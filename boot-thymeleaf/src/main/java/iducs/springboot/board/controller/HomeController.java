@@ -1,5 +1,9 @@
 package iducs.springboot.board.controller;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -76,6 +80,12 @@ public class HomeController {
 		session.invalidate();
 		return "redirect:/";
 	}
+    @GetMapping("/hello")
+    public Collection<String> sayHello() {
+        return IntStream.range(0, 10)
+          .mapToObj(i -> "Hello number " + i)
+          .collect(Collectors.toList());
+    }
 	/*
 	@GetMapping("/userinfo")
 	public String datail(HttpSession session) {

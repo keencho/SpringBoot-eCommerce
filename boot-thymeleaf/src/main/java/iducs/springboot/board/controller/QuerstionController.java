@@ -61,7 +61,10 @@ public class QuerstionController {
 		model.addAttribute("countall",page.getTotalElements());
 		return "/questions/list"; 
 	}	
-	
+	@GetMapping("/test1")
+	public String test() {		
+		return "index";
+	}
 	@GetMapping("/{id}")
 	public String getQuestionById(@PathVariable(value = "id") Long id, Model model) {
 		Question question = questionService.getQuestionById(id);
