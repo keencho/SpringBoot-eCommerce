@@ -48,7 +48,7 @@ public class UserController {
 	public String createUser(@Valid User formUser, Model model) {
 		userService.saveUser(formUser); 
 		model.addAttribute("user", formUser);
-		return "redirect:/";
+		return "user/complete";
 	}
 	@ResponseBody
 	@PostMapping("/idCheck")
@@ -58,6 +58,38 @@ public class UserController {
 		if(user1!=null) result=1;
 		// User getUserByNo(long no); // primary key에 해당하는 id로  조회
 		return result;
+	}
+	@GetMapping("/login")
+	public String loginForm(HttpSession session) {
+		User checksession = (User) session.getAttribute("user");
+		if(checksession != null) {
+			return "redirect:../404";
+		}
+		return "user/login";
+	}
+	@PostMapping("/login")
+	public String login(@Valid User user, HttpSession session) {
+		System.out.println("login process : ");
+		User sessionUser = userService.getUserById(user.getId()); 
+		if(sessionUser == null) {
+			System.out.println("id error : ");
+			return "redirect:loginError";
+		}
+		if(!sessionUser.getPassword().equals(user.getPassword())) {
+			System.out.println("pw error : ");
+			return "redirect:loginError";
+		}
+		session.setAttribute("user", sessionUser);
+		return "redirect:../";
+	}
+	@GetMapping("/loginError")
+	public String loginError() {
+		return "user/loginError";
+	}
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:../";
 	}
 	@GetMapping("")
 	public String getUsers(Model model, HttpSession session, @PageableDefault(size=3, sort="id", direction = Sort.Direction.ASC) Pageable pageable) {
@@ -95,4 +127,3 @@ public class UserController {
 		return "redirect:/";
 	}
 }
-// test code

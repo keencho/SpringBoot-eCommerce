@@ -42,6 +42,10 @@ public class HomeController {
 	public String home() {		
 		return "main/index";
 	}
+	@GetMapping("/404")
+	public String error() {		
+		return "main/404";
+	}
 	@GetMapping("/questions/form") // 등록폼은 form URL을 가지도록 규칙화하겠음
 	public String questionForm(HttpSession session, Model model) {
 		if(!HttpSessionUtils.isLoginUser(session)) {

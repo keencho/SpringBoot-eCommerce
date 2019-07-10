@@ -42,9 +42,13 @@
                 <div class="container">
                     <div class="carousel_top_h_inner">
                         <div class="float-md-right">
-                            <div class="top_header_middle">
-                                <a href="#"><i class="fa fa-phone"></i><span>010-3457-8021</span></a>
+                            <div class="top_header_middle" th:unless="${session.user}">개발자 연락처: 
+                                <a href="#"><i class="fa fa-phone"></i><span>010-0000-0000</span></a>
                                 <a href="#"><i class="fa fa-envelope"></i><span>seyoung050412@gmail.com</span></a>
+                            </div>
+                            <div class="top_header_middle" th:if="${session.user}">
+                              <a href="#"><i class="fa fa-child"></i><span th:text="${session.user.name}"></span>님 환영합니다!</a>
+                              <a href="#"><i class="fa fa-envelope"></i><span th:text="${session.user.email}"></span></a>
                             </div>
                         </div>
                     </div>
@@ -111,8 +115,9 @@
                                 <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                             </ul>
                             <ul class="navbar-nav justify-content-end">
-                                <li class="user_icon" title="회원가입"><a href="/user/register"><i class="icon-people icons"></i></a></li>
-                                <li class="user_icon" title="로그인"><a href="/user/register"><i class="icon-login icons"></i></a></li>
+                                <li th:unless="${session.user}" class="user_icon" title="회원가입"><a href="/user/register"><i class="fa fa-registered icons"></i></a></li>
+                                <li th:unless="${session.user}" class="user_icon" title="로그인"><a href="/user/login"><i class="icon-login icons"></i></a></li>
+                                <li th:if="${session.user}" class="user_icon" title="로그아웃"><a href="/user/logout"><i class="icon-logout icons"></i></a></li>
                                 <li class="cart_cart"><a href="#"><i class="icon-handbag icons"></i></a></li>
                             </ul>
                         </div>

@@ -70,3 +70,32 @@ function pwCheck() {
         }
     }
 }
+
+/* ajax id중복체크 */
+function idCheck() {
+	var id = $("#id").val();
+	$.ajax({
+		url : "/user/idCheck",
+		type : "POST",
+		data : {
+			"id" : id
+		},
+		dataType : "html",
+		complete : function(xhr, textStatus) {
+			var num = xhr.responseText;
+			if (num > 0) {
+				$('#cktext').text("※중복되는 아이디입니다. 다른 아이디를 입력해주세요");
+				$('#cktext').css("color", "#F47520");
+				$("#id").css("border-color", "#F47520");
+				$(".check_button").prop("disabled", true);
+				idck = 0;
+			} else {
+				$('#cktext').text("");
+				$("#id").css("border-color", "");
+				$(".check_button").prop("disabled", false);
+				idck = 1;
+			}
+		},
+
+	});
+}
