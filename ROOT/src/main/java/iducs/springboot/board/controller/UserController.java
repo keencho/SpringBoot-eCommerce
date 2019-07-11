@@ -1,9 +1,12 @@
 package iducs.springboot.board.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +55,7 @@ public class UserController {
 	}
 	@ResponseBody
 	@PostMapping("/idCheck")
-	public int idCheck(@RequestParam(value = "id") String id) {
+	public int idCheck(@RequestParam(value = "id") String id) {	// Ajax id 중복체크
 		int result=0;
 		User user1 = userService.getUserById(id);
 		if(user1!=null) result=1;
@@ -60,11 +63,7 @@ public class UserController {
 		return result;
 	}
 	@GetMapping("/login")
-	public String loginForm(HttpSession session) {
-		User checksession = (User) session.getAttribute("user");
-		if(checksession != null) {
-			return "redirect:../404";
-		}
+	public String loginForm() {
 		return "user/login";
 	}
 	@PostMapping("/login")
@@ -80,6 +79,8 @@ public class UserController {
 			return "redirect:loginError";
 		}
 		session.setAttribute("user", sessionUser);
+		session.setAttribute("userRank", sessionUser.getRank());
+		System.out.println(sessionUser.getRank());
 		return "redirect:../";
 	}
 	@GetMapping("/loginError")
@@ -87,43 +88,12 @@ public class UserController {
 		return "user/loginError";
 	}
 	@GetMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletResponse response) throws IOException {
 		session.invalidate();
-		return "redirect:../";
-	}
-	@GetMapping("")
-	public String getUsers(Model model, HttpSession session, @PageableDefault(size=3, sort="id", direction = Sort.Direction.ASC) Pageable pageable) {
-		if(!HttpSessionUtils.isLoginUser(session)) {
-			return "redirect:/users/login-form";
-		}
-		List<User> user = userService.getUsersByPage(pageable);
-		Page<UserEntity> pageNo = userService.getUserPage(pageable);
-		model.addAttribute("users", user);
-		model.addAttribute("pageNo", pageNo);
-		return "/users/list";
-	}	
-	/*
-	 * @GetMapping("/{id}") public String getUserById(@PathVariable(value = "id")
-	 * Long id, Model model) { User user = userService.getUserById(id);
-	 * model.addAttribute("user", user); return "/users/info"; }
-	 */
-	
-//	@PutMapping("/{id}")
-//	public String updateUserById(@PathVariable(value = "id") Long id, @Valid User formUser, Model model, HttpSession session) {
-//		User user = userService.getUserById(id);
-//		user.setUserPw(formUser.getUserPw());
-//		user.setName(formUser.getName());
-//		user.setCompany(formUser.getCompany());
-//		userService.updateUser(user);		
-//		model.addAttribute("user", user);
-//		session.setAttribute("user", user);
-//		return "/users/info";
-//	}	
-	@DeleteMapping("/{id}")
-	public String deleteUserById(@PathVariable(value = "id") Long id, @Valid User formUser, Model model, HttpSession session) {
-		userService.deleteUser(formUser);
-		model.addAttribute("name", formUser.getName());
-		session.invalidate();
-		return "redirect:/";
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('로그아웃이 완료되었습니다.'); location.href='/';</script>");
+		out.flush();
+		return null;
 	}
 }

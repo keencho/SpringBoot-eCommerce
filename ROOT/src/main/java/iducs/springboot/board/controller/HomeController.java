@@ -59,22 +59,6 @@ public class HomeController {
 	public String loginForm(Model model) {
 		return "/users/login";
 	}
-//	@PostMapping("/users/login")
-//	public String loginUser(@Valid User user, HttpSession session) {
-//		System.out.println("login process : ");
-//		User sessionUser = userService.getUserByUserId(user.getUserId()); 
-//		if(sessionUser == null) {
-//			System.out.println("id error : ");
-//			return "redirect:/users/login-form";
-//		}
-//		if(!sessionUser.getUserPw().equals(user.getUserPw())) {
-//			System.out.println("pw error : ");
-//			return "redirect:/users/login-form";
-//		}
-//		session.setAttribute("user", sessionUser);
-//		return "redirect:/questions";
-//	}	
-	
 	@GetMapping("/users/form") // 등록폼은 form URL을 가지도록 함, 다른 폼은 이름을 명명하기로 수정함
 	public String registerForm() {
 		return "/users/register";
@@ -90,12 +74,4 @@ public class HomeController {
           .mapToObj(i -> "Hello number " + i)
           .collect(Collectors.toList());
     }
-	/*
-	@GetMapping("/userinfo")
-	public String datail(HttpSession session) {
-		System.out.println("-------");
-		User user = (User) session.getAttribute("user");
-		return "/users/" + user.getId();
-	}	
-	*/
 }
