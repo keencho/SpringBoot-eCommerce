@@ -5,28 +5,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import iducs.springboot.board.domain.Question;
 import iducs.springboot.board.domain.User;
-import iducs.springboot.board.service.QuestionService;
-import iducs.springboot.board.service.UserService;
 import iducs.springboot.board.utils.HttpSessionUtils;
 
 @Controller
 public class HomeController {
-	
-	@Autowired 
-	private UserService userService; // 의존성 주입(Dependency Injection) : 
-	
-	@Autowired 
-	private QuestionService questionService;
 	
 //	@GetMapping("/initdb") 
 //	public String initialize() {

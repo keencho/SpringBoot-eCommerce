@@ -1,41 +1,30 @@
 package iducs.springboot.board.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.hibernate.dialect.function.StandardAnsiSqlAggregationFunctions.CountFunction;
-import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.COUNT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import iducs.springboot.board.domain.Comment;
 import iducs.springboot.board.domain.Question;
 import iducs.springboot.board.domain.User;
 import iducs.springboot.board.entity.QuestionEntity;
-import iducs.springboot.board.exception.ResourceNotFoundException;
-import iducs.springboot.board.repository.UserRepository;
 import iducs.springboot.board.service.CommentService;
 import iducs.springboot.board.service.QuestionService;
-import iducs.springboot.board.service.UserService;
 import iducs.springboot.board.utils.HttpSessionUtils;
 
 @Controller

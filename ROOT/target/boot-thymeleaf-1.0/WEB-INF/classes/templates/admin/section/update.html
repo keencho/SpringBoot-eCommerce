@@ -1,0 +1,67 @@
+<th:block th:include="admin/main/header.html"></th:block>
+<script>
+	function find_division() {
+		window.open("/admin/section/findDivision", "","resizeable=yes,scrollbar=yes,width=900,height=800");
+	}
+</script>
+<!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>소분류</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+ 			<div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>수정</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form th:action="@{'/admin/section/update/{no}'(no=${section.no})}" name="sectionAddForm" th:method="put" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">대분류명 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="category_name" class="form-control col-md-7 col-xs-12" th:value="${section.category.name}" disabled>
+                          <input type="text" required="required" name="category_no" th:value="${section.category.no}">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">중분류명 <span class="required">*</span>
+                        </label>
+                        <input type="button" value="중분류 찾기" onClick="find_division();" class="btn">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="division_name" class="form-control col-md-7 col-xs-12" th:value="${section.name}" disabled>
+                          <input type="text" required="required" name="division_no" th:value="${section.no}">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">소분류명<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" name="name" required="required" class="form-control col-md-7 col-xs-12" th:value="${section.name}">
+                        </div>
+                      </div>
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
+                          <button type="submit" class="btn btn-success">수정</button>
+                          <button class="btn btn-primary" type="button" onClick="history.back();">취소</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+      <th:block th:include="admin/main/footer.html"></th:block>

@@ -7,6 +7,7 @@ public class Section {
 	private Category category_no;
 	private Division division_no;
 	private String name;
+	private List<ProductInfo> productinfo;
 	
 	public Section() {}
 	public Section(Category category, Division division, String name) {
@@ -38,6 +39,12 @@ public class Section {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public List<ProductInfo> getProductinfo() {
+		return productinfo;
+	}
+	public void setProductinfo(List<ProductInfo> productinfo) {
+		this.productinfo = productinfo;
 	}
 	
 }

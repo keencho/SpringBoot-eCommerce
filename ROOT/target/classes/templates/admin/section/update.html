@@ -30,7 +30,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" required="required" name="category_name" class="form-control col-md-7 col-xs-12" th:value="${section.category.name}" disabled>
-                          <input type="text" required="required" name="category_no" th:value="${section.category.no}">
+                          <input type="hidden" required="required" name="category_no" th:value="${section.category.no}">
                         </div>
                       </div>
                       <div class="form-group">
@@ -39,7 +39,7 @@
                         <input type="button" value="중분류 찾기" onClick="find_division();" class="btn">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" required="required" name="division_name" class="form-control col-md-7 col-xs-12" th:value="${section.name}" disabled>
-                          <input type="text" required="required" name="division_no" th:value="${section.no}">
+                          <input type="hidden" required="required" name="division_no" th:value="${section.no}">
                         </div>
                       </div>
                       <div class="form-group">
