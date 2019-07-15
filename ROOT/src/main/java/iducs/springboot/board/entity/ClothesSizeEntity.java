@@ -17,8 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import iducs.springboot.board.domain.ClothesSize;
-import iducs.springboot.board.domain.ProductInfo;
-
 @Entity
 @Table(name = "size")
 public class ClothesSizeEntity {
@@ -29,12 +27,6 @@ public class ClothesSizeEntity {
 	
 	@Column(name="name", nullable=false, length=10, unique=true)
 	private String name;
-	
-	@OneToMany
-	@JoinTable(name="productinfo_size",
-			joinColumns = @JoinColumn(name="size_no"),
-			inverseJoinColumns = @JoinColumn(name="productinfo_no"))
-	private List<ProductInfoEntity> productinfo= new ArrayList<>();
 	
 	public Long getNo() {
 		return no;
@@ -50,16 +42,6 @@ public class ClothesSizeEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-
-
-	public List<ProductInfoEntity> getProductinfo() {
-		return productinfo;
-	}
-
-	public void setProductinfo(List<ProductInfoEntity> productinfo) {
-		this.productinfo = productinfo;
 	}
 
 	public ClothesSize buildDomain() {

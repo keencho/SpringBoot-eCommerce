@@ -6,12 +6,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import iducs.springboot.board.entity.ProductInfoEntity;
+import iducs.springboot.board.entity.ProductEntity;
 
 @Repository
-public interface ProductInfoRepository extends JpaRepository<ProductInfoEntity, Long>{
-	ProductInfoEntity findByNo(long no);
+public interface ProductRepository extends JpaRepository<ProductEntity, Long>{
+	ProductEntity findByNo(long no);
 	
-	
-	List<ProductInfoEntity> findAll(Sort sort);
+	List<ProductEntity> findAll(Sort sort);
 }

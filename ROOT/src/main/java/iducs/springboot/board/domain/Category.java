@@ -8,7 +8,7 @@ public class Category {
 	private String englishName;
 	private List<Division> division;
 	private List<Section> section;
-	private List<ProductInfo> productinfo;
+	private List<Product> product;
 	
 	public Category() {}
 	public Category(String name, String englishName) {
@@ -46,11 +46,12 @@ public class Category {
 	public void setSection(List<Section> section) {
 		this.section = section;
 	}
-	public List<ProductInfo> getProductinfo() {
-		return productinfo;
+	public List<Product> getProduct() {
+		return product;
 	}
-	public void setProductinfo(List<ProductInfo> productinfo) {
-		this.productinfo = productinfo;
+	public void setProduct(List<Product> product) {
+		this.product = product;
 	}
+
 	
 }

@@ -16,7 +16,7 @@
                   <div class="x_title">
                     <h2>판매전 상품정보 등록 페이지</h2>
 						<div class="text-right mtop20">
-	                    	<a href="/admin/productinfo/add" class="btn btn-sm btn-primary">추가</a>
+	                    	<a href="/admin/product/add" class="btn btn-sm btn-primary">추가</a>
 						</div>
                     <div class="clearfix"></div>
                   </div>
@@ -28,21 +28,21 @@
                           <th>대분류명</th>
                           <th>중분류명</th>
                           <th>소분류명</th>
-                          <th>모델명</th>
+                          <th>판매명</th>
                           <th>작업</th>
                         </tr>
                       </thead>
                       
                       <tbody>
-                        <tr th:each="productinfo : ${productinfo}">
-                          <td th:text="${productinfo.no}"></td>
-                          <td th:text="${productinfo.category.name}"></td>
-                          <td th:text="${productinfo.division.name}"></td>
-                          <td th:text="${productinfo.size.name}"></td>
-                          <td th:text="${productinfo.name}"></td>
+                        <tr th:each="product : ${product}">
+                          <td th:text="${product.no}"></td>
+                          <td th:text="${product.category.name}"></td>
+                          <td th:text="${product.division.name}"></td>
+						  <td th:text="${product.section.name}"></td>
+                          <td th:text="${product.name}"></td>
                           <td>
-                          	<a th:href="@{'/admin/productinfo/update/{no}'(no=${productinfo.no})}" class="btn btn-info btn-xs"><i class="fas fa-pen"></i> 수정</a>
-                          	<a th:href="@{'/admin/productinfo/del/{no}'(no=${productinfo.no})}" class="btn btn-danger btn-xs" onClick="return confirm('삭제할까요?');"><i class="fas fa-trash-alt"></i> 삭제</a>
+                          	<a th:href="@{'/admin/product/update/{no}'(no=${product.no})}" class="btn btn-info btn-xs"><i class="fas fa-pen"></i> 수정</a>
+                          	<a th:href="@{'/admin/product/del/{no}'(no=${product.no})}" class="btn btn-danger btn-xs" onClick="return confirm('삭제할까요?');"><i class="fas fa-trash-alt"></i> 삭제</a>
                           </td>
                         </tr>
                       </tbody>
