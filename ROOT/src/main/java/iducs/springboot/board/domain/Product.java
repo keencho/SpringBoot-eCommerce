@@ -19,20 +19,20 @@ public class Product {
 	private String madein;	// 제조원산지
 	private String caution;	// 주의사항
 	private String date;	// 제조년월
-	private MultipartFile pic1;	//사진
-	private MultipartFile pic2;
-	private MultipartFile pic3;
-	private MultipartFile pic4;
-	private MultipartFile pic5;
-	private MultipartFile explainpic;	// 상품 설명 이미지
+	private String pic1;	//사진
+	private String pic2;
+	private String pic3;
+	private String pic4;
+	private String pic5;
+	private String explainpic;	// 상품 설명 이미지
 	private String regdate;	//상품 등록일
 	
 	public Product() {}
 	
 	public Product(Category category, Division division, Section section, String name, String modelname,
 			String price, String discount, String listprice, String size, String color, String material, String madeby,
-			String madein, String caution, String date, MultipartFile pic1, MultipartFile pic2, MultipartFile pic3, MultipartFile pic4, MultipartFile pic5,
-			MultipartFile explainpic, String regdate) {
+			String madein, String caution, String date, String pic1, String pic2, String pic3, String pic4, String pic5,
+			String explainpic, String regdate) {
 		super();
 		this.category = category;
 		this.division = division;
@@ -186,51 +186,51 @@ public class Product {
 		this.date = date;
 	}
 
-	public MultipartFile getPic1() {
+	public String getPic1() {
 		return pic1;
 	}
 
-	public void setPic1(MultipartFile pic1) {
+	public void setPic1(String pic1) {
 		this.pic1 = pic1;
 	}
 
-	public MultipartFile getPic2() {
+	public String getPic2() {
 		return pic2;
 	}
 
-	public void setPic2(MultipartFile pic2) {
+	public void setPic2(String pic2) {
 		this.pic2 = pic2;
 	}
 
-	public MultipartFile getPic3() {
+	public String getPic3() {
 		return pic3;
 	}
 
-	public void setPic3(MultipartFile pic3) {
+	public void setPic3(String pic3) {
 		this.pic3 = pic3;
 	}
 
-	public MultipartFile getPic4() {
+	public String getPic4() {
 		return pic4;
 	}
 
-	public void setPic4(MultipartFile pic4) {
+	public void setPic4(String pic4) {
 		this.pic4 = pic4;
 	}
 
-	public MultipartFile getPic5() {
+	public String getPic5() {
 		return pic5;
 	}
 
-	public void setPic5(MultipartFile pic5) {
+	public void setPic5(String pic5) {
 		this.pic5 = pic5;
 	}
 
-	public MultipartFile getExplainpic() {
+	public String getExplainpic() {
 		return explainpic;
 	}
 
-	public void setExplainpic(MultipartFile explainpic) {
+	public void setExplainpic(String explainpic) {
 		this.explainpic = explainpic;
 	}
 

@@ -18,8 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Product;
 
@@ -79,29 +77,23 @@ public class ProductEntity {
 	@Column(name="date", nullable=false, length=30)
 	private String date;
 	
-	@Lob
-	@Column(name="pic1", nullable=false, length=1024000)
-	private MultipartFile pic1;
+	@Column(name="pic1", nullable=false, length=1024)
+	private String pic1;
 	
-	@Lob
-	@Column(name="pic2", nullable=true, length=1024000)
-	private MultipartFile pic2;
+	@Column(name="pic2", nullable=true, length=1024)
+	private String pic2;
 	
-	@Lob
-	@Column(name="pic3", nullable=true, length=1024000)
-	private MultipartFile pic3;
+	@Column(name="pic3", nullable=true, length=1024)
+	private String pic3;
 	
-	@Lob
-	@Column(name="pic4", nullable=true, length=1024000)
-	private MultipartFile pic4;
+	@Column(name="pic4", nullable=true, length=1024)
+	private String pic4;
 	
-	@Lob
-	@Column(name="pic5", nullable=true, length=1024000)
-	private MultipartFile pic5;
+	@Column(name="pic5", nullable=true, length=1024)
+	private String pic5;
 	
-	@Lob
-	@Column(name="explainpic", nullable=true, length=1024000)
-	private MultipartFile explainpic;
+	@Column(name="explainpic", nullable=true, length=1024)
+	private String explainpic;
 	
 	@Column(name="regdate", nullable=true, length=50)
 	private String regdate;
@@ -235,51 +227,51 @@ public class ProductEntity {
 	}
 
 
-	public MultipartFile getPic1() {
+	public String getPic1() {
 		return pic1;
 	}
 
-	public void setPic1(MultipartFile pic1) {
+	public void setPic1(String pic1) {
 		this.pic1 = pic1;
 	}
 
-	public MultipartFile getPic2() {
+	public String getPic2() {
 		return pic2;
 	}
 
-	public void setPic2(MultipartFile pic2) {
+	public void setPic2(String pic2) {
 		this.pic2 = pic2;
 	}
 
-	public MultipartFile getPic3() {
+	public String getPic3() {
 		return pic3;
 	}
 
-	public void setPic3(MultipartFile pic3) {
+	public void setPic3(String pic3) {
 		this.pic3 = pic3;
 	}
 
-	public MultipartFile getPic4() {
+	public String getPic4() {
 		return pic4;
 	}
 
-	public void setPic4(MultipartFile pic4) {
+	public void setPic4(String pic4) {
 		this.pic4 = pic4;
 	}
 
-	public MultipartFile getPic5() {
+	public String getPic5() {
 		return pic5;
 	}
 
-	public void setPic5(MultipartFile pic5) {
+	public void setPic5(String pic5) {
 		this.pic5 = pic5;
 	}
 
-	public MultipartFile getExplainpic() {
+	public String getExplainpic() {
 		return explainpic;
 	}
 
-	public void setExplainpic(MultipartFile explainpic) {
+	public void setExplainpic(String explainpic) {
 		this.explainpic = explainpic;
 	}
 

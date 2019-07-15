@@ -22,6 +22,7 @@ public class BootThymeleafApplication extends SpringBootServletInitializer{
 	private final int MAX_SIZE = 10 * 1024 * 1024;
 	public static void main(String[] args) {
 		SpringApplication.run(BootThymeleafApplication.class, args);
+		
 	}
 	
 	@Override
@@ -36,8 +37,14 @@ public class BootThymeleafApplication extends SpringBootServletInitializer{
 	factory.setMaxRequestSize("512MB");
 	return factory.createMultipartConfig();
 	}
-
-
+	
+	
+	@Bean(name = "multipartResolver")  
+    public MultipartResolver multipartResolver()  
+    {  
+        StandardServletMultipartResolver resolver = new StandardServletMultipartResolver();  
+        return resolver;  
+    }
 	}
 	
 

@@ -1,0 +1,1177 @@
+# Created at 2019-07-16T02:26:18.304
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: DEFAULT
+java.io.EOFException
+	at java.io.DataInputStream.readInt(DataInputStream.java:392)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.lang.Thread.run(Thread.java:748)
+
+
+# Created at 2019-07-16T02:26:18.366
+Unexpected IOException with stream: 2019-07-16 02:26:18.364  INFO 18888 --- [           main] i.s.board.BootThymeleafApplicationTests  : Starting BootThymeleafApplicationTests on DESKTOP-BN2UAJP with PID 18888 (started by cho in C:\Users\cho\git\SpringBoot-eCommerce\ROOT)
+
+
+# Created at 2019-07-16T02:26:18.373
+Unexpected IOException with stream: 2019-07-16 02:26:18.372  INFO 18888 --- [           main] i.s.board.BootThymeleafApplicationTests  : No active profile set, falling back to default profiles: default
+
+
+# Created at 2019-07-16T02:26:19.152
+Unexpected IOException with stream: 2019-07-16 02:26:19.150  INFO 18888 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+
+
+# Created at 2019-07-16T02:26:19.311
+Unexpected IOException with stream: 2019-07-16 02:26:19.310  INFO 18888 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 147ms. Found 9 repository interfaces.
+
+
+# Created at 2019-07-16T02:26:19.764
+Unexpected IOException with stream: 2019-07-16 02:26:19.763  INFO 18888 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d916b548] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+
+
+# Created at 2019-07-16T02:26:20.164
+Unexpected IOException with stream: 2019-07-16 02:26:20.163  INFO 18888 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+
+
+# Created at 2019-07-16T02:26:20.362
+Unexpected IOException with stream: 2019-07-16 02:26:20.361  INFO 18888 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+
+
+# Created at 2019-07-16T02:26:20.469
+Unexpected IOException with stream: 2019-07-16 02:26:20.468  INFO 18888 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+
+
+# Created at 2019-07-16T02:26:20.577
+Unexpected IOException with stream: 2019-07-16 02:26:20.576  INFO 18888 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.9.Final}
+
+
+# Created at 2019-07-16T02:26:20.583
+Unexpected IOException with stream: 2019-07-16 02:26:20.583  INFO 18888 --- [           main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+
+
+# Created at 2019-07-16T02:26:20.757
+Unexpected IOException with stream: 2019-07-16 02:26:20.756  INFO 18888 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+
+
+# Created at 2019-07-16T02:26:20.924
+Unexpected IOException with stream: 2019-07-16 02:26:20.924  INFO 18888 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+
+
+# Created at 2019-07-16T02:26:21.925
+Unexpected IOException with stream: 2019-07-16 02:26:21.924  INFO 18888 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+
+
+# Created at 2019-07-16T02:26:23.457
+Unexpected IOException with stream: 2019-07-16 02:26:23.456  INFO 18888 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+
+
+# Created at 2019-07-16T02:26:23.590
+Unexpected IOException with stream: 2019-07-16 02:26:23.589  WARN 18888 --- [           main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+
+
+# Created at 2019-07-16T02:26:23.862
+Unexpected IOException with stream: 2019-07-16 02:26:23.861  INFO 18888 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+
+
+# Created at 2019-07-16T02:26:24.256
+Unexpected IOException with stream: 2019-07-16 02:26:24.255  INFO 18888 --- [           main] i.s.board.BootThymeleafApplicationTests  : Started BootThymeleafApplicationTests in 6.125 seconds (JVM running for 6.925)
+
+
+# Created at 2019-07-16T02:26:24.293
+Unexpected IOException: 5,1,iducs.springboot.board.BootThymeleafApplicationTests,contextLoads(iducs.springboot.board.BootThymeleafApplicationTests),null,null,null
+
+
+# Created at 2019-07-16T02:26:24.366
+Unexpected IOException with stream: 2019-07-16 02:26:24.365  INFO 18888 --- [           main] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+
+
+# Created at 2019-07-16T02:26:24.379
+Unexpected IOException with stream: 
+
+
+# Created at 2019-07-16T02:26:24.385
+Unexpected IOException with stream:   .   ____          _            __ _ _
+
+
+# Created at 2019-07-16T02:26:24.391
+Unexpected IOException with stream:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+
+
+# Created at 2019-07-16T02:26:24.397
+Unexpected IOException with stream: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+
+
+# Created at 2019-07-16T02:26:24.402
+Unexpected IOException with stream:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+
+
+# Created at 2019-07-16T02:26:24.407
+Unexpected IOException with stream:   '  |____| .__|_| |_|_| |_\__, | / / / /
+
+
+# Created at 2019-07-16T02:26:24.411
+Unexpected IOException with stream:  =========|_|==============|___/=/_/_/_/
+
+
+# Created at 2019-07-16T02:26:24.416
+Unexpected IOException with stream:  :: Spring Boot ::        (v2.1.4.RELEASE)
+
+
+# Created at 2019-07-16T02:26:24.422
+Unexpected IOException with stream: 
+
+
+# Created at 2019-07-16T02:26:24.434
+Unexpected IOException with stream: 2019-07-16 02:26:24.433  INFO 18888 --- [           main] o.a.maven.surefire.booter.ForkedBooter   : Starting ForkedBooter v2.22.1 on DESKTOP-BN2UAJP with PID 18888 (started by cho in C:\Users\cho\git\SpringBoot-eCommerce\ROOT)
+
+
+# Created at 2019-07-16T02:26:24.440
+Unexpected IOException with stream: 2019-07-16 02:26:24.439  INFO 18888 --- [           main] o.a.maven.surefire.booter.ForkedBooter   : No active profile set, falling back to default profiles: default
+
+
+# Created at 2019-07-16T02:26:24.731
+Unexpected IOException with stream: 2019-07-16 02:26:24.730  INFO 18888 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+
+
+# Created at 2019-07-16T02:26:24.830
+Unexpected IOException with stream: 2019-07-16 02:26:24.829  INFO 18888 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 90ms. Found 9 repository interfaces.
+
+
+# Created at 2019-07-16T02:26:24.900
+Unexpected IOException with stream: 2019-07-16 02:26:24.898  INFO 18888 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d916b548] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+
+
+# Created at 2019-07-16T02:26:25.163
+Unexpected IOException with stream: 2019-07-16 02:26:25.162  INFO 18888 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8011 (http)
+
+
+# Created at 2019-07-16T02:26:25.229
+Unexpected IOException with stream: 2019-07-16 02:26:25.228  INFO 18888 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+
+
+# Created at 2019-07-16T02:26:25.239
+Unexpected IOException with stream: 2019-07-16 02:26:25.238  INFO 18888 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+
+
+# Created at 2019-07-16T02:26:25.516
+Unexpected IOException with stream: 2019-07-16 02:26:25.513  INFO 18888 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+
+
+# Created at 2019-07-16T02:26:25.531
+Unexpected IOException with stream: 2019-07-16 02:26:25.530  INFO 18888 --- [           main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1083 ms
+
+
+# Created at 2019-07-16T02:26:25.665
+Unexpected IOException with stream: 2019-07-16 02:26:25.664  INFO 18888 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+
+
+# Created at 2019-07-16T02:26:26.677
+Unexpected IOException with stream: 2019-07-16 02:26:26.676  INFO 18888 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+
+
+# Created at 2019-07-16T02:26:26.709
+Unexpected IOException with stream: 2019-07-16 02:26:26.708  INFO 18888 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+
+
+# Created at 2019-07-16T02:26:26.725
+Unexpected IOException with stream: 2019-07-16 02:26:26.724  INFO 18888 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+
+
+# Created at 2019-07-16T02:26:26.841
+Unexpected IOException with stream: 2019-07-16 02:26:26.840  INFO 18888 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+
+
+# Created at 2019-07-16T02:26:27.211
+Unexpected IOException with stream: 2019-07-16 02:26:27.210  INFO 18888 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+
+
+# Created at 2019-07-16T02:26:27.236
+Unexpected IOException with stream: 2019-07-16 02:26:27.235  WARN 18888 --- [           main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+
+
+# Created at 2019-07-16T02:26:27.313
+Unexpected IOException with stream: 2019-07-16 02:26:27.312  INFO 18888 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+
+
+# Created at 2019-07-16T02:26:27.449
+Unexpected IOException with stream: 2019-07-16 02:26:27.448  INFO 18888 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8011 (http) with context path ''
+
+
+# Created at 2019-07-16T02:26:27.456
+Unexpected IOException with stream: 2019-07-16 02:26:27.455  INFO 18888 --- [           main] o.a.maven.surefire.booter.ForkedBooter   : Started ForkedBooter in 3.108 seconds (JVM running for 10.124)
+
+
+# Created at 2019-07-16T02:26:27.464
+Unexpected IOException with stream: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+# Created at 2019-07-16T02:26:27.470
+Unexpected IOException with stream: org.springframework.context.annotation.internalConfigurationAnnotationProcessor
+
+
+# Created at 2019-07-16T02:26:27.477
+Unexpected IOException with stream: org.springframework.context.annotation.internalAutowiredAnnotationProcessor
+
+
+# Created at 2019-07-16T02:26:27.484
+Unexpected IOException with stream: org.springframework.context.annotation.internalCommonAnnotationProcessor
+
+
+# Created at 2019-07-16T02:26:27.488
+Unexpected IOException with stream: org.springframework.context.annotation.internalPersistenceAnnotationProcessor
+
+
+# Created at 2019-07-16T02:26:27.493
+Unexpected IOException with stream: org.springframework.context.event.internalEventListenerProcessor
+
+
+# Created at 2019-07-16T02:26:27.499
+Unexpected IOException with stream: org.springframework.context.event.internalEventListenerFactory
+
+
+# Created at 2019-07-16T02:26:27.505
+Unexpected IOException with stream: bootThymeleafApplication
+
+
+# Created at 2019-07-16T02:26:27.510
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory
+
+
+# Created at 2019-07-16T02:26:27.515
+Unexpected IOException with stream: servletInitializer
+
+
+# Created at 2019-07-16T02:26:27.524
+Unexpected IOException with stream: webConfig
+
+
+# Created at 2019-07-16T02:26:27.529
+Unexpected IOException with stream: logAspect
+
+
+# Created at 2019-07-16T02:26:27.534
+Unexpected IOException with stream: adminCategoryController
+
+
+# Created at 2019-07-16T02:26:27.539
+Unexpected IOException with stream: adminClothesSizeController
+
+
+# Created at 2019-07-16T02:26:27.544
+Unexpected IOException with stream: adminColorController
+
+
+# Created at 2019-07-16T02:26:27.549
+Unexpected IOException with stream: adminDivisionController
+
+
+# Created at 2019-07-16T02:26:27.554
+Unexpected IOException with stream: adminHomeController
+
+
+# Created at 2019-07-16T02:26:27.559
+Unexpected IOException with stream: adminProductController
+
+
+# Created at 2019-07-16T02:26:27.564
+Unexpected IOException with stream: adminSectionController
+
+
+# Created at 2019-07-16T02:26:27.569
+Unexpected IOException with stream: commentController
+
+
+# Created at 2019-07-16T02:26:27.574
+Unexpected IOException with stream: homeController
+
+
+# Created at 2019-07-16T02:26:27.579
+Unexpected IOException with stream: querstionController
+
+
+# Created at 2019-07-16T02:26:27.584
+Unexpected IOException with stream: userController
+
+
+# Created at 2019-07-16T02:26:27.591
+Unexpected IOException with stream: userExceptionConfig
+
+
+# Created at 2019-07-16T02:26:27.596
+Unexpected IOException with stream: categoryService
+
+
+# Created at 2019-07-16T02:26:27.601
+Unexpected IOException with stream: clothesSizeService
+
+
+# Created at 2019-07-16T02:26:27.616
+Unexpected IOException with stream: colorService
+
+
+# Created at 2019-07-16T02:26:27.623
+Unexpected IOException with stream: commentService
+
+
+# Created at 2019-07-16T02:26:27.627
+Unexpected IOException with stream: divisionService
+
+
+# Created at 2019-07-16T02:26:27.632
+Unexpected IOException with stream: ProductSize
+
+
+# Created at 2019-07-16T02:26:27.637
+Unexpected IOException with stream: questionService
+
+
+# Created at 2019-07-16T02:26:27.642
+Unexpected IOException with stream: sectionService
+
+
+# Created at 2019-07-16T02:26:27.655
+Unexpected IOException with stream: userServiceImpl
+
+
+# Created at 2019-07-16T02:26:27.663
+Unexpected IOException with stream: multipartConfigElement
+
+
+# Created at 2019-07-16T02:26:27.671
+Unexpected IOException with stream: multipartResolver
+
+
+# Created at 2019-07-16T02:26:27.679
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.AutoConfigurationPackages
+
+
+# Created at 2019-07-16T02:26:27.687
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:27.692
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.condition.BeanTypeRegistry
+
+
+# Created at 2019-07-16T02:26:27.699
+Unexpected IOException with stream: propertySourcesPlaceholderConfigurer
+
+
+# Created at 2019-07-16T02:26:27.706
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration$TomcatWebSocketConfiguration
+
+
+# Created at 2019-07-16T02:26:27.712
+Unexpected IOException with stream: websocketServletWebServerCustomizer
+
+
+# Created at 2019-07-16T02:26:27.720
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:27.727
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryConfiguration$EmbeddedTomcat
+
+
+# Created at 2019-07-16T02:26:27.734
+Unexpected IOException with stream: tomcatServletWebServerFactory
+
+
+# Created at 2019-07-16T02:26:27.740
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:27.748
+Unexpected IOException with stream: servletWebServerFactoryCustomizer
+
+
+# Created at 2019-07-16T02:26:27.758
+Unexpected IOException with stream: tomcatServletWebServerFactoryCustomizer
+
+
+# Created at 2019-07-16T02:26:27.767
+Unexpected IOException with stream: server-org.springframework.boot.autoconfigure.web.ServerProperties
+
+
+# Created at 2019-07-16T02:26:27.774
+Unexpected IOException with stream: org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor
+
+
+# Created at 2019-07-16T02:26:27.781
+Unexpected IOException with stream: org.springframework.boot.context.properties.ConfigurationBeanFactoryMetadata
+
+
+# Created at 2019-07-16T02:26:27.791
+Unexpected IOException with stream: webServerFactoryCustomizerBeanPostProcessor
+
+
+# Created at 2019-07-16T02:26:27.799
+Unexpected IOException with stream: errorPageRegistrarBeanPostProcessor
+
+
+# Created at 2019-07-16T02:26:27.819
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration
+
+
+# Created at 2019-07-16T02:26:27.825
+Unexpected IOException with stream: dispatcherServlet
+
+
+# Created at 2019-07-16T02:26:27.832
+Unexpected IOException with stream: spring.http-org.springframework.boot.autoconfigure.http.HttpProperties
+
+
+# Created at 2019-07-16T02:26:27.842
+Unexpected IOException with stream: spring.mvc-org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties
+
+
+# Created at 2019-07-16T02:26:27.848
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration
+
+
+# Created at 2019-07-16T02:26:27.856
+Unexpected IOException with stream: dispatcherServletRegistration
+
+
+# Created at 2019-07-16T02:26:27.863
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:27.871
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:27.877
+Unexpected IOException with stream: taskExecutorBuilder
+
+
+# Created at 2019-07-16T02:26:27.884
+Unexpected IOException with stream: applicationTaskExecutor
+
+
+# Created at 2019-07-16T02:26:27.891
+Unexpected IOException with stream: spring.task.execution-org.springframework.boot.autoconfigure.task.TaskExecutionProperties
+
+
+# Created at 2019-07-16T02:26:27.899
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:27.907
+Unexpected IOException with stream: defaultValidator
+
+
+# Created at 2019-07-16T02:26:27.914
+Unexpected IOException with stream: methodValidationPostProcessor
+
+
+# Created at 2019-07-16T02:26:27.922
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration
+
+
+# Created at 2019-07-16T02:26:27.929
+Unexpected IOException with stream: error
+
+
+# Created at 2019-07-16T02:26:27.936
+Unexpected IOException with stream: beanNameViewResolver
+
+
+# Created at 2019-07-16T02:26:27.943
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration
+
+
+# Created at 2019-07-16T02:26:27.955
+Unexpected IOException with stream: conventionErrorViewResolver
+
+
+# Created at 2019-07-16T02:26:27.963
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:27.970
+Unexpected IOException with stream: errorAttributes
+
+
+# Created at 2019-07-16T02:26:27.975
+Unexpected IOException with stream: basicErrorController
+
+
+# Created at 2019-07-16T02:26:27.986
+Unexpected IOException with stream: errorPageCustomizer
+
+
+# Created at 2019-07-16T02:26:28.016
+Unexpected IOException with stream: preserveErrorControllerTargetClassPostProcessor
+
+
+# Created at 2019-07-16T02:26:28.022
+Unexpected IOException with stream: spring.resources-org.springframework.boot.autoconfigure.web.ResourceProperties
+
+
+# Created at 2019-07-16T02:26:28.027
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration
+
+
+# Created at 2019-07-16T02:26:28.033
+Unexpected IOException with stream: faviconHandlerMapping
+
+
+# Created at 2019-07-16T02:26:28.039
+Unexpected IOException with stream: faviconRequestHandler
+
+
+# Created at 2019-07-16T02:26:28.045
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration
+
+
+# Created at 2019-07-16T02:26:28.050
+Unexpected IOException with stream: requestMappingHandlerAdapter
+
+
+# Created at 2019-07-16T02:26:28.055
+Unexpected IOException with stream: requestMappingHandlerMapping
+
+
+# Created at 2019-07-16T02:26:28.061
+Unexpected IOException with stream: mvcConversionService
+
+
+# Created at 2019-07-16T02:26:28.066
+Unexpected IOException with stream: mvcValidator
+
+
+# Created at 2019-07-16T02:26:28.073
+Unexpected IOException with stream: mvcContentNegotiationManager
+
+
+# Created at 2019-07-16T02:26:28.085
+Unexpected IOException with stream: mvcPathMatcher
+
+
+# Created at 2019-07-16T02:26:28.090
+Unexpected IOException with stream: mvcUrlPathHelper
+
+
+# Created at 2019-07-16T02:26:28.095
+Unexpected IOException with stream: viewControllerHandlerMapping
+
+
+# Created at 2019-07-16T02:26:28.100
+Unexpected IOException with stream: beanNameHandlerMapping
+
+
+# Created at 2019-07-16T02:26:28.105
+Unexpected IOException with stream: resourceHandlerMapping
+
+
+# Created at 2019-07-16T02:26:28.110
+Unexpected IOException with stream: mvcResourceUrlProvider
+
+
+# Created at 2019-07-16T02:26:28.115
+Unexpected IOException with stream: defaultServletHandlerMapping
+
+
+# Created at 2019-07-16T02:26:28.121
+Unexpected IOException with stream: mvcUriComponentsContributor
+
+
+# Created at 2019-07-16T02:26:28.126
+Unexpected IOException with stream: httpRequestHandlerAdapter
+
+
+# Created at 2019-07-16T02:26:28.131
+Unexpected IOException with stream: simpleControllerHandlerAdapter
+
+
+# Created at 2019-07-16T02:26:28.136
+Unexpected IOException with stream: handlerExceptionResolver
+
+
+# Created at 2019-07-16T02:26:28.141
+Unexpected IOException with stream: mvcViewResolver
+
+
+# Created at 2019-07-16T02:26:28.146
+Unexpected IOException with stream: mvcHandlerMappingIntrospector
+
+
+# Created at 2019-07-16T02:26:28.151
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter
+
+
+# Created at 2019-07-16T02:26:28.156
+Unexpected IOException with stream: defaultViewResolver
+
+
+# Created at 2019-07-16T02:26:28.161
+Unexpected IOException with stream: viewResolver
+
+
+# Created at 2019-07-16T02:26:28.165
+Unexpected IOException with stream: welcomePageHandlerMapping
+
+
+# Created at 2019-07-16T02:26:28.171
+Unexpected IOException with stream: requestContextFilter
+
+
+# Created at 2019-07-16T02:26:28.176
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.181
+Unexpected IOException with stream: hiddenHttpMethodFilter
+
+
+# Created at 2019-07-16T02:26:28.185
+Unexpected IOException with stream: formContentFilter
+
+
+# Created at 2019-07-16T02:26:28.190
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.195
+Unexpected IOException with stream: mbeanExporter
+
+
+# Created at 2019-07-16T02:26:28.200
+Unexpected IOException with stream: objectNamingStrategy
+
+
+# Created at 2019-07-16T02:26:28.205
+Unexpected IOException with stream: mbeanServer
+
+
+# Created at 2019-07-16T02:26:28.209
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.aop.AopAutoConfiguration$CglibAutoProxyConfiguration
+
+
+# Created at 2019-07-16T02:26:28.214
+Unexpected IOException with stream: org.springframework.aop.config.internalAutoProxyCreator
+
+
+# Created at 2019-07-16T02:26:28.220
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.aop.AopAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.225
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.231
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari
+
+
+# Created at 2019-07-16T02:26:28.236
+Unexpected IOException with stream: dataSource
+
+
+# Created at 2019-07-16T02:26:28.241
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.DataSourceJmxConfiguration$Hikari
+
+
+# Created at 2019-07-16T02:26:28.245
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.DataSourceJmxConfiguration
+
+
+# Created at 2019-07-16T02:26:28.250
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$PooledDataSourceConfiguration
+
+
+# Created at 2019-07-16T02:26:28.255
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration$HikariPoolDataSourceMetadataProviderConfiguration
+
+
+# Created at 2019-07-16T02:26:28.259
+Unexpected IOException with stream: hikariPoolDataSourceMetadataProvider
+
+
+# Created at 2019-07-16T02:26:28.264
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration
+
+
+# Created at 2019-07-16T02:26:28.269
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker
+
+
+# Created at 2019-07-16T02:26:28.273
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.DataSourceInitializationConfiguration
+
+
+# Created at 2019-07-16T02:26:28.278
+Unexpected IOException with stream: dataSourceInitializerPostProcessor
+
+
+# Created at 2019-07-16T02:26:28.283
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.291
+Unexpected IOException with stream: spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
+
+
+# Created at 2019-07-16T02:26:28.305
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration
+
+
+# Created at 2019-07-16T02:26:28.311
+Unexpected IOException with stream: openEntityManagerInViewInterceptor
+
+
+# Created at 2019-07-16T02:26:28.318
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration
+
+
+# Created at 2019-07-16T02:26:28.335
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration
+
+
+# Created at 2019-07-16T02:26:28.340
+Unexpected IOException with stream: transactionManager
+
+
+# Created at 2019-07-16T02:26:28.346
+Unexpected IOException with stream: jpaVendorAdapter
+
+
+# Created at 2019-07-16T02:26:28.352
+Unexpected IOException with stream: entityManagerFactoryBuilder
+
+
+# Created at 2019-07-16T02:26:28.358
+Unexpected IOException with stream: entityManagerFactory
+
+
+# Created at 2019-07-16T02:26:28.366
+Unexpected IOException with stream: spring.jpa.hibernate-org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties
+
+
+# Created at 2019-07-16T02:26:28.373
+Unexpected IOException with stream: spring.jpa-org.springframework.boot.autoconfigure.orm.jpa.JpaProperties
+
+
+# Created at 2019-07-16T02:26:28.379
+Unexpected IOException with stream: dataSourceInitializedPublisher
+
+
+# Created at 2019-07-16T02:26:28.386
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.391
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.397
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.404
+Unexpected IOException with stream: persistenceExceptionTranslationPostProcessor
+
+
+# Created at 2019-07-16T02:26:28.409
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.414
+Unexpected IOException with stream: emBeanDefinitionRegistrarPostProcessor
+
+
+# Created at 2019-07-16T02:26:28.421
+Unexpected IOException with stream: jpaMappingContext
+
+
+# Created at 2019-07-16T02:26:28.428
+Unexpected IOException with stream: jpaContext
+
+
+# Created at 2019-07-16T02:26:28.433
+Unexpected IOException with stream: org.springframework.data.jpa.util.JpaMetamodelCacheCleanup
+
+
+# Created at 2019-07-16T02:26:28.438
+Unexpected IOException with stream: org.springframework.data.jpa.repository.support.JpaEvaluationContextExtension
+
+
+# Created at 2019-07-16T02:26:28.443
+Unexpected IOException with stream: questionRepository
+
+
+# Created at 2019-07-16T02:26:28.449
+Unexpected IOException with stream: userRepository
+
+
+# Created at 2019-07-16T02:26:28.454
+Unexpected IOException with stream: productRepository
+
+
+# Created at 2019-07-16T02:26:28.459
+Unexpected IOException with stream: sectionRepository
+
+
+# Created at 2019-07-16T02:26:28.464
+Unexpected IOException with stream: clothesSizeRepository
+
+
+# Created at 2019-07-16T02:26:28.471
+Unexpected IOException with stream: colorRepository
+
+
+# Created at 2019-07-16T02:26:28.476
+Unexpected IOException with stream: divisionRepository
+
+
+# Created at 2019-07-16T02:26:28.481
+Unexpected IOException with stream: categoryRepository
+
+
+# Created at 2019-07-16T02:26:28.491
+Unexpected IOException with stream: commentRepository
+
+
+# Created at 2019-07-16T02:26:28.499
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration
+
+
+# Created at 2019-07-16T02:26:28.506
+Unexpected IOException with stream: standardJacksonObjectMapperBuilderCustomizer
+
+
+# Created at 2019-07-16T02:26:28.511
+Unexpected IOException with stream: spring.jackson-org.springframework.boot.autoconfigure.jackson.JacksonProperties
+
+
+# Created at 2019-07-16T02:26:28.516
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration
+
+
+# Created at 2019-07-16T02:26:28.521
+Unexpected IOException with stream: jacksonObjectMapperBuilder
+
+
+# Created at 2019-07-16T02:26:28.527
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$ParameterNamesModuleConfiguration
+
+
+# Created at 2019-07-16T02:26:28.535
+Unexpected IOException with stream: parameterNamesModule
+
+
+# Created at 2019-07-16T02:26:28.542
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperConfiguration
+
+
+# Created at 2019-07-16T02:26:28.547
+Unexpected IOException with stream: jacksonObjectMapper
+
+
+# Created at 2019-07-16T02:26:28.553
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.560
+Unexpected IOException with stream: jsonComponentModule
+
+
+# Created at 2019-07-16T02:26:28.565
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration$StringHttpMessageConverterConfiguration
+
+
+# Created at 2019-07-16T02:26:28.570
+Unexpected IOException with stream: stringHttpMessageConverter
+
+
+# Created at 2019-07-16T02:26:28.577
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration
+
+
+# Created at 2019-07-16T02:26:28.591
+Unexpected IOException with stream: mappingJackson2HttpMessageConverter
+
+
+# Created at 2019-07-16T02:26:28.600
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration
+
+
+# Created at 2019-07-16T02:26:28.608
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.616
+Unexpected IOException with stream: messageConverters
+
+
+# Created at 2019-07-16T02:26:28.623
+Unexpected IOException with stream: org.springframework.data.web.config.ProjectingArgumentResolverRegistrar
+
+
+# Created at 2019-07-16T02:26:28.628
+Unexpected IOException with stream: projectingArgumentResolverBeanPostProcessor
+
+
+# Created at 2019-07-16T02:26:28.633
+Unexpected IOException with stream: org.springframework.data.web.config.SpringDataWebConfiguration
+
+
+# Created at 2019-07-16T02:26:28.637
+Unexpected IOException with stream: pageableResolver
+
+
+# Created at 2019-07-16T02:26:28.642
+Unexpected IOException with stream: sortResolver
+
+
+# Created at 2019-07-16T02:26:28.647
+Unexpected IOException with stream: org.springframework.data.web.config.SpringDataJacksonConfiguration
+
+
+# Created at 2019-07-16T02:26:28.653
+Unexpected IOException with stream: jacksonGeoModule
+
+
+# Created at 2019-07-16T02:26:28.658
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.663
+Unexpected IOException with stream: pageableCustomizer
+
+
+# Created at 2019-07-16T02:26:28.668
+Unexpected IOException with stream: sortCustomizer
+
+
+# Created at 2019-07-16T02:26:28.673
+Unexpected IOException with stream: spring.data.web-org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties
+
+
+# Created at 2019-07-16T02:26:28.678
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$LoggingCodecConfiguration
+
+
+# Created at 2019-07-16T02:26:28.682
+Unexpected IOException with stream: loggingCodecCustomizer
+
+
+# Created at 2019-07-16T02:26:28.687
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$JacksonCodecConfiguration
+
+
+# Created at 2019-07-16T02:26:28.691
+Unexpected IOException with stream: jacksonCodecCustomizer
+
+
+# Created at 2019-07-16T02:26:28.696
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.701
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.706
+Unexpected IOException with stream: spring.info-org.springframework.boot.autoconfigure.info.ProjectInfoProperties
+
+
+# Created at 2019-07-16T02:26:28.710
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration$JdbcTemplateConfiguration
+
+
+# Created at 2019-07-16T02:26:28.714
+Unexpected IOException with stream: jdbcTemplate
+
+
+# Created at 2019-07-16T02:26:28.719
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration$NamedParameterJdbcTemplateConfiguration
+
+
+# Created at 2019-07-16T02:26:28.723
+Unexpected IOException with stream: namedParameterJdbcTemplate
+
+
+# Created at 2019-07-16T02:26:28.728
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.732
+Unexpected IOException with stream: spring.jdbc-org.springframework.boot.autoconfigure.jdbc.JdbcProperties
+
+
+# Created at 2019-07-16T02:26:28.737
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.741
+Unexpected IOException with stream: taskSchedulerBuilder
+
+
+# Created at 2019-07-16T02:26:28.746
+Unexpected IOException with stream: spring.task.scheduling-org.springframework.boot.autoconfigure.task.TaskSchedulingProperties
+
+
+# Created at 2019-07-16T02:26:28.750
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$ThymeleafJava8TimeDialect
+
+
+# Created at 2019-07-16T02:26:28.755
+Unexpected IOException with stream: java8TimeDialect
+
+
+# Created at 2019-07-16T02:26:28.760
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$ThymeleafWebMvcConfiguration$ThymeleafViewResolverConfiguration
+
+
+# Created at 2019-07-16T02:26:28.764
+Unexpected IOException with stream: thymeleafViewResolver
+
+
+# Created at 2019-07-16T02:26:28.769
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$ThymeleafWebMvcConfiguration
+
+
+# Created at 2019-07-16T02:26:28.773
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$ThymeleafDefaultConfiguration
+
+
+# Created at 2019-07-16T02:26:28.778
+Unexpected IOException with stream: templateEngine
+
+
+# Created at 2019-07-16T02:26:28.783
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration
+
+
+# Created at 2019-07-16T02:26:28.787
+Unexpected IOException with stream: defaultTemplateResolver
+
+
+# Created at 2019-07-16T02:26:28.792
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.796
+Unexpected IOException with stream: spring.thymeleaf-org.springframework.boot.autoconfigure.thymeleaf.ThymeleafProperties
+
+
+# Created at 2019-07-16T02:26:28.801
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration
+
+
+# Created at 2019-07-16T02:26:28.806
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.810
+Unexpected IOException with stream: org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration
+
+
+# Created at 2019-07-16T02:26:28.820
+Unexpected IOException with stream: org.springframework.transaction.config.internalTransactionAdvisor
+
+
+# Created at 2019-07-16T02:26:28.825
+Unexpected IOException with stream: transactionAttributeSource
+
+
+# Created at 2019-07-16T02:26:28.829
+Unexpected IOException with stream: transactionInterceptor
+
+
+# Created at 2019-07-16T02:26:28.834
+Unexpected IOException with stream: org.springframework.transaction.config.internalTransactionalEventListenerFactory
+
+
+# Created at 2019-07-16T02:26:28.838
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$EnableTransactionManagementConfiguration$CglibAutoProxyConfiguration
+
+
+# Created at 2019-07-16T02:26:28.843
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$EnableTransactionManagementConfiguration
+
+
+# Created at 2019-07-16T02:26:28.847
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$TransactionTemplateConfiguration
+
+
+# Created at 2019-07-16T02:26:28.852
+Unexpected IOException with stream: transactionTemplate
+
+
+# Created at 2019-07-16T02:26:28.856
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.860
+Unexpected IOException with stream: platformTransactionManagerCustomizers
+
+
+# Created at 2019-07-16T02:26:28.865
+Unexpected IOException with stream: spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties
+
+
+# Created at 2019-07-16T02:26:28.871
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.877
+Unexpected IOException with stream: restTemplateBuilder
+
+
+# Created at 2019-07-16T02:26:28.882
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration$TomcatWebServerFactoryCustomizerConfiguration
+
+
+# Created at 2019-07-16T02:26:28.888
+Unexpected IOException with stream: tomcatWebServerFactoryCustomizer
+
+
+# Created at 2019-07-16T02:26:28.893
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.898
+Unexpected IOException with stream: org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.904
+Unexpected IOException with stream: characterEncodingFilter
+
+
+# Created at 2019-07-16T02:26:28.910
+Unexpected IOException with stream: localeCharsetMappingsCustomizer
+
+
+# Created at 2019-07-16T02:26:28.915
+Unexpected IOException with stream: org.springframework.boot.devtools.autoconfigure.DevToolsDataSourceAutoConfiguration$DatabaseShutdownExecutorJpaDependencyConfiguration
+
+
+# Created at 2019-07-16T02:26:28.921
+Unexpected IOException with stream: org.springframework.boot.devtools.autoconfigure.DevToolsDataSourceAutoConfiguration
+
+
+# Created at 2019-07-16T02:26:28.926
+Unexpected IOException with stream: inMemoryDatabaseShutdownExecutor
+
+
+# Created at 2019-07-16T02:26:28.932
+Unexpected IOException with stream: org.springframework.orm.jpa.SharedEntityManagerCreator#0
+
+
+# Created at 2019-07-16T02:26:28.938
+Unexpected IOException with stream: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+# Created at 2019-07-16T02:26:28.948
+Unexpected IOException: 6,1,iducs.springboot.board.BootThymeleafApplicationTests,contextLoads(iducs.springboot.board.BootThymeleafApplicationTests),null,null,null
+
+
+# Created at 2019-07-16T02:26:28.953
+Unexpected IOException: 2,1,org.apache.maven.surefire.junit4.JUnit4Provider,iducs.springboot.board.BootThymeleafApplicationTests,null,null,null
+
+
