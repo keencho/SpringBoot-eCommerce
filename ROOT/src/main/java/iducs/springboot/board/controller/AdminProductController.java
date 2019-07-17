@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import iducs.springboot.board.domain.Category;
 import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
+import iducs.springboot.board.domain.Question;
 import iducs.springboot.board.domain.Section;
 import iducs.springboot.board.entity.ProductEntity;
 import iducs.springboot.board.service.CategoryService;
@@ -49,10 +51,10 @@ public class AdminProductController {
 	
 	
 	String osName = System.getProperty("os.name");
-	static File cwd = new File("src/main/resources/static/uploads/");	// 업로드 경로
-	static File cwd2 = new File("webapps/ROOT/WEB-INF/classes/static/uploads/");
-	static File path = cwd.getAbsoluteFile();	// 윈도우 경로
-	static File path2 = cwd2.getAbsoluteFile(); // 리눅스 경로
+	static File cwd = new File("src/main/resources/static/uploads/");	// 윈도우 업로드 경로
+	static File cwd2 = new File("webapps/ROOT/WEB-INF/classes/static/uploads/");	// 리눅스 실제 웹서버 업로드 경로
+	static File path = cwd.getAbsoluteFile();
+	static File path2 = cwd2.getAbsoluteFile();
 	static String autoFolderStatic = path.toString();
 	static String autoFolderStatic2 = path2.toString();
 	
@@ -203,6 +205,13 @@ public class AdminProductController {
 		productService.saveProduct(product);
 
 		return "redirect:/admin/product";
+	}
+	
+	@GetMapping("/view/{no}")
+	public String viewProduct(@PathVariable(value = "no") Long no, Model model) {
+		Product product = productService.getProductById(no);
+		model.addAttribute("product", product);
+		return "/admin/product/view";
 	}
 
 }

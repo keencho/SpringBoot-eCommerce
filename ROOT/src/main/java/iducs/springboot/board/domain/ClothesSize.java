@@ -5,6 +5,7 @@ import java.util.List;
 public class ClothesSize {
 	private long no;
 	private String name;
+
 	
 	public ClothesSize() {}
 	public ClothesSize(String name) {
@@ -22,6 +23,7 @@ public class ClothesSize {
 	}
 	public void setName(String name) {
 		this.name = name;
-	} 
+	}
+	
 	
 }

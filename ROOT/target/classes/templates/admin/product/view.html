@@ -1,0 +1,206 @@
+<th:block th:include="admin/main/header.html"></th:block>
+<script>
+	function sizeTable(no){
+		window.open("/admin/product/size/add/" + no, "","resizeable=yes,scrollbar=yes,width=891,height=800");
+	}
+</script>
+<!-- page content -->
+        <div class="right_col" role="main">
+
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>판매 상세정보 페이지</h3>
+              </div>
+            
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2 th:text="${product.name}"></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                      <div class="product-image">
+                        <img th:src="@{'/uploads/{date}/{pic}'(date=${product.regdate}, pic=${product.pic1})}"/>
+                      </div>
+                      <div class="product_gallery">
+                      	<span th:if="${product.pic2!=null}">
+	                        <a>
+	                          <img th:src="@{'/uploads/{date}/{pic}'(date=${product.regdate}, pic=${product.pic2})}" height="80"/>
+	                        </a>
+                        </span>
+                        <span th:if="${product.pic3!=null}">
+	                        <a>
+	                          <img th:src="@{'/uploads/{date}/{pic}'(date=${product.regdate}, pic=${product.pic3})}" height="80"/>
+	                        </a>
+                        </span>
+                        <span th:if="${product.pic4!=null}">
+	                        <a>
+	                          <img th:src="@{'/uploads/{date}/{pic}'(date=${product.regdate}, pic=${product.pic4})}" height="80"/>
+	                        </a>
+                        </span>
+                        <span th:if="${product.pic5!=null}">
+	                        <a>
+	                          <img th:src="@{'/uploads/{date}/{pic}'(date=${product.regdate}, pic=${product.pic5})}" height="80"/>
+	                        </a>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-5 col-sm-5 col-xs-12" style="border:0px solid #e5e5e5;">
+
+                      <h3 class="prod_title" th:text="${product.modelname}"></h3>
+                      <table class="table">
+					  <thead>
+						<tr>
+						  <th scope="col"></th>
+						  <th scope="col">대분류</th>
+						  <th scope="col">중분류</th>
+						  <th scope="col">소분류</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr>
+						  <th scope="row">분류명</th>
+						  <td th:text="${product.category.name}"></td>
+						  <td th:text="${product.division.name}"></td>
+						  <td th:text="${product.section.name}"></td>
+						</tr>
+					  </tbody>
+					</table>
+					<table class="table">
+					  <thead>
+						<tr>
+						  <th scope="col"></th>
+						  <th scope="col">정보</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr>
+						  <th scope="row">판매명</th>
+						  <td th:text="${product.name}"></td>
+						</tr>
+						<tr>
+						  <th scope="row">모델명</th>
+						  <td th:text="${product.modelname}"></td>
+						</tr>
+						<tr>
+						  <th scope="row">판매 가능 색상</th>
+						  <td th:text="${product.color}"></td>
+						</tr>
+						<tr>
+						  <th scope="row">판매 가능 사이즈</th>
+						  <td th:text="${product.size}"></td>
+						</tr>
+						<tr>
+						  <th scope="row">소재</th>
+						  <td th:text="${product.material}"></td>
+						</tr>
+						<tr>
+						  <th scope="row">제품 생산일</th>
+						  <td th:text="${product.date}"></td>
+						</tr>
+						<tr>
+						  <th scope="row">등록일</th>
+						  <td th:text="${product.regdate}"></td>
+						</tr>
+					  </tbody>
+					</table>
+                      <div class="">
+                        <h2>Available Colors</h2>
+                        <ul class="list-inline prod_color">
+                          <li>
+                            <p>Green</p>
+                            <div class="color bg-green"></div>
+                          </li>
+                          <li>
+                            <p>Blue</p>
+                            <div class="color bg-blue"></div>
+                          </li>
+                          <li>
+                            <p>Red</p>
+                            <div class="color bg-red"></div>
+                          </li>
+                          <li>
+                            <p>Orange</p>
+                            <div class="color bg-orange"></div>
+                          </li>
+
+                        </ul>
+                      </div>
+                      <br />
+
+                      <div class="">
+                        <h2>사이즈 <small>현재 치수표에 등록된 사이즈</small></h2>
+                        <ul class="list-inline prod_size" >
+                          <li th:each="size : ${product.productsize}">
+                            <button type="button" class="btn btn-default btn-xs" th:text="${size.size_no.name}"></button>
+                          </li>
+                        </ul>
+                      </div>
+                      <br />
+                      <div class="">
+                        <div class="product_price">
+	                        <span th:if="${product.discount='0'}">
+	                          <h1 class="price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></h1>
+	                        </span>
+	                        <span th:if="${product.discount!='0'}">
+	                          <h1 class="price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></h1>
+	                          	<span class="price-tax" th:text="@{'원가: {price}원'(price=${product.price})}"></span>
+	                          <br>
+	                        </span>
+                        </div>
+                      </div>
+
+                      <div class="">
+                        <button type="button" class="btn btn-default btn-lg">상품 판매정보 수정</button>
+                        <button type="button" class="btn btn-default btn-lg" th:onclick="@{'sizeTable(\'{no}\')'(no=${product.no})}">치수표 확인</button>
+                        <button type="button" class="btn btn-default btn-lg">수량 확인</button>
+                        <button type="button" class="btn btn-default btn-lg">삭제</button>
+                      </div>
+
+
+                    </div>
+
+
+                    <div class="col-md-12">
+
+                      <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                          <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">상품 설명이미지</a>
+                          </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                          <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" align="center">
+                            <img th:src="@{'/uploads/{date}/{pic}'(date=${product.regdate}, pic=${product.explainpic})}" alt="..." />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->      
+<th:block th:include="admin/main/footer.html"></th:block>

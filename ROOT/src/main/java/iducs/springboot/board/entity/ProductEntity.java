@@ -3,6 +3,7 @@ package iducs.springboot.board.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import iducs.springboot.board.domain.ClothesSize;
@@ -97,6 +99,10 @@ public class ProductEntity {
 	
 	@Column(name="regdate", nullable=true, length=50)
 	private String regdate;
+	
+	@OneToMany(mappedBy="productNo", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProductSizeEntity> productsize = new ArrayList<ProductSizeEntity>();
+	
 	
 	public Long getNo() {
 		return no;
@@ -281,6 +287,14 @@ public class ProductEntity {
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+
+	public List<ProductSizeEntity> getProductsize() {
+		return productsize;
+	}
+
+	public void setProductsize(List<ProductSizeEntity> productsize) {
+		this.productsize = productsize;
 	}
 
 	public Product buildDomain() {

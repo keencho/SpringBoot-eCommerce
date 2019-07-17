@@ -14,7 +14,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>판매전 상품정보 등록 페이지tt</h2>
+                    <h2>판매전 상품정보 등록 페이지</h2>
 						<div class="text-right mtop20">
 	                    	<a href="/admin/product/add" class="btn btn-sm btn-primary">추가</a>
 						</div>
@@ -32,22 +32,15 @@
                           <th>작업</th>
                         </tr>
                       </thead>
-                      
                       <tbody>
                         <tr th:each="product : ${product}">
-                        	<img th:src="@{'/uploads/{folder}/{name}'(folder=${product.regdate} ,name=${product.pic1})}" alt="">
-                 
-                        	<img th:src="@{'/uploads/{folder}/{name}'(folder=${product.regdate} ,name=${product.pic2})}" alt="">
-                        	<img th:src="@{'/uploads/{folder}/{name}'(folder=${product.regdate} ,name=${product.pic3})}" alt="">
-                        	<img th:src="@{'/uploads/{folder}/{name}'(folder=${product.regdate} ,name=${product.pic4})}" alt="">
-                        	<img th:src="@{'/uploads/{folder}/{name}'(folder=${product.regdate} ,name=${product.pic5})}" alt="">
-                        	<img th:src="@{'/uploads/{folder}/{name}'(folder=${product.regdate} ,name=${product.explainpic})}" alt="">
                           <td th:text="${product.no}"></td>
                           <td th:text="${product.category.name}"></td>
                           <td th:text="${product.division.name}"></td>
 						  <td th:text="${product.section.name}"></td>
                           <td th:text="${product.name}"></td>
                           <td>
+                          	<a th:href="@{'/admin/product/view/{no}'(no=${product.no})}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i>상세정보</a>
                           	<a th:href="@{'/admin/product/update/{no}'(no=${product.no})}" class="btn btn-info btn-xs"><i class="fas fa-pen"></i> 수정</a>
                           	<a th:href="@{'/admin/product/del/{no}'(no=${product.no})}" class="btn btn-danger btn-xs" onClick="return confirm('삭제할까요?');"><i class="fas fa-trash-alt"></i> 삭제</a>
                           </td>

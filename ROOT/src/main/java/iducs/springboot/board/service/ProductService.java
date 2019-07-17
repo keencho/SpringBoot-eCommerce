@@ -5,7 +5,7 @@ import java.util.List;
 import iducs.springboot.board.domain.Product;
 
 public interface ProductService {
-	Product getProductByNo(long no);
+	Product getProductById(long no);
 	
 	List<Product> getProduct();
 	

@@ -1,5 +1,7 @@
 package iducs.springboot.board.domain;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Product {
@@ -26,6 +28,7 @@ public class Product {
 	private String pic5;
 	private String explainpic;	// 상품 설명 이미지
 	private String regdate;	//상품 등록일
+	private List<ProductSize> productsize;
 	
 	public Product() {}
 	
@@ -240,6 +243,14 @@ public class Product {
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+
+	public List<ProductSize> getProductsize() {
+		return productsize;
+	}
+
+	public void setProductsize(List<ProductSize> productsize) {
+		this.productsize = productsize;
 	}
 	
 	

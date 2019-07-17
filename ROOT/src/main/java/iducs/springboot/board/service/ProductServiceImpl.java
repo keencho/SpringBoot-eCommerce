@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Product;
+import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.entity.ProductEntity;
+import iducs.springboot.board.entity.ProductSizeEntity;
 import iducs.springboot.board.repository.ProductRepository;
 
 @Service("ProductSize")
@@ -17,11 +20,16 @@ public class ProductServiceImpl implements ProductService{
 	private ProductRepository repository;
 	
 	@Override
-	public Product getProductByNo(long no) {
-		ProductEntity productEntity = repository.findById(no).get();
-		if(productEntity == null)
-			return null;
-		return productEntity.buildDomain();
+	public Product getProductById(long no) {
+		ProductEntity entity = repository.findById(no).get();
+		Product product = entity.buildDomain();
+		
+		List<ProductSize> productsize = new ArrayList<ProductSize>();
+		for(ProductSizeEntity productsizeEntity : entity.getProductsize())
+			productsize.add(productsizeEntity.buildDomain());
+		product.setProductsize(productsize);
+		
+		return product;
 	}
 
 	@Override
