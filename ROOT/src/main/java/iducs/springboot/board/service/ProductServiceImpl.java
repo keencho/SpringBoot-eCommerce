@@ -10,8 +10,10 @@ import org.springframework.util.StringUtils;
 import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Product;
 import iducs.springboot.board.domain.ProductSize;
+import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.entity.ProductEntity;
 import iducs.springboot.board.entity.ProductSizeEntity;
+import iducs.springboot.board.entity.ProductStockEntity;
 import iducs.springboot.board.repository.ProductRepository;
 
 @Service("ProductSize")
@@ -25,10 +27,14 @@ public class ProductServiceImpl implements ProductService{
 		Product product = entity.buildDomain();
 		
 		List<ProductSize> productsize = new ArrayList<ProductSize>();
+		List<ProductStock> productstock = new ArrayList<ProductStock>();
 		for(ProductSizeEntity productsizeEntity : entity.getProductsize())
 			productsize.add(productsizeEntity.buildDomain());
+		for(ProductStockEntity productstockEntity : entity.getProductstock())
+			productstock.add(productstockEntity.buildDomain());
 		product.setProductsize(productsize);
-		
+		product.setProductstock(productstock);
+			
 		return product;
 	}
 

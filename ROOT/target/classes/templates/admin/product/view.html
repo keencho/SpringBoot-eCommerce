@@ -3,6 +3,9 @@
 	function sizeTable(no){
 		window.open("/admin/product/size/add/" + no, "","resizeable=yes,scrollbar=yes,width=891,height=800");
 	}
+	function stockTable(no){
+		window.open("/admin/product/stock/add/" + no, "","resizeable=yes,scrollbar=yes,width=891,height=800");
+	}
 </script>
 <!-- page content -->
         <div class="right_col" role="main">
@@ -174,7 +177,7 @@
                       <div class="">
                         <button type="button" class="btn btn-default btn-lg">상품 판매정보 수정</button>
                         <button type="button" class="btn btn-default btn-lg" th:onclick="@{'sizeTable(\'{no}\')'(no=${product.no})}">치수표 확인</button>
-                        <button type="button" class="btn btn-default btn-lg">수량 확인</button>
+                        <button type="button" class="btn btn-default btn-lg" th:onclick="@{'stockTable(\'{no}\')'(no=${product.no})}">수량 확인</button>
                         <button type="button" class="btn btn-default btn-lg">삭제</button>
                       </div>
 

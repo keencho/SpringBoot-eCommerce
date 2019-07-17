@@ -103,6 +103,9 @@ public class ProductEntity {
 	@OneToMany(mappedBy="productNo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductSizeEntity> productsize = new ArrayList<ProductSizeEntity>();
 	
+	@OneToMany(mappedBy="productNo", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProductStockEntity> productstock = new ArrayList<ProductStockEntity>();
+	
 	
 	public Long getNo() {
 		return no;
@@ -295,6 +298,15 @@ public class ProductEntity {
 
 	public void setProductsize(List<ProductSizeEntity> productsize) {
 		this.productsize = productsize;
+	}
+	
+
+	public List<ProductStockEntity> getProductstock() {
+		return productstock;
+	}
+
+	public void setProductstock(List<ProductStockEntity> productstock) {
+		this.productstock = productstock;
 	}
 
 	public Product buildDomain() {

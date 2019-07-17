@@ -29,6 +29,7 @@ public class Product {
 	private String explainpic;	// 상품 설명 이미지
 	private String regdate;	//상품 등록일
 	private List<ProductSize> productsize;
+	private List<ProductStock> productstock;
 	
 	public Product() {}
 	
@@ -251,6 +252,14 @@ public class Product {
 
 	public void setProductsize(List<ProductSize> productsize) {
 		this.productsize = productsize;
+	}
+
+	public List<ProductStock> getProductstock() {
+		return productstock;
+	}
+
+	public void setProductstock(List<ProductStock> productstock) {
+		this.productstock = productstock;
 	}
 	
 	
