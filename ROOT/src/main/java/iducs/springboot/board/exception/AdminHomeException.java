@@ -13,6 +13,7 @@ public class AdminHomeException extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
+		
 
 		if ("/admin/404".equals(request.getRequestURI())) {
 			return true;

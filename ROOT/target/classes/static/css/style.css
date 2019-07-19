@@ -816,7 +816,7 @@ i:before {
     -ms-transform-origin: 50% 0;
     transform-origin: 50% 0;
     min-width: 250px;
-    background: #171717;
+    background: #FFF;
     border-radius: 0px;
     border: none;
     padding: 30px 0px 30px 0px;
@@ -824,6 +824,33 @@ i:before {
     box-shadow: none;
     visibility: hidden;
   }
+}
+
+@media (min-width: 992px) {
+  .shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu2 {
+    -webkit-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    transform: scaleY(0);
+    -webkit-transition: all 400ms ease-out;
+    -o-transition: all 400ms ease-out;
+    transition: all 400ms ease-out;
+    display: block;
+    -webkit-transform-origin: 50% 0;
+    -ms-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    min-width: 700px;
+    background: #FFF;
+    border-radius: 0px;
+    border: none;
+    padding: 30px 0px 30px 0px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    visibility: hidden;
+  }
+}
+
+.shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu .dropdown-category{
+ float:left;
 }
 
 .shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu li {
@@ -835,7 +862,7 @@ i:before {
 .shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu li a {
   display: block;
   line-height: 38px;
-  color: #fff;
+  color: #000;
   font-family: "Montserrat", sans-serif;
   letter-spacing: .48px;
   font-size: 14px;
@@ -848,7 +875,27 @@ i:before {
   text-shadow: none;
 }
 
+.shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu a {
+  display: block;
+  line-height: 38px;
+  color: #000;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: .48px;
+  font-size: 20px;
+  padding: 0px 30px;
+  text-transform: inherit;
+  -webkit-transition: all 400ms linear 0s;
+  -o-transition: all 400ms linear 0s;
+  transition: all 400ms linear 0s;
+  font-weight: bold;
+  text-shadow: none;
+}
+
 .shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu li:hover a, .shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu li.active a {
+  color: #d91522;
+}
+
+.shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu a:hover, .shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu a.active{
   color: #d91522;
 }
 

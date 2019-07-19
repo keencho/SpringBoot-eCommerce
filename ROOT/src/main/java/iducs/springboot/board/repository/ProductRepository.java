@@ -11,6 +11,7 @@ import iducs.springboot.board.entity.ProductEntity;
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long>{
 	ProductEntity findByNo(long no);
+	List<ProductEntity> findByCategoryNo(long no);
 	
 	List<ProductEntity> findAll(Sort sort);
 }

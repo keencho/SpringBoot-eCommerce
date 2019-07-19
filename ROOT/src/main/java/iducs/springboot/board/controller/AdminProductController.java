@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import iducs.springboot.board.domain.Category;
 import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
+import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.domain.Question;
 import iducs.springboot.board.domain.Section;
 import iducs.springboot.board.entity.ProductEntity;
@@ -194,6 +195,8 @@ public class AdminProductController {
 				File file = new File(path2 + "/" + t1.format(d), explainname);
 				FileCopyUtils.copy(explainpic.getBytes(), file);
 			}
+		} else {
+			explainname = "sample";
 		}
 		 
 
@@ -212,6 +215,13 @@ public class AdminProductController {
 		Product product = productService.getProductById(no);
 		model.addAttribute("product", product);
 		return "/admin/product/view";
+	}
+	
+	@GetMapping("/del/{no}")
+	public String productSizeDel(@PathVariable(value = "no") Long no, Model model) {
+		Product product = productService.getProductById(no);
+		productService.deleteProduct(product);
+		return "redirect:/admin/product";
 	}
 
 }

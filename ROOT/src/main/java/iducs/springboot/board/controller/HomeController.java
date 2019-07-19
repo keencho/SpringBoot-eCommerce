@@ -1,20 +1,25 @@
 package iducs.springboot.board.controller;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import iducs.springboot.board.domain.Section;
 import iducs.springboot.board.domain.User;
+import iducs.springboot.board.service.SectionService;
 import iducs.springboot.board.utils.HttpSessionUtils;
 
 @Controller
 public class HomeController {
+	@Autowired SectionService sectionService;
 	
 //	@GetMapping("/initdb") 
 //	public String initialize() {
@@ -26,40 +31,18 @@ public class HomeController {
 //		}
 //		return "index";
 //	}
+	@GetMapping("")
+	public void header(Model model) {
+		List<Section> section=sectionService.getSection();
+		model.addAttribute("section", section);
+	}
 	@GetMapping("/")
-	public String home() {		
+	public String home() {
 		return "main/index";
 	}
 	@GetMapping("/404")
 	public String error() {		
 		return "main/404";
 	}
-	@GetMapping("/questions/form") // 등록폼은 form URL을 가지도록 규칙화하겠음
-	public String questionForm(HttpSession session, Model model) {
-		if(!HttpSessionUtils.isLoginUser(session)) {
-			return "redirect:/users/login-form";
-		}
-		User writer = (User) session.getAttribute("user");
-		model.addAttribute("writer", writer);
-		return "/questions/register";
-	}	
-	@GetMapping("/users/login-form")
-	public String loginForm(Model model) {
-		return "/users/login";
-	}
-	@GetMapping("/users/form") // 등록폼은 form URL을 가지도록 함, 다른 폼은 이름을 명명하기로 수정함
-	public String registerForm() {
-		return "/users/register";
-	}
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/";
-	}
-    @GetMapping("/hello")
-    public Collection<String> sayHello() {
-        return IntStream.range(0, 10)
-          .mapToObj(i -> "Hello number " + i)
-          .collect(Collectors.toList());
-    }
+
 }

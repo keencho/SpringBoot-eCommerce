@@ -194,7 +194,8 @@
                         </ul>
                         <div id="myTabContent" class="tab-content">
                           <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" align="center">
-                            <img th:src="@{'/uploads/{date}/{pic}'(date=${product.regdate}, pic=${product.explainpic})}" alt="..." />
+                          	<img th:if="${product.explainpic == 'sample'}" src="/uploads/sample.jpeg">
+                            <img th:if="${product.explainpic != 'sample'}" th:src="@{'/uploads/{date}/{pic}'(date=${product.regdate}, pic=${product.explainpic})}" alt="..." />
                           </div>
                         </div>
                       </div>

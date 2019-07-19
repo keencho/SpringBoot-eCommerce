@@ -48,6 +48,17 @@ public class ProductServiceImpl implements ProductService{
 		}
 		return product;
 	}
+	
+	@Override
+	public List<Product> getProductByCategoryNo(long no) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findByCategoryNo(no);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
 
 	@Override
 	public void saveProduct(Product product) {
@@ -71,5 +82,7 @@ public class ProductServiceImpl implements ProductService{
 		entity.buildEntity(product);
 		repository.delete(entity);
 	}
+
+
 
 }
