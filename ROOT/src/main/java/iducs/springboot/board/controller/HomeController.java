@@ -38,7 +38,7 @@ public class HomeController {
 	}
 	@GetMapping("/")
 	public String home() {
-		return "main/index";
+		return "home/main/index";
 	}
 	@GetMapping("/404")
 	public String error() {		

@@ -31,13 +31,13 @@ public class UserController {
 		Date today = new Date();
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 		model.addAttribute("date", date.format(today));
-		return "user/register";
+		return "home/user/register";
 	}
 	@PostMapping("/register")
 	public String createUser(@Valid User formUser, Model model) {
 		userService.saveUser(formUser); 
 		model.addAttribute("user", formUser);
-		return "user/complete";
+		return "home/user/complete";
 	}
 	@ResponseBody
 	@PostMapping("/idCheck")

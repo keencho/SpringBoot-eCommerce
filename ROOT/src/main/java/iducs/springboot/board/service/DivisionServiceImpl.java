@@ -23,6 +23,7 @@ public class DivisionServiceImpl implements DivisionService{
 			return null;
 		return divisionEntity.buildDomain();
 	}
+	
 
 	@Override
 	public List<Division> getDivision() {
@@ -55,4 +56,6 @@ public class DivisionServiceImpl implements DivisionService{
 		entity.buildEntity(division);
 		repository.delete(entity);
 	}
+
+
 }

@@ -41,9 +41,14 @@ public class ProductController {
 	
 	@GetMapping("/list/category/{no}")
 	public String productList(@PathVariable("no")long categoryno, Model model) throws Exception{
-		List <Product> product = productService.getProductByCategoryNo(categoryno);
 		Category category = categoryService.getCategoryByNo(categoryno);
+		
+		List <Product> product = productService.getProductByCategoryNo(categoryno);
+		List <Division> division = divisionService.getDivision();
+		List <Section> section = sectionService.getSection();
 		model.addAttribute("categoryname", category);
+		model.addAttribute("division", division);
+		model.addAttribute("section", section);
 		model.addAttribute("product", product);
 
 		return "/product/list";

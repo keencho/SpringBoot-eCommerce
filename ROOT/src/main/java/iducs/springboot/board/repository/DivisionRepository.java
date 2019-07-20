@@ -11,7 +11,6 @@ import iducs.springboot.board.entity.DivisionEntity;
 @Repository
 public interface DivisionRepository extends JpaRepository<DivisionEntity, Long>{
 	DivisionEntity findByNo(long no);
-	
 	List<DivisionEntity> findAll(Sort sort);
 
 }

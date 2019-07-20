@@ -1,6 +1,7 @@
 package iducs.springboot.board.controller;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -43,6 +44,13 @@ public class AdminProductStockController {
 	public String productStockAddForm(@PathVariable(value = "no") Long no, Model model) {
 		Product product = productService.getProductById(no);
 		model.addAttribute("product", product);
+		Random randomGenerator = new Random();
+		int start = 100;
+		int end = 500;
+		double range = end - start + 1;
+		int randomInt5to10 = (int)(randomGenerator.nextDouble() * range + start);
+		model.addAttribute("random", randomInt5to10);
+
 		return "admin/product/stock/addstockForm";
 	}
 
