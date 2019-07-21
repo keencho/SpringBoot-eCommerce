@@ -62,5 +62,11 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 		repository.delete(entity);
 	}
 
+	@Override
+	public List<ProductSize> findDistinctSizeNo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

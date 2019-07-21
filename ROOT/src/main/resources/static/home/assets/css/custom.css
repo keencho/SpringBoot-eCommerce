@@ -1,0 +1,32 @@
+.navbar-nav .dropdown ul {
+	padding-left: 10px;
+	border-width: 0px;
+	line-height: 1.5em;
+}
+
+.navbar-nav .dropdown a {
+	text-decoration:none !important;
+}
+
+.navbar-nav .dropdown ul li {
+	font-size: 13px;
+}
+
+.dropdown-menu li a {
+	color: #000 !important;
+}
+
+.dropdown-menu li a:hover {
+	text-decoration:none !important;
+	color: #007bff !important;
+}
+
+.navbar-default .navbar-nav li a:hover {
+	text-decoration:none !important;
+	color: #007bff;
+}
+
+.navbar-default .navbar-nav > li.open a{
+	text-decoration:none !important;
+	color: #007bff;
+}

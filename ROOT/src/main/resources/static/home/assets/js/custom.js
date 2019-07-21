@@ -98,3 +98,17 @@
 
 		});
 	}
+	/* product list 부분의 dropdown 관련 jQuery */
+    $(document).ready(function () {
+        $('.navbar-default .navbar-nav > li.dropdown').click(function () {
+            if ($(this).hasClass('open')) {
+            	$('ul.dropdown-menu', this).stop(true, true).slideUp(100);
+                $(this).removeClass('open');
+            } else {
+            	$('ul.dropdown-menu', '.open').stop(true, true).slideUp(100);
+            	$('.open').removeClass('open');
+                $('ul.dropdown-menu', this).stop(true, true).slideDown('fast');
+                $(this).addClass('open');
+            }
+        });
+    });

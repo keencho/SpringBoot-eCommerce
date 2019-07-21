@@ -50,7 +50,7 @@ public class UserController {
 	}
 	@GetMapping("/login")
 	public String loginForm() {
-		return "user/login";
+		return "home/user/login";
 	}
 	@PostMapping("/login")
 	public String login(@Valid User user, HttpSession session) {
@@ -71,7 +71,7 @@ public class UserController {
 	}
 	@GetMapping("/loginError")
 	public String loginError() {
-		return "user/loginError";
+		return "home/user/loginError";
 	}
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletResponse response) throws IOException {

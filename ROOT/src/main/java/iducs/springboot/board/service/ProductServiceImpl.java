@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -15,11 +17,13 @@ import iducs.springboot.board.entity.ProductEntity;
 import iducs.springboot.board.entity.ProductSizeEntity;
 import iducs.springboot.board.entity.ProductStockEntity;
 import iducs.springboot.board.repository.ProductRepository;
+import iducs.springboot.board.repository.ProductSizeRepository;
 
 @Service("ProductSize")
 public class ProductServiceImpl implements ProductService{
 	@Autowired
 	private ProductRepository repository;
+	private ProductSizeRepository sizerepository;
 	
 	@Override
 	public Product getProductById(long no) {
@@ -37,6 +41,12 @@ public class ProductServiceImpl implements ProductService{
 			
 		return product;
 	}
+	
+	@Override
+	public Page<ProductEntity> getProductByCategoryNoPage(long no, Pageable pageable) {
+		Page<ProductEntity> entities = repository.findByCategoryNo(no, pageable);
+		return entities;
+	}
 
 	@Override
 	public List<Product> getProduct() {
@@ -50,9 +60,10 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public List<Product> getProductByCategoryNo(long no) {
+	public List<Product> getProductByCategoryNo(long no, Pageable pageable) {
 		List<Product> product = new ArrayList<Product>();
-		List<ProductEntity> entities = repository.findByCategoryNo(no);
+		List<ProductEntity> entities = repository.findByCategoryNo(pageable, no);
+
 		for(ProductEntity entity : entities) {
 			Product products = entity.buildDomain();
 			product.add(products);
@@ -82,6 +93,8 @@ public class ProductServiceImpl implements ProductService{
 		entity.buildEntity(product);
 		repository.delete(entity);
 	}
+
+
 
 
 

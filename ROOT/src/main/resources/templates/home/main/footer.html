@@ -215,11 +215,23 @@
     <script src="/home/assets/js/jquery.min.js"></script>
     <script src="/home/assets/js/bootstrap.bundle.min.js"></script>
     <script src="/home/assets/js/plugins.min.js"></script>
+    <script src="/home/assets/js/nouislider.min.js"></script>
 
     <!-- Main JS File -->
     <script src="/home/assets/js/main.min.js"></script>
     
     <!-- Custom JS File -->
-    <script src="/home/assets/js/custom.js"></script>
+    <script src="/home/assets/js/custom.js?ver=12"></script>
+    <script>
+    function sorting(cno) {
+    	$(document).ready(function(){
+    		var sort = $('#orderby').val();
+    		var variable = sort.split(',');
+    		var url= "/product/list/category/" + cno + "?sort=" + variable[0] + "," + variable[1];
+    		location.href=url;
+        })
+    }
+    
+    </script>
 </body>
 </html>

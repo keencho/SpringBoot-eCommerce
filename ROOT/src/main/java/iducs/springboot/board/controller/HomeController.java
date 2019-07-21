@@ -42,7 +42,7 @@ public class HomeController {
 	}
 	@GetMapping("/404")
 	public String error() {		
-		return "main/404";
+		return "home/main/404";
 	}
 
 }

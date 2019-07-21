@@ -29,28 +29,28 @@
 	                                	<font id="cktext" size=2></font>
 	                                    <input class="form-control" name="id" id="id" type="text" placeholder="아이디" oninput="idCheck()" required>
 	                                </div>
-	                                <div class="col-lg-2 form-group">
+	                                <div class="col-lg-2 form-group" style="padding-left: 60px">
 	                                    <input class="form-control" name="phone1" type="tel" placeholder="휴대폰 번호" required>
 	                                </div>
-	                                <div class="col-lg-2 form-group">
+	                                <div class="col-lg-2 form-group" style="padding-left: 40px; padding-right: 40px">
 	                                    <input class="form-control" name="phone2" type="tel" required>
 	                                </div>
-	                                <div class="col-lg-2 form-group">
+	                                <div class="col-lg-2 form-group" style="padding-right: 60px">
 	                                    <input class="form-control" name="phone3" type="tel" required>
 	                                </div>
 	                                <input type="hidden" name="phone" value="">
 	                                <div class="col-lg-6 form-group">
-	                                    <input class="form-control" name="password" id="password" type="password" placeholder="비밀번호" required>
+	                                    <input class="form-control" name="password" id="password" type="password" placeholder="비밀번호" onchange="pwCheck()" required>
 	                                </div>
 	                                <div class="col-lg-6 form-group">
 	                                    <input class="form-control" name="passwordC" id="passwordC" type="password" placeholder="비밀번호 재입력" onchange="pwCheck()" required>
 	                                    <span id="same"></span>
 	                                </div>
-	                                <div class="col-lg-4 form-group">
+	                                <div class="col-lg-4 form-group" style="padding-left: 60px; " >
 	                                    <input class="form-control" name="zipcode" type="text" id="sample6_postcode" placeholder="우편번호" required>
 	                                </div>
-	                                <div class="col-lg-2 form-group">
-										<button type="button" value="submit" class="btn update_btn form-control" onClick="sample6_execDaumPostcode();">우편번호 찾기</button>
+	                                <div class="col-lg-2 form-group"  style="padding-right: 60px">
+										<button type="button" value="submit" class="btn update_btn form-control" onClick="sample6_execDaumPostcode();">번호 찾기</button>
 									</div>
 									<div class="col-lg-6 form-group">
 										<input class="form-control" type="text" name="address" id="sample6_address" placeholder="주소" required>
@@ -64,7 +64,7 @@
 									<input type="hidden" name="joinday" th:value="${date}">
 									<input type="hidden" name="rank" value="1">
 	                            <div class="col-md-4 offset-md-4">
-	                                <button type="submit" class="btn btn-primary">회원가입</button>
+	                                <button type="submit" id="check_button" class="btn btn-primary check_button">회원가입</button>
 	                            </div><!-- End .form-footer -->
 	                        </form>
 	                    </div><!-- End .col-md-6 -->

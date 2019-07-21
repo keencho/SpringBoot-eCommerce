@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Porto - Bootstrap eCommerce Template</title>
+    <title>Keencho's Spring-boot</title>
 
     <meta name="keywords" content="HTML5 Template" />
     <meta name="description" content="Porto - Bootstrap eCommerce Template">
@@ -19,7 +19,13 @@
     <link rel="stylesheet" href="/home/assets/css/bootstrap.min.css">
 
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="/home/assets/css/style.min.css">
+    <link rel="stylesheet" href="/home/assets/css/style.min.css?ver=3">
+    
+    <!-- Custom CSS File -->
+    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=3">
+    
+    <!-- font-awesome -->
+    <link href="/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
 </head>
 <body>
     <div class="page-wrapper">
@@ -35,8 +41,10 @@
                                     <li><a href="#">DAILY DEAL</a></li>
                                     <li><a href="#">MY WISHLIST </a></li>
                                     <li><a href="blog.html">BLOG</a></li>
-                                    <li><a href="/user/register">회원가입</a></li>
-                                    <li><a href="/login">로그인</a></li>
+                                    <li th:unless="${session.user}"><a href="/user/register">회원가입</a></li>
+                                    <li th:unless="${session.user}"><a href="/user/login">로그인</a></li>
+                                    <li th:if="${session.userRank=='0'}"><a href="/admin">관리자</a></li>
+                                    <li th:if="${session.user}"><a href="/user/logout">로그아웃</a></li>
                                 </ul>
                             </div><!-- End .header-menu -->
                         </div><!-- End .header-dropown -->
@@ -47,7 +55,7 @@
             <div class="header-middle">
                 <div class="container">
                     <div class="header-left">
-                        <a href="index.html" class="logo">
+                        <a href="/" class="logo">
                             <img src="/home/assets/images/logo.png" alt="Porto Logo">
                         </a>
                     </div><!-- End .header-left -->
@@ -57,7 +65,7 @@
                             <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
                             <form action="#" method="get">
                                 <div class="header-search-wrapper">
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search..." required>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="검색" required>
                                     <div class="select-custom">
                                         <select id="cat" name="cat">
                                             <option value="">All Categories</option>
@@ -90,8 +98,8 @@
                             <i class="icon-menu"></i>
                         </button>
                         <div class="header-contact">
-                            <span>Call us now</span>
-                            <a href="tel:#"><strong>+123 5678 890</strong></a>
+                            <span>문의</span>
+                            <strong>seyoung050412@gmail.com</strong>
                         </div><!-- End .header-contact -->
 
                         <div class="dropdown cart-dropdown">
@@ -159,4 +167,4 @@
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
-        </header><!-- End .header -->
+        

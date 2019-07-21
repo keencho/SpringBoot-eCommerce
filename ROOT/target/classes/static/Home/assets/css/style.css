@@ -2733,14 +2733,14 @@ a:focus {
 }
 .banner .banner-title {
   margin-bottom: 2rem;
-  color: #010204;
+  color: #FFF;
   font: 800 3rem/1.1 "Open Sans", sans-serif;
   letter-spacing: -.025rem;
   text-transform: uppercase;
 }
 .banner .banner-subtitle {
   margin-bottom: .2rem;
-  color: #010204;
+  color: #FFF;
   font: 700 1.5rem/1.1 "Open Sans", sans-serif;
   letter-spacing: 0;
   text-transform: uppercase;
