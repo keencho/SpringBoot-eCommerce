@@ -34,8 +34,8 @@ public class AdminColorController {
 	}
 	
 	@PostMapping("/add")
-	public String colorAdd(String name, Model model) {
-		Color color = new Color(name);
+	public String colorAdd(String name, String rgb, Model model) {
+		Color color = new Color(name, rgb);
 		colorService.saveColor(color);
 		return "redirect:/admin/color";
 	}
@@ -51,6 +51,7 @@ public class AdminColorController {
 	public String colorUpdate(@PathVariable(value = "no") Long no, @Valid Color updateColor, Model model) {
 		Color color= colorService.getColorByNo(no);
 		color.setName(updateColor.getName());
+		color.setRgb(updateColor.getRgb());
 		colorService.updateColor(color);
 		return "redirect:/admin/color";
 	}

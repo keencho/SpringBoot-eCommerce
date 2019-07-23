@@ -223,15 +223,98 @@
     <!-- Custom JS File -->
     <script src="/home/assets/js/custom.js?ver=12"></script>
     <script>
+    
+    /* pagination load_hide */
+    $(function(){
+ 	   $(document).on("click","#paginationajax a",function(e) { 
+ 		  $("#ajax_product_list").hide();
+			$("#ajax_product_list").load($(this).attr("href") + " div#ajax_product_list").show();
+			$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
+			e.preventDefault();
+ 	   });
+    });
+	$(function(){
+		var Btn = $("ul#size_class > li");
+			Btn.find("a").click(function(){ 
+				if($(this).parent().hasClass("active")){
+					$(this).parent().removeClass("active");
+				} else {
+					$(this).parent().addClass("active");
+				}
+			});
+	});
+	
+    /* category번호로 접근시 sorting */
     function sorting(cno) {
     	$(document).ready(function(){
+			var selected = [];
+    		$('#size_class > li').each(function(i){
+    			if($(this).hasClass('active')){
+    				selected.push($(this).attr('value'));
+    			}
+    		});
     		var sort = $('#orderby').val();
     		var variable = sort.split(',');
-    		var url= "/product/list/category/" + cno + "?sort=" + variable[0] + "," + variable[1];
-    		location.href=url;
+    		
+    		var url = "/product/list/category/" + cno + "?sort=" + variable[0] + "," + variable[1];
+    		var urlSize ="/product/Ajax/list/category/" + cno + "/size/" + selected + "?sort=" + variable[0] + "," + variable[1];
+    		
+    		if(selected ==""){
+    			$("#ajax_product_list").hide();
+    			$("#ajax_product_list").load(url + " div#ajax_product_list").show();
+    			$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
+    		} else if (selected != "") {
+    			$("#ajax_product_list").hide();
+    			$("#ajax_product_list").load(urlSize + " div#ajax_product_list").show();
+    			$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
+    		}
+
         })
     }
     
+	function size_ajax(no) {
+		
+    	$(function(){
+    		var selected = [];
+    		
+    		$('#size_class > li').each(function(i){
+    			if($(this).hasClass('active')){
+    				selected.push($(this).attr('value'));
+    			}
+    		});
+    		// location.href="/product/Ajax/list/category/" + no + "/size/" + selected;
+    		var urlOriginal = "/product/list/category/" + no;
+    		var url = "/product/Ajax/list/category/" + no + "/size/" + selected;
+    		$.ajax({
+    			url : "/product/sizeCheck",
+    			type : "POST",
+    			traditional : true,
+    			data : {
+    				"no" : no,
+    				"size" : selected
+    			},
+    			dataType : "html",
+    			complete : function(xhr, textStatus) {
+    				var num = xhr.responseText;
+    				if (num > 0) {
+    					$("#ajax_product_list").hide();
+    					$("#ajax_product_list").load(url + " div#ajax_product_list").show();
+    				} else {
+    					$("#ajax_product_list").hide();
+    					$("#ajax_product_list").load(urlOriginal + " div#ajax_product_list").show();
+    				}
+    				 
+				},
+
+    		});
+    });
+	}
+    
+    
+    
+    	
+
+
     </script>
 </body>
 </html>

@@ -38,6 +38,18 @@ public class ProductStockServiceImpl implements ProductStockService {
 		}
 		return productstock;
 	}
+	
+	@Override
+	public List<ProductStock> findDistinctSizeNo(long no) {
+		List<ProductStock> productstock = new ArrayList<ProductStock>();
+		List<ProductStockEntity> entities = repository.findByCategoryNo(no);
+		for(ProductStockEntity entity : entities) {
+			ProductStock pro = entity.buildDomain();
+			productstock.add(pro);
+		}
+		return productstock;
+	}
+
 
 	@Override
 	public List<ProductStock> getProductStockByProductNo(long no) {
@@ -64,6 +76,7 @@ public class ProductStockServiceImpl implements ProductStockService {
 		entity.buildEntity(productstock);
 		repository.delete(entity);
 	}
+
 
 
 }

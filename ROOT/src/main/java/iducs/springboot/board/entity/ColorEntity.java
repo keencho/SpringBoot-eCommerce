@@ -19,6 +19,9 @@ public class ColorEntity {
 	
 	@Column(name="name", nullable=false, length=20, unique=true)
 	private String name;
+	
+	@Column(name="rgb", nullable=false, length=50, unique=true)
+	private String rgb;
 
 	public Long getNo() {
 		return no;
@@ -36,15 +39,25 @@ public class ColorEntity {
 		this.name = name;
 	}
 	
+	public String getRgb() {
+		return rgb;
+	}
+
+	public void setRgb(String rgb) {
+		this.rgb = rgb;
+	}
+
 	public Color buildDomain() {
 		Color color = new Color();
 		color.setNo(no);
 		color.setName(name);
+		color.setRgb(rgb);
 		return color;
 	}
 	
 	public void buildEntity(Color color) {
 		no = color.getNo();
 		name = color.getName();
+		rgb = color.getRgb();
 	}
 }

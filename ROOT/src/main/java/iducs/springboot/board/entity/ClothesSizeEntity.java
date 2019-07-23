@@ -27,7 +27,7 @@ public class ClothesSizeEntity {
 	
 	@Column(name="name", nullable=false, length=10, unique=true)
 	private String name;
-	
+
 	public Long getNo() {
 		return no;
 	}

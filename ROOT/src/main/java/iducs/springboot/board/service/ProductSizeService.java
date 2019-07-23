@@ -15,7 +15,7 @@ public interface ProductSizeService {
 	ProductSize getProductSizeByNo(long no);
 	List<ProductSize> findAll();
 	List<ProductSize> getProductSizeByProductNo(long no);
-	List<ProductSize> findDistinctSizeNo();
+	List<ProductSize> findDistinctSizeNo(long no);
 	
 	void saveProductSize(ProductSize productsize);
 	void updateProductSize(ProductSize productsize);

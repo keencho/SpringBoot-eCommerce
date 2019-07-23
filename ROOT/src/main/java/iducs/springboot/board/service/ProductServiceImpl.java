@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,7 +24,6 @@ import iducs.springboot.board.repository.ProductSizeRepository;
 public class ProductServiceImpl implements ProductService{
 	@Autowired
 	private ProductRepository repository;
-	private ProductSizeRepository sizerepository;
 	
 	@Override
 	public Product getProductById(long no) {
@@ -42,11 +42,20 @@ public class ProductServiceImpl implements ProductService{
 		return product;
 	}
 	
+	
 	@Override
-	public Page<ProductEntity> getProductByCategoryNoPage(long no, Pageable pageable) {
+	public Page<ProductEntity> getProductByCategoryNoPage(Pageable pageable, long no) {
 		Page<ProductEntity> entities = repository.findByCategoryNo(no, pageable);
 		return entities;
 	}
+	
+
+	@Override
+	public Page<ProductEntity> getProductByCategoryNoPageSize(Pageable pageable, long no, String[] sizeArray) {
+		Page<ProductEntity> entities = repository.findByCategoryNoPage(no, pageable, sizeArray);
+		return entities;
+	}
+
 
 	@Override
 	public List<Product> getProduct() {
@@ -60,10 +69,20 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
+	public List<Product> getProductByCategoryNoSize(long categoryno, String[] sizeArray, Pageable pageable) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findByCategoryNo(categoryno, sizeArray, pageable);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+	
+	@Override
 	public List<Product> getProductByCategoryNo(long no, Pageable pageable) {
 		List<Product> product = new ArrayList<Product>();
 		List<ProductEntity> entities = repository.findByCategoryNo(pageable, no);
-
 		for(ProductEntity entity : entities) {
 			Product products = entity.buildDomain();
 			product.add(products);
@@ -93,6 +112,9 @@ public class ProductServiceImpl implements ProductService{
 		entity.buildEntity(product);
 		repository.delete(entity);
 	}
+
+
+
 
 
 

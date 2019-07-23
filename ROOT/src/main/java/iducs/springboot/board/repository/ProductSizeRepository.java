@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import javax.persistence.Entity;
 
@@ -14,7 +15,9 @@ public interface ProductSizeRepository extends JpaRepository<ProductSizeEntity, 
 	ProductSizeEntity findByNo(long no);
 	
 	List<ProductSizeEntity> findAll();
-	List<ProductSizeEntity> findDistinctProductSizeBySizeNo();
+	
+	@Query(value="select * from product_size join product on product.no = product_size.product_no where product.category_no = :no group by product_size.size_no", nativeQuery=true)
+	List<ProductSizeEntity> findByCategoryNo(@Param("no") long no);
 
 	List<ProductSizeEntity> findByProductNo(long product_no);
 

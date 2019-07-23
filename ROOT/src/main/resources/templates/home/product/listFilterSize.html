@@ -1,5 +1,8 @@
 <th:block th:include="home/main/header.html"></th:block>
 	<th:block th:include="home/main/nav.html"></th:block>
+	<script>
+
+	</script>
 <main class="main">
             <div class="banner banner-cat" style="background-image: url('/home/assets/images/product-list.jpg');">
             	
@@ -91,7 +94,7 @@
                          <!-- produt list end -->
                         </div><!-- End .row -->
                         
-						 <nav class="toolbox toolbox-pagination" id="">
+						 <nav class="toolbox toolbox-pagination">
 							<!-- pagination start -->
 							<div style="margin: auto;" >
 							<ul class="pagination" id="paginationajax" th:if="${param.sort == null}">
@@ -147,6 +150,8 @@
                     </div>
                     </div><!-- End .col-lg-9 -->
                     
+					<span th:with="url=${#httpServletRequest.requestURI}"/></span>
+					<span th:text="${url}"></span> 
                     <aside class="sidebar-shop col-lg-3 order-lg-first">
                         <div class="sidebar-wrapper">
                         
@@ -162,7 +167,7 @@
                                         <ul class="cat-list">
 										  <div class="navbar-default">
 										    <ul class="navbar-nav" th:each="division : ${division}" th:if="${categoryname.no == division.category.no}">
-										        <li class="dropdown"><a style="cursor:pointer;" th:text="${division.name}"></a>&#x25BE;
+										        <li class="dropdown"><a href="#" th:text="${division.name}"></a>&#x25BE;
 										            <ul class="dropdown-menu">
 										                <li th:each="section : ${section}" th:if="${division.no == section.division.no}"><a th:href="@{'/product/list/category/{cno}/division/{dno}/section/{sno}'(cno=${categoryname.no}, dno=${division.no}, sno=${section.no})}" th:text="${section.name}"></a></li>
 										                <br>
@@ -216,16 +221,17 @@
 
                             <div class="widget">
                                 <h3 class="widget-title">
-                                    <a data-toggle="collapse" href="#widget-body-6" role="button" aria-expanded="true" aria-controls="widget-body-6">색상</a>
+                                    <a data-toggle="collapse" href="#widget-body-6" role="button" aria-expanded="true" aria-controls="widget-body-6">Color</a>
                                 </h3>
+
                                 <div class="collapse show" id="widget-body-6">
                                     <div class="widget-body">
                                         <ul class="config-swatch-list">
-                                            <li title="zzz">
-                                                <a href="#" style="background-color: #F5F5DC"></a>
-                                            </li>
                                             <li>
-                                                <a href="#" style="background-color: #000000"></a>
+                                                <a href="#" style="background-color: #4090d5;"></a>
+                                            </li>
+                                            <li class="active">
+                                                <a href="#" style="background-color: #f5494a;"></a>
                                             </li>
                                             <li>
                                                 <a href="#" style="background-color: grey;"></a>

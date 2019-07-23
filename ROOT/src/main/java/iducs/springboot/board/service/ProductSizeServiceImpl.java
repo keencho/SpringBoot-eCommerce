@@ -35,6 +35,18 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 		}
 		return productsize;
 	}
+	
+	@Override
+	public List<ProductSize> findDistinctSizeNo(long no) {
+		List<ProductSize> productsize = new ArrayList<ProductSize>();
+		List<ProductSizeEntity> entities = repository.findByCategoryNo(no);
+		for(ProductSizeEntity entity : entities) {
+			ProductSize pro = entity.buildDomain();
+			productsize.add(pro);
+		}
+		return productsize;
+	}
+
 
 	@Override
 	public List<ProductSize> getProductSizeByProductNo(long no) {
@@ -62,11 +74,6 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 		repository.delete(entity);
 	}
 
-	@Override
-	public List<ProductSize> findDistinctSizeNo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 }

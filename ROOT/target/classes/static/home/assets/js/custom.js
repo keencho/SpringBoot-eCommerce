@@ -112,3 +112,13 @@
             }
         });
     });
+    
+    /* category번호로 접근시 sorting */
+    function sorting(cno) {
+    	$(document).ready(function(){
+    		var sort = $('#orderby').val();
+    		var variable = sort.split(',');
+    		var url= "/product/list/category/" + cno + "?sort=" + variable[0] + "," + variable[1];
+    		location.href=url;
+        })
+    }
