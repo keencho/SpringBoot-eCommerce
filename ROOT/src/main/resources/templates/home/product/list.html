@@ -30,7 +30,7 @@
                             <div class="toolbox-left">
                                 <div class="toolbox-item toolbox-sort">
                                     <div class="select-custom">
-                                        <select id="orderby" class="form-control" th:if="${divisionname == null && sectionname == null}" th:onchange="@{'javascript:sorting(\'{cno}\');'(cno=${categoryname.no})}">
+                                        <select id="orderby" class="form-control" th:if="${divisionname == null && sectionname == null}" th:onchange="@{'javascript:category_sorting(\'{cno}\');'(cno=${categoryname.no})}">
                                             <option value="no,asc" th:if="${#strings.equals(param.sort, 'no,asc')}" selected>등록순</option>
                                             <option value="no,asc" th:unless="${#strings.equals(param.sort, 'no,asc')}">등록순</option>
                                             <option value="listprice,desc" th:if="${#strings.equals(param.sort, 'listprice,desc')}" selected>높은 가격순</option>
@@ -162,6 +162,7 @@
                                         <ul class="cat-list">
 										  <div class="navbar-default">
 										    <ul class="navbar-nav" th:each="division : ${division}" th:if="${categoryname.no == division.category.no}">
+										    <!-- li태그에 open 붙이고, ul에 style=display: block; 지정하기 -->
 										        <li class="dropdown"><a style="cursor:pointer;" th:text="${division.name}"></a>&#x25BE;
 										            <ul class="dropdown-menu">
 										                <li th:each="section : ${section}" th:if="${division.no == section.division.no}"><a th:href="@{'/product/list/category/{cno}/division/{dno}/section/{sno}'(cno=${categoryname.no}, dno=${division.no}, sno=${section.no})}" th:text="${section.name}"></a></li>
@@ -207,43 +208,23 @@
                                     <div class="widget-body">
                                         <ul class="config-size-list" id="size_class">
                                         	<li th:each="productsize : ${productsize}" th:value="${productsize.size_no.no}">
-                                        		<a style="cursor:pointer;" th:text="${productsize.size_no.name}" th:onclick="@{'javascript:size_ajax(\'{size}\')'(size=${productsize.product_no.category.no})}"></a>
+                                        		<a style="cursor:pointer;" th:text="${productsize.size_no.name}" th:onclick="@{'javascript:filter_category_ajax(\'{size}\')'(size=${productsize.product_no.category.no})}"></a>
                                         	</li>
                                         </ul>
                                     </div><!-- End .widget-body -->
                                 </div><!-- End .collapse -->
                             </div><!-- End .widget -->
 
-                            <div class="widget">
+                            <div class="widget" >
                                 <h3 class="widget-title">
                                     <a data-toggle="collapse" href="#widget-body-6" role="button" aria-expanded="true" aria-controls="widget-body-6">색상</a>
                                 </h3>
                                 <div class="collapse show" id="widget-body-6">
                                     <div class="widget-body">
-                                        <ul class="config-swatch-list">
-                                            <li title="zzz">
-                                                <a href="#" style="background-color: #F5F5DC"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: #000000"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: grey;"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: #11426b;"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: #f0f0f0;"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: #3fd5c9;"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: #979c1c;"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: #7d5a3c;"></a>
+                                        <ul class="config-swatch-list" id="color_class">
+                                            <li th:each="productcolor : ${productcolor}" th:value="${productcolor.color_no.no}">
+                                                <a th:unless="${productcolor.color_no.name == 'White'}" th:style="@{background-color: rgb({color}); cursor:pointer;(color=${productcolor.color_no.rgb})}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_category_ajax(\'{size}\')'(size=${productcolor.product_no.category.no})}"></a>
+                                                <a style="cursor:pointer; border-style: solid; border-width: 1px;" th:if="${productcolor.color_no.name == 'White'}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_category_ajax(\'{size}\')'(size=${productcolor.product_no.category.no})}"></a>
                                             </li>
                                         </ul>
                                     </div><!-- End .widget-body -->

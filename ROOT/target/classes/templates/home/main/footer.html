@@ -244,54 +244,113 @@
 			});
 	});
 	
+	 /* 색상에 active class 추가 / 삭제 */
+    $(function(){
+		var Btn = $("ul#color_class > li");
+			Btn.find("a").click(function(){ 
+				if($(this).parent().hasClass("active")){
+					$(this).parent().removeClass("active");
+				} else {
+					$(this).parent().addClass("active");
+				}
+			});
+	});
+	
     /* category번호로 접근시 sorting */
-    function sorting(cno) {
+    function category_sorting(cno) {
     	$(document).ready(function(){
 			var selected = [];
+			var selected2 = [];
+			var sizeSelected = [];
+    		var colorSelected = [];
+    		var sort = $('#orderby').val();
+    		var variable = sort.split(',');
+    		
     		$('#size_class > li').each(function(i){
     			if($(this).hasClass('active')){
     				selected.push($(this).attr('value'));
     			}
     		});
-    		var sort = $('#orderby').val();
-    		var variable = sort.split(',');
     		
-    		var url = "/product/list/category/" + cno + "?sort=" + variable[0] + "," + variable[1];
-    		var urlSize ="/product/Ajax/list/category/" + cno + "/size/" + selected + "?sort=" + variable[0] + "," + variable[1];
+    		$('#color_class > li').each(function(i){
+    			if($(this).hasClass('active')){
+    				selected2.push($(this).attr('value'));
+    			}
+    		});
     		
-    		if(selected ==""){
-    			$("#ajax_product_list").hide();
-    			$("#ajax_product_list").load(url + " div#ajax_product_list").show();
-    			$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
-    		} else if (selected != "") {
-    			$("#ajax_product_list").hide();
-    			$("#ajax_product_list").load(urlSize + " div#ajax_product_list").show();
-    			$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
+    		if (selected == ''){
+    			$('#size_class > li').each(function(i){
+        			sizeSelected.push($(this).attr('value'));
+        		});
+    		} else{
+    			sizeSelected = selected;
     		}
+    		
+    		if (selected2 == ''){
+    			$('#color_class > li').each(function(i){
+        			colorSelected.push($(this).attr('value'));
+        		});
+    		} else{
+    			colorSelected = selected2;
+    		}
+    		
+    		var url = "/product/Ajax/list/category/" + cno + "/size/" + sizeSelected + "/color/" + colorSelected + "/?sort=" + variable[0] + "," + variable[1];
+    		
+    		$("#ajax_product_list").hide();
+    		$("#ajax_product_list").load(url + " div#ajax_product_list").show();
+    		$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
 
         })
     }
     
-	function size_ajax(no) {
-		
+    /* category번호로 접근시 filter Ajax */
+	function filter_category_ajax(no) {
     	$(function(){
     		var selected = [];
-    		
+    		var selected2 = [];
+    		var sizeSelected = [];
+    		var colorSelected = [];
+    		var sort = $('#orderby').val();
+    		var variable = sort.split(',');
+    	
     		$('#size_class > li').each(function(i){
     			if($(this).hasClass('active')){
     				selected.push($(this).attr('value'));
     			}
     		});
-    		// location.href="/product/Ajax/list/category/" + no + "/size/" + selected;
-    		var urlOriginal = "/product/list/category/" + no;
-    		var url = "/product/Ajax/list/category/" + no + "/size/" + selected;
+    		
+    		$('#color_class > li').each(function(i){
+    			if($(this).hasClass('active')){
+    				selected2.push($(this).attr('value'));
+    			}
+    		});
+    		
+    		
+    		if (selected == ''){
+    			$('#size_class > li').each(function(i){
+        			sizeSelected.push($(this).attr('value'));
+        		});
+    		} else{
+    			sizeSelected = selected;
+    		}
+    		
+    		if (selected2 == ''){
+    			$('#color_class > li').each(function(i){
+        			colorSelected.push($(this).attr('value'));
+        		});
+    		} else{
+    			colorSelected = selected2;
+    		}
+    		
+    		var url = "/product/Ajax/list/category/" + no + "/size/" + sizeSelected + "/color/" + colorSelected + "/?sort=" + variable[0] + "," + variable[1];
     		$.ajax({
     			url : "/product/sizeCheck",
     			type : "POST",
     			traditional : true,
     			data : {
     				"no" : no,
-    				"size" : selected
+    				"size" : sizeSelected,
+    				"color" : colorSelected
     			},
     			dataType : "html",
     			complete : function(xhr, textStatus) {
@@ -300,20 +359,14 @@
     					$("#ajax_product_list").hide();
     					$("#ajax_product_list").load(url + " div#ajax_product_list").show();
     				} else {
-    					$("#ajax_product_list").hide();
-    					$("#ajax_product_list").load(urlOriginal + " div#ajax_product_list").show();
+    					alert("결과값이 없습니다!");
     				}
     				 
 				},
 
     		});
-    });
+   		});
 	}
-    
-    
-    
-    	
-
 
     </script>
 </body>

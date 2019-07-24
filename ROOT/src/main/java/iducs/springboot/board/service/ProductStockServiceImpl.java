@@ -49,6 +49,17 @@ public class ProductStockServiceImpl implements ProductStockService {
 		}
 		return productstock;
 	}
+	
+	@Override
+	public List<ProductStock> findDistinctColorNo(long no) {
+		List<ProductStock> productstock = new ArrayList<ProductStock>();
+		List<ProductStockEntity> entities = repository.findByCategoryNoColor(no);
+		for(ProductStockEntity entity : entities) {
+			ProductStock pro = entity.buildDomain();
+			productstock.add(pro);
+		}
+		return productstock;
+	}
 
 
 	@Override
@@ -76,6 +87,8 @@ public class ProductStockServiceImpl implements ProductStockService {
 		entity.buildEntity(productstock);
 		repository.delete(entity);
 	}
+
+
 
 
 

@@ -51,8 +51,8 @@ public class ProductServiceImpl implements ProductService{
 	
 
 	@Override
-	public Page<ProductEntity> getProductByCategoryNoPageSize(Pageable pageable, long no, String[] sizeArray) {
-		Page<ProductEntity> entities = repository.findByCategoryNoPage(no, pageable, sizeArray);
+	public Page<ProductEntity> getProductByCategoryNoPageSize(Pageable pageable, long no, String[] sizeArray, String[] colorArray) {
+		Page<ProductEntity> entities = repository.findByCategoryNoPage(no, pageable, sizeArray, colorArray);
 		return entities;
 	}
 
@@ -69,9 +69,9 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public List<Product> getProductByCategoryNoSize(long categoryno, String[] sizeArray, Pageable pageable) {
+	public List<Product> getProductByCategoryNoSize(long categoryno, String[] sizeArray, String[] colorArray, Pageable pageable) {
 		List<Product> product = new ArrayList<Product>();
-		List<ProductEntity> entities = repository.findByCategoryNo(categoryno, sizeArray, pageable);
+		List<ProductEntity> entities = repository.findByCategoryNo(categoryno, sizeArray, colorArray, pageable);
 		for(ProductEntity entity : entities) {
 			Product products = entity.buildDomain();
 			product.add(products);

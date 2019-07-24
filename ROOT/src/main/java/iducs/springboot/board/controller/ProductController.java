@@ -69,6 +69,7 @@ public class ProductController {
 
 		List<Product> product = productService.getProductByCategoryNo(categoryno, pageable);
 		List<ProductStock> productsize = productstockService.findDistinctSizeNo(categoryno);
+		List<ProductStock> productcolor = productstockService.findDistinctColorNo(categoryno);
 		List<ClothesSize> size = clothessizeService.getClothesSize();
 		List<Division> division = divisionService.getDivision();
 		List<Section> section = sectionService.getSection();
@@ -81,22 +82,25 @@ public class ProductController {
 		model.addAttribute("product", product);
 		model.addAttribute("page", page);
 		model.addAttribute("size", size);
+		model.addAttribute("productcolor", productcolor);
 
 		return "/home/product/list";
 	}
 
-	@GetMapping("/Ajax/list/category/{no}/size/{size}")
+	@GetMapping("/Ajax/list/category/{no}/size/{size}/color/{color}")
 	public String sizeAjax(@PathVariable(value = "no") long categoryno,
 			@PathVariable(value = "size") String[] sizeArray,
+			@PathVariable(value = "color") String[] colorArray,
 			@PageableDefault(size = 6, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
 			HttpServletRequest request) throws Exception { // Ajax id 중복체크
 		Category category = categoryService.getCategoryByNo(categoryno);
-		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, pageable);
+		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, colorArray, pageable);
 		List<ProductStock> productsize = productstockService.findDistinctSizeNo(categoryno);
+		List<ProductStock> productcolor = productstockService.findDistinctColorNo(categoryno);
 		List<ClothesSize> size = clothessizeService.getClothesSize();
 		List<Division> division = divisionService.getDivision();
 		List<Section> section = sectionService.getSection();
-		Page<ProductEntity> page = productService.getProductByCategoryNoPageSize(pageable, categoryno, sizeArray);
+		Page<ProductEntity> page = productService.getProductByCategoryNoPageSize(pageable, categoryno, sizeArray, colorArray);
 
 		model.addAttribute("categoryname", category);
 		model.addAttribute("productsize", productsize);
@@ -105,6 +109,7 @@ public class ProductController {
 		model.addAttribute("product", product);
 		model.addAttribute("page", page);
 		model.addAttribute("size", size);
+		model.addAttribute("productcolor", productcolor);
 
 		return "/home/product/list";
 	}
@@ -112,10 +117,10 @@ public class ProductController {
 	
 	@ResponseBody
 	@PostMapping("/sizeCheck")
-	public int sizeCheck(@RequestParam(value = "no") long categoryno, @RequestParam(value = "size") String[] sizeArray,
+	public int sizeCheck(@RequestParam(value = "no") long categoryno, @RequestParam(value = "size") String[] sizeArray, @RequestParam(value= "color") String[] colorArray,
 			Pageable pageable) { // Ajax id 중복체크 
 		int result=0; 
-		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, pageable);
+		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, colorArray, pageable);
 		if (product != null)
 			result = 1;
 		return result;

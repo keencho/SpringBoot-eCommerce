@@ -10,6 +10,7 @@ public interface ProductStockService {
 	List<ProductStock> findAll();
 	List<ProductStock> getProductStockByProductNo(long no);
 	List<ProductStock> findDistinctSizeNo(long no);
+	List<ProductStock> findDistinctColorNo(long no);
 	
 	void saveProductStock(ProductStock productstock);
 	void updateProductStock(ProductStock productstock);
