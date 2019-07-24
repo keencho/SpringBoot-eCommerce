@@ -233,6 +233,8 @@
 			e.preventDefault();
  	   });
     });
+    
+    /* 사이즈에 active class 추가 / 삭제 */
 	$(function(){
 		var Btn = $("ul#size_class > li");
 			Btn.find("a").click(function(){ 
@@ -240,6 +242,19 @@
 					$(this).parent().removeClass("active");
 				} else {
 					$(this).parent().addClass("active");
+				}
+			});
+	});
+    
+    /* 가격에 active class 추가 / 삭제 */
+	$(function(){
+		var Btn = $(".price_class");
+			Btn.find("a").click(function(){ 
+				if($(this).hasClass("active")){
+					$(this).removeClass("active");
+				} else {
+					$(".price_class a").removeClass("active");
+					$(this).addClass("active");
 				}
 			});
 	});
@@ -261,6 +276,13 @@
     	$(document).ready(function(){
 			var selected = [];
 			var selected2 = [];
+			if($('.price_class > a.active').attr('value') != null){
+    			var selected3 = $('.price_class > a.active').attr('value');
+    			var price = selected3.split('~');
+    		} else {
+    			var selected3;
+    			var price;
+    		}
 			var sizeSelected = [];
     		var colorSelected = [];
     		var sort = $('#orderby').val();
@@ -293,8 +315,15 @@
     		} else{
     			colorSelected = selected2;
     		}
+    		if (price == null){
+    			var price1 = 0;
+    			var price2 = 500000;
+    		} else{
+    			var price1 = price[0];
+    			var price2 = price[1];
+    		}
     		
-    		var url = "/product/Ajax/list/category/" + cno + "/size/" + sizeSelected + "/color/" + colorSelected + "/?sort=" + variable[0] + "," + variable[1];
+    		var url = "/product/Ajax/list/category/" + cno + "/size/" + sizeSelected + "/color/" + colorSelected + "/price1/" + price1 + "/price2/" + price2 + "?sort=" + variable[0] + "," + variable[1];
     		
     		$("#ajax_product_list").hide();
     		$("#ajax_product_list").load(url + " div#ajax_product_list").show();
@@ -308,8 +337,16 @@
     	$(function(){
     		var selected = [];
     		var selected2 = [];
+    		if($('.price_class > a.active').attr('value') != null){
+    			var selected3 = $('.price_class > a.active').attr('value');
+    			var price = selected3.split('~');
+    		} else {
+    			var selected3;
+    			var price;
+    		}
     		var sizeSelected = [];
     		var colorSelected = [];
+    		var priceSelected = [];
     		var sort = $('#orderby').val();
     		var variable = sort.split(',');
     	
@@ -324,7 +361,6 @@
     				selected2.push($(this).attr('value'));
     			}
     		});
-    		
     		
     		if (selected == ''){
     			$('#size_class > li').each(function(i){
@@ -342,32 +378,37 @@
     			colorSelected = selected2;
     		}
     		
-    		var url = "/product/Ajax/list/category/" + no + "/size/" + sizeSelected + "/color/" + colorSelected + "/?sort=" + variable[0] + "," + variable[1];
+    		if (price == null){
+    			var price1 = 0;
+    			var price2 = 500000;
+    		} else{
+    			var price1 = price[0];
+    			var price2 = price[1];
+    		}
+    		var url = "/product/Ajax/list/category/" + no + "/size/" + sizeSelected + "/color/" + colorSelected + "/price1/" + price1 + "/price2/" + price2 + "?sort=" + variable[0] + "," + variable[1];
     		$.ajax({
-    			url : "/product/sizeCheck",
+    			url : "/product/categoryFilterCheck",
     			type : "POST",
     			traditional : true,
     			data : {
     				"no" : no,
     				"size" : sizeSelected,
-    				"color" : colorSelected
+    				"color" : colorSelected,
+    				"price1" : price1,
+    				"price2" : price2
     			},
     			dataType : "html",
     			complete : function(xhr, textStatus) {
-    				var num = xhr.responseText;
-    				if (num > 0) {
+
     					$("#ajax_product_list").hide();
     					$("#ajax_product_list").load(url + " div#ajax_product_list").show();
-    				} else {
-    					alert("결과값이 없습니다!");
-    				}
+
     				 
 				},
 
     		});
    		});
 	}
-
     </script>
 </body>
 </html>

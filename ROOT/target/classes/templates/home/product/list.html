@@ -178,25 +178,14 @@
 
                             <div class="widget">
                                 <h3 class="widget-title">
-                                    <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Price</a>
+                                    <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">가격</a>
                                 </h3>
-
-                                <div class="collapse show" id="widget-body-2">
-                                    <div class="widget-body">
-                                        <form action="#">
-                                            <div class="price-slider-wrapper">
-                                                <div id="price-slider"></div><!-- End #price-slider -->
-                                            </div><!-- End .price-slider-wrapper -->
-
-                                            <div class="filter-price-action">
-                                                <button type="submit" class="btn btn-primary">Filter</button>
-
-                                                <div class="filter-price-text">
-                                                    <span id="filter-price-range"></span>
-                                                </div><!-- End .filter-price-text -->
-                                            </div><!-- End .filter-price-action -->
-                                        </form>
-                                    </div><!-- End .widget-body -->
+                                <div class="collapse show price_class" id="widget-body-2" align="center">
+                                	<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_category_ajax(\'{cno}\'); return false;'(cno=${categoryname.no})}" value="0~10000" style="width: 200px;">10,000원 이하</a>
+									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_category_ajax(\'{cno}\'); return false;'(cno=${categoryname.no})}" value="10000~40000" style="width: 200px;">10,000 ~ 40,000원</a>
+									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_category_ajax(\'{cno}\'); return false;'(cno=${categoryname.no})}" value="40000~70000" style="width: 200px;">40,000 ~ 70,000원</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_category_ajax(\'{cno}\'); return false;'(cno=${categoryname.no})}" value="70000~100000" style="width: 200px;">70,000 ~ 100,000원</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_category_ajax(\'{cno}\'); return false;'(cno=${categoryname.no})}" value="100000~500000" style="width: 200px;">100,000원 이상</a>         	      
                                 </div><!-- End .collapse -->
                             </div><!-- End .widget -->
                             <div class="widget">

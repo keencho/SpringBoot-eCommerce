@@ -87,20 +87,22 @@ public class ProductController {
 		return "/home/product/list";
 	}
 
-	@GetMapping("/Ajax/list/category/{no}/size/{size}/color/{color}")
+	@GetMapping("/Ajax/list/category/{no}/size/{size}/color/{color}/price1/{price1}/price2/{price2}")
 	public String sizeAjax(@PathVariable(value = "no") long categoryno,
 			@PathVariable(value = "size") String[] sizeArray,
 			@PathVariable(value = "color") String[] colorArray,
+			@PathVariable(value = "price1") long price1,
+			@PathVariable(value = "price2") long price2,
 			@PageableDefault(size = 6, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
 			HttpServletRequest request) throws Exception { // Ajax id 중복체크
 		Category category = categoryService.getCategoryByNo(categoryno);
-		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, colorArray, pageable);
+		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, colorArray, price1, price2, pageable);
 		List<ProductStock> productsize = productstockService.findDistinctSizeNo(categoryno);
 		List<ProductStock> productcolor = productstockService.findDistinctColorNo(categoryno);
 		List<ClothesSize> size = clothessizeService.getClothesSize();
 		List<Division> division = divisionService.getDivision();
 		List<Section> section = sectionService.getSection();
-		Page<ProductEntity> page = productService.getProductByCategoryNoPageSize(pageable, categoryno, sizeArray, colorArray);
+		Page<ProductEntity> page = productService.getProductByCategoryNoPageSize(pageable, categoryno, sizeArray, colorArray, price1, price2);
 
 		model.addAttribute("categoryname", category);
 		model.addAttribute("productsize", productsize);
@@ -116,11 +118,15 @@ public class ProductController {
 
 	
 	@ResponseBody
-	@PostMapping("/sizeCheck")
-	public int sizeCheck(@RequestParam(value = "no") long categoryno, @RequestParam(value = "size") String[] sizeArray, @RequestParam(value= "color") String[] colorArray,
-			Pageable pageable) { // Ajax id 중복체크 
-		int result=0; 
-		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, colorArray, pageable);
+	@PostMapping("/categoryFilterCheck")
+	public int sizeCheck(@RequestParam(value = "no") long categoryno, 
+			@RequestParam(value = "size") String[] sizeArray,
+			@RequestParam(value = "color") String[] colorArray, 
+			@PathVariable(value = "price1") long price1,
+			@PathVariable(value = "price2") long price2, 
+			Pageable pageable) { // Ajax id 중복체크
+		int result = 0;
+		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, colorArray, price1, price2, pageable);
 		if (product != null)
 			result = 1;
 		return result;

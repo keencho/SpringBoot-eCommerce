@@ -13,10 +13,10 @@ public interface ProductService {
 	
 	List<Product> getProduct();
 	List<Product> getProductByCategoryNo(long no, Pageable pageable);
-	List<Product> getProductByCategoryNoSize(long no, String[] sizeArray, String[] colorArray, Pageable pageable);
+	List<Product> getProductByCategoryNoSize(long no, String[] sizeArray, String[] colorArray, long price1, long price2, Pageable pageable);
 	
 	Page<ProductEntity> getProductByCategoryNoPage(Pageable pageable, long no);
-	Page<ProductEntity> getProductByCategoryNoPageSize(Pageable pageable, long no, String[] sizeArray, String[] colorArray);
+	Page<ProductEntity> getProductByCategoryNoPageSize(Pageable pageable, long no, String[] sizeArray, String[] colorArray, long price1, long price2);
 	
 	void saveProduct(Product product);
 	void updateProduct(Product product);
