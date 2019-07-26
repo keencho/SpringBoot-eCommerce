@@ -60,6 +60,28 @@ public class ProductStockServiceImpl implements ProductStockService {
 		}
 		return productstock;
 	}
+	
+	@Override
+	public List<ProductStock> findDivisionDistinctSizeNo(long no) {
+		List<ProductStock> productstock = new ArrayList<ProductStock>();
+		List<ProductStockEntity> entities = repository.findByDivisionNo(no);
+		for(ProductStockEntity entity : entities) {
+			ProductStock pro = entity.buildDomain();
+			productstock.add(pro);
+		}
+		return productstock;
+	}
+
+	@Override
+	public List<ProductStock> findDivisionDistinctColorNo(long no) {
+		List<ProductStock> productstock = new ArrayList<ProductStock>();
+		List<ProductStockEntity> entities = repository.findByDivisionNoColor(no);
+		for(ProductStockEntity entity : entities) {
+			ProductStock pro = entity.buildDomain();
+			productstock.add(pro);
+		}
+		return productstock;
+	}
 
 
 	@Override
@@ -88,8 +110,27 @@ public class ProductStockServiceImpl implements ProductStockService {
 		repository.delete(entity);
 	}
 
+	@Override
+	public List<ProductStock> findSectionDistinctSizeNo(long no) {
+		List<ProductStock> productstock = new ArrayList<ProductStock>();
+		List<ProductStockEntity> entities = repository.findBySectionNo(no);
+		for(ProductStockEntity entity : entities) {
+			ProductStock pro = entity.buildDomain();
+			productstock.add(pro);
+		}
+		return productstock;
+	}
 
-
+	@Override
+	public List<ProductStock> findSectionDistinctColorNo(long no) {
+		List<ProductStock> productstock = new ArrayList<ProductStock>();
+		List<ProductStockEntity> entities = repository.findBySectionNoColor(no);
+		for(ProductStockEntity entity : entities) {
+			ProductStock pro = entity.buildDomain();
+			productstock.add(pro);
+		}
+		return productstock;
+	}
 
 
 }

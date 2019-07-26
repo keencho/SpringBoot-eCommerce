@@ -62,8 +62,8 @@ public class ProductController {
 	ProductStockService productstockService;
 
 	@GetMapping("/list/category/{cno}")
-	public String productList(@PathVariable("cno") long categoryno,
-			@PageableDefault(size = 6, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
+	public String productCategoryList(@PathVariable("cno") long categoryno,
+			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
 			HttpServletRequest request) throws Exception {
 		Category category = categoryService.getCategoryByNo(categoryno);
 
@@ -88,12 +88,12 @@ public class ProductController {
 	}
 
 	@GetMapping("/Ajax/list/category/{no}/size/{size}/color/{color}/price1/{price1}/price2/{price2}")
-	public String sizeAjax(@PathVariable(value = "no") long categoryno,
+	public String filterCategoryAjax(@PathVariable(value = "no") long categoryno,
 			@PathVariable(value = "size") String[] sizeArray,
 			@PathVariable(value = "color") String[] colorArray,
 			@PathVariable(value = "price1") long price1,
 			@PathVariable(value = "price2") long price2,
-			@PageableDefault(size = 6, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
+			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
 			HttpServletRequest request) throws Exception { // Ajax id 중복체크
 		Category category = categoryService.getCategoryByNo(categoryno);
 		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, colorArray, price1, price2, pageable);
@@ -119,14 +119,152 @@ public class ProductController {
 	
 	@ResponseBody
 	@PostMapping("/categoryFilterCheck")
-	public int sizeCheck(@RequestParam(value = "no") long categoryno, 
+	public int categoryFilterCheck(@RequestParam(value = "no") long categoryno, 
 			@RequestParam(value = "size") String[] sizeArray,
 			@RequestParam(value = "color") String[] colorArray, 
-			@PathVariable(value = "price1") long price1,
-			@PathVariable(value = "price2") long price2, 
-			Pageable pageable) { // Ajax id 중복체크
+			@RequestParam(value = "price1") long price1,
+			@RequestParam(value = "price2") long price2, 
+			Pageable pageable) { // Ajax product 결과값 체크
 		int result = 0;
 		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, colorArray, price1, price2, pageable);
+		if (product != null)
+			result = 1;
+		return result;
+	}
+	
+	@GetMapping("/list/division/{dno}")
+	public String productDivisionList(@PathVariable("dno") long divisionno,
+			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
+			HttpServletRequest request) throws Exception {
+		Division divisionname = divisionService.getDivisionByNo(divisionno);
+		List<Product> product = productService.getProductByDivisionNo(divisionno, pageable);
+		List<ProductStock> productsize = productstockService.findDivisionDistinctSizeNo(divisionno);
+		List<ProductStock> productcolor = productstockService.findDivisionDistinctColorNo(divisionno);
+		List<ClothesSize> size = clothessizeService.getClothesSize();
+		List<Division> division = divisionService.getDivision();
+		List<Section> section = sectionService.getSection();
+		Page<ProductEntity> page = productService.getProductByDivisionNoPage(pageable, divisionno);
+
+		model.addAttribute("divisionname", divisionname);
+		model.addAttribute("productsize", productsize);
+		model.addAttribute("division", division);
+		model.addAttribute("section", section);
+		model.addAttribute("product", product);
+		model.addAttribute("page", page);
+		model.addAttribute("size", size);
+		model.addAttribute("productcolor", productcolor);
+
+		return "/home/product/list";
+	}
+	
+	@GetMapping("/Ajax/list/division/{no}/size/{size}/color/{color}/price1/{price1}/price2/{price2}")
+	public String filterDivisionAjax(@PathVariable(value = "no") long divisionno,
+			@PathVariable(value = "size") String[] sizeArray,
+			@PathVariable(value = "color") String[] colorArray,
+			@PathVariable(value = "price1") long price1,
+			@PathVariable(value = "price2") long price2,
+			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
+			HttpServletRequest request) throws Exception { // Ajax id 중복체크
+		Division divisionname = divisionService.getDivisionByNo(divisionno);
+		List<Product> product = productService.getProductByDivisionNoSize(divisionno, sizeArray, colorArray, price1, price2, pageable);
+		List<ProductStock> productsize = productstockService.findDivisionDistinctSizeNo(divisionno);
+		List<ProductStock> productcolor = productstockService.findDivisionDistinctColorNo(divisionno);
+		List<ClothesSize> size = clothessizeService.getClothesSize();
+		List<Division> division = divisionService.getDivision();
+		List<Section> section = sectionService.getSection();
+		Page<ProductEntity> page = productService.getProductByDivisionNoPageSize(pageable, divisionno, sizeArray, colorArray, price1, price2);
+
+		model.addAttribute("divisionname", divisionname);
+		model.addAttribute("productsize", productsize);
+		model.addAttribute("division", division);
+		model.addAttribute("section", section);
+		model.addAttribute("product", product);
+		model.addAttribute("page", page);
+		model.addAttribute("size", size);
+		model.addAttribute("productcolor", productcolor);
+
+		return "/home/product/list";
+	}
+	
+	@ResponseBody
+	@PostMapping("/divisionFilterCheck")
+	public int divisionFilterCheck(@RequestParam(value = "no") long divisionno, 
+			@RequestParam(value = "size") String[] sizeArray,
+			@RequestParam(value = "color") String[] colorArray, 
+			@RequestParam(value = "price1") long price1,
+			@RequestParam(value = "price2") long price2, 
+			Pageable pageable) { // Ajax product 결과값 체크
+		int result = 0;
+		List<Product> product = productService.getProductByDivisionNoSize(divisionno, sizeArray, colorArray, price1, price2, pageable);
+		if (product != null)
+			result = 1;
+		return result;
+	}
+	
+	@GetMapping("/list/section/{sno}")
+	public String productSectionList(@PathVariable("sno") long sectionno,
+			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
+			HttpServletRequest request) throws Exception {
+		Section sectionname = sectionService.getSectionByNo(sectionno);
+		List<Product> product = productService.getProductBySectionNo(sectionno, pageable);
+		List<ProductStock> productsize = productstockService.findSectionDistinctSizeNo(sectionno);
+		List<ProductStock> productcolor = productstockService.findSectionDistinctColorNo(sectionno);
+		List<ClothesSize> size = clothessizeService.getClothesSize();
+		List<Division> division = divisionService.getDivision();
+		List<Section> section = sectionService.getSection();
+		Page<ProductEntity> page = productService.getProductBySectionNoPage(pageable, sectionno);
+
+		model.addAttribute("sectionname", sectionname);
+		model.addAttribute("productsize", productsize);
+		model.addAttribute("division", division);
+		model.addAttribute("section", section);
+		model.addAttribute("product", product);
+		model.addAttribute("page", page);
+		model.addAttribute("size", size);
+		model.addAttribute("productcolor", productcolor);
+
+		return "/home/product/list";
+	}
+	
+	@GetMapping("/Ajax/list/section/{no}/size/{size}/color/{color}/price1/{price1}/price2/{price2}")
+	public String filterSectionAjax(@PathVariable(value = "no") long sectionno,
+			@PathVariable(value = "size") String[] sizeArray,
+			@PathVariable(value = "color") String[] colorArray,
+			@PathVariable(value = "price1") long price1,
+			@PathVariable(value = "price2") long price2,
+			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
+			HttpServletRequest request) throws Exception { // Ajax id 중복체크
+		Section sectionname = sectionService.getSectionByNo(sectionno);
+		List<Product> product = productService.getProductBySectionNoSize(sectionno, sizeArray, colorArray, price1, price2, pageable);
+		List<ProductStock> productsize = productstockService.findSectionDistinctSizeNo(sectionno);
+		List<ProductStock> productcolor = productstockService.findSectionDistinctColorNo(sectionno);
+		List<ClothesSize> size = clothessizeService.getClothesSize();
+		List<Division> division = divisionService.getDivision();
+		List<Section> section = sectionService.getSection();
+		Page<ProductEntity> page = productService.getProductBySectionNoPageSize(pageable, sectionno, sizeArray, colorArray, price1, price2);
+
+		model.addAttribute("sectionname", sectionname);
+		model.addAttribute("productsize", productsize);
+		model.addAttribute("division", division);
+		model.addAttribute("section", section);
+		model.addAttribute("product", product);
+		model.addAttribute("page", page);
+		model.addAttribute("size", size);
+		model.addAttribute("productcolor", productcolor);
+
+		return "/home/product/list";
+	}
+	
+	@ResponseBody
+	@PostMapping("/sectionFilterCheck")
+	public int sectionFilterCheck(@RequestParam(value = "no") long sectionno, 
+			@RequestParam(value = "size") String[] sizeArray,
+			@RequestParam(value = "color") String[] colorArray, 
+			@RequestParam(value = "price1") long price1,
+			@RequestParam(value = "price2") long price2, 
+			Pageable pageable) { // Ajax product 결과값 체크
+		int result = 0;
+		List<Product> product = productService.getProductByDivisionNoSize(sectionno, sizeArray, colorArray, price1, price2, pageable);
 		if (product != null)
 			result = 1;
 		return result;

@@ -49,6 +49,17 @@ public class ProductServiceImpl implements ProductService{
 		return entities;
 	}
 	
+	@Override
+	public Page<ProductEntity> getProductByDivisionNoPage(Pageable pageable, long no) {
+		Page<ProductEntity> entities = repository.findByDivisionNo(no, pageable);
+		return entities;
+	}
+	
+	@Override
+	public Page<ProductEntity> getProductBySectionNoPage(Pageable pageable, long no) {
+		Page<ProductEntity> entities = repository.findBySectionNo(no, pageable);
+		return entities;
+	}
 
 	@Override
 	public Page<ProductEntity> getProductByCategoryNoPageSize(Pageable pageable, long no, String[] sizeArray, String[] colorArray, long price1, long price2) {
@@ -89,6 +100,19 @@ public class ProductServiceImpl implements ProductService{
 		}
 		return product;
 	}
+	
+	
+	@Override
+	public List<Product> getProductByDivisionNo(long no, Pageable pageable) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findByDivisionNo(pageable, no);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+	
 
 	@Override
 	public void saveProduct(Product product) {
@@ -114,10 +138,58 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 
+	@Override
+	public List<Product> getProductByDivisionNoSize(long no, String[] sizeArray, String[] colorArray, long price1,
+			long price2, Pageable pageable) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findByDivisionNo(no, sizeArray, colorArray, price1, price2, pageable);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
 
 
+	@Override
+	public List<Product> getProductBySectionNo(long no, Pageable pageable) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findBySectionNo(pageable, no);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
 
 
+	@Override
+	public List<Product> getProductBySectionNoSize(long no, String[] sizeArray, String[] colorArray, long price1,
+			long price2, Pageable pageable) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findBySectionNo(no, sizeArray, colorArray, price1, price2, pageable);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
+
+	@Override
+	public Page<ProductEntity> getProductByDivisionNoPageSize(Pageable pageable, long no, String[] sizeArray,
+			String[] colorArray, long price1, long price2) {
+		Page<ProductEntity> entities = repository.findByDivisionNoPage(no, pageable, sizeArray, colorArray, price1, price2);
+		return entities;
+	}
+
+
+	@Override
+	public Page<ProductEntity> getProductBySectionNoPageSize(Pageable pageable, long no, String[] sizeArray,
+			String[] colorArray, long price1, long price2) {
+		Page<ProductEntity> entities = repository.findBySectionNoPage(no, pageable, sizeArray, colorArray, price1, price2);
+		return entities;
+	}
 
 
 }

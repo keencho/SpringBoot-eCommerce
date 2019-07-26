@@ -1,0 +1,412 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+	<script>
+
+	</script>
+<main class="main">
+            <div class="banner banner-cat" style="background-image: url('/home/assets/images/product-list.jpg');">
+            	
+                <div class="banner-content container color-change">
+                <h1 class="banner-title">
+                        Product List
+                    </h1>
+                    <h2 class="banner-subtitle">check out our <span>High Quality</span> products</h2>
+                </div><!-- End .banner-content -->
+            </div><!-- End .banner -->
+
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item"><a th:href="@{'/product/list/category/{cno}'(cno=${categoryname.no})}" th:text="${categoryname.name}"></a></li>
+                        <li class="breadcrumb-item active" aria-current="page" th:if="${divisionname}"></li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+	
+			
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9" >
+                     <div id="ajax_product_list">
+                        <nav class="toolbox">
+                            <div class="toolbox-left">
+                                <div class="toolbox-item toolbox-sort">
+                                    <div class="select-custom">
+                                        <select id="orderby" class="form-control" th:if="${divisionname == null && sectionname == null}" th:onchange="@{'javascript:sorting(\'{cno}\');'(cno=${categoryname.no})}">
+                                            <option value="no,asc" th:if="${#strings.equals(param.sort, 'no,asc')}" selected>등록순</option>
+                                            <option value="no,asc" th:unless="${#strings.equals(param.sort, 'no,asc')}">등록순</option>
+                                            <option value="listprice,desc" th:if="${#strings.equals(param.sort, 'listprice,desc')}" selected>높은 가격순</option>
+                                            <option value="listprice,desc" th:unless="${#strings.equals(param.sort, 'listprice,desc')}">높은 가격순</option>
+                                            <option value="listprice,asc" th:if="${#strings.equals(param.sort, 'listprice,asc')}" selected>낮은 가격순</option>
+                                            <option value="listprice,asc" th:unless="${#strings.equals(param.sort, 'listprice,asc')}">낮은 가격순</option>
+                                        </select>
+                                    </div><!-- End .select-custom -->
+                                </div><!-- End .toolbox-item -->
+                            </div><!-- End .toolbox-left -->
+
+                            <div class="toolbox-item toolbox-show">
+                                <label>총 <span th:text="${page.getTotalElements()}"></span>개의 상품</span>
+                                </label>
+                            </div><!-- End .toolbox-item -->
+                        </nav>
+					
+                        <div class="row row-sm product-ajax-grid">
+                        <!-- product list start -->
+                            <div class="col-6 col-md-4 data_bno" th:each="product : ${product}" th:data-bno="${product.no}">
+                                <div class="product">
+                                    <figure class="product-image-container">
+                                        <a href="product.html" class="product-image">
+                                            <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product">
+                                        </a>
+                                        <a href="/home/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
+                                    </figure>
+                                    <div class="product-details">
+                                        <div class="ratings-container">
+                                            <div class="product-ratings">
+                                                <span class="ratings" style="width:80%"></span><!-- End .ratings -->
+                                            </div><!-- End .product-ratings -->
+                                        </div><!-- End .product-container -->
+                                        <h2 class="product-title">
+                                            <a href="product.html" th:text="${product.name}"></a>
+                                        </h2>
+                                        <div class="price-box">
+                                            <span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
+                                            <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
+                                        </div><!-- End .price-box -->
+
+                                        <div class="product-action">
+                                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                                <span>Add to Wishlist</span>
+                                            </a>
+
+                                            <a href="product.html" class="paction add-cart" title="Add to Cart">
+                                                <span>Add to Cart</span>
+                                            </a>
+
+                                            <a href="#" class="paction add-compare" title="Add to Compare">
+                                                <span>Add to Compare</span>
+                                            </a>
+                                        </div><!-- End .product-action -->
+                                    </div><!-- End .product-details -->
+                                </div><!-- End .product -->
+                            </div><!-- End .col-md-4 -->
+                         <!-- produt list end -->
+                        </div><!-- End .row -->
+                        
+						 <nav class="toolbox toolbox-pagination">
+							<!-- pagination start -->
+							<div style="margin: auto;" >
+							<ul class="pagination" id="paginationajax" th:if="${param.sort == null}">
+	                                <li class="page-item" th:if="${!page.first}">
+	                                    <a th:href="@{'?page={number}'(number=${page.number-1})}" class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+	                                </li>
+	                                <li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}" th:class=" ${page.number == pages} ? 'page-item active' : ''">
+	                                    <a th:unless="${pages+1 ==0}" class="page-link" th:href="@{${#httpServletRequest.requestURI}(page=${pages})}" th:inline="text">[[${pages+1}]]</a>
+	                                </li>   
+	                                <li th:if="${!page.last}" class="page-item">
+	                                    <a th:href="@{'?page={number}'(number=${page.number+1})}" class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+	                                </li>
+	                            </ul>
+	                            <ul class="pagination" id="paginationajax"  th:if="${#strings.equals(param.sort, 'no,asc')}">
+	                                <li class="page-item" th:if="${!page.first}">
+	                                    <a th:href="@{'?sort=no,asc&page={number}'(number=${page.number-1})}" class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+	                                </li>
+	                                <li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}" th:class=" ${page.number == pages} ? 'page-item active' : ''">
+	                                    <a th:unless="${pages+1 ==0}" class="page-link" th:href="@{${#httpServletRequest.requestURI}(sort=${param.sort}, page=${pages})}" th:inline="text">[[${pages+1}]]</a>
+	                                </li>   
+	                                <li th:if="${!page.last}" class="page-item">
+	                                    <a th:href="@{'?sort=no,asc&page={number}'(number=${page.number+1})}" class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+	                                </li>
+	                            </ul>
+	                            <ul class="pagination" id="paginationajax"  th:if="${#strings.equals(param.sort, 'listprice,asc')}">
+	                                <li class="page-item" th:if="${!page.first}">
+	                                    <a th:href="@{'?sort=listprice,asc&page={number}'(number=${page.number-1})}" class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+	                                </li>
+	                                <li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}" th:class=" ${page.number == pages} ? 'page-item active' : ''">
+	                                    <a th:unless="${pages+1 ==0}" class="page-link" th:href="@{${#httpServletRequest.requestURI}(sort=${param.sort}, page=${pages})}" th:inline="text">[[${pages+1}]]</a>
+	                                </li>   
+	                                <li th:if="${!page.last}" class="page-item">
+	                                    <a th:href="@{'?sort=listprice,asc&page={number}'(number=${page.number+1})}" class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+	                                </li>
+	                            </ul>
+	                            <ul class="pagination" id="paginationajax"  th:if="${#strings.equals(param.sort, 'listprice,desc')}">
+	                                <li class="page-item" th:if="${!page.first}">
+	                                    <a th:href="@{'?sort=listprice,desc&page={number}'(number=${page.number-1})}" class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+	                                </li>
+	                                <li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}" th:class=" ${page.number == pages} ? 'page-item active' : ''">
+	                                    <a th:unless="${pages+1 ==0}" class="page-link" th:href="@{${#httpServletRequest.requestURI}(sort=${param.sort}, page=${pages})}" th:inline="text">[[${pages+1}]]</a>
+	                                </li>   
+	                                <li th:if="${!page.last}" class="page-item">
+	                                    <a th:href="@{'?sort=listprice,desc&page={number}'(number=${page.number+1})}" class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+	                                </li>
+	                            </ul>
+                            </div>
+                            <!-- pagination end -->
+                            
+                        </nav>
+                        
+                       
+                    </div>
+                    </div><!-- End .col-lg-9 -->
+                    
+					<span th:with="url=${#httpServletRequest.requestURI}"/></span>
+					<span th:text="${url}"></span> 
+                    <aside class="sidebar-shop col-lg-3 order-lg-first">
+                        <div class="sidebar-wrapper">
+                        
+                            <div class="widget">
+                                <h3 class="widget-title">
+                                    <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1" th:text="${categoryname.name}"></a>
+                                </h3>
+                                <script>
+
+                                </script>
+                                <div class="collapse show" id="widget-body-1">
+                                    <div class="widget-body">
+                                        <ul class="cat-list">
+										  <div class="navbar-default">
+										    <ul class="navbar-nav" th:each="division : ${division}" th:if="${categoryname.no == division.category.no}">
+										        <li class="dropdown"><a href="#" th:text="${division.name}"></a>&#x25BE;
+										            <ul class="dropdown-menu">
+										                <li th:each="section : ${section}" th:if="${division.no == section.division.no}"><a th:href="@{'/product/list/category/{cno}/division/{dno}/section/{sno}'(cno=${categoryname.no}, dno=${division.no}, sno=${section.no})}" th:text="${section.name}"></a></li>
+										                <br>
+										            </ul>
+										        </li>
+										    </ul>
+                                        </ul>
+                                    </div><!-- End .widget-body -->
+                                </div><!-- End .collapse -->
+                            </div><!-- End .widget -->
+                            
+
+                            <div class="widget">
+                                <h3 class="widget-title">
+                                    <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Price</a>
+                                </h3>
+
+                                <div class="collapse show" id="widget-body-2">
+                                    <div class="widget-body">
+                                        <form action="#">
+                                            <div class="price-slider-wrapper">
+                                                <div id="price-slider"></div><!-- End #price-slider -->
+                                            </div><!-- End .price-slider-wrapper -->
+
+                                            <div class="filter-price-action">
+                                                <button type="submit" class="btn btn-primary">Filter</button>
+
+                                                <div class="filter-price-text">
+                                                    <span id="filter-price-range"></span>
+                                                </div><!-- End .filter-price-text -->
+                                            </div><!-- End .filter-price-action -->
+                                        </form>
+                                    </div><!-- End .widget-body -->
+                                </div><!-- End .collapse -->
+                            </div><!-- End .widget -->
+                            <div class="widget">
+                                <h3 class="widget-title">
+                                    <a data-toggle="collapse" href="#widget-body-3" role="button" aria-expanded="true" aria-controls="widget-body-3">사이즈</a>
+                                </h3>
+
+                                <div class="collapse show" id="widget-body-3">
+                                    <div class="widget-body">
+                                        <ul class="config-size-list" id="size_class">
+                                        	<li th:each="productsize : ${productsize}" th:value="${productsize.size_no.no}">
+                                        		<a style="cursor:pointer;" th:text="${productsize.size_no.name}" th:onclick="@{'javascript:size_ajax(\'{size}\')'(size=${productsize.product_no.category.no})}"></a>
+                                        	</li>
+                                        </ul>
+                                    </div><!-- End .widget-body -->
+                                </div><!-- End .collapse -->
+                            </div><!-- End .widget -->
+
+                            <div class="widget">
+                                <h3 class="widget-title">
+                                    <a data-toggle="collapse" href="#widget-body-6" role="button" aria-expanded="true" aria-controls="widget-body-6">Color</a>
+                                </h3>
+
+                                <div class="collapse show" id="widget-body-6">
+                                    <div class="widget-body">
+                                        <ul class="config-swatch-list">
+                                            <li>
+                                                <a href="#" style="background-color: #4090d5;"></a>
+                                            </li>
+                                            <li class="active">
+                                                <a href="#" style="background-color: #f5494a;"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="background-color: grey;"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="background-color: #11426b;"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="background-color: #f0f0f0;"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="background-color: #3fd5c9;"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="background-color: #979c1c;"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="background-color: #7d5a3c;"></a>
+                                            </li>
+                                        </ul>
+                                    </div><!-- End .widget-body -->
+                                </div><!-- End .collapse -->
+                            </div><!-- End .widget -->
+
+                            <div class="widget widget-featured">
+                                <h3 class="widget-title">Featured Products</h3>
+                                
+                                <div class="widget-body">
+                                    <div class="owl-carousel widget-featured-products">
+                                        <div class="featured-col">
+                                            <div class="product product-sm">
+                                                <figure class="product-image-container">
+                                                    <a href="product.html" class="product-image">
+                                                        <img src="/home/assets/images/products/small/product-1.jpg" alt="product">
+                                                    </a>
+                                                </figure>
+                                                <div class="product-details">
+                                                    <h2 class="product-title">
+                                                        <a href="product.html">Mouse</a>
+                                                    </h2>
+                                                    <div class="ratings-container">
+                                                        <div class="product-ratings">
+                                                            <span class="ratings" style="width:80%"></span><!-- End .ratings -->
+                                                        </div><!-- End .product-ratings -->
+                                                    </div><!-- End .product-container -->
+                                                    <div class="price-box">
+                                                        <span class="product-price">$45.00</span>
+                                                    </div><!-- End .price-box -->
+                                                </div><!-- End .product-details -->
+                                            </div><!-- End .product -->
+
+                                            <div class="product product-sm">
+                                                <figure class="product-image-container">
+                                                    <a href="product.html" class="product-image">
+                                                        <img src="/home/assets/images/products/home-featured-1.jpg" alt="product">
+                                                    </a>
+                                                </figure>
+                                                <div class="product-details">
+                                                    <h2 class="product-title">
+                                                        <a href="product.html">Headset</a>
+                                                    </h2>
+                                                    <div class="ratings-container">
+                                                        <div class="product-ratings">
+                                                            <span class="ratings" style="width:20%"></span><!-- End .ratings -->
+                                                        </div><!-- End .product-ratings -->
+                                                    </div><!-- End .product-container -->
+                                                    <div class="price-box">
+                                                        <span class="old-price">$60.00</span>
+                                                        <span class="product-price">$45.00</span>
+                                                    </div><!-- End .price-box -->
+                                                </div><!-- End .product-details -->
+                                            </div><!-- End .product -->
+
+                                            <div class="product product-sm">
+                                                <figure class="product-image-container">
+                                                    <a href="product.html" class="product-image">
+                                                        <img src="/home/assets/images/products/home-featured-2.jpg" alt="product">
+                                                    </a>
+                                                </figure>
+                                                <div class="product-details">
+                                                    <h2 class="product-title">
+                                                        <a href="product.html">Technicca</a>
+                                                    </h2>
+                                                    <div class="ratings-container">
+                                                        <div class="product-ratings">
+                                                            <span class="ratings" style="width:100%"></span><!-- End .ratings -->
+                                                        </div><!-- End .product-ratings -->
+                                                    </div><!-- End .product-container -->
+                                                    <div class="price-box">
+                                                        <span class="product-price">$50.00</span>
+                                                    </div><!-- End .price-box -->
+                                                </div><!-- End .product-details -->
+                                            </div><!-- End .product -->
+                                        </div><!-- End .featured-col -->
+
+                                        <div class="featured-col">
+                                            <div class="product product-sm">
+                                                <figure class="product-image-container">
+                                                    <a href="product.html" class="product-image">
+                                                        <img src="/home/assets/images/products/home-featured-3.jpg" alt="product">
+                                                    </a>
+                                                </figure>
+                                                <div class="product-details">
+                                                    <h2 class="product-title">
+                                                        <a href="product.html">Skullcanddy</a>
+                                                    </h2>
+                                                    <div class="ratings-container">
+                                                        <div class="product-ratings">
+                                                            <span class="ratings" style="width:100%"></span><!-- End .ratings -->
+                                                        </div><!-- End .product-ratings -->
+                                                    </div><!-- End .product-container -->
+                                                    <div class="price-box">
+                                                        <span class="old-price">$50.00</span>
+                                                        <span class="product-price">$35.00</span>
+                                                    </div><!-- End .price-box -->
+                                                </div><!-- End .product-details -->
+                                            </div><!-- End .product -->
+
+                                            <div class="product product-sm">
+                                                <figure class="product-image-container">
+                                                    <a href="product.html" class="product-image">
+                                                        <img src="/home/assets/images/products/home-featured-4.jpg" alt="product">
+                                                    </a>
+                                                </figure>
+                                                <div class="product-details">
+                                                    <h2 class="product-title">
+                                                        <a href="product.html">Phillips</a>
+                                                    </h2>
+                                                    <div class="ratings-container">
+                                                        <div class="product-ratings">
+                                                            <span class="ratings" style="width:60%"></span><!-- End .ratings -->
+                                                        </div><!-- End .product-ratings -->
+                                                    </div><!-- End .product-container -->
+                                                    <div class="price-box">
+                                                        <span class="product-price">$29.00</span>
+                                                    </div><!-- End .price-box -->
+                                                </div><!-- End .product-details -->
+                                            </div><!-- End .product -->
+
+                                            <div class="product product-sm">
+                                                <figure class="product-image-container">
+                                                    <a href="product.html" class="product-image">
+                                                        <img src="/home/assets/images/products/home-featured-5.jpg" alt="product">
+                                                    </a>
+                                                </figure>
+                                                <div class="product-details">
+                                                    <h2 class="product-title">
+                                                        <a href="product.html">Senheisser</a>
+                                                    </h2>
+                                                    <div class="ratings-container">
+                                                        <div class="product-ratings">
+                                                            <span class="ratings" style="width:20%"></span><!-- End .ratings -->
+                                                        </div><!-- End .product-ratings -->
+                                                    </div><!-- End .product-container -->
+                                                    <div class="price-box">
+                                                        <span class="product-price">$40.00</span>
+                                                    </div><!-- End .price-box -->
+                                                </div><!-- End .product-details -->
+                                            </div><!-- End .product -->
+                                        </div><!-- End .featured-col -->
+                                    </div><!-- End .widget-featured-slider -->
+                                </div><!-- End .widget-body -->
+                            </div><!-- End .widget -->
+
+                            <div class="widget widget-block">
+                                <h3 class="widget-title">Custom HTML Block</h3>
+                                <h5>This is a custom sub-title.</h5>
+                                <p>Lorem ipsum dolor sit amet, consectetur elitad adipiscing Cras non placerat mi. </p>
+                            </div><!-- End .widget -->
+                        </div><!-- End .sidebar-wrapper -->
+                    </aside><!-- End .col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+            
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->
+ <th:block th:include="home/main/footer.html"></th:block>

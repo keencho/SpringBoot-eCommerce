@@ -1,0 +1,194 @@
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+	  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="images/favicon.ico" type="image/ico" />
+
+    <title>Spring Boot Admin </title>
+
+    <!-- Bootstrap -->
+    <link href="/admin/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/admin/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- NProgress -->
+    <link href="/admin/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/admin/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	
+    <!-- bootstrap-progressbar -->
+    <link href="/admin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/admin/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="/admin/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/admin/build/css/custom.min.css" rel="stylesheet">
+  </head>
+<script>
+function find_size() {
+	window.open("/admin/product/stock/findSize", "","resizeable=yes,scrollbar=yes,width=890,height=800");
+}
+
+function find_color() {
+	window.open("/admin/product/stock/findColor", "","resizeable=yes,scrollbar=yes,width=890,height=800");
+}
+</script>
+
+<body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+       <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>수량 등록</h3>
+                
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2 th:text="${product.name}"></h2>
+                    <div class="clearfix"></div>
+                  </div>
+					<div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left" action="/admin/product/stock/add" name="productStockAddForm" method="post">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">상품명 
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="category_name" th:value="${product.name}" class="form-control col-md-7 col-xs-12" disabled>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">상품 타입
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="category_name" th:value="${product.division.name}" class="form-control col-md-7 col-xs-12" disabled>
+                          <input type="hidden" name="product_no"  th:value="${product.no}">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">사이즈 <span class="required">*</span>
+                        </label>
+                        <input type="button" value="사이즈 찾기" onClick="find_size();" class="btn">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="size_name" class="form-control col-md-7 col-xs-12" disabled>
+                          <input type="hidden" required="required" name="size_no">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">색상 <span class="required">*</span>
+                        </label>
+                        <input type="button" value="색상 찾기" onClick="find_color();" class="btn">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="color_name" class="form-control col-md-7 col-xs-12" disabled>
+                          <input type="hidden" required="required" name="color_no">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">수량
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" name="stock" class="form-control col-md-7 col-xs-12" th:value="${random}">
+                        </div>
+                      </div>       
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div align="center">
+                          <button type="submit" class="btn btn-success">추가</button>
+                          <button class="btn btn-primary" type="button" onClick="history.back();">취소</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/admin/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/admin/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/admin/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="/admin/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/admin/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="/admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="/admin/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="/admin/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/admin/vendors/Flot/jquery.flot.js"></script>
+    <script src="/admin/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/admin/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/admin/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/admin/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/admin/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/admin/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/admin/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/admin/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/admin/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/admin/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/admin/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/admin/vendors/moment/min/moment.min.js"></script>
+    <script src="/admin/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+     <!-- Datatables -->
+    <script src="/admin/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/admin/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/admin/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/admin/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/admin/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/admin/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/admin/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/admin/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/admin/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/admin/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/admin/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/admin/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/admin/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/admin/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/admin/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="/admin/build/js/custom.min.js"></script>
+	
+  </body>
+</html>

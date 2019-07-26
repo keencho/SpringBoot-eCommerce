@@ -22,5 +22,17 @@ public interface ProductStockRepository extends JpaRepository<ProductStockEntity
 	
 	@Query(value="select * from product_stock join product on product.no = product_stock.product_no where product.category_no = :no group by product_stock.color_no", nativeQuery=true)
 	List<ProductStockEntity> findByCategoryNoColor(@Param("no") long no);
+	
+	@Query(value="select * from product_stock join product on product.no = product_stock.product_no where product.division_no = :no group by product_stock.size_no", nativeQuery=true)
+	List<ProductStockEntity> findByDivisionNo(@Param("no") long no);
+	
+	@Query(value="select * from product_stock join product on product.no = product_stock.product_no where product.division_no = :no group by product_stock.color_no", nativeQuery=true)
+	List<ProductStockEntity> findByDivisionNoColor(@Param("no") long no);
+	
+	@Query(value="select * from product_stock join product on product.no = product_stock.product_no where product.section_no = :no group by product_stock.size_no", nativeQuery=true)
+	List<ProductStockEntity> findBySectionNo(@Param("no") long no);
+	
+	@Query(value="select * from product_stock join product on product.no = product_stock.product_no where product.section_no = :no group by product_stock.color_no", nativeQuery=true)
+	List<ProductStockEntity> findBySectionNoColor(@Param("no") long no);
 
 }
