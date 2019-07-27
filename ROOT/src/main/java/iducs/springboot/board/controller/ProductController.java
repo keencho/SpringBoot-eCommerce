@@ -1,10 +1,7 @@
 package iducs.springboot.board.controller;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
@@ -27,10 +23,8 @@ import iducs.springboot.board.domain.Category;
 import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
-import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.domain.Section;
-import iducs.springboot.board.domain.User;
 import iducs.springboot.board.entity.ProductEntity;
 import iducs.springboot.board.service.CategoryService;
 import iducs.springboot.board.service.ClothesSizeService;
@@ -68,6 +62,8 @@ public class ProductController {
 		Category category = categoryService.getCategoryByNo(categoryno);
 
 		List<Product> product = productService.getProductByCategoryNo(categoryno, pageable);
+		List<Product> related = productService.getRelatedProductByCategoryNo(categoryno);
+		List<Product> related2 = productService.getRelatedProductByCategoryNo(categoryno);
 		List<ProductStock> productsize = productstockService.findDistinctSizeNo(categoryno);
 		List<ProductStock> productcolor = productstockService.findDistinctColorNo(categoryno);
 		List<ClothesSize> size = clothessizeService.getClothesSize();
@@ -83,6 +79,8 @@ public class ProductController {
 		model.addAttribute("page", page);
 		model.addAttribute("size", size);
 		model.addAttribute("productcolor", productcolor);
+		model.addAttribute("related", related);
+		model.addAttribute("related2", related2);
 
 		return "/home/product/list";
 	}
@@ -97,6 +95,8 @@ public class ProductController {
 			HttpServletRequest request) throws Exception { // Ajax id 중복체크
 		Category category = categoryService.getCategoryByNo(categoryno);
 		List<Product> product = productService.getProductByCategoryNoSize(categoryno, sizeArray, colorArray, price1, price2, pageable);
+		List<Product> related = productService.getRelatedProductByCategoryNo(categoryno);
+		List<Product> related2 = productService.getRelatedProductByCategoryNo(categoryno);
 		List<ProductStock> productsize = productstockService.findDistinctSizeNo(categoryno);
 		List<ProductStock> productcolor = productstockService.findDistinctColorNo(categoryno);
 		List<ClothesSize> size = clothessizeService.getClothesSize();
@@ -112,6 +112,8 @@ public class ProductController {
 		model.addAttribute("page", page);
 		model.addAttribute("size", size);
 		model.addAttribute("productcolor", productcolor);
+		model.addAttribute("related", related);
+		model.addAttribute("related2", related2);
 
 		return "/home/product/list";
 	}
@@ -137,6 +139,9 @@ public class ProductController {
 			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
 			HttpServletRequest request) throws Exception {
 		Division divisionname = divisionService.getDivisionByNo(divisionno);
+		long categoryno = divisionname.getCategory().getNo();
+		List<Product> related = productService.getRelatedProductByCategoryNo(categoryno);
+		List<Product> related2 = productService.getRelatedProductByCategoryNo(categoryno);
 		List<Product> product = productService.getProductByDivisionNo(divisionno, pageable);
 		List<ProductStock> productsize = productstockService.findDivisionDistinctSizeNo(divisionno);
 		List<ProductStock> productcolor = productstockService.findDivisionDistinctColorNo(divisionno);
@@ -153,6 +158,8 @@ public class ProductController {
 		model.addAttribute("page", page);
 		model.addAttribute("size", size);
 		model.addAttribute("productcolor", productcolor);
+		model.addAttribute("related", related);
+		model.addAttribute("related2", related2);
 
 		return "/home/product/list";
 	}
@@ -166,6 +173,9 @@ public class ProductController {
 			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
 			HttpServletRequest request) throws Exception { // Ajax id 중복체크
 		Division divisionname = divisionService.getDivisionByNo(divisionno);
+		long categoryno = divisionname.getCategory().getNo();
+		List<Product> related = productService.getRelatedProductByCategoryNo(categoryno);
+		List<Product> related2 = productService.getRelatedProductByCategoryNo(categoryno);
 		List<Product> product = productService.getProductByDivisionNoSize(divisionno, sizeArray, colorArray, price1, price2, pageable);
 		List<ProductStock> productsize = productstockService.findDivisionDistinctSizeNo(divisionno);
 		List<ProductStock> productcolor = productstockService.findDivisionDistinctColorNo(divisionno);
@@ -182,6 +192,8 @@ public class ProductController {
 		model.addAttribute("page", page);
 		model.addAttribute("size", size);
 		model.addAttribute("productcolor", productcolor);
+		model.addAttribute("related", related);
+		model.addAttribute("related2", related2);
 
 		return "/home/product/list";
 	}
@@ -206,6 +218,9 @@ public class ProductController {
 			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
 			HttpServletRequest request) throws Exception {
 		Section sectionname = sectionService.getSectionByNo(sectionno);
+		long categoryno = sectionname.getCategory().getNo();
+		List<Product> related = productService.getRelatedProductByCategoryNo(categoryno);
+		List<Product> related2 = productService.getRelatedProductByCategoryNo(categoryno);
 		List<Product> product = productService.getProductBySectionNo(sectionno, pageable);
 		List<ProductStock> productsize = productstockService.findSectionDistinctSizeNo(sectionno);
 		List<ProductStock> productcolor = productstockService.findSectionDistinctColorNo(sectionno);
@@ -222,6 +237,8 @@ public class ProductController {
 		model.addAttribute("page", page);
 		model.addAttribute("size", size);
 		model.addAttribute("productcolor", productcolor);
+		model.addAttribute("related", related);
+		model.addAttribute("related2", related2);
 
 		return "/home/product/list";
 	}
@@ -235,6 +252,9 @@ public class ProductController {
 			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
 			HttpServletRequest request) throws Exception { // Ajax id 중복체크
 		Section sectionname = sectionService.getSectionByNo(sectionno);
+		long categoryno = sectionname.getCategory().getNo();
+		List<Product> related = productService.getRelatedProductByCategoryNo(categoryno);
+		List<Product> related2 = productService.getRelatedProductByCategoryNo(categoryno);
 		List<Product> product = productService.getProductBySectionNoSize(sectionno, sizeArray, colorArray, price1, price2, pageable);
 		List<ProductStock> productsize = productstockService.findSectionDistinctSizeNo(sectionno);
 		List<ProductStock> productcolor = productstockService.findSectionDistinctColorNo(sectionno);
@@ -251,6 +271,8 @@ public class ProductController {
 		model.addAttribute("page", page);
 		model.addAttribute("size", size);
 		model.addAttribute("productcolor", productcolor);
+		model.addAttribute("related", related);
+		model.addAttribute("related2", related2);
 
 		return "/home/product/list";
 	}

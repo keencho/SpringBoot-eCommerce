@@ -1,5 +1,122 @@
 <th:block th:include="home/main/header.html"></th:block>
 	<th:block th:include="home/main/nav.html"></th:block>
+	<style>
+		.overlay_popup {
+	  	display: none;
+	  	padding: 10px;
+		width: 400px;
+		height: 350px;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		background-color: #fff;
+		border-radius: 5px;
+		text-align: center;
+		z-index: 1201; /* 1px higher than the overlay layer */
+		border: 2px solid;
+		border-color: #2C7FC3;
+		border-radius: 5px;
+		box-shadow : rgba(0,0,0,0.5) 0 0 0 9999px, rgba(0,0,0,0.5) 2px 2px 3px 3px;
+		z-index : 100;
+	}
+	
+	.overlay_popup .wrap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -86px;
+	margin-left: -89px;
+	text-align: center;
+}
+.overlay_popup a {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	display: inline;
+	margin: 20px auto;
+	max-width: 30px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 5px 10px;
+}
+
+.overlay_popup a.button {
+	color: #000;
+	box-shadow: #2C7FC3 0 0px 0px 1px inset;
+}
+
+.overlay_popup a.button:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #2C7FC3 0 0px 0px 40px inset;
+}
+
+#cart_ajax_option {
+	  	display: none;
+	  	padding: 10px;
+		width: 400px;
+		height: 350px;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		background-color: #fff;
+		border-radius: 5px;
+		text-align: center;
+		z-index: 1201; /* 1px higher than the overlay layer */
+		border: 2px solid;
+		border-color: #2C7FC3;
+		border-radius: 5px;
+		box-shadow : rgba(0,0,0,0.5) 0 0 0 9999px, rgba(0,0,0,0.5) 2px 2px 3px 3px;
+		z-index : 100;
+	}
+	
+	#cart_ajax_option .wrap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -86px;
+	margin-left: -89px;
+	text-align: center;
+}
+#cart_ajax_option a {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	display: inline;
+	margin: 20px auto;
+	max-width: 30px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 5px 10px;
+}
+
+#cart_ajax_option a.button {
+	color: #000;
+	box-shadow: #2C7FC3 0 0px 0px 1px inset;
+}
+
+#cart_ajax_option a.button:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #2C7FC3 0 0px 0px 40px inset;
+}
+
+</style>
+<!-- 장바구니 옵션 선택 팝업 레이어를 불러오기 위한 div 지정 -->
+<div id="cart_ajax_option"></div>
+<!-- 장바구니 팝업 레이어 -->
+<div>
+	<span class="overlay_popup btn-popup01">
+	<br>
+		<h3><font color="#2C7FC3"><br>장바구니</font>에 상품이 담겼습니다.</h3>
+		<h5>장바구니로 이동하시겠습니까?</h5>
+		<a style="cursor: pointer" class="button">이동하기</a>
+  		<a style="cursor: pointer" onclick="$(this).popupClose();" class="button">닫기</a>
+	</span>
+</div>
+
 <main class="main">
             <div class="banner banner-cat" style="background-image: url('/home/assets/images/product-list.jpg');">
             	
@@ -107,7 +224,7 @@
                                                 <span>위시 리스트에 추가</span>
                                             </a>
 
-                                            <a href="product.html" class="paction add-cart" title="장바구니에 추가">
+                                            <a style="cursor: pointer;" class="paction add-cart" title="장바구니에 추가" th:onclick="@{'cartOptionAjax(\'{no}\')'(no=${product.no})}">
                                                 <span>장바구니에 추가</span>
                                             </a>
 
@@ -329,20 +446,21 @@
                             </div><!-- End .widget -->
 
                             <div class="widget widget-featured">
-                                <h3 class="widget-title">Featured Products</h3>
-                                
+                                <h3 class="widget-title" th:if="${categoryname}"><span th:text="${categoryname.name}"></span> 관련상품</h3>
+                                <h3 class="widget-title" th:if="${divisionname}"><span th:text="${divisionname.category.name}"></span> 관련상품</h3>
+                                <h3 class="widget-title" th:if="${sectionname}"><span th:text="${sectionname.category.name}"></span> 관련상품</h3>  
                                 <div class="widget-body">
                                     <div class="owl-carousel widget-featured-products">
                                         <div class="featured-col">
-                                            <div class="product product-sm">
+                                            <div class="product product-sm" th:each="related : ${related}">
                                                 <figure class="product-image-container">
                                                     <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/small/product-1.jpg" alt="product">
+                                                        <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${related.regdate}, pic=${related.pic1})}" alt="product">
                                                     </a>
                                                 </figure>
                                                 <div class="product-details">
                                                     <h2 class="product-title">
-                                                        <a href="product.html">Mouse</a>
+                                                        <a href="product.html" th:text="${related.name}"></a>
                                                     </h2>
                                                     <div class="ratings-container">
                                                         <div class="product-ratings">
@@ -350,102 +468,22 @@
                                                         </div><!-- End .product-ratings -->
                                                     </div><!-- End .product-container -->
                                                     <div class="price-box">
-                                                        <span class="product-price">$45.00</span>
-                                                    </div><!-- End .price-box -->
-                                                </div><!-- End .product-details -->
-                                            </div><!-- End .product -->
-                                            <div class="product product-sm">
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/small/product-1.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h2 class="product-title">
-                                                        <a href="product.html">Mouse</a>
-                                                    </h2>
-                                                    <div class="ratings-container">
-                                                        <div class="product-ratings">
-                                                            <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                                                        </div><!-- End .product-ratings -->
-                                                    </div><!-- End .product-container -->
-                                                    <div class="price-box">
-                                                        <span class="product-price">$45.00</span>
-                                                    </div><!-- End .price-box -->
-                                                </div><!-- End .product-details -->
-                                            </div><!-- End .product -->
-                                            <div class="product product-sm">
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/small/product-1.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h2 class="product-title">
-                                                        <a href="product.html">Mouse</a>
-                                                    </h2>
-                                                    <div class="ratings-container">
-                                                        <div class="product-ratings">
-                                                            <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                                                        </div><!-- End .product-ratings -->
-                                                    </div><!-- End .product-container -->
-                                                    <div class="price-box">
-                                                        <span class="product-price">$45.00</span>
-                                                    </div><!-- End .price-box -->
-                                                </div><!-- End .product-details -->
-                                            </div><!-- End .product -->
-                                            <div class="product product-sm">
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/small/product-1.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h2 class="product-title">
-                                                        <a href="product.html">Mouse</a>
-                                                    </h2>
-                                                    <div class="ratings-container">
-                                                        <div class="product-ratings">
-                                                            <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                                                        </div><!-- End .product-ratings -->
-                                                    </div><!-- End .product-container -->
-                                                    <div class="price-box">
-                                                        <span class="product-price">$45.00</span>
-                                                    </div><!-- End .price-box -->
-                                                </div><!-- End .product-details -->
-                                            </div><!-- End .product -->
-                                            <div class="product product-sm">
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/small/product-1.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h2 class="product-title">
-                                                        <a href="product.html">Mouse</a>
-                                                    </h2>
-                                                    <div class="ratings-container">
-                                                        <div class="product-ratings">
-                                                            <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                                                        </div><!-- End .product-ratings -->
-                                                    </div><!-- End .product-container -->
-                                                    <div class="price-box">
-                                                        <span class="product-price">$45.00</span>
+                                                        <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(related.listprice, 0, 'COMMA')})}"></span>
                                                     </div><!-- End .price-box -->
                                                 </div><!-- End .product-details -->
                                             </div><!-- End .product -->
                                         </div><!-- End .featured-col -->
 
                                         <div class="featured-col">
-                                            <div class="product product-sm">
+                                            <div class="product product-sm" th:each="related2 : ${related2}">
                                                 <figure class="product-image-container">
                                                     <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/home-featured-5.jpg" alt="product">
+                                                        <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${related2.regdate}, pic=${related2.pic1})}" alt="product">
                                                     </a>
                                                 </figure>
                                                 <div class="product-details">
                                                     <h2 class="product-title">
-                                                        <a href="product.html">Senheisser</a>
+                                                        <a href="product.html" th:text="${related2.name}"></a>
                                                     </h2>
                                                     <div class="ratings-container">
                                                         <div class="product-ratings">
@@ -453,7 +491,7 @@
                                                         </div><!-- End .product-ratings -->
                                                     </div><!-- End .product-container -->
                                                     <div class="price-box">
-                                                        <span class="product-price">$40.00</span>
+                                                        <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(related2.listprice, 0, 'COMMA')})}"></span>
                                                     </div><!-- End .price-box -->
                                                 </div><!-- End .product-details -->
                                             </div><!-- End .product -->

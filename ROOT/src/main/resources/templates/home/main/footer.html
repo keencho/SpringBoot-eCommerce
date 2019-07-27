@@ -223,476 +223,77 @@
     <!-- Custom JS File -->
     <script src="/home/assets/js/custom.js?ver=14"></script>
     <script>
-    
-    /* pagination load_hide */
-    $(function(){
- 	   $(document).on("click","#paginationajax a",function(e) { 
- 		  $("#ajax_product_list").hide();
-			$("#ajax_product_list").load($(this).attr("href") + " div#ajax_product_list").show();
-			$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
-			e.preventDefault();
- 	   });
-    });
-    
-    /* 사이즈에 active class 추가 / 삭제 */
-	$(function(){
-		var Btn = $("ul#size_class > li");
-			Btn.find("a").click(function(){ 
-				if($(this).parent().hasClass("active")){
-					$(this).parent().removeClass("active");
+ 
+ // 장바구니 ajax
+    function cartOptionAjax(no) {
+		var url = "/cart/option/" + no;
+		$.ajax({
+			url : "/cart/option/",
+			type : "POST",
+			data : {
+				"no" : no
+			},
+			dataType : "html",
+			complete : function(xhr, textStatus) {
+				var num = xhr.responseText;
+				if (num > 0) {
+					$("#cart_ajax_option").css({
+						"top": (($(window).height()-$("#cart_ajax_option").outerHeight())/2+$(window).scrollTop())+"px",
+						"left": (($(window).width()-$("#cart_ajax_option").outerWidth())/2+$(window).scrollLeft())+"px"
+					 });
+					$("#cart_ajax_option").load(url + " .cart_option").fadeIn(300);
 				} else {
-					$(this).parent().addClass("active");
-				}
-			});
-	});
-    
-    /* 가격에 active class 추가 / 삭제 */
-	$(function(){
-		var Btn = $(".price_class");
-			Btn.find("a").click(function(){ 
-				if($(this).hasClass("active")){
-					$(this).removeClass("active");
-				} else {
-					$(".price_class a").removeClass("active");
-					$(this).addClass("active");
-				}
-			});
-	});
+					alert("결과값이 없습니다!");
+				} 				 
+			},
+
+		});
+		$("#cart_ajax_option").css({
+			"top": (($(window).height()-$("#cart_ajax_option").outerHeight())/2+$(window).scrollTop())+"px",
+			"left": (($(window).width()-$("#cart_ajax_option").outerWidth())/2+$(window).scrollLeft())+"px"
+		 });
+		$("#cart_ajax_option").load(url + " .cart_option").fadeIn(300);
+    }
 	
-	 /* 색상에 active class 추가 / 삭제 */
-    $(function(){
-		var Btn = $("ul#color_class > li");
-			Btn.find("a").click(function(){ 
-				if($(this).parent().hasClass("active")){
-					$(this).parent().removeClass("active");
-				} else {
-					$(this).parent().addClass("active");
-				}
-			});
+	// pop-up 닫기
+	$(document).ready(function(){
+	    $.fn.ajaxOptionClose = function() {
+	      $( "#cart_ajax_option" ).css("display", "none");
+	      return this;
+	    };
 	});
 	
-    /* category번호로 접근시 sorting */
-    function category_sorting(cno) {
-    	$(document).ready(function(){
-			var selected = [];
-			var selected2 = [];
-			if($('.price_class > a.active').attr('value') != null){
-    			var selected3 = $('.price_class > a.active').attr('value');
-    			var price = selected3.split('~');
-    		} else {
-    			var selected3;
-    			var price;
-    		}
-			var sizeSelected = [];
-    		var colorSelected = [];
-    		var sort = $('#orderby').val();
-    		var variable = sort.split(',');
-    		
-    		$('#size_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		$('#color_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected2.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		if (selected == ''){
-    			$('#size_class > li').each(function(i){
-        			sizeSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			sizeSelected = selected;
-    		}
-    		
-    		if (selected2 == ''){
-    			$('#color_class > li').each(function(i){
-        			colorSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			colorSelected = selected2;
-    		}
-    		if (price == null){
-    			var price1 = 0;
-    			var price2 = 500000;
-    		} else{
-    			var price1 = price[0];
-    			var price2 = price[1];
-    		}
-    		
-    		var url = "/product/Ajax/list/category/" + cno + "/size/" + sizeSelected + "/color/" + colorSelected + "/price1/" + price1 + "/price2/" + price2 + "?sort=" + variable[0] + "," + variable[1];
-    		
-    		$("#ajax_product_list").hide();
-    		$("#ajax_product_list").load(url + " div#ajax_product_list").show();
-    		$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
-
-        })
-    }
-    
-    /* division번호로 접근시 sorting */
-    function division_sorting(dno) {
-    	$(document).ready(function(){
-			var selected = [];
-			var selected2 = [];
-			if($('.price_class > a.active').attr('value') != null){
-    			var selected3 = $('.price_class > a.active').attr('value');
-    			var price = selected3.split('~');
-    		} else {
-    			var selected3;
-    			var price;
-    		}
-			var sizeSelected = [];
-    		var colorSelected = [];
-    		var sort = $('#orderby').val();
-    		var variable = sort.split(',');
-    		
-    		$('#size_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		$('#color_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected2.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		if (selected == ''){
-    			$('#size_class > li').each(function(i){
-        			sizeSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			sizeSelected = selected;
-    		}
-    		
-    		if (selected2 == ''){
-    			$('#color_class > li').each(function(i){
-        			colorSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			colorSelected = selected2;
-    		}
-    		if (price == null){
-    			var price1 = 0;
-    			var price2 = 500000;
-    		} else{
-    			var price1 = price[0];
-    			var price2 = price[1];
-    		}
-    		
-    		var url = "/product/Ajax/list/division/" + dno + "/size/" + sizeSelected + "/color/" + colorSelected + "/price1/" + price1 + "/price2/" + price2 + "?sort=" + variable[0] + "," + variable[1];
-    		
-    		$("#ajax_product_list").hide();
-    		$("#ajax_product_list").load(url + " div#ajax_product_list").show();
-    		$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
-
-        })
-    }
-    
-    /* section번호로 접근시 sorting */
-    function section_sorting(sno) {
-    	$(document).ready(function(){
-			var selected = [];
-			var selected2 = [];
-			if($('.price_class > a.active').attr('value') != null){
-    			var selected3 = $('.price_class > a.active').attr('value');
-    			var price = selected3.split('~');
-    		} else {
-    			var selected3;
-    			var price;
-    		}
-			var sizeSelected = [];
-    		var colorSelected = [];
-    		var sort = $('#orderby').val();
-    		var variable = sort.split(',');
-    		
-    		$('#size_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		$('#color_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected2.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		if (selected == ''){
-    			$('#size_class > li').each(function(i){
-        			sizeSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			sizeSelected = selected;
-    		}
-    		
-    		if (selected2 == ''){
-    			$('#color_class > li').each(function(i){
-        			colorSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			colorSelected = selected2;
-    		}
-    		if (price == null){
-    			var price1 = 0;
-    			var price2 = 500000;
-    		} else{
-    			var price1 = price[0];
-    			var price2 = price[1];
-    		}
-    		
-    		var url = "/product/Ajax/list/section/" + sno + "/size/" + sizeSelected + "/color/" + colorSelected + "/price1/" + price1 + "/price2/" + price2 + "?sort=" + variable[0] + "," + variable[1];
-    		
-    		$("#ajax_product_list").hide();
-    		$("#ajax_product_list").load(url + " div#ajax_product_list").show();
-    		$('html, body').animate({scrollTop : $(".breadcrumb-nav").offset().top}, 500);
-
-        })
-    }
-    
-    /* category번호로 접근시 filter Ajax */
-	function filter_category_ajax(no) {
-    	$(function(){
-    		var selected = [];
-    		var selected2 = [];
-    		if($('.price_class > a.active').attr('value') != null){
-    			var selected3 = $('.price_class > a.active').attr('value');
-    			var price = selected3.split('~');
-    		} else {
-    			var selected3;
-    			var price;
-    		}
-    		var sizeSelected = [];
-    		var colorSelected = [];
-    		var priceSelected = [];
-    		var sort = $('#orderby').val();
-    		var variable = sort.split(',');
-    	
-    		$('#size_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		$('#color_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected2.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		if (selected == ''){
-    			$('#size_class > li').each(function(i){
-        			sizeSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			sizeSelected = selected;
-    		}
-    		
-    		if (selected2 == ''){
-    			$('#color_class > li').each(function(i){
-        			colorSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			colorSelected = selected2;
-    		}
-    		
-    		if (price == null){
-    			var price1 = 0;
-    			var price2 = 500000;
-    		} else{
-    			var price1 = price[0];
-    			var price2 = price[1];
-    		}
-    		var url = "/product/Ajax/list/category/" + no + "/size/" + sizeSelected + "/color/" + colorSelected + "/price1/" + price1 + "/price2/" + price2 + "?sort=" + variable[0] + "," + variable[1];
-    		$.ajax({
-    			url : "/product/categoryFilterCheck",
-    			type : "POST",
-    			traditional : true,
-    			data : {
-    				"no" : no,
-    				"size" : sizeSelected,
-    				"color" : colorSelected,
-    				"price1" : price1,
-    				"price2" : price2
-    			},
-    			dataType : "html",
-    			complete : function(xhr, textStatus) {
-    				var num = xhr.responseText;
-    				if (num > 0) {
-    					$("#ajax_product_list").hide();
-    					$("#ajax_product_list").load(url + " div#ajax_product_list").show();
-    				} else {
-    					alert("결과값이 없습니다!");
-    				} 				 
+	// 장바구니 ajax 수량체크
+	function cartOptionStockCheck(no) {
+		var size=Number($("#cart_ajax_size option:selected").val());
+		var color=Number($("#cart_ajax_color option:selected").val());
+		if(size != 0){
+			$('#cart_ajax_color').attr('disabled', false);
+		} else {
+			$('#cart_ajax_color').attr('disabled', true);
+		}
+		if (size != 0 && color != 0){
+			$.ajax({
+				url : "/cart/option/stockCheck",
+				type : "POST",
+				data : {
+					"no" : no,
+					"size" : size,
+					"color" : color
 				},
-
-    		});
-   		});
-	}
-    
-	/* division번호로 접근시 filter Ajax */
-	function filter_division_ajax(no) {
-    	$(function(){
-    		var selected = [];
-    		var selected2 = [];
-    		if($('.price_class > a.active').attr('value') != null){
-    			var selected3 = $('.price_class > a.active').attr('value');
-    			var price = selected3.split('~');
-    		} else {
-    			var selected3;
-    			var price;
-    		}
-    		var sizeSelected = [];
-    		var colorSelected = [];
-    		var priceSelected = [];
-    		var sort = $('#orderby').val();
-    		var variable = sort.split(',');
-    	
-    		$('#size_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		$('#color_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected2.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		if (selected == ''){
-    			$('#size_class > li').each(function(i){
-        			sizeSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			sizeSelected = selected;
-    		}
-    		
-    		if (selected2 == ''){
-    			$('#color_class > li').each(function(i){
-        			colorSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			colorSelected = selected2;
-    		}
-    		
-    		if (price == null){
-    			var price1 = 0;
-    			var price2 = 500000;
-    		} else{
-    			var price1 = price[0];
-    			var price2 = price[1];
-    		}
-    		var url = "/product/Ajax/list/division/" + no + "/size/" + sizeSelected + "/color/" + colorSelected + "/price1/" + price1 + "/price2/" + price2 + "?sort=" + variable[0] + "," + variable[1];
-    		$.ajax({
-    			url : "/product/divisionFilterCheck",
-    			type : "POST",
-    			traditional : true,
-    			data : {
-    				"no" : no,
-    				"size" : sizeSelected,
-    				"color" : colorSelected,
-    				"price1" : price1,
-    				"price2" : price2
-    			},
-    			dataType : "html",
-    			complete : function(xhr, textStatus) {
-    				var num = xhr.responseText;
-    				if (num > 0) {
-    					$("#ajax_product_list").hide();
-    					$("#ajax_product_list").load(url + " div#ajax_product_list").show();
-    				} else {
-    					alert("결과값이 없습니다!");
-    				} 				 
-				},
-
-    		});
-   		});
+				dataType : "html",
+				success : function(result) {
+					if (result > 0) {
+						$('#cart_option_button').show();
+					} else {
+						alert("수량이 부족합니다. 다른 옵션을 선택해주세요")
+						$('#cart_option_button').hide();
+					} 				 
+				}
+			});
+		}
 	}
 	
-	/* section번호로 접근시 filter Ajax */
-	function filter_section_ajax(no) {
-    	$(function(){
-    		var selected = [];
-    		var selected2 = [];
-    		if($('.price_class > a.active').attr('value') != null){
-    			var selected3 = $('.price_class > a.active').attr('value');
-    			var price = selected3.split('~');
-    		} else {
-    			var selected3;
-    			var price;
-    		}
-    		var sizeSelected = [];
-    		var colorSelected = [];
-    		var priceSelected = [];
-    		var sort = $('#orderby').val();
-    		var variable = sort.split(',');
-    	
-    		$('#size_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		$('#color_class > li').each(function(i){
-    			if($(this).hasClass('active')){
-    				selected2.push($(this).attr('value'));
-    			}
-    		});
-    		
-    		if (selected == ''){
-    			$('#size_class > li').each(function(i){
-        			sizeSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			sizeSelected = selected;
-    		}
-    		
-    		if (selected2 == ''){
-    			$('#color_class > li').each(function(i){
-        			colorSelected.push($(this).attr('value'));
-        		});
-    		} else{
-    			colorSelected = selected2;
-    		}
-    		
-    		if (price == null){
-    			var price1 = 0;
-    			var price2 = 500000;
-    		} else{
-    			var price1 = price[0];
-    			var price2 = price[1];
-    		}
-    		var url = "/product/Ajax/list/section/" + no + "/size/" + sizeSelected + "/color/" + colorSelected + "/price1/" + price1 + "/price2/" + price2 + "?sort=" + variable[0] + "," + variable[1];
-    		$.ajax({
-    			url : "/product/sectionFilterCheck",
-    			type : "POST",
-    			traditional : true,
-    			data : {
-    				"no" : no,
-    				"size" : sizeSelected,
-    				"color" : colorSelected,
-    				"price1" : price1,
-    				"price2" : price2
-    			},
-    			dataType : "html",
-    			complete : function(xhr, textStatus) {
-    				var num = xhr.responseText;
-    				if (num > 0) {
-    					$("#ajax_product_list").hide();
-    					$("#ajax_product_list").load(url + " div#ajax_product_list").show();
-    				} else {
-    					alert("결과값이 없습니다!");
-    				} 				 
-				},
-
-    		});
-   		});
-	}
-    </script>
+	</script>
 </body>
 </html>

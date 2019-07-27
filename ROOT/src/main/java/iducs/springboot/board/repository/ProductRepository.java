@@ -20,6 +20,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>{
 	List<ProductEntity> findByCategoryNo(Pageable pageable, long no);
 	List<ProductEntity> findByDivisionNo(Pageable pageable, long no);
 	List<ProductEntity> findBySectionNo(Pageable pageable, long no);
+	@Query(value="SELECT * FROM product WHERE category_no = :no ORDER BY rand() LIMIT 5", nativeQuery=true)
+	List<ProductEntity> findTop5ByCategoryNo(long no);
 	Page<ProductEntity> findByCategoryNo(long no, Pageable pageable);
 	Page<ProductEntity> findByDivisionNo(long no, Pageable pageable);
 	Page<ProductEntity> findBySectionNo(long no, Pageable pageable);

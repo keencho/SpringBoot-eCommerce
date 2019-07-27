@@ -7,8 +7,13 @@ import iducs.springboot.board.domain.ProductStock;
 
 public interface ProductStockService {
 	ProductStock getProductStockById(long no);
+	ProductStock getProductStockByNo(long no);
+	ProductStock stockCheck(long no, long color, long size);
 	List<ProductStock> findAll();
 	List<ProductStock> getProductStockByProductNo(long no);
+	
+	List<ProductStock> findSizeByProductNo(long no);
+	List<ProductStock> findColorByProductNo(long no);
 	
 	List<ProductStock> findDistinctSizeNo(long no);
 	List<ProductStock> findDistinctColorNo(long no);

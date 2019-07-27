@@ -192,4 +192,16 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 
+	@Override
+	public List<Product> getRelatedProductByCategoryNo(long no) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findTop5ByCategoryNo(no);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
+
 }

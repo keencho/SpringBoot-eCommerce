@@ -27,6 +27,13 @@ public class ProductStockServiceImpl implements ProductStockService {
 		ProductStock stock= entity.buildDomain();
 		return stock;
 	}
+	
+	@Override
+	public ProductStock getProductStockByNo(long no) {
+		ProductStockEntity entity = repository.findByProductNoQuery(no);
+		ProductStock stock= entity.buildDomain();
+		return stock;
+	}
 
 	@Override
 	public List<ProductStock> findAll() {
@@ -130,6 +137,35 @@ public class ProductStockServiceImpl implements ProductStockService {
 			productstock.add(pro);
 		}
 		return productstock;
+	}
+
+	@Override
+	public List<ProductStock> findSizeByProductNo(long no) {
+		List<ProductStock> productstock = new ArrayList<ProductStock>();
+		List<ProductStockEntity> entities = repository.findSizeByProductNo(no);
+		for(ProductStockEntity entity : entities) {
+			ProductStock pro = entity.buildDomain();
+			productstock.add(pro);
+		}
+		return productstock;
+	}
+
+	@Override
+	public List<ProductStock> findColorByProductNo(long no) {
+		List<ProductStock> productstock = new ArrayList<ProductStock>();
+		List<ProductStockEntity> entities = repository.findColorByProductNo(no);
+		for(ProductStockEntity entity : entities) {
+			ProductStock pro = entity.buildDomain();
+			productstock.add(pro);
+		}
+		return productstock;
+	}
+
+	@Override
+	public ProductStock stockCheck(long no, long color, long size) {
+		ProductStockEntity entity = repository.stockCheck(no, color, size);
+		ProductStock stock= entity.buildDomain();
+		return stock;
 	}
 
 

@@ -115,6 +115,8 @@ public class AdminProductController {
 				File file = new File(path2 + "/" + t1.format(d), newname);
 				FileCopyUtils.copy(pic1.getBytes(), file);
 			}
+		} else {
+			newname = null;
 		}
 		
 		if (!pic2.isEmpty()) {
@@ -131,6 +133,8 @@ public class AdminProductController {
 				File file = new File(path2 + "/" + t1.format(d), newname2);
 				FileCopyUtils.copy(pic2.getBytes(), file);
 			}
+		} else {
+			newname2 = null;
 		}
 		
 		if (!pic3.isEmpty()) {
@@ -147,6 +151,8 @@ public class AdminProductController {
 				File file = new File(path2 + "/" + t1.format(d), newname3);
 				FileCopyUtils.copy(pic3.getBytes(), file);
 			}
+		} else {
+			newname3 = null;
 		}
 		
 		if (!pic4.isEmpty()) {
@@ -163,6 +169,8 @@ public class AdminProductController {
 				File file = new File(path2 + "/" + t1.format(d), newname4);
 				FileCopyUtils.copy(pic4.getBytes(), file);
 			}
+		} else {
+			newname4 = null;
 		}
 		
 		if (!pic5.isEmpty()) {
@@ -179,6 +187,8 @@ public class AdminProductController {
 				File file = new File(path2 + "/" + t1.format(d), newname5);
 				FileCopyUtils.copy(pic5.getBytes(), file);
 			}
+		} else {
+			newname5 = null;
 		}
 		
 		if (!explainpic.isEmpty()) {
@@ -206,6 +216,12 @@ public class AdminProductController {
 
 		Product product = new Product(category, division, section, name, modelname, price, discount, listprice, size, color, material, madeby, madein, caution, date, newname, newname2, newname3, newname4, newname5, explainname, regdate);
 		productService.saveProduct(product);
+		
+		System.out.println(newname);
+		System.out.println(newname2);
+		System.out.println(newname3);
+		System.out.println(newname4);
+		System.out.println(newname5);
 
 		return "redirect:/admin/product";
 	}

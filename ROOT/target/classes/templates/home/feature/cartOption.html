@@ -1,0 +1,18 @@
+<div>
+	<span class="cart_option btn-popup01">
+	<br>
+		<h3><font color="#2C7FC3" th:text="${product.name}">오버핏 블루코트</font></h3>
+		<div align="center">
+		<h5>옵션을 선택해주세요</h5>
+		사이즈<select id="cart_ajax_size" class="form-control" th:onchange="@{'javascript:cartOptionStockCheck(\'{no}\')'(no=${product.no})}">
+			<option value="0">사이즈를 선택하세요</option>
+        	<option th:each="size : ${size}" th:value="${size.size_no.no}" th:text="${size.size_no.name}"></option>
+        </select>
+       	 색상<select id="cart_ajax_color" class="form-control" th:onchange="@{'javascript:cartOptionStockCheck(\'{no}\')'(no=${product.no})}" disabled>
+       	 	<option value="0">색상을 선택하세요</option>
+        	<option th:each="color : ${color}" th:value="${color.color_no.no}" th:text="${color.color_no.name}"></option>
+        </select>
+        </div>
+		<a style="cursor: pointer; display: none;" id="cart_option_button" class="button">추가하기</a>
+  		<a style="cursor: pointer" onclick="$(this).ajaxOptionClose();" class="button">닫기</a>
+	</span>

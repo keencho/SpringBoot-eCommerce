@@ -45,7 +45,6 @@ public class UserController {
 		int result=0;
 		User user1 = userService.getUserById(id);
 		if(user1!=null) result=1;
-		// User getUserByNo(long no); // primary key에 해당하는 id로  조회
 		return result;
 	}
 	@GetMapping("/login")

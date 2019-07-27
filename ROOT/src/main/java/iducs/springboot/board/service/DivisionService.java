@@ -6,7 +6,7 @@ import iducs.springboot.board.domain.Division;
 
 public interface DivisionService {
 	Division getDivisionByNo(long no);
-	
+
 	List<Division> getDivision();
 	
 	void saveDivision(Division division);
