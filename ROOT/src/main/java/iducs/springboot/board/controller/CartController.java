@@ -1,6 +1,9 @@
 package iducs.springboot.board.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -64,6 +67,43 @@ public class CartController {
 		ProductStock stockResult = productstockService.getProductStockById(stock.getNo());
 		int result = Integer.parseInt(stockResult.getStock());
 		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/add")
+	public void cartAdd(
+			@RequestParam(value = "no") long no,
+			@RequestParam(value = "color") String color,
+			@RequestParam(value = "size") String size,
+			HttpSession session
+			) {
+		Product product = productService.getProductById(no);
+		int cartno = 0;
+		if(session.getAttribute("cart") == null) {
+			List<Product> cart = new ArrayList<Product>();
+			cart.add(cartno, product);
+			session.setAttribute("cart", cart);
+		} else {
+			List<Product> cart = (List<Product>) session.getAttribute("cart");
+			for(int i = 0; i < cart.size(); i++) {
+				cartno = i + 1;
+			}
+			int index = this.exists(no, cart);
+			if(index == -1) {
+				cart.add(cartno,  product);
+				System.out.println(cartno);
+			}
+			session.setAttribute("cart", cart);
+		}
+	}
+	
+	private int exists(Long id, List<Product> cart) {
+		for(int i = 0; i < cart.size(); i++) {
+			if ( cart.get(i).getNo() == id){
+				return i;
+			}
+		}
+		return -1;
 	}
 
 }

@@ -18,54 +18,28 @@
                                 <thead>
                                     <tr>
                                         <th class="product-col">상품</th>
+                                        <th>옵션</th>
                                         <th class="price-col">가격</th>
                                         <th class="qty-col">수량</th>
                                         <th>총 가격</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr class="product-row">
+                                <tbody th:each="cart : ${session.cart}">
+                                    <tr class="product-row" >
                                         <td class="product-col">
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="/home/assets/images/products/product-4.jpg" alt="product">
+                                                    <img th:src="@{'/uploads/{date}/{pic}'(date=${cart.regdate}, pic=${cart.pic1})}" alt="product" style="height:180px;">
                                                 </a>
                                             </figure>
                                             <h2 class="product-title">
-                                                <a href="product.html">Men Watch</a>
+                                                <a href="product.html" th:text="${cart.name}"></a><br>
+                                                
                                             </h2>
                                         </td>
-                                        <td>$17.90</td>
-                                        <td>
-                                            <input class="vertical-quantity form-control" type="text">
-                                        </td>
-                                        <td>$17.90</td>
-                                    </tr>
-                                    <tr class="product-action-row">
-                                        <td colspan="4" class="clearfix">
-                                            <div class="float-left">
-                                                <a href="#" class="btn-move">Move to Wishlist</a>
-                                            </div><!-- End .float-left -->
-                                            
-                                            <div class="float-right">
-                                                <a href="#" title="Edit product" class="btn-edit"><span class="sr-only">Edit</span><i class="icon-pencil"></i></a>
-                                                <a href="#" title="Remove product" class="btn-remove"><span class="sr-only">Remove</span></a>
-                                            </div><!-- End .float-right -->
-                                        </td>
-                                    </tr>
-
-                                    <tr class="product-row">
-                                        <td class="product-col">
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="/home/assets/images/products/product-3.jpg" alt="product">
-                                                </a>
-                                            </figure>
-                                            <h2 class="product-title">
-                                                <a href="product.html">Men Watch-Black</a>
-                                            </h2>
-                                        </td>
-                                        <td>$8.90</td>
+                                        <td>사이즈 : 1<br>
+                                        컬러:2</td>
+                                        <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.listprice, 0, 'COMMA')})}"></td>
                                         <td>
                                             <input class="vertical-quantity form-control" type="text">
                                         </td>
@@ -74,12 +48,12 @@
                                     <tr class="product-action-row">
                                         <td colspan="4" class="clearfix">
                                             <div class="float-left">
-                                                <a href="#" class="btn-move">Move to Wishlist</a>
+                                                <a href="#" class="btn-move">위시리스트로 이동</a>
                                             </div><!-- End .float-left -->
                                             
                                             <div class="float-right">
-                                                <a href="#" title="Edit product" class="btn-edit"><span class="sr-only">Edit</span><i class="icon-pencil"></i></a>
-                                                <a href="#" title="Remove product" class="btn-remove"><span class="sr-only">Remove</span></a>
+                                                <a href="#" title="수정" class="btn-edit"><span class="sr-only">수정</span><i class="icon-pencil"></i></a>
+                                                <a href="#" title="삭제" class="btn-remove"><span class="sr-only">삭제</span></a>
                                             </div><!-- End .float-right -->
                                         </td>
                                     </tr>
@@ -89,7 +63,7 @@
                                     <tr>
                                         <td colspan="4" class="clearfix">
                                             <div class="float-left">
-                                                <a href="category.html" class="btn btn-outline-secondary">Continue Shopping</a>
+                                                <a href="/" class="btn btn-outline-secondary">메인으로 가기</a>
                                             </div><!-- End .float-left -->
 
                                             <div class="float-right">
@@ -101,23 +75,11 @@
                                 </tfoot>
                             </table>
                         </div><!-- End .cart-table-container -->
-
-                        <div class="cart-discount">
-                            <h4>Apply Discount Code</h4>
-                            <form action="#">
-                                <div class="input-group">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Enter discount code"  required>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-sm btn-primary" type="submit">Apply Discount</button>
-                                    </div>
-                                </div><!-- End .input-group -->
-                            </form>
-                        </div><!-- End .cart-discount -->
                     </div><!-- End .col-lg-8 -->
 
                     <div class="col-lg-4">
                         <div class="cart-summary">
-                            <h3>Summary</h3>
+                            <h3>요약</h3>
 
                             <h4>
                                 <a data-toggle="collapse" href="#total-estimate-section" class="collapsed" role="button" aria-expanded="false" aria-controls="total-estimate-section">Estimate Shipping and Tax</a>
