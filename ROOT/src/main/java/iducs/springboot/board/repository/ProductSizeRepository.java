@@ -13,6 +13,8 @@ import iducs.springboot.board.entity.ProductSizeEntity;
 @Repository
 public interface ProductSizeRepository extends JpaRepository<ProductSizeEntity, Long>{
 	ProductSizeEntity findByNo(long no);
+	@Query(value="SELECT * FROM product_size WHERE product_no = :no GROUP BY product_no", nativeQuery=true)
+	ProductSizeEntity findByNoNativeQuery(long no);
 	
 	List<ProductSizeEntity> findAll();
 	

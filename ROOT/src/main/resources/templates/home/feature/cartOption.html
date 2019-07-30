@@ -12,6 +12,10 @@
         	<option th:each="color : ${color}" th:value="${color.color_no.no}" th:text="${color.color_no.name}"></option>
         </select>
         </div>
-		<a style="cursor: pointer; display: none;" id="cart_option_button" th:onclick="@{'cart_add(\'{no}\')'(no=${product.no})}" class="button">추가하기</a>
-  		<a style="cursor: pointer" onclick="$(this).ajaxOptionClose();" class="button">닫기</a>
+        <div>
+			<a style="cursor: pointer; display: none;" id="cart_option_button" th:onclick="@{'cart_add_list(\'{no}\')'(no=${product.no})}" class="button">추가하기</a>
+  			<a style="cursor: pointer" onclick="$(this).ajaxOptionClose();" class="button">닫기</a>
+  			&nbsp&nbsp&nbsp
+  			<a style="cursor: pointer" th:onclick="@{'cart_size_table(\'{no}\')'(no=${product.no})}" class="button" th:if="${productSize != null}">사이즈표</a>
+  		</div>
 	</span>

@@ -28,6 +28,10 @@ public class Product {
 	private String pic5;
 	private String explainpic;	// 상품 설명 이미지
 	private String regdate;	//상품 등록일
+	private String cartSize; // 앞에 cart가 붙으면 장바구니용 변수임
+	private String cartColor;
+	private int cartQty;
+	private int cartPrice;
 	private List<ProductSize> productsize;
 	private List<ProductStock> productstock;
 	
@@ -261,6 +265,39 @@ public class Product {
 	public void setProductstock(List<ProductStock> productstock) {
 		this.productstock = productstock;
 	}
+
+	public String getCartSize() {
+		return cartSize;
+	}
+
+	public void setCartSize(String cartSize) {
+		this.cartSize = cartSize;
+	}
+
+	public String getCartColor() {
+		return cartColor;
+	}
+
+	public void setCartColor(String cartColor) {
+		this.cartColor = cartColor;
+	}
+
+	public int getCartQty() {
+		return cartQty;
+	}
+
+	public void setCartQty(int cartQty) {
+		this.cartQty = cartQty;
+	}
+
+	public int getCartPrice() {
+		return cartPrice;
+	}
+
+	public void setCartPrice(int cartPrice) {
+		this.cartPrice = cartPrice;
+	}
 	
+
 	
 }

@@ -13,6 +13,7 @@ import iducs.springboot.board.entity.QuestionEntity;
 
 public interface ProductSizeService {
 	ProductSize getProductSizeByNo(long no);
+	ProductSize getProductSizeByNoNativeQuery(long no);
 	List<ProductSize> findAll();
 	List<ProductSize> getProductSizeByProductNo(long no);
 	List<ProductSize> findDistinctSizeNo(long no);

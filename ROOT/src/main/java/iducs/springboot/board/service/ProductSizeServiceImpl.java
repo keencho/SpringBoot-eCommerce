@@ -74,6 +74,13 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 		repository.delete(entity);
 	}
 
+	@Override
+	public ProductSize getProductSizeByNoNativeQuery(long no) {
+		ProductSizeEntity entity = repository.findByNoNativeQuery(no);
+		ProductSize size = entity.buildDomain();
+		return size;
+	}
+
 
 
 }

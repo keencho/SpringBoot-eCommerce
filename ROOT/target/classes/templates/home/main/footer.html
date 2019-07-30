@@ -224,42 +224,23 @@
     <script src="/home/assets/js/custom.js?ver=14"></script>
     <script>
  
- // 장바구니 ajax
-    function cartOptionAjax(no) {
-		var url = "/cart/option/" + no;
-		$.ajax({
-			url : "/cart/option/",
-			type : "POST",
-			data : {
-				"no" : no
-			},
-			dataType : "html",
-			complete : function(xhr, textStatus) {
-				var num = xhr.responseText;
-				if (num > 0) {
-					$("#cart_ajax_option").css({
-						"top": (($(window).height()-$("#cart_ajax_option").outerHeight())/2+$(window).scrollTop())+"px",
-						"left": (($(window).width()-$("#cart_ajax_option").outerWidth())/2+$(window).scrollLeft())+"px"
-					 });
-					$("#cart_ajax_option").load(url + " .cart_option").fadeIn(300);
-				} else {
-					alert("결과값이 없습니다!");
-				} 				 
-			},
-		});
-		$("#cart_ajax_option").css({
-			"top": (($(window).height()-$("#cart_ajax_option").outerHeight())/2+$(window).scrollTop())+"px",
-			"left": (($(window).width()-$("#cart_ajax_option").outerWidth())/2+$(window).scrollLeft())+"px"
-		 });
-		$("#cart_ajax_option").load(url + " .cart_option").fadeIn(300);
-    }
-	
 	// pop-up 닫기
 	$(document).ready(function(){
 	    $.fn.ajaxOptionClose = function() {
-	      $( "#cart_ajax_option" ).css("display", "none");
-	      return this;
+	    	$( "#cart_ajax_option" ).css("display", "none");
+	    	return this;
 	    };
+	    
+	    $.fn.popupClose = function() {
+			$( "#cart_ajax_complete" ).css("display", "none");
+			return this;
+		};
+		    
+		$.fn.sizeTableClose = function() {
+			$( "#cart_ajax_sizeTable" ).css("display", "none");
+			return this;
+		};
+		
 	});
 	
 	// 장바구니 ajax 수량체크
@@ -297,7 +278,34 @@
 		}
 	}
 	
-	function cart_add(no) {
+	 // 장바구니 ajax
+    function cartOptionAjax(no) {
+		var url = "/cart/option/" + no;
+		$.ajax({
+			url : "/cart/option/",
+			type : "POST",
+			data : {
+				"no" : no
+			},
+			dataType : "html",
+			complete : function(xhr, textStatus) {
+				var num = xhr.responseText;
+				if (num > 0) {
+					$("#cart_ajax_option").css({
+						"top": (($(window).height()-$("#cart_ajax_option").outerHeight())/2+$(window).scrollTop())+"px",
+						"left": (($(window).width()-$("#cart_ajax_option").outerWidth())/2+$(window).scrollLeft())+"px"
+					 });
+					$("#cart_ajax_option").load(url + " .cart_option").fadeIn(300);
+				} else {
+					alert("결과값이 없습니다!");
+				} 				 
+			},
+		});
+
+    }
+	
+	// list에서 장바구니 추가 접근
+	function cart_add_list(no) {
 		var size=$("#cart_ajax_size option:selected").text();
 		var color=$("#cart_ajax_color option:selected").text();
 		$.ajax({
@@ -306,13 +314,41 @@
 			data : {
 				"no" : no,
 				"size" : size,
-				"color" : color
+				"color" : color,
+				"qty" : 1
 			},
 			dataType : "html",
 			success : function() {
-				alert("성공");		 
+				$( "#cart_ajax_option" ).css("display", "none");
+				$("#cart_ajax_complete").css({
+					"top": (($(window).height()-$("#cart_ajax_complete").outerHeight())/2+$(window).scrollTop())+"px",
+					"left": (($(window).width()-$("#cart_ajax_complete").outerWidth())/2+$(window).scrollLeft())+"px"
+				 });
+				$("#cart_ajax_complete").load("/cart/move/" + " .overlay_popup").fadeIn(300);		 
 			}
 		});
+		
+	}
+	
+	// 장바구니 전체 삭제
+	function cart_deleteall() {
+		var check = confirm("정말 장바구니를 비우시겠습니까?");
+		if(check == true){
+		  location.href="/cart/deleteall";
+		}
+		else if(check == false){
+		  return false;
+		}
+	}
+	
+	// 장바구니 사이즈표
+	function cart_size_table(no) {
+		var url = "/cart/sizetable/" + no;
+		$("#cart_ajax_sizeTable").css({
+			"top": (($(window).height()-$("#cart_ajax_sizeTable").outerHeight())/2+$(window).scrollTop())+"px",
+			"left": (($(window).width()-$("#cart_ajax_sizeTable").outerWidth())/2+$(window).scrollLeft())+"px",
+		 });
+		$("#cart_ajax_sizeTable").load(url + " .size_table").fadeIn(300);
 		
 	}
 	

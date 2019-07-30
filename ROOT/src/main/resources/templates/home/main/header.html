@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/home/assets/css/bootstrap.min.css">
 
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="/home/assets/css/style.min.css?ver=3">
+    <link rel="stylesheet" href="/home/assets/css/style.min.css?ver=14">
     
     <!-- Custom CSS File -->
     <link rel="stylesheet" href="/home/assets/css/custom.css?ver=3">
@@ -104,61 +104,49 @@
 
                         <div class="dropdown cart-dropdown">
                             <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <span class="cart-count">2</span>
+                               <span class="cart-count" th:if="${session.cart}" th:text="${session.cart.size()}"></span>
+                                <span class="cart-count" th:unless="${session.cart}">0</span>
                             </a>
 
                             <div class="dropdown-menu" >
                                 <div class="dropdownmenu-wrapper">
                                     <div class="dropdown-cart-products">
-                                        <div class="product">
+                                    
+                                        <div class="product" th:if="${session.cart != null}" th:each="cart : ${session.cart}">
                                             <div class="product-details">
                                                 <h4 class="product-title">
-                                                    <a href="product.html">Woman Ring</a>
+                                                    <a href="product.html" th:text="${cart.name}"></a>
                                                 </h4>
 
                                                 <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span>
-                                                    x $99.00
+                                                    <span class="cart-product-qty" th:text="${cart.cartQty}"></span>
+                                                    x
+                                                    <span th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.cartPrice, 0, 'COMMA')})}"></span>
                                                 </span>
                                             </div><!-- End .product-details -->
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="/home/assets/images/products/cart/product-1.jpg" alt="product">
+                                                    <img th:src="@{'/uploads/{date}/{pic}'(date=${cart.regdate}, pic=${cart.pic1})}" alt="product">
                                                 </a>
                                                 <a href="#" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
                                             </figure>
                                         </div><!-- End .product -->
-
-                                        <div class="product">
-                                            <div class="product-details">
-                                                <h4 class="product-title">
-                                                    <a href="product.html">Woman Necklace</a>
-                                                </h4>
-
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span>
-                                                    x $35.00
-                                                </span>
-                                            </div><!-- End .product-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="/home/assets/images/products/cart/product-2.jpg" alt="product">
-                                                </a>
-                                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
-                                            </figure>
+                                        
+                                         <div th:if="${session.cart == null}" align="center">
+                                       		  <h4>장바구니가 비었습니다. </h4>  
+                                       		  <h5>지금 원하시는 상품을 추가해보세요!</h5>
                                         </div><!-- End .product -->
+                                        
                                     </div><!-- End .cart-product -->
 
-                                    <div class="dropdown-cart-total">
-                                        <span>Total</span>
-
+                                    <div class="dropdown-cart-total" th:if="${session.cart != null}">
+                                        <span>합계</span>
                                         <span class="cart-total-price">$134.00</span>
                                     </div><!-- End .dropdown-cart-total -->
 
-                                    <div class="dropdown-cart-action">
-                                        <a href="cart.html" class="btn">장바구니 보기</a>
+                                    <div class="dropdown-cart-action" th:if="${session.cart != null}">
+                                        <a href="/cart" class="btn">장바구니 보기</a>
                                         <a href="checkout-shipping.html" class="btn">Checkout</a>
                                     </div><!-- End .dropdown-cart-total -->
                                 </div><!-- End .dropdownmenu-wrapper -->

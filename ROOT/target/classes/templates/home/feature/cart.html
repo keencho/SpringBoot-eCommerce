@@ -17,15 +17,14 @@
                             <table class="table table-cart">
                                 <thead>
                                     <tr>
-                                        <th class="product-col">상품</th>
-                                        <th>옵션</th>
+                                    	<th class="product-col">상품</th>
                                         <th class="price-col">가격</th>
                                         <th class="qty-col">수량</th>
-                                        <th>총 가격</th>
+                                        <th>합산 가격</th>
                                     </tr>
                                 </thead>
-                                <tbody th:each="cart : ${session.cart}">
-                                    <tr class="product-row" >
+                                <tbody th:if="${session.cart != null}" th:each="cart : ${session.cart}">
+                                    <tr class="product-row">
                                         <td class="product-col">
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
@@ -34,16 +33,19 @@
                                             </figure>
                                             <h2 class="product-title">
                                                 <a href="product.html" th:text="${cart.name}"></a><br>
-                                                
+                                                <font size="2">
+                                                	<span th:text="@{'옵션: {color}, {size}'(color=${cart.cartColor}, size=${cart.cartSize})}"></span>
+                                                </font><br><br>
+                                                <a href="#"><strong><u>옵션 변경하기</u></strong><i class="icon-angle-right"></i></a>
                                             </h2>
                                         </td>
-                                        <td>사이즈 : 1<br>
-                                        컬러:2</td>
                                         <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.listprice, 0, 'COMMA')})}"></td>
                                         <td>
-                                            <input class="vertical-quantity form-control" type="text">
+                                            <input class="vertical-quantity form-control" type="text" th:value="${cart.cartQty}">
+											<a href="#" th:onclick="@{'cart_update_qty(\'{no}\')'(no=${cart.index})}" title="수정" class="btn-edit"><span class="sr-only">수정</span><i class="icon-pencil">수정</i></a>
                                         </td>
-                                        <td>$8.90</td>
+                                        <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.cartPrice * cart.cartQty, 0, 'COMMA')})}">
+                                        </td>
                                     </tr>
                                     <tr class="product-action-row">
                                         <td colspan="4" class="clearfix">
@@ -52,13 +54,11 @@
                                             </div><!-- End .float-left -->
                                             
                                             <div class="float-right">
-                                                <a href="#" title="수정" class="btn-edit"><span class="sr-only">수정</span><i class="icon-pencil"></i></a>
                                                 <a href="#" title="삭제" class="btn-remove"><span class="sr-only">삭제</span></a>
                                             </div><!-- End .float-right -->
                                         </td>
                                     </tr>
                                 </tbody>
-
                                 <tfoot>
                                     <tr>
                                         <td colspan="4" class="clearfix">
@@ -67,8 +67,7 @@
                                             </div><!-- End .float-left -->
 
                                             <div class="float-right">
-                                                <a href="#" class="btn btn-outline-secondary btn-clear-cart">Clear Shopping Cart</a>
-                                                <a href="#" class="btn btn-outline-secondary btn-update-cart">Update Shopping Cart</a>
+                                                <a href="#" onclick="cart_deleteall()" class="btn btn-outline-secondary btn-clear-cart">장바구니 전체 삭제</a>
                                             </div><!-- End .float-right -->
                                         </td>
                                     </tr>
@@ -80,81 +79,30 @@
                     <div class="col-lg-4">
                         <div class="cart-summary">
                             <h3>요약</h3>
-
-                            <h4>
-                                <a data-toggle="collapse" href="#total-estimate-section" class="collapsed" role="button" aria-expanded="false" aria-controls="total-estimate-section">Estimate Shipping and Tax</a>
-                            </h4>
-
-                            <div class="collapse" id="total-estimate-section">
-                                <form action="#">
-                                    <div class="form-group form-group-sm">
-                                        <label>Country</label>
-                                        <div class="select-custom">
-                                            <select class="form-control form-control-sm">
-                                                <option value="USA">United States</option>
-                                                <option value="Turkey">Turkey</option>
-                                                <option value="China">China</option>
-                                                <option value="Germany">Germany</option>
-                                            </select>
-                                        </div><!-- End .select-custom -->
-                                    </div><!-- End .form-group -->
-
-                                    <div class="form-group form-group-sm">
-                                        <label>State/Province</label>
-                                        <div class="select-custom">
-                                            <select class="form-control form-control-sm">
-                                                <option value="CA">California</option>
-                                                <option value="TX">Texas</option>
-                                            </select>
-                                        </div><!-- End .select-custom -->
-                                    </div><!-- End .form-group -->
-
-                                    <div class="form-group form-group-sm">
-                                        <label>Zip/Postal Code</label>
-                                        <input type="text" class="form-control form-control-sm">
-                                    </div><!-- End .form-group -->
-
-                                    <div class="form-group form-group-custom-control">
-                                        <label>Flat Way</label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="flat-rate">
-                                            <label class="custom-control-label" for="flat-rate">Fixed $5.00</label>
-                                        </div><!-- End .custom-checkbox -->
-                                    </div><!-- End .form-group -->
-
-                                    <div class="form-group form-group-custom-control">
-                                        <label>Best Rate</label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="best-rate">
-                                            <label class="custom-control-label" for="best-rate">Table Rate $15.00</label>
-                                        </div><!-- End .custom-checkbox -->
-                                    </div><!-- End .form-group -->
-                                </form>
-                            </div><!-- End #total-estimate-section -->
-
                             <table class="table table-totals">
                                 <tbody>
                                     <tr>
-                                        <td>Subtotal</td>
-                                        <td>$17.90</td>
+                                        <td>가격 합계</td>
+                                        <td th:if="${session.total}" th:text="@{'{price}원'(price=${#numbers.formatInteger(session.total, 0, 'COMMA')})}"></td>
+                                        <td th:unless="${session.total}" >0원</td>
                                     </tr>
 
                                     <tr>
-                                        <td>Tax</td>
-                                        <td>$0.00</td>
+                                        <td>배송료</td>
+                                        <td>0원</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td>Order Total</td>
-                                        <td>$17.90</td>
+                                    	<td>총 합계</td>
+                                        <td th:if="${session.total}" th:text="@{'{price}원'(price=${#numbers.formatInteger(session.total, 0, 'COMMA')})}"></td>
+                                        <td th:unless="${session.total}" >0원</td>
                                     </tr>
                                 </tfoot>
                             </table>
 
                             <div class="checkout-methods">
-                                <a href="checkout-shipping.html" class="btn btn-block btn-sm btn-primary">Go to Checkout</a>
-                                <a href="#" class="btn btn-link btn-block">Check Out with Multiple Addresses</a>
+                                <a href="checkout-shipping.html" class="btn btn-block btn-sm btn-primary">결제하기</a>
                             </div><!-- End .checkout-methods -->
                         </div><!-- End .cart-summary -->
                     </div><!-- End .col-lg-4 -->
