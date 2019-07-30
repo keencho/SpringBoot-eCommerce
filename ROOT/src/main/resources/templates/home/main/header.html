@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="/home/assets/css/style.min.css?ver=14">
     
     <!-- Custom CSS File -->
-    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=3">
+    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=5">
     
     <!-- font-awesome -->
     <link href="/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
@@ -129,7 +129,7 @@
                                                 <a href="product.html" class="product-image">
                                                     <img th:src="@{'/uploads/{date}/{pic}'(date=${cart.regdate}, pic=${cart.pic1})}" alt="product">
                                                 </a>
-                                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
+                                                <a href="#" th:onclick="@{'cart_del(\'{no}\')'(no=${cart.cartNo})}" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
                                             </figure>
                                         </div><!-- End .product -->
                                         
@@ -142,7 +142,7 @@
 
                                     <div class="dropdown-cart-total" th:if="${session.cart != null}">
                                         <span>합계</span>
-                                        <span class="cart-total-price">$134.00</span>
+                                        <span class="cart-total-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(session.total, 0, 'COMMA')})}">$134.00</span>
                                     </div><!-- End .dropdown-cart-total -->
 
                                     <div class="dropdown-cart-action" th:if="${session.cart != null}">

@@ -1,6 +1,6 @@
 	<span class="cart_option btn-popup01">
 	<br>
-		<h3><font color="#2C7FC3" th:text="${product.name}">오버핏 블루코트</font></h3>
+		<h3><font color="#2C7FC3" th:text="${product.name}"></font></h3>
 		<div align="center">
 		<h5>옵션을 선택해주세요</h5>
 		사이즈<select id="cart_ajax_size" class="form-control" th:onchange="@{'javascript:cartOptionStockCheck(\'{no}\')'(no=${product.no})}">

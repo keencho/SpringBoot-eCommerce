@@ -1,5 +1,10 @@
 <th:block th:include="home/main/header.html"></th:block>
 	<th:block th:include="home/main/nav.html"></th:block>
+<!-- 장바구니 옵션 선택 팝업 레이어를 불러오기 위한 div 지정 -->
+<input type="hidden" id="hidden_cart_no"> 
+<div id="cart_ajax_updateOption"></div>
+<div id="cart_ajax_complete"></div>
+<div id="cart_ajax_sizeTable"></div>
 	 <main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
@@ -36,13 +41,13 @@
                                                 <font size="2">
                                                 	<span th:text="@{'옵션: {color}, {size}'(color=${cart.cartColor}, size=${cart.cartSize})}"></span>
                                                 </font><br><br>
-                                                <a href="#"><strong><u>옵션 변경하기</u></strong><i class="icon-angle-right"></i></a>
+                                                <a style="cursor: pointer;" th:onclick="@{'cartUpdateOptionAjax(\'{no}\', \'{cartno}\')'(no=${cart.no}, cartno=${cart.cartNo})}"><strong><u>옵션 변경하기</u></strong><i class="icon-angle-right"></i></a>
                                             </h2>
                                         </td>
                                         <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.listprice, 0, 'COMMA')})}"></td>
                                         <td>
-                                            <input class="vertical-quantity form-control" type="text" th:value="${cart.cartQty}">
-											<a href="#" th:onclick="@{'cart_update_qty(\'{no}\')'(no=${cart.index})}" title="수정" class="btn-edit"><span class="sr-only">수정</span><i class="icon-pencil">수정</i></a>
+                                            <input class="vertical-quantity form-control" th:id="@{'cart_qty{no}'(no=${cart.cartNo})}" type="text" th:value="${cart.cartQty}">
+											<a href="#" th:onclick="@{'cart_update_qty(\'{no}\')'(no=${cart.cartNo})}" title="수정" class="btn-edit"><span class="sr-only">수정</span><i class="icon-pencil">수정</i></a>
                                         </td>
                                         <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.cartPrice * cart.cartQty, 0, 'COMMA')})}">
                                         </td>
@@ -54,7 +59,7 @@
                                             </div><!-- End .float-left -->
                                             
                                             <div class="float-right">
-                                                <a href="#" title="삭제" class="btn-remove"><span class="sr-only">삭제</span></a>
+                                                <a href="#" th:onclick="@{'cart_del(\'{no}\')'(no=${cart.cartNo})}" title="삭제" class="btn-remove"><span class="sr-only">삭제</span></a>
                                             </div><!-- End .float-right -->
                                         </td>
                                     </tr>

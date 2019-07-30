@@ -32,6 +32,7 @@ public class Product {
 	private String cartColor;
 	private int cartQty;
 	private int cartPrice;
+	private int cartNo;
 	private List<ProductSize> productsize;
 	private List<ProductStock> productstock;
 	
@@ -296,6 +297,14 @@ public class Product {
 
 	public void setCartPrice(int cartPrice) {
 		this.cartPrice = cartPrice;
+	}
+
+	public int getCartNo() {
+		return cartNo;
+	}
+
+	public void setCartNo(int cartNo) {
+		this.cartNo = cartNo;
 	}
 	
 

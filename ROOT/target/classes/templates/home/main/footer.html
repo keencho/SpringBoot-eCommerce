@@ -241,6 +241,11 @@
 			return this;
 		};
 		
+		$.fn.OptionUpdateClose = function() {
+			$( "#cart_ajax_updateOption" ).css("display", "none");
+			return this;
+		};
+		
 	});
 	
 	// 장바구니 ajax 수량체크
@@ -303,6 +308,34 @@
 		});
 
     }
+	 
+    // 장바구니 옵션 수정
+    function cartUpdateOptionAjax(no, cartno) {
+		var url = "/cart/option/update/" + no;
+		$.ajax({
+			url : "/cart/option/",
+			type : "POST",
+			data : {
+				"no" : no
+			},
+			dataType : "html",
+			complete : function(xhr, textStatus) {
+				var num = xhr.responseText;
+				if (num > 0) {
+					
+					$("#cart_ajax_updateOption").css({
+						"top": (($(window).height()-$("#cart_ajax_updateOption").outerHeight())/2+$(window).scrollTop())+"px",
+						"left": (($(window).width()-$("#cart_ajax_updateOption").outerWidth())/2+$(window).scrollLeft())+"px"
+					 });
+					$("#cart_ajax_updateOption").load(url + " .cart_option").fadeIn(300);
+					document.getElementById("hidden_cart_no").value = cartno;
+				} else {
+					alert("결과값이 없습니다!");
+				} 				 
+			},
+		});
+
+    }
 	
 	// list에서 장바구니 추가 접근
 	function cart_add_list(no) {
@@ -349,6 +382,53 @@
 			"left": (($(window).width()-$("#cart_ajax_sizeTable").outerWidth())/2+$(window).scrollLeft())+"px",
 		 });
 		$("#cart_ajax_sizeTable").load(url + " .size_table").fadeIn(300);
+		
+	}
+	
+	function cart_update_qty(no){
+		var qty = $('#cart_qty' + no).val();
+		$.ajax({
+			url : "/cart/updateqty",
+			type : "POST",
+			data : {
+				"no" : no,
+				"qty" : qty
+			},
+			dataType : "html",
+			success : function() {
+				location.href='/cart';
+			}
+		});
+		
+	}
+	
+	function cart_del(no){
+		var check = confirm("정말 삭제하시겠습니까?");
+		if(check == true){
+		  location.href="/cart/del/" + no;
+		}
+		else if(check == false){
+		  return false;
+		}
+	}
+	
+	function cart_update_option(no){
+		var size=$("#cart_ajax_size option:selected").text();
+		var color=$("#cart_ajax_color option:selected").text();
+		var cartno=$("#hidden_cart_no").val();
+		$.ajax({
+			url : "/cart/updateOption",
+			type : "POST",
+			data : {
+				"no" : cartno,
+				"size" : size,
+				"color" : color
+			},
+			dataType : "html",
+			success : function() {
+				location.href="/cart";	 
+			}
+		});
 		
 	}
 	

@@ -13,9 +13,10 @@
         </select>
         </div>
         <div>
-			<a style="cursor: pointer; display: none;" id="cart_option_button" th:onclick="@{'cart_add_list(\'{no}\')'(no=${product.no})}" class="button">추가하기</a>
-  			<a style="cursor: pointer" onclick="$(this).ajaxOptionClose();" class="button">닫기</a>
+			<a style="cursor: pointer; display: none;" id="cart_option_button" th:onclick="@{'cart_update_option(\'{no}\')'(no=${product.no})}" class="button">수정하기</a>
+  			<a style="cursor: pointer" onclick="$(this).OptionUpdateClose();" class="button">닫기</a>
   			&nbsp&nbsp&nbsp
   			<a style="cursor: pointer" th:onclick="@{'cart_size_table(\'{no}\')'(no=${product.no})}" class="button" th:if="${productSize != null}">사이즈표</a>
   		</div>
 	</span>
+

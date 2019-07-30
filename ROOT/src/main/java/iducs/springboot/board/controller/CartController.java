@@ -49,15 +49,6 @@ public class CartController {
 		return result;
 	}
 	
-	@GetMapping("/sizetable/{no}")
-	public String cartGetSizeTable(@PathVariable(value = "no") long no, Model model) {
-		Product product = productService.getProductById(no);
-		ProductSize productSize = productsizeService.getProductSizeByNoNativeQuery(no);
-		model.addAttribute("clothesSize", productSize);
-		model.addAttribute("product", product);
-		return "home/feature/cartSizetable";
-	}
-	
 	@GetMapping("/option/{no}")
 	public String cartGetOption(@PathVariable(value = "no") long no, Model model) {
 		Product product = productService.getProductById(no);
@@ -75,9 +66,55 @@ public class CartController {
 		return "home/feature/cartOption";
 	}
 	
+	@GetMapping("/option/update/{no}")
+	public String cartGetUpdateOption(@PathVariable(value = "no") long no, Model model) {
+		Product product = productService.getProductById(no);
+		List<ProductStock> sizeStock = productstockService.findSizeByProductNo(no);
+		List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
+		model.addAttribute("product", product);
+		model.addAttribute("size", sizeStock);
+		model.addAttribute("color", colorStock);
+		try  {
+			ProductSize productSize = productsizeService.getProductSizeByNoNativeQuery(no);
+			model.addAttribute("productSize", productSize);
+		} catch (Exception e) {
+			System.out.println("null~"); // null 체크용 try~catch문
+		}
+		return "home/feature/cartUpdateOption";
+	}
+
+	@GetMapping("/sizetable/{no}")
+	public String cartGetSizeTable(@PathVariable(value = "no") long no, Model model) {
+		Product product = productService.getProductById(no);
+		ProductSize productSize = productsizeService.getProductSizeByNoNativeQuery(no);
+		model.addAttribute("clothesSize", productSize);
+		model.addAttribute("product", product);
+		return "home/feature/cartSizetable";
+	}
+	
 	@GetMapping("/move")
 	public String cartMove() {
 		return "home/feature/cartMove";
+	}
+	
+	@GetMapping("/del/{no}")
+	public String cartDel(@PathVariable(value = "no") int no, Model model, HttpSession session) {
+		List<Product> cart = (List<Product>) session.getAttribute("cart");
+		int total = 0;
+		cart.remove(no);
+		try {
+			for(int i = 0; i< cart.size(); i ++) {
+				if(no < cart.get(no + i).getCartNo()) {
+					cart.get(no + i).setCartNo(cart.get(no+i).getCartNo() -1);
+				}
+			}
+		} catch (Exception e) {
+		}
+		for(int i = 0; i< cart.size(); i ++) {
+			total = total + (cart.get(i).getCartPrice() * cart.get(i).getCartQty());
+		}
+		session.setAttribute("total", total);
+		return "redirect:/cart";
 	}
 	
 	@GetMapping("/deleteall")
@@ -115,6 +152,7 @@ public class CartController {
 		product.setCartColor(color);
 		product.setCartQty(qty);
 		product.setCartPrice(Integer.parseInt(product.getListprice()));
+		product.setCartNo(cartno);
 		int total = product.getCartPrice() * product.getCartQty(); // 이 total은 
 		if(session.getAttribute("cart") == null) { // cart session이 존재하지 않으면 새로 생성
 			List<Product> cart = new ArrayList<Product>();
@@ -126,6 +164,7 @@ public class CartController {
 			total = (int)session.getAttribute("total");
 			for(int i = 0; i < cart.size(); i++) {
 				cartno = i + 1; // 새로 삽일될 정보의 인덱스는 cart session의 마지막 인덱스 +1
+				product.setCartNo(cartno);
 			}
 			int index = this.exists(no, cart); // 장바구니에 현재 고객이 선택한 상품이 있는지 확인
 			if(index == -1) { // 장바구니에 현재 고객이 선택한 상품이 없으면..
@@ -141,6 +180,35 @@ public class CartController {
 		}
 	}
 	
+	@ResponseBody
+	@PostMapping("/updateOption")
+	public void cartUpdateOption(
+			@RequestParam(value = "no") int no,
+			@RequestParam(value = "color") String color,
+			@RequestParam(value = "size") String size,
+			HttpSession session
+			) {
+		List<Product> cart = (List<Product>) session.getAttribute("cart");
+		cart.get(no).setCartColor(color);
+		cart.get(no).setCartSize(size);
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateqty")
+	public void cartQtyUpdate(
+			@RequestParam(value = "no") int no,
+			@RequestParam(value = "qty") int qty,
+			HttpSession session
+			) {
+		List<Product> cart = (List<Product>) session.getAttribute("cart");
+		int total = (int) session.getAttribute("total");
+		int originalQty = cart.get(no).getCartQty();
+		cart.get(no).setCartQty(qty);
+		total = total + ((qty - originalQty) * cart.get(no).getCartPrice());
+		session.setAttribute("total", total);
+		System.out.println(qty);
+	}
+	 
 	private int exists(Long id, List<Product> cart) { // 장바구니에 이미 선택한 상품이 있는지 확인
 		for(int i = 0; i < cart.size(); i++) {
 			if ( cart.get(i).getNo() == id){
