@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="/home/assets/css/style.min.css?ver=14">
     
     <!-- Custom CSS File -->
-    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=5">
+    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=6">
     
     <!-- font-awesome -->
     <link href="/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
@@ -37,13 +37,10 @@
                             <a href="#">Links</a>
                             <div class="header-menu">
                                 <ul>
-                                    <li><a href="my-account.html">MY ACCOUNT </a></li>
-                                    <li><a href="#">DAILY DEAL</a></li>
-                                    <li><a href="#">MY WISHLIST </a></li>
-                                    <li><a href="blog.html">BLOG</a></li>
                                     <li th:unless="${session.user}"><a href="/user/register">회원가입</a></li>
                                     <li th:unless="${session.user}"><a href="/user/login">로그인</a></li>
                                     <li th:if="${session.userRank=='0'}"><a href="/admin">관리자</a></li>
+                                    <li th:if="${session.user}"><a th:href="@{'/wishlist/{no}'(no=${session.user.no})}">위시 리스트</a></li>
                                     <li th:if="${session.user}"><a href="/user/logout">로그아웃</a></li>
                                 </ul>
                             </div><!-- End .header-menu -->

@@ -36,6 +36,7 @@ public class HomeController {
 		List<Section> section=sectionService.getSection();
 		model.addAttribute("section", section);
 	}
+	
 	@GetMapping("/")
 	public String home() {
 		return "home/main/index";

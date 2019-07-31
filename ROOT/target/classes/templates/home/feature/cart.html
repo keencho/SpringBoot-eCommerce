@@ -86,10 +86,13 @@
                             <h3>요약</h3>
                             <table class="table table-totals">
                                 <tbody>
-                                    <tr>
-                                        <td>가격 합계</td>
-                                        <td th:if="${session.total}" th:text="@{'{price}원'(price=${#numbers.formatInteger(session.total, 0, 'COMMA')})}"></td>
-                                        <td th:unless="${session.total}" >0원</td>
+                                    <tr th:each="cart : ${session.cart}">
+                                        <td><span th:text="${cart.name}"></span><span th:text="@{' X {qty}'(qty=${cart.cartQty})}"></span></td>
+                                        <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.cartPrice * cart.cartQty, 0, 'COMMA')})}"></td>
+                                    </tr>
+                                    <tr th:unless="${session.cart}">
+                                    	<td>합계</td>
+                                        <td>0원</td>
                                     </tr>
 
                                     <tr>

@@ -4,7 +4,60 @@
 <div id="cart_ajax_option"></div>
 <div id="cart_ajax_complete"></div>
 <div id="cart_ajax_sizeTable"></div>
-<!-- 장바구니 팝업 레이어 -->
+<div id="wishlist_ajax_complete"></div>
+<!-- 로그인 -->
+<div id="login_popup"></div>
+<style>
+#wishlist_ajax_complete {
+	  	display: none;
+	  	padding: 10px;
+		width: 400px;
+		height: 200px;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		background-color: #fff;
+		border-radius: 5px;
+		text-align: center;
+		z-index: 1201; /* 1px higher than the overlay layer */
+		border: 2px solid;
+		border-color: #2C7FC3;
+		border-radius: 5px;
+		box-shadow : rgba(0,0,0,0.5) 0 0 0 9999px, rgba(0,0,0,0.5) 2px 2px 3px 3px;
+		z-index : 100;
+	}
+	#wishlist_ajax_complete .wrap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -86px;
+	margin-left: -89px;
+	text-align: center;
+}
+#wishlist_ajax_complete a {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	display: inline;
+	margin: 20px auto;
+	max-width: 30px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 5px 10px;
+}
+
+#wishlist_ajax_complete a.button {
+	color: #000;
+	box-shadow: #2C7FC3 0 0px 0px 1px inset;
+}
+
+#wishlist_ajax_complete a.button:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #2C7FC3 0 0px 0px 40px inset;
+}
+	</style>
 
 <main class="main">
             <div class="banner banner-cat" style="background-image: url('/home/assets/images/product-list.jpg');">
@@ -92,7 +145,7 @@
                                         <a href="product.html" class="product-image">
                                             <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product">
                                         </a>
-                                        <a href="/home/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
+                                        <a th:href="@{'/product/quickview/{no}'(no=${product.no})}" class="btn-quickview">상품 미리보기</a>
                                     </figure>
                                     <div class="product-details">
                                         <div class="ratings-container">
@@ -109,7 +162,10 @@
                                         </div><!-- End .price-box -->
 
                                         <div class="product-action">
-                                            <a href="#" class="paction add-wishlist" title="위시 리스트에 추가">
+                                            <a style="cursor: pointer;" onclick="login_popup()" class="paction add-wishlist" title="위시 리스트에 추가" th:if="${session.user == null}">
+                                                <span>위시 리스트에 추가</span>
+                                            </a>
+                                            <a style="cursor: pointer;" th:onclick="@{'wishlist_ajax_add(\'{no}\', \'{productno}\')'(no=${session.user.no}, productno=${product.no})}" class="paction add-wishlist" title="위시 리스트에 추가" th:unless="${session.user == null}">
                                                 <span>위시 리스트에 추가</span>
                                             </a>
 
@@ -273,11 +329,11 @@
                                     <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_division_ajax(\'{dno}\'); return false;'(dno=${divisionname.no})}" value="100000~500000" style="width: 200px;">100,000원 이상</a>         	      
                                 </div><!-- End .collapse -->
                                 <div class="collapse show price_class" id="widget-body-2" th:if="${sectionname}" align="center">
-                                	<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="0~10000" style="width: 200px;">10,000원 이하</a>
-									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="10000~40000" style="width: 200px;">10,000 ~ 40,000원</a>
-									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="40000~70000" style="width: 200px;">40,000 ~ 70,000원</a>
-                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="70000~100000" style="width: 200px;">70,000 ~ 100,000원</a>
-                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="100000~500000" style="width: 200px;">100,000원 이상</a>         	      
+                                	<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="0~10000" style="width: 200px;">10,000원 이하</a>
+									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="10000~40000" style="width: 200px;">10,000 ~ 40,000원</a>
+									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="40000~70000" style="width: 200px;">40,000 ~ 70,000원</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="70000~100000" style="width: 200px;">70,000 ~ 100,000원</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="100000~500000" style="width: 200px;">100,000원 이상</a>         	      
                                 </div><!-- End .collapse -->
                             </div><!-- End .widget -->
                             <div class="widget">

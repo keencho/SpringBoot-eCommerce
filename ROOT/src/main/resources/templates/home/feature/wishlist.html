@@ -1,0 +1,73 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+<!-- 장바구니 옵션 선택 팝업 레이어를 불러오기 위한 div 지정 -->
+<div id="cart_ajax_option"></div>
+<div id="cart_ajax_complete"></div>
+<div id="cart_ajax_sizeTable"></div>
+ <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">위시리스트</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="cart-table-container">
+                            <table class="table table-cart">
+                                <thead>
+                                    <tr>
+                                        <th class="product-col">상품</th>
+                                        <th class="price-col">모델명</th>
+                                        <th>가격</th>
+										<th>작업</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="product-row" th:each="wishlist : ${wishlist}">
+                                        <td class="product-col">
+                                            <figure class="product-image-container">
+                                                <a href="product.html" class="product-image">
+                                                    <img th:src="@{'/uploads/{date}/{pic}'(date=${wishlist.product_no.regdate}, pic=${wishlist.product_no.pic1})}" alt="product" style="width: 180px; height:180px;">
+                                                </a>
+                                            </figure>
+                                            <h2 class="product-title">
+                                                <a href="product.html" th:text="${wishlist.product_no.name}"></a><br>
+                                            </h2>
+                                        </td>
+                                        <td th:text="${wishlist.product_no.modelname}"></td>
+                                        <td th:text="@{'{price}원'(price=${#numbers.formatInteger(wishlist.product_no.listprice, 0, 'COMMA')})}"></td>
+                                        <td>
+											<a href="#" th:onclick="@{'cartOptionAjax(\'{no}\')'(no=${wishlist.product_no.no})}" class="btn btn-outline-secondary btn-update-cart">장바구니</a><br>
+											<a href="#" class="btn btn-outline-secondary btn-update-cart">바로구매</a><br>
+											<a href="#" th:onclick="@{'wishlist_del(\'{no}\', \'{userno}\')'(no=${wishlist.no}, userno=${session.user.no})}" class="btn btn-primary">삭제</a>
+											</td>
+                                    </tr>
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" class="clearfix">
+                                            <div class="float-left">
+                                                <a href="/" class="btn btn-outline-secondary">메인으로 돌아가기</a>
+                                            </div><!-- End .float-left -->
+
+                                            <div class="float-right">
+                                                <a href="#" th:onclick="@{'wishlist_delAll(\'{userno}\')'(userno=${session.user.no})}" class="btn btn-outline-secondary btn-update-cart">위시리스트 비우기</a>
+                                            </div><!-- End .float-right -->
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div><!-- End .cart-table-container -->
+                    </div><!-- End .col-lg-8 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-6"></div><!-- margin -->
+        </main><!-- End .main -->
+ <th:block th:include="home/main/footer.html"></th:block>

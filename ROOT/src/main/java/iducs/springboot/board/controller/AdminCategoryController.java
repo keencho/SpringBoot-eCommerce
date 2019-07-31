@@ -35,6 +35,7 @@ public class AdminCategoryController {
 	@PostMapping("/add")
 	public String categoryAdd(String name, String englishName, Model model) {
 		Category category = new Category(name,englishName);
+		
 		categoryService.saveCategory(category);
 		return "redirect:/admin/category";
 	}

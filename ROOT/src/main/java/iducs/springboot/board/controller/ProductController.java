@@ -291,6 +291,15 @@ public class ProductController {
 			result = 1;
 		return result;
 	}
-	 
+	
+	@GetMapping("/quickview/{no}")
+	public String productQuickView(
+			@PathVariable(value = "no") long no,
+			Model model
+			) {
+		Product product = productService.getProductById(no);
+		model.addAttribute("product", product);
+		return "home/product/quickview";
+	}
 
 }

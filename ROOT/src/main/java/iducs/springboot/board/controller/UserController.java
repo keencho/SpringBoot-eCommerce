@@ -51,6 +51,11 @@ public class UserController {
 	public String loginForm() {
 		return "home/user/login";
 	}
+	
+	@GetMapping("/loginPopup")
+	public String loginPopupForm() {
+		return "home/user/loginPopup";
+	}
 	@PostMapping("/login")
 	public String login(@Valid User user, HttpSession session) {
 		System.out.println("login process : ");
@@ -68,6 +73,25 @@ public class UserController {
 		System.out.println(sessionUser.getRank());
 		return "redirect:../";
 	}
+	
+	@ResponseBody
+	@PostMapping("/loginPopup")
+	public int loginPopup(
+			@RequestParam(value = "id") String id,
+			@RequestParam(value = "pw") String pw, 
+			HttpSession session) {
+		User sessionUser = userService.getUserById(id);
+		if(sessionUser == null) {
+			return 1;
+		}
+		if(!sessionUser.getPassword().equals(pw)) {
+			return 2;
+		}
+		session.setAttribute("user", sessionUser);
+		session.setAttribute("userRank", sessionUser.getRank());
+		return 0;
+	}
+	
 	@GetMapping("/loginError")
 	public String loginError() {
 		return "home/user/loginError";

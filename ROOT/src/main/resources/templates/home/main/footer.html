@@ -223,7 +223,11 @@
     <!-- Custom JS File -->
     <script src="/home/assets/js/custom.js?ver=14"></script>
     <script>
- 
+ 	// a href=# 이동 방지
+	$(document).on('click', 'a[href="#"]', function(e){
+		e.preventDefault();
+	});
+	
 	// pop-up 닫기
 	$(document).ready(function(){
 	    $.fn.ajaxOptionClose = function() {
@@ -243,6 +247,16 @@
 		
 		$.fn.OptionUpdateClose = function() {
 			$( "#cart_ajax_updateOption" ).css("display", "none");
+			return this;
+		};
+		
+		$.fn.loginPopupClose = function() {
+			$( "#login_popup" ).css("display", "none");
+			return this;
+		};
+		
+		$.fn.wishlistPopupClose = function() {
+			$( "#wishlist_ajax_complete" ).css("display", "none");
 			return this;
 		};
 		
@@ -430,6 +444,96 @@
 			}
 		});
 		
+	}
+	
+	function login_popup(){
+		var url="/user/loginPopup";
+		$("#login_popup").css({
+			"top": (($(window).height()-$("#login_popup").outerHeight())/2+$(window).scrollTop())+"px",
+			"left": (($(window).width()-$("#login_popup").outerWidth())/2+$(window).scrollLeft())+"px",
+		 });
+		$("#login_popup").load(url + " #modal-wrapper").fadeIn(300);
+	}
+	
+	function ajax_popup_login(){
+		var id = $("#login-email").val();
+		var pw = $("#login-password").val();
+		if(id == ''){
+			alert("아이디를 입력하세요");
+		} else if(pw == '') {
+			alert("비밀번호를 입력하세요");
+		}
+		if (id != '' && pw != ''){
+			$.ajax({
+				url : "/user/loginPopup",
+				type : "POST",
+				data : {
+					"id" : id,
+					"pw" : pw
+				},
+				dataType : "html",
+				success : function(result) {
+					if(result == 0){
+						alert("로그인에 성공하셨습니다!");
+						window.location.reload();
+					} else if(result == 1 || result == 2){
+						alert("잘못된 정보를 입력하셨습니다.");
+						document.getElementById('login-email').value = '';
+						document.getElementById('login-password').value = '';
+					}
+				}
+			});
+		}
+	}
+	
+	function wishlist_ajax_add(no, productno){
+		var url = "/wishlist/complete";
+		var failurl = "/wishlist/already";
+		$.ajax({
+			url : "/wishlist/add",
+			type : "POST",
+			data : {
+				"userno" : no,
+				"productno" : productno
+			},
+			dataType : "html",
+			success : function(result) {
+				if (result == 0){
+					$("#wishlist_ajax_complete").css({
+						"top": (($(window).height()-$("#wishlist_ajax_complete").outerHeight())/2+$(window).scrollTop())+"px",
+						"left": (($(window).width()-$("#wishlist_ajax_complete").outerWidth())/2+$(window).scrollLeft())+"px",
+					 });
+					$("#wishlist_ajax_complete").load(url + " .overlay_popup").fadeIn(300);
+				} else{
+					$("#wishlist_ajax_complete").css({
+						"top": (($(window).height()-$("#wishlist_ajax_complete").outerHeight())/2+$(window).scrollTop())+"px",
+						"left": (($(window).width()-$("#wishlist_ajax_complete").outerWidth())/2+$(window).scrollLeft())+"px",
+					 });
+					$("#wishlist_ajax_complete").load(failurl + " .overlay_popup").fadeIn(300);
+				}
+				
+			}
+		});
+	}
+	
+	function wishlist_del(no, userno){
+		var check = confirm("정말 삭제하시겠습니까?");
+		if(check == true){
+		  location.href="/wishlist/del/" + userno + "/" + no;
+		}
+		else if(check == false){
+		  return false;
+		}
+	}
+	
+	function wishlist_delAll(userno){
+		var check = confirm("정말 위시리스트를 비우시겠습니까?");
+		if(check == true){
+		  location.href="/wishlist/delall/" + userno;
+		}
+		else if(check == false){
+		  return false;
+		}
 	}
 	
 	</script>
