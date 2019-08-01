@@ -23,6 +23,7 @@ import iducs.springboot.board.domain.Category;
 import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
+import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.domain.Section;
 import iducs.springboot.board.entity.ProductEntity;
@@ -298,7 +299,13 @@ public class ProductController {
 			Model model
 			) {
 		Product product = productService.getProductById(no);
+		ProductSize productSize = productsizeService.getProductSizeByNoNativeQuery(no);
+		List<ProductStock> sizeStock = productstockService.findSizeByProductNo(no);
+		List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
 		model.addAttribute("product", product);
+		model.addAttribute("productsize", productSize);
+		model.addAttribute("size", sizeStock);
+		model.addAttribute("color", colorStock);
 		return "home/product/quickview";
 	}
 

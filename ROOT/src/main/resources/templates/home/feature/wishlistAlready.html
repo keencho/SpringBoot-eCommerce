@@ -5,3 +5,11 @@
 		<a style="cursor: pointer" th:onclick="@{location.href='/wishlist/{no}';(no=${session.user.no})}" class="button">이동하기</a>
   		<a style="cursor: pointer" onclick="$(this).wishlistPopupClose();" class="button">닫기</a>
 	</span>
+	
+	<span class="quick_overlay_popup btn-popup01">
+	<br>
+		<h3><br>이미<font color="#2C7FC3"> 위시리스트</font>에 담겨져 있는 상품입니다.</h3>
+		<h5>위시리스트로 이동하시겠습니까?</h5>
+		<a style="cursor: pointer" th:onclick="@{location.href='/wishlist/{no}';(no=${session.user.no})}" class="button">이동하기</a>
+  		<a style="cursor: pointer" onclick="$(this).wishlistQuickPopupClose();" class="button">닫기</a>
+	</span>

@@ -7,58 +7,6 @@
 <div id="wishlist_ajax_complete"></div>
 <!-- 로그인 -->
 <div id="login_popup"></div>
-<style>
-#wishlist_ajax_complete {
-	  	display: none;
-	  	padding: 10px;
-		width: 400px;
-		height: 200px;
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		background-color: #fff;
-		border-radius: 5px;
-		text-align: center;
-		z-index: 1201; /* 1px higher than the overlay layer */
-		border: 2px solid;
-		border-color: #2C7FC3;
-		border-radius: 5px;
-		box-shadow : rgba(0,0,0,0.5) 0 0 0 9999px, rgba(0,0,0,0.5) 2px 2px 3px 3px;
-		z-index : 100;
-	}
-	#wishlist_ajax_complete .wrap {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -86px;
-	margin-left: -89px;
-	text-align: center;
-}
-#wishlist_ajax_complete a {
-	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	display: inline;
-	margin: 20px auto;
-	max-width: 30px;
-	text-decoration: none;
-	border-radius: 4px;
-	padding: 5px 10px;
-}
-
-#wishlist_ajax_complete a.button {
-	color: #000;
-	box-shadow: #2C7FC3 0 0px 0px 1px inset;
-}
-
-#wishlist_ajax_complete a.button:hover {
-	color: rgba(255, 255, 255, 0.85);
-	box-shadow: #2C7FC3 0 0px 0px 40px inset;
-}
-	</style>
-
 <main class="main">
             <div class="banner banner-cat" style="background-image: url('/home/assets/images/product-list.jpg');">
             	
@@ -92,7 +40,7 @@
 	 <div class="container">
                 <div class="row">
                     <div class="col-lg-9" >
-                     <div id="ajax_product_list">
+                     <div id="ajax_product_list">              
                         <nav class="toolbox">
                             <div class="toolbox-left">
                                 <div class="toolbox-item toolbox-sort">
@@ -145,7 +93,7 @@
                                         <a href="product.html" class="product-image">
                                             <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product">
                                         </a>
-                                        <a th:href="@{'/product/quickview/{no}'(no=${product.no})}" class="btn-quickview">상품 미리보기</a>
+                                        <a th:href="@{'/product/quickview/{no}'(no=${product.no})}" class="btn-quickview" >상품 미리보기</a>
                                     </figure>
                                     <div class="product-details">
                                         <div class="ratings-container">
@@ -174,7 +122,7 @@
                                             </a>
 
                                             <a href="#" class="paction icon-magnifier" title="새창으로 보기">
-                                                <span>비교하기에 추가</span>
+                                                <span>새창으로 보기</span>
                                             </a>
                                         </div><!-- End .product-action -->
                                     </div><!-- End .product-details -->
@@ -243,10 +191,7 @@
 	                            </ul>
                             </div>
                             <!-- pagination end -->
-                            
                         </nav>
-                        
-                       
                     </div>
                     </div><!-- End .col-lg-9 -->
                     
@@ -368,19 +313,19 @@
                                 </h3>
                                 <div class="collapse show" id="widget-body-6">
                                     <div class="widget-body">
-                                        <ul class="config-swatch-list" id="color_class" th:if="${categoryname}">
+                                        <ul class="config-swatch-list2" id="color_class" th:if="${categoryname}">
                                             <li th:each="productcolor : ${productcolor}" th:value="${productcolor.color_no.no}">
                                                 <a th:unless="${productcolor.color_no.name == 'White'}" th:style="@{background-color: rgb({color}); cursor:pointer;(color=${productcolor.color_no.rgb})}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_category_ajax(\'{size}\')'(size=${productcolor.product_no.category.no})}"></a>
                                                 <a style="cursor:pointer; border-style: solid; border-width: 1px;" th:if="${productcolor.color_no.name == 'White'}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_category_ajax(\'{size}\')'(size=${productcolor.product_no.category.no})}"></a>
                                             </li>
                                         </ul>
-                                        <ul class="config-swatch-list" id="color_class" th:if="${divisionname}">
+                                        <ul class="config-swatch-list2" id="color_class" th:if="${divisionname}">
                                             <li th:each="productcolor : ${productcolor}" th:value="${productcolor.color_no.no}">
                                                 <a th:unless="${productcolor.color_no.name == 'White'}" th:style="@{background-color: rgb({color}); cursor:pointer;(color=${productcolor.color_no.rgb})}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_division_ajax(\'{size}\')'(size=${productcolor.product_no.division.no})}"></a>
                                                 <a style="cursor:pointer; border-style: solid; border-width: 1px;" th:if="${productcolor.color_no.name == 'White'}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_division_ajax(\'{size}\')'(size=${productcolor.product_no.division.no})}"></a>
                                             </li>
                                         </ul>
-                                        <ul class="config-swatch-list" id="color_class" th:if="${sectionname}">
+                                        <ul class="config-swatch-list2" id="color_class" th:if="${sectionname}">
                                             <li th:each="productcolor : ${productcolor}" th:value="${productcolor.color_no.no}">
                                                 <a th:unless="${productcolor.color_no.name == 'White'}" th:style="@{background-color: rgb({color}); cursor:pointer;(color=${productcolor.color_no.rgb})}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_section_ajax(\'{size}\')'(size=${productcolor.product_no.section.no})}"></a>
                                                 <a style="cursor:pointer; border-style: solid; border-width: 1px;" th:if="${productcolor.color_no.name == 'White'}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_section_ajax(\'{size}\')'(size=${productcolor.product_no.section.no})}"></a>

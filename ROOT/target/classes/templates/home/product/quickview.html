@@ -1,101 +1,140 @@
 <div class="product-single-container product-single-default product-quick-view container">
+<div id="quick_cart_ajax_complete"></div>
+<div id="quick_cart_ajax_sizeTable"></div>
+<div id="quick_wishlist_ajax_complete"></div>
+<!-- 로그인 -->
+<div id="quick_login_popup"></div>
+<script>
+/* 퀵뷰(색상) active class 추가, 삭제 */
+$(function(){
+	var Btn = $(".config-swatch-list > li");
+		Btn.click(function(){ 
+			if($(this).hasClass("active")){
+				$(this).removeClass("active");
+			} else {
+				Btn.removeClass("active");
+				$(this).addClass("active");
+			}
+		});
+});
+</script>
     <div class="row">
-        <div class="col-lg-6 col-md-6 product-single-gallery">
+        <div class="col-lg-5 col-md-5 product-single-gallery">
             <div class="product-slider-container product-item">
                 <div class="product-single-carousel owl-carousel owl-theme">
-                    <div class="product-item">
-                        <img class="product-single-image" src="/home/assets/images/products/zoom/product-1.jpg" data-zoom-image="assets/images/products/zoom/product-1-big.jpg"/>
+                    <div class="product-item" th:if="${product.pic1}">
+                        <img class="product-single-image" th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" data-zoom-image="assets/images/products/zoom/product-1-big.jpg"/>
                     </div>
-                    <div class="product-item">
-                        <img class="product-single-image" src="/home/assets/images/products/zoom/product-2.jpg" data-zoom-image="assets/images/products/zoom/product-2-big.jpg"/>
+                    <div class="product-item" th:if="${product.pic2}">
+                        <img class="product-single-image" th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic2})}" data-zoom-image="assets/images/products/zoom/product-2-big.jpg"/>
                     </div>
-                    <div class="product-item">
-                        <img class="product-single-image" src="/home/assets/images/products/zoom/product-3.jpg" data-zoom-image="assets/images/products/zoom/product-3-big.jpg"/>
+                    <div class="product-item" th:if="${product.pic3}" >
+                        <img class="product-single-image" th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic3})}" data-zoom-image="assets/images/products/zoom/product-3-big.jpg"/>
                     </div>
-                    <div class="product-item">
-                        <img class="product-single-image" src="/home/assets/images/products/zoom/product-4.jpg" data-zoom-image="assets/images/products/zoom/product-4-big.jpg"/>
+                    <div class="product-item" th:if="${product.pic4}">
+                        <img class="product-single-image" th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic4})}" data-zoom-image="assets/images/products/zoom/product-4-big.jpg"/>
                     </div>
                 </div>
                 <!-- End .product-single-carousel -->
             </div>
             <div class="prod-thumbnail row owl-dots" id='carousel-custom-dots'>
-                <div class="col-3 owl-dot">
-                    <img src="/home/assets/images/products/zoom/product-1.jpg"/>
+                <div class="col-3 owl-dot" th:if="${product.pic1}">
+                    <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}"/>
                 </div>
-                <div class="col-3 owl-dot">
-                    <img src="/home/assets/images/products/zoom/product-2.jpg"/>
+                <div class="col-3 owl-dot" th:if="${product.pic2}">
+                    <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic2})}"/>
                 </div>
-                <div class="col-3 owl-dot">
-                    <img src="/home/assets/images/products/zoom/product-3.jpg"/>
+                <div class="col-3 owl-dot" th:if="${product.pic3}">
+                    <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic3})}"/>
                 </div>
-                <div class="col-3 owl-dot">
-                    <img src="/home/assets/images/products/zoom/product-4.jpg"/>
+                <div class="col-3 owl-dot" th:if="${product.pic4}">
+                    <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic4})}"/>
                 </div>
             </div>
         </div><!-- End .col-lg-7 -->
 
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-7 col-md-7">
             <div class="product-single-details">
-                <h1 class="product-title">zz Porto Headset</h1>
-
-                <div class="ratings-container">
-                    <div class="product-ratings">
-                        <span class="ratings" style="width:60%"></span><!-- End .ratings -->
-                    </div><!-- End .product-ratings -->
-
-                    <a href="#" class="rating-link">( 6 Reviews )</a>
-                </div><!-- End .product-container -->
-
+                <h1 class="product-title" th:text="${product.name}"></h1>
                 <div class="price-box">
-                    <span class="old-price">$81.00</span>
-                    <span class="product-price">$101.00</span>
+                    <span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
+                    <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
                 </div><!-- End .price-box -->
-
                 <div class="product-desc">
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non.</p>
+                    <table class="table table-hover">
+					  <thead>
+					    <tr>
+					      <th scope="col">#</th>
+					      <th th:if="${productsize.top_length != ''}" th:text="@{'전체'}"></th>
+					      <th th:if="${productsize.top_shoulder != ''}" th:text="@{'어깨'}"></th>
+					      <th th:if="${productsize.top_sleeve != ''}" th:text="@{'소매'}"></th>
+					      <th th:if="${productsize.top_chest != ''}" th:text="@{'가슴'}"></th>
+					      
+					      <th th:if="${productsize.bot_length != ''}" th:text="@{'전체'}"></th>
+					      <th th:if="${productsize.bot_hip != ''}" th:text="@{'엉덩이'}"></th>
+					      <th th:if="${productsize.bot_rise != ''}" th:text="@{'앞밑위'}"></th>
+					      <th th:if="${productsize.bot_thigh != ''}" th:text="@{'허벅지 '}"></th>
+					      <th th:if="${productsize.bot_under != ''}" th:text="@{'밑단'}"></th>
+					      <th th:if="${productsize.bot_waist != ''}" th:text="@{'허리'}"></th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr th:each="productSize : ${product.productsize}">
+					      <th scope="row" th:text="${productSize.size_no.name}"></th>
+					      <th th:if="${productSize.top_length != ''}" th:text="${productSize.top_length}"></th>
+					      <th th:if ="${productSize.top_shoulder != ''}" th:text="${productSize.top_shoulder}"></th>
+					      <th th:if ="${productSize.top_sleeve != ''}" th:text="${productSize.top_sleeve}"></th>
+					      <th th:if ="${productSize.top_chest != ''}" th:text="${productSize.top_chest}"></th>
+					      
+					      <th th:if ="${productSize.bot_length!= ''}" th:text="${productSize.bot_length}"></th>
+					      <th th:if ="${productSize.bot_hip!= ''}" th:text="${productSize.bot_hip}"></th>
+					      <th th:if ="${productSize.bot_rise!= ''}" th:text="${productSize.bot_rise}"></th>
+					      <th th:if ="${productSize.bot_thigh!= ''}" th:text="${productSize.bot_thigh}"></th>
+					      <th th:if ="${productSize.bot_under!= ''}" th:text="${productSize.bot_under}"></th>
+					      <th th:if ="${productSize.bot_waist!= ''}" th:text="${productSize.bot_waist}"></th>
+					    </tr>
+					    
+					  </tbody>
+					  
+					</table>
                 </div><!-- End .product-desc -->
-
                 <div class="product-filters-container">
-                    <div class="product-single-filter">
-                        <label>Colors:</label>
-                        <ul class="config-swatch-list">
-                            <li class="active">
-                                <a href="#" style="background-color: #6085a5;"></a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-color: #ab6e6e;"></a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-color: #b19970;"></a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-color: #11426b;"></a>
-                            </li>
-                        </ul>
-                    </div><!-- End .product-single-filter -->
+	                <div class="product-single-filter">
+	                        <label>사이즈:</label>
+	                        <select id="quick_cart_ajax_size" class="form-control" style="width:200px; height:50px;">
+								<option value="0">사이즈를 선택하세요</option>
+					        	<option th:each="size : ${size}" th:value="${size.size_no.no}" th:text="${size.size_no.name}"></option>
+					        </select>
+	                    </div><!-- End .product-single-filter -->
+	                    <div class="product-single-filter">
+	                        <label>색상:</label>
+	                        <ul class="config-swatch-list">
+	                            <li th:each="color : ${color}" th:value="${color.color_no.no}">
+	                                <a href="#" th:style="@{background-color: rgb({color});(color=${color.color_no.rgb})}" th:title="${color.color_no.name}" th:text="${color.color_no.name}"></a>
+	                            </li>
+	                        </ul>
+	                    </div><!-- End .product-single-filter -->
                 </div><!-- End .product-filters-container -->
-
                 <div class="product-action">
                     <div class="product-single-qty">
-                        <input class="horizontal-quantity form-control" type="text">
+                        <input class="horizontal-quantity form-control" id="quick-qty" type="text">
                     </div><!-- End .product-single-qty -->
-
-                    <a href="cart.html" class="paction add-cart" title="Add to Cart">
-                        <span>Add to Cart</span>
+					<a href="#" class="paction icon-dollar" title="바로 구매">
+                    	<span>바로 구매&nbsp&nbsp</span>
                     </a>
-                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                        <span>Add to Wishlist</span>
+                    <a href="#" th:onclick="@{'cartQuickOptionAjax(\'{no}\')'(no=${product.no})}" class="paction add-cart" title="장바구니에 추가">
+                        <span>장바구니</span>
                     </a>
-                    <a href="#" class="paction add-compare" title="Add to Compare">
-                        <span>Add to Compare</span>
+                    <a style="cursor: pointer;" onclick="quick_login_popup()" class="paction add-wishlist" title="위시 리스트에 추가" th:if="${session.user == null}">
+                    	<span>위시 리스트에 추가</span>
+                    </a>
+                    <a style="cursor: pointer;" th:onclick="@{'wishlist_quick_ajax_add(\'{no}\', \'{productno}\')'(no=${session.user.no}, productno=${product.no})}" class="paction add-wishlist" title="위시 리스트에 추가" th:unless="${session.user == null}">
+                    <span>위시 리스트에 추가</span>
+                    	</a>
+                    <a href="#" class="paction icon-magnifier" title="새창으로 보기">
+                    	<span>새창으로 보기</span>
                     </a>
                 </div><!-- End .product-action -->
-
-                <div class="product-single-share">
-                    <label>Share:</label>
-                    <!-- www.addthis.com share plugin-->
-                    <div class="addthis_inline_share_toolbox"></div>
-                </div><!-- End .product single-share -->
             </div><!-- End .product-single-details -->
         </div><!-- End .col-lg-5 -->
     </div><!-- End .row -->
