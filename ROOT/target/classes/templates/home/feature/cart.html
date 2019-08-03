@@ -32,12 +32,12 @@
                                     <tr class="product-row">
                                         <td class="product-col">
                                             <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
+                                                <a th:href="@{'/product/view/{no}'(no=${cart.no})}" class="product-image" target="_blank">
                                                     <img th:src="@{'/uploads/{date}/{pic}'(date=${cart.regdate}, pic=${cart.pic1})}" alt="product" style="height:180px;">
                                                 </a>
                                             </figure>
                                             <h2 class="product-title">
-                                                <a href="product.html" th:text="${cart.name}"></a><br>
+                                                <a th:href="@{'/product/view/{no}'(no=${cart.no})}" target="_blank" th:text="${cart.name}"></a><br>
                                                 <font size="2">
                                                 	<span th:text="@{'옵션: {color}, {size}'(color=${cart.cartColor}, size=${cart.cartSize})}"></span>
                                                 </font><br><br>

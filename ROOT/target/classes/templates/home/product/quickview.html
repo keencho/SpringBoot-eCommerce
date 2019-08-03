@@ -55,7 +55,7 @@ $(function(){
 
         <div class="col-lg-7 col-md-7">
             <div class="product-single-details">
-                <h1 class="product-title" th:text="${product.name}"></h1>
+                <a th:href="@{'/product/view/{no}'(no=${product.no})}"><h1 class="product-title" th:text="${product.name}"></h1></a>
                 <div class="price-box">
                     <span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
                     <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
@@ -131,7 +131,7 @@ $(function(){
                     <a style="cursor: pointer;" th:onclick="@{'wishlist_quick_ajax_add(\'{no}\', \'{productno}\')'(no=${session.user.no}, productno=${product.no})}" class="paction add-wishlist" title="위시 리스트에 추가" th:unless="${session.user == null}">
                     <span>위시 리스트에 추가</span>
                     	</a>
-                    <a href="#" class="paction icon-magnifier" title="새창으로 보기">
+                    <a th:href="@{'/product/view/{no}'(no=${product.no})}" target="_blank" class="paction icon-magnifier" title="새창으로 보기">
                     	<span>새창으로 보기</span>
                     </a>
                 </div><!-- End .product-action -->

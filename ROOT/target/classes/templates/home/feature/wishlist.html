@@ -31,12 +31,12 @@
                                     <tr class="product-row" th:each="wishlist : ${wishlist}">
                                         <td class="product-col">
                                             <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
+                                                <a th:href="@{'/product/view/{no}'(no=${wishlist.product_no.no})}" class="product-image" target="_blank">
                                                     <img th:src="@{'/uploads/{date}/{pic}'(date=${wishlist.product_no.regdate}, pic=${wishlist.product_no.pic1})}" alt="product" style="width: 180px; height:180px;">
                                                 </a>
                                             </figure>
                                             <h2 class="product-title">
-                                                <a href="product.html" th:text="${wishlist.product_no.name}"></a><br>
+                                                <a th:href="@{'/product/view/{no}'(no=${wishlist.product_no.no})}" target="_blank" th:text="${wishlist.product_no.name}"></a><br>
                                             </h2>
                                         </td>
                                         <td th:text="${wishlist.product_no.modelname}"></td>

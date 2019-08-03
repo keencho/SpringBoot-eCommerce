@@ -308,5 +308,12 @@ public class ProductController {
 		model.addAttribute("color", colorStock);
 		return "home/product/quickview";
 	}
+	
+	@GetMapping("/view/{no}")
+	public String viewProduct(@PathVariable(value = "no") Long no, Model model) {
+		Product product = productService.getProductById(no);
+		model.addAttribute("product", product);
+		return "/home/product/view";
+	}
 
 }
