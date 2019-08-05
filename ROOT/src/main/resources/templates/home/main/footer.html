@@ -212,7 +212,6 @@
     <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
 <div id="script-reload">
 </div>
-<div id="js">
     <!-- Plugins JS File -->
     <script src="/home/assets/js/jquery.min.js"></script>
     <script src="/home/assets/js/bootstrap.bundle.min.js"></script>
@@ -226,6 +225,26 @@
     <script src="/home/assets/js/custom.js?ver=29"></script>
     <!-- .load()메소드를 사용했을시 main.js를 다시 불러오기 위한 reload function -->
     <script src="/home/assets/js/reload_main.js"></script>
-</div>
+    <script>
+	// 상품설명 전체보기, 닫기
+    $(function(){
+    	 var offset = $( '.expic' ).offset();
+    	  $("#expic_button > button").click ( function(){
+    		  if($(this).hasClass("checkcrop")){
+    			  $(this).removeClass("checkcrop");﻿
+    			  $("#expic").removeClass('expic');
+    			  $("#expic").addClass('expic_all');
+    			  $('#spancrop span').html('상품설명 닫기');
+    		  }
+    		  else{
+    			  $(this).addClass("checkcrop");
+    			  $("#expic").removeClass('expic_all');
+    			  $("#expic").addClass('expic');
+    			  $('#spancrop span').html('상품설명 전체보기');
+    			  $('html, body').animate({scrollTop : (offset.top)}, 100);
+    		  }
+    	 });
+    });
+    </script>
 </body>
 </html>

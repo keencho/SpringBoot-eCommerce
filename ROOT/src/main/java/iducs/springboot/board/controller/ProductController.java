@@ -1,6 +1,8 @@
 package iducs.springboot.board.controller;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -312,7 +314,27 @@ public class ProductController {
 	@GetMapping("/view/{no}")
 	public String viewProduct(@PathVariable(value = "no") Long no, Model model) {
 		Product product = productService.getProductById(no);
+		List<ProductStock> sizeStock = productstockService.findSizeByProductNo(no);
+		List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
+		
+		String deliveryDate = null;
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat formatDate = new SimpleDateFormat("MM월 dd일(E) 이내 발송 예정");
+		cal.add(Calendar.DATE,+3);
+		deliveryDate = formatDate.format(cal.getTime());
+		int point = Integer.parseInt(product.getListprice()) / 1000;
+		try  {
+			ProductSize productSize = productsizeService.getProductSizeByNoNativeQuery(no);
+			model.addAttribute("productsize", productSize);
+		} catch (Exception e) {
+			System.out.println("null~"); // null 체크용 try~catch문
+		}
+		
 		model.addAttribute("product", product);
+		model.addAttribute("size", sizeStock);
+		model.addAttribute("color", colorStock);
+		model.addAttribute("delivery", deliveryDate);
+		model.addAttribute("point", point);
 		return "/home/product/view";
 	}
 

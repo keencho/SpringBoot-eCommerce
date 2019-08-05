@@ -64,55 +64,46 @@
                                         </div><!-- End .product-container -->
 
                                         <div class="price-box">
-                                            <span class="old-price">$81.00</span>
-                                            <span class="product-price">$101.00</span>
+                                            <span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
+                                            <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}">$101.00</span>
                                         </div><!-- End .price-box -->
-
                                         <div class="product-desc">
-                                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non.</p>
-                                        </div><!-- End .product-desc -->
-
+                                            <label>배송비</label>0원<br>
+                                            <label>발송예정일</label><span th:text="${delivery}"></span><br>
+                                            <label>포인트</label><span th:text="@{'{point}P 적립 예정'(point=${point})}"></span>		
+                                        </div>
+										
                                         <div class="product-filters-container">
                                             <div class="product-single-filter">
-                                                <label>Colors:</label>
-                                                <ul class="config-swatch-list">
-                                                    <li class="active">
-                                                        <a href="#" style="background-color: #6085a5;"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" style="background-color: #ab6e6e;"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" style="background-color: #b19970;"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" style="background-color: #11426b;"></a>
-                                                    </li>
-                                                </ul>
-                                            </div><!-- End .product-single-filter -->
+						                        <label>사이즈:</label>
+						                        <select id="quick_cart_ajax_size" class="form-control" style="width: 200px; height:48px;">
+													<option value="0">사이즈를 선택하세요</option>
+										        	<option th:each="size : ${size}" th:value="${size.size_no.no}" th:text="${size.size_no.name}"></option>
+										        </select>
+						                    </div><!-- End .product-single-filter -->
+						                    <div class="product-single-filter">
+						                        <label>색상:</label>
+						                        <ul class="config-swatch-list">
+						                            <li th:each="color : ${color}" th:value="${color.color_no.no}">
+						                                <a href="#" th:style="@{background-color: rgb({color});(color=${color.color_no.rgb})}" th:title="${color.color_no.name}" th:text="${color.color_no.name}"></a>
+						                            </li>
+						                        </ul>
+						                    </div><!-- End .product-single-filter -->
                                         </div><!-- End .product-filters-container -->
-
                                         <div class="product-action product-all-icons">
-                                            <div class="product-single-qty">
-                                                <input class="horizontal-quantity form-control" type="text">
-                                            </div><!-- End .product-single-qty -->
-
-                                            <a href="cart.html" class="paction add-cart" title="Add to Cart">
-                                                <span>Add to Cart</span>
-                                            </a>
-                                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                                <span>Add to Wishlist</span>
-                                            </a>
-                                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                                <span>Add to Compare</span>
-                                            </a>
+											<a href="#" class="paction icon-dollar" title="구매">
+						                    	<span>바로 구매&nbsp&nbsp</span>
+						                    </a>
+						                    <a href="#" th:onclick="@{'cartQuickOptionAjax(\'{no}\')'(no=${product.no})}" class="paction add-cart" title="장바구니에 추가">
+						                        <span>장바구니</span>
+						                    </a>
+						                    <a style="cursor: pointer;" onclick="quick_login_popup()" class="paction add-wishlist" title="위시 리스트에 추가" th:if="${session.user == null}">
+						                    	<span>위시 리스트에 추가</span>
+						                    </a>
+						                    <a style="cursor: pointer;" th:onclick="@{'wishlist_quick_ajax_add(\'{no}\', \'{productno}\')'(no=${session.user.no}, productno=${product.no})}" class="paction add-wishlist" title="위시 리스트에 추가" th:unless="${session.user == null}">
+						                    	<span>위시 리스트에 추가</span>
+						                    </a>
                                         </div><!-- End .product-action -->
-
-                                        <div class="product-single-share">
-                                            <label>Share:</label>
-                                            <!-- www.addthis.com share plugin-->
-                                            <div class="addthis_inline_share_toolbox"></div>
-                                        </div><!-- End .product single-share -->
                                     </div><!-- End .product-single-details -->
                                 </div><!-- End .col-lg-5 -->
                             </div><!-- End .row -->
@@ -122,103 +113,121 @@
                             <div class="sticky-header" role="tablist">
                                 <ul class="nav nav-tabs container">
                                     <li class="nav-item">
-                                        <a class="nav-link" id="product-tab-desc" href="#product-desc-content" data-toggle="tab">Description</a>
+                                        <a class="nav-link active" id="product-tab-desc" href="#product-desc-content" data-toggle="tab">상품 설명</a>
+                                    </li>
+                                    <li class="nav-item" th:if="${productsize != null}">
+                                        <a class="nav-link" id="product-tab-size" href="#product-size-content" data-toggle="tab">실측 사이즈</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="product-tab-size" href="#product-size-content" data-toggle="tab">Size Guide</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="product-tab-tags" href="#product-tags-content" data-toggle="tab">Tags</a>
+                                        <a class="nav-link" id="product-tab-tags" href="#product-information-content" data-toggle="tab">상품정보</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="product-tab-reviews" href="#product-reviews-content" data-toggle="tab">Reviews</a>
                                     </li>
                                 </ul>
                             </div>
-
                             <div class="tab-pane" id="product-desc-content" role="tabpanel" aria-labelledby="product-tab-desc">
-                                <div class="product-desc-content">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
-                                    <ul>
-                                        <li><i class="icon-ok"></i>Any Product types that You want - Simple, Configurable</li>
-                                        <li><i class="icon-ok"></i>Downloadable/Digital Products, Virtual Products</li>
-                                        <li><i class="icon-ok"></i>Inventory Management with Backordered items</li>
-                                    </ul>
-                                    <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <br>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                                </div><!-- End .product-desc-content -->
-                            </div><!-- End .tab-pane -->
-    
-                            <div class="tab-pane" id="product-size-content" role="tabpanel" aria-labelledby="product-tab-size">
+                            	<div class="expic" id="expic">
+                                	<img th:if="${product.explainpic == 'sample'}" src="/uploads/sample.jpeg">
+                            		<img th:if="${product.explainpic != 'sample'}" th:src="@{'/uploads/{date}/{pic}'(date=${product.regdate}, pic=${product.explainpic})}" alt="..." />
+                           		</div>
+                           		<br>
+                            <div align="center" id="expic_button">
+                            	<button class="btn btn-primary checkcrop" id="spancrop"><span style="white-space:nowrap;">상품설명 전체보기</span></button>
+                            </div>
+                            </div><!-- End .tab-pane --> 
+                            <div class="tab-pane" id="product-size-content" role="tabpanel" aria-labelledby="product-tab-size" th:if="${productsize != null}">
                                 <div class="product-size-content">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <img src="/home/assets/images/products/single/body-shape.png" alt="body shape">
-                                        </div><!-- End .col-md-4 -->
-    
-                                        <div class="col-md-8">
-                                            <table class="table table-size">
-                                                <thead>
-                                                    <tr>
-                                                        <th>SIZE</th>
-                                                        <th>CHEST (in.)</th>
-                                                        <th>WAIST (in.)</th>
-                                                        <th>HIPS (in.)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>XS</td>
-                                                        <td>34-36</td>
-                                                        <td>27-29</td>
-                                                        <td>34.5-36.5</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>S</td>
-                                                        <td>36-38</td>
-                                                        <td>29-31</td>
-                                                        <td>36.5-38.5</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>M</td>
-                                                        <td>38-40</td>
-                                                        <td>31-33</td>
-                                                        <td>38.5-40.5</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>L</td>
-                                                        <td>40-42</td>
-                                                        <td>33-36</td>
-                                                        <td>40.5-43.5</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>XL</td>
-                                                        <td>42-45</td>
-                                                        <td>36-40</td>
-                                                        <td>43.5-47.5</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>XLL</td>
-                                                        <td>45-48</td>
-                                                        <td>40-44</td>
-                                                        <td>47.5-51.5</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                    	<div class="col-md-12">
+                                           <table class="table table-bordered">
+											  <thead class="table-back">
+											    <tr>
+											      <th scope="col"></th>
+											      <th th:if="${productsize.top_length != ''}" th:text="@{'전체(cm)'}"></th>
+											      <th th:if="${productsize.top_shoulder != ''}" th:text="@{'어깨(cm)'}"></th>
+											      <th th:if="${productsize.top_sleeve != ''}" th:text="@{'소매(cm)'}"></th>
+											      <th th:if="${productsize.top_chest != ''}" th:text="@{'가슴(cm)'}"></th>
+											      
+											      <th th:if="${productsize.bot_length != ''}" th:text="@{'전체(cm)'}"></th>
+											      <th th:if="${productsize.bot_hip != ''}" th:text="@{'엉덩이(cm)'}"></th>
+											      <th th:if="${productsize.bot_rise != ''}" th:text="@{'앞밑위(cm)'}"></th>
+											      <th th:if="${productsize.bot_thigh != ''}" th:text="@{'허벅지(cm)'}"></th>
+											      <th th:if="${productsize.bot_under != ''}" th:text="@{'밑단(cm)'}"></th>
+											      <th th:if="${productsize.bot_waist != ''}" th:text="@{'허리(cm)'}"></th>
+											    </tr>
+											  </thead>
+											  <tbody>
+											    <tr th:each="productSize : ${product.productsize}">
+											      <th scope="row" th:text="${productSize.size_no.name}" class="table-back"></th>
+											      <th th:if="${productSize.top_length != ''}" th:text="${productSize.top_length}" ></th>
+											      <th th:if ="${productSize.top_shoulder != ''}" th:text="${productSize.top_shoulder}"></th>
+											      <th th:if ="${productSize.top_sleeve != ''}" th:text="${productSize.top_sleeve}"></th>
+											      <th th:if ="${productSize.top_chest != ''}" th:text="${productSize.top_chest}"></th>
+											      
+											      <th th:if ="${productSize.bot_length!= ''}" th:text="${productSize.bot_length}" ></th>
+											      <th th:if ="${productSize.bot_hip!= ''}" th:text="${productSize.bot_hip}"></th>
+											      <th th:if ="${productSize.bot_rise!= ''}" th:text="${productSize.bot_rise}"></th>
+											      <th th:if ="${productSize.bot_thigh!= ''}" th:text="${productSize.bot_thigh}"></th>
+											      <th th:if ="${productSize.bot_under!= ''}" th:text="${productSize.bot_under}"></th>
+											      <th th:if ="${productSize.bot_waist!= ''}" th:text="${productSize.bot_waist}"></th>
+											    </tr>
+											    
+											  </tbody>
+											  
+											</table>
                                         </div>
                                     </div><!-- End .row -->
                                 </div><!-- End .product-size-content -->
                             </div><!-- End .tab-pane -->
-    
-                            <div class="tab-pane" id="product-tags-content" role="tabpanel" aria-labelledby="product-tab-tags">
+                            <div class="tab-pane" id="product-information-content" role="tabpanel" aria-labelledby="product-tab-information">
                                 <div class="product-tags-content">
-                                    <form action="#">
-                                        <h4>Add Your Tags:</h4>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm" required>
-                                            <input type="submit" class="btn btn-primary" value="Add Tags">
-                                        </div><!-- End .form-group -->
-                                    </form>
-                                    <p class="note">Use spaces to separate tags. Use single quotes (') for phrases.</p>
+                                    <table class="table">
+									  <tbody>
+									  	<tr>
+									      <th scope="row" class="table-back">모델명</th>
+									      <td th:text="${product.modelname}"></td>
+									    </tr>
+									    <tr>
+									      <th scope="row" class="table-back">제품소재</th>
+									      <td th:text="${product.material}"></td>
+									    </tr>
+									    <tr>
+									      <th scope="row" class="table-back">색상</th>
+									      <td th:text="${product.color}"></td>
+									    </tr>
+									    <tr>
+									      <th scope="row" class="table-back">치수</th>
+									      <td th:text="${product.size}"></td>
+									    </tr>
+									    <tr>
+									      <th scope="row" class="table-back">제조사</th>
+									      <td th:text="${product.madeby}"></td>
+									    </tr>
+									    <tr>
+									      <th scope="row" class="table-back">제조국</th>
+									      <td th:text="${product.madein}"></td>
+									    </tr>
+									    <tr>
+									      <th scope="row" class="table-back">세탁방법</th>
+									      <td th:text="${product.caution}"></td>
+									    </tr>
+									    <tr>
+									      <th scope="row" class="table-back">제조년월</th>
+									      <td th:text="${product.date}"></td>
+									    </tr>
+									    <tr>
+									      <th scope="row" class="table-back">품질보증</th>
+									      <td>상품수령 후 7일 이내에 신청하실 수 있습니다. 단, 다음의 경우 해당하는 반품/교환은 신청이 불가능할 수 있습니다.<br><br>
+									      	  -소비자의 책임 있는 사유로 상품등이 멸실 또는 훼손된 경우<br>
+									      	  -소비자의 사용 또는 소비에 의해 상품 등의 가치가 현저히 감소한 경우<br>
+											  -시간의 경과에 의해 재판매가 곤란할 정도로 상품 등의 가치가 현저히 감소한 경우<br>
+											  -복제가 가능한 상품 등의 포장을 훼손한 경우<br>
+											  -소비자의 주문에 따라 개별적으로 생산되는 상품이 제작에 들어간 경우
+									      </td>
+									    </tr>
+									  </tbody>
+									</table>
                                 </div><!-- End .product-tags-content -->
                             </div><!-- End .tab-pane -->
     
@@ -329,25 +338,21 @@
                     <div class="sidebar-toggle"><i class="icon-sliders"></i></div>
                     <aside class="sidebar-product col-lg-3 padding-left-lg mobile-sidebar">
                         <div class="sidebar-wrapper">
-                            <div class="widget widget-brand">
-                                <a href="#">
-                                    <img src="/home/assets/images/product-brand.png" alt="brand name">
-                                </a>
-                            </div><!-- End .widget -->
 
                             <div class="widget widget-info">
                                 <ul>
                                     <li>
                                         <i class="icon-shipping"></i>
-                                        <h4>FREE<br>SHIPPING</h4>
+                                        <h4>100%무료 배송료
+                                        </h4>
                                     </li>
                                     <li>
                                         <i class="icon-us-dollar"></i>
-                                        <h4>100% MONEY<br>BACK GUARANTEE</h4>
+                                        <h4>품질 보증</h4>
                                     </li>
                                     <li>
                                         <i class="icon-online-support"></i>
-                                        <h4>ONLINE<br>SUPPORT 24/7</h4>
+                                        <h4>온라인 지원센터</h4>
                                     </li>
                                 </ul>
                             </div><!-- End .widget -->

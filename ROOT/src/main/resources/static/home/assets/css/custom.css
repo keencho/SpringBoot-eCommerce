@@ -423,3 +423,23 @@
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #2C7FC3 0 0px 0px 40px inset;
 }
+
+.product-desc label {
+    margin-right: 1.3rem;
+    margin-bottom: 0;
+    color: #21293c;
+    font: 600 1.5rem/1.1 "Open Sans",sans-serif;
+    letter-spacing: .005em;
+    text-transform: uppercase;
+}
+
+	.expic{
+		max-height: 800px;
+		overflow: hidden;
+	}
+	.expic_all{
+		overflow: hidden;
+	}
+ .table-back{
+ 	background: #E7EAED;
+ }
