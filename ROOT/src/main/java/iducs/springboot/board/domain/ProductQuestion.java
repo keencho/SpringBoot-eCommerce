@@ -12,11 +12,12 @@ public class ProductQuestion {
 	private String contents;
 	private int status;
 	private String regdate;
+	private String answer;
 	
 	public ProductQuestion() {}
 
 	public ProductQuestion(Product product_no, long personal_no, int type, User user_no, String name,
-			String contents, int status, String regdate) {
+			String contents, int status, String regdate, String answer) {
 		super();
 		this.product_no = product_no;
 		this.personal_no = personal_no;
@@ -26,6 +27,7 @@ public class ProductQuestion {
 		this.contents = contents;
 		this.status = status;
 		this.regdate = regdate;
+		this.answer = answer;
 	}
 
 	public long getNo() {
@@ -98,6 +100,14 @@ public class ProductQuestion {
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 	
 	

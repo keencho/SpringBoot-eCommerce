@@ -30,27 +30,30 @@ public class ProductQuestionEntity {
 	@JoinColumn(name = "product_no", nullable=false, unique = false)
 	private ProductEntity product;
 	
-	@Column(name = "personal_no",nullable=false, length=50)
+	@Column(name = "personal_no",nullable=false, length=10)
 	private Long personal_no;
 	
-	@Column(name = "type",nullable=false, length=50)
+	@Column(name = "type",nullable=false, length=4)
 	private int type;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_no", nullable=false, unique = false)
 	private UserEntity user;
 	
-	@Column(name = "name",nullable=false, length=50)
+	@Column(name = "name",nullable=false, length=60)
 	private String name;
 	
-	@Column(name = "contents",nullable=false, length=50)
+	@Column(name = "contents",nullable=false, length=512)
 	private String contents;
 	
-	@Column(name = "status",nullable=false, length=50)
+	@Column(name = "status",nullable=false, length=10)
 	private int status;
 	
-	@Column(name = "regdate",nullable=false, length=50)
+	@Column(name = "regdate",nullable=false, length=128)
 	private String regdate;
+	
+	@Column(name = "answer",nullable=true, length=512)
+	private String answer;
 
 	public Long getNo() {
 		return no;
@@ -123,6 +126,15 @@ public class ProductQuestionEntity {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
+	
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
 
 	public ProductQuestion buildDomain() {
 		ProductQuestion productquestion = new ProductQuestion();
@@ -135,6 +147,7 @@ public class ProductQuestionEntity {
 		productquestion.setContents(contents);
 		productquestion.setStatus(status);
 		productquestion.setRegdate(regdate);
+		productquestion.setAnswer(answer);
 		return productquestion;
 	}
 	
@@ -146,6 +159,7 @@ public class ProductQuestionEntity {
 		type = productquestion.getType();
 		status = productquestion.getStatus();
 		regdate = productquestion.getRegdate();
+		answer = productquestion.getAnswer();
 		
 		ProductEntity productEntity = new ProductEntity();
 		productEntity.buildEntity(productquestion.getProduct_no());
