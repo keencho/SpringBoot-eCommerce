@@ -222,7 +222,7 @@
     <script src="/home/assets/js/main.min.js?ver=2"></script>
     
     <!-- Custom JS File -->
-    <script src="/home/assets/js/custom.js?ver=29"></script>
+    <script src="/home/assets/js/custom.js?ver=30"></script>
     <!-- .load()메소드를 사용했을시 main.js를 다시 불러오기 위한 reload function -->
     <script src="/home/assets/js/reload_main.js"></script>
     <script>
@@ -244,6 +244,17 @@
     			  $('html, body').animate({scrollTop : (offset.top)}, 100);
     		  }
     	 });
+    });
+	
+ // Q&A 팝업 레이어
+    $(document).ready(function () {
+    	$('#qnasubmit').click(function () {
+    		$("#qna_popup").css({
+    			"top": (($(window).height()-$("#qna_popup").outerHeight())/2+$(window).scrollTop())+"px",
+    			"left": (($(window).width()-$("#qna_popup").outerWidth())/2+$(window).scrollLeft())+"px"
+    			 });
+    		$( "#qna_popup" ).load( ".qna_popup" ).fadeIn(100);
+    	});
     });
     </script>
 </body>

@@ -664,6 +664,11 @@
 			return this;
 		};
 		
+		$.fn.qnaPopupClose = function() {
+			$( "#qna_popup" ).css("display", "none");
+			return this;
+		};
+		
 	});
 	
 	// 장바구니 ajax 수량체크
@@ -883,7 +888,6 @@
 				dataType : "html",
 				success : function(result) {
 					if(result == 0){
-						alert("로그인에 성공하셨습니다!");
 						window.location.reload();
 					} else if(result == 1 || result == 2){
 						alert("잘못된 정보를 입력하셨습니다.");

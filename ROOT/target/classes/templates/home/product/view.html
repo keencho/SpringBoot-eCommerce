@@ -1,6 +1,101 @@
 <th:block th:include="home/main/header.html"></th:block>
 	<th:block th:include="home/main/nav.html"></th:block>
- <main class="main">
+	<style>
+		#qna_popup {
+	  	display: none;
+	  	padding: 10px;
+		width: 700px;
+		height: 600px;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		background-color: #fff;
+		border-radius: 5px;
+		text-align: center;
+		z-index: 1201; /* 1px higher than the overlay layer */
+		border: 2px solid;
+		border-color: #2C7FC3;
+		border-radius: 5px;
+		z-index : 100;
+	}
+	#qna_popup .wrap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -86px;
+	margin-left: -89px;
+	text-align: center;
+}
+#qna_popup a {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	display: inline;
+	margin: 20px auto;
+	max-width: 30px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 5px 10px;
+}
+
+#qna_popup a.button {
+	color: #000;
+	box-shadow: #2C7FC3 0 0px 0px 1px inset;
+}
+
+#qna_popup a.button:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #2C7FC3 0 0px 0px 40px inset;
+}
+	</style>
+		<!-- 로그인 팝업 -->
+		<div id="login_popup"></div>
+		<!-- Q&A 팝업 -->
+		<div id="qna_popup">
+		<span class="qna_popup btn-popup01">
+			<h3 style="border-bottom: 1px solid #E4E7EA; padding-bottom: 15px;">상품문의</h3>
+				<font color="red">
+					게시글에 개인정보가 기록되지 않도록 주의하여 주십시오.
+				</font>
+				<table class="table">
+					<tbody>
+						<tr>
+							<th scope="row" class="table-back">문의유형</th>
+							<td align="left">
+								<input type="radio" name="chk_info" value="0" checked>사이즈
+								&nbsp&nbsp&nbsp
+								<input type="radio" name="chk_info" value="1">디자인/색상
+								&nbsp&nbsp&nbsp
+								<input type="radio" name="chk_info" value="2">배송/교환/반품
+								&nbsp&nbsp&nbsp
+								<input type="radio" name="chk_info" value="3">기타
+								&nbsp&nbsp&nbsp
+							</td>
+						</tr>
+						<tr>
+							<th scope="row" class="table-back">제목</th>
+							<td align="left">
+								<input type="text" size="70" name="name" required><br>
+								※30자 이내로 입력해주세요
+							</td>
+						</tr>
+						<tr>
+							<th scope="row" class="table-back">내용</th>
+							<td align="left">
+								<textarea style="resize: none;" rows="12" cols="70" name="contents" placeholder="문의 내용을 입력해 주세요." required></textarea><br>
+								※ 상품과 관련없는 내용은 통보 없이 삭제될 수 있습니다.
+							</td>
+						</tr>
+					</tbody>
+				</table> 
+				<a style="cursor: pointer" onclick="location.href='/cart'" class="button">등록하기</a>
+		  		<a style="cursor: pointer" onclick="$(this).qnaPopupClose();" class="button">닫기</a>
+		</span>		
+		</div>
+		
+ 		<main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
                     <ol class="breadcrumb">
@@ -124,6 +219,12 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="product-tab-reviews" href="#product-reviews-content" data-toggle="tab">Reviews</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="product-tab-qna" href="#product-qna-content" data-toggle="tab">상품 문의</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="product-tab-delivery" href="#product-delivery-content" data-toggle="tab">배송/반품/교환</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="tab-pane" id="product-desc-content" role="tabpanel" aria-labelledby="product-tab-desc">
@@ -182,7 +283,7 @@
                             </div><!-- End .tab-pane -->
                             <div class="tab-pane" id="product-information-content" role="tabpanel" aria-labelledby="product-tab-information">
                                 <div class="product-tags-content">
-                                    <table class="table">
+                                    <table class="table auto-linebreak">
 									  <tbody>
 									  	<tr>
 									      <th scope="row" class="table-back">모델명</th>
@@ -209,7 +310,7 @@
 									      <td th:text="${product.madein}"></td>
 									    </tr>
 									    <tr>
-									      <th scope="row" class="table-back">세탁방법</th>
+									      <th scope="row" class="table-back">세탁방법 / 주의사항</th>
 									      <td th:text="${product.caution}"></td>
 									    </tr>
 									    <tr>
@@ -218,12 +319,13 @@
 									    </tr>
 									    <tr>
 									      <th scope="row" class="table-back">품질보증</th>
-									      <td>상품수령 후 7일 이내에 신청하실 수 있습니다. 단, 다음의 경우 해당하는 반품/교환은 신청이 불가능할 수 있습니다.<br><br>
-									      	  -소비자의 책임 있는 사유로 상품등이 멸실 또는 훼손된 경우<br>
-									      	  -소비자의 사용 또는 소비에 의해 상품 등의 가치가 현저히 감소한 경우<br>
-											  -시간의 경과에 의해 재판매가 곤란할 정도로 상품 등의 가치가 현저히 감소한 경우<br>
-											  -복제가 가능한 상품 등의 포장을 훼손한 경우<br>
-											  -소비자의 주문에 따라 개별적으로 생산되는 상품이 제작에 들어간 경우
+									      <td>
+									      	<div>- 상품수령 후 7일 이내에 신청하실 수 있습니다. 단, 다음의 경우 해당하는 반품/교환은 신청이 불가능할 수 있습니다.</div><br>
+									      	<div>- 소비자의 책임 있는 사유로 상품등이 멸실 또는 훼손된 경우</div>
+									      	<div>- 소비자의 사용 또는 소비에 의해 상품 등의 가치가 현저히 감소한 경우</div>
+										  	<div>- 시간의 경과에 의해 재판매가 곤란할 정도로 상품 등의 가치가 현저히 감소한 경우</div>
+										  	<div>- 복제가 가능한 상품 등의 포장을 훼손한 경우</div>
+										  	<div>- 소비자의 주문에 따라 개별적으로 생산되는 상품이 제작에 들어간 경우</div>
 									      </td>
 									    </tr>
 									  </tbody>
@@ -331,6 +433,166 @@
                                     </div><!-- End .add-product-review -->
                                 </div><!-- End .product-reviews-content -->
                             </div><!-- End .tab-pane -->
+                            <div class="tab-pane" id="product-qna-content" role="tabpanel" aria-labelledby="product-tab-qna">
+                                <div class="product-reviews-content">
+                                    <div class="add-product-review">
+                                        <h3 class="text-uppercase heading-text-color font-weight-semibold">상품 관련 문의만 가능합니다.</h3>
+											<div class="container" style="padding-bottom: 10px;">
+												<div class="row">
+													<div class="col-auto mr-auto">
+														<a href="#">
+														<span>
+															<strong>
+																전체(00)
+															</strong>
+														</span>
+														</a>
+														&nbsp&nbsp&nbsp 
+														<a href="#">
+															<span>
+																답변완료(00)
+															</span>
+														</a>
+													</div>
+													<div class="col-auto">
+														<button type="submit" th:if="${session.user == null}" onclick="login_popup()" class="btn btn-primary" style="padding: 0.4rem !important;">등록하기</button>
+														<button type="submit" th:if="${session.user != null}" id="qnasubmit" class="btn btn-primary" style="padding: 0.4rem !important;">등록하기</button>
+													</div>
+												</div>
+											</div>
+											<table class="table">
+												<thead class="thead-light">
+													<tr>
+														<th scope="col">번호</th>
+														<th scope="col">답변상태</th>
+														<th scope="col">문의유형</th>
+														<th scope="col">제목</th>
+														<th scope="col">작성자</th>
+														<th scope="col">작성일</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<th scope="row">1</th>
+														<td>Mark</td>
+														<td>Otto</td>
+														<td>@mdo</td>
+														<td>Otto</td>
+														<td>@mdo</td>
+													</tr>
+													<tr>
+														<th scope="row">2</th>
+														<td>Jacob</td>
+														<td>Thornton</td>
+														<td>@fat</td>
+														<td>Otto</td>
+														<td>@mdo</td>
+													</tr>
+													<tr>
+														<th scope="row">3</th>
+														<td>Larry</td>
+														<td>the Bird</td>
+														<td>@twitter</td>
+														<td>Otto</td>
+														<td>@mdo</td>
+													</tr>
+												</tbody>
+											</table>
+									</div><!-- End .add-product-review -->
+                                </div><!-- End .product-reviews-content -->
+                            </div><!-- End .tab-pane -->
+                            
+                                             
+                            <div class="tab-pane" id="product-delivery-content" role="tabpanel" aria-labelledby="product-tab-delivery">
+                                <div class="product-reviews-content">
+                                    <div class="add-product-review">
+                                        <h3 class="text-uppercase heading-text-color font-weight-semibold">상품 배송 안내</h3>
+                                           <table class="table auto-linebreak">
+											  <tbody>
+											  	<tr>
+											      <th scope="row" class="table-back">공급업체</th>
+											      <td><div>가상 쇼핑몰</div></td>
+											    </tr>
+											    <tr>
+											      <th scope="row" class="table-back">배송비</th>
+											      <td><div>0원</div></td>
+											    </tr>
+											    <tr>
+											      <th scope="row" class="table-back">배송정보</th>
+											      <td><div><span th:text="${delivery}"></span></div></td>
+											    </tr>
+											  </tbody>
+											</table>
+											<br>
+											<h3 class="text-uppercase heading-text-color font-weight-semibold">취소/반품/교환 안내</h3>
+                                           	<table class="table auto-linebreak">
+											  <tbody>
+											  	<tr>
+											      <th scope="row" class="table-back">주문취소</th>
+											      <td>
+											      	<div>- 주문취소는 입금대기/입금완료에서 가능합니다.</div>
+													<div>- 가구 등 주문제작상품의 경우에는 상품준비중 단계부터 불가능하며 상품 수령 후, 반품 신청을 하실 수 있습니다.</div>
+												  </td>
+											    </tr>
+											    <tr>
+											      <th scope="row" class="table-back">반품/교환 배송비</th>
+											      <td>
+											      	<div>- 2,500원 예상 (편도기준)</div>
+													<div>- 반품/교환 배송비는 고객 변심의 경우에만 발생됩니다.</div>
+													<div>- 구매 후 반품/교환 시 예상금액과 차이가 있을 수 있습니다.</div>
+											      </td>
+											    </tr>
+											    <tr>
+											      <th scope="row" class="table-back">반품/교환안내</th>
+											      <td>
+											      	<div>- 반품/교환은 상품 수령일 7일 이내에 신청해주셔야 합니다.</div>
+											      	<div>- 단순 고객변심으로 인한 왕복 배송비는 고객님께서 부담하셔야 합니다.</div>
+													<div>- 표시광고와 상이하여 상품에 하자가 있는 경우 상품수령 후 3개월 이내, 해당사실을 안(알 수 있었던)날로부터 30일 이내에 교환/반품을 신청을 할 수 있습니다.</div>
+													<div>- 반품/교환 시 제품 원형 그대로 보내 주셔야 가능 합니다.</div>
+													<div>- 반품/교환은 꼭 승인과정을 거쳐서 진행해주세요.</div>
+													<div>- 신청/승인 과정 없이 고객님께서 직접 제품을 보내실 경우 택배사에서 추가 배송비를 요구할 수 있습니다.</div>
+													<div>- 정해진 반품장소가 아닌 곳으로 보내질 경우 수취거부로 인해 왕복 배송비가 부과될 수 있습니다.</div>
+											      </td>
+											    </tr>
+											    <tr>
+											      <th scope="row" class="table-back">반품/교환 불가 안내</th>
+											      <td>
+											      	<div>- 고객님이 상품 포장을 개봉하여 사용 또는 설치 완료되어 상품의 가치가 훼손된 경우(단, 내용 확인을 위한 포장 개봉의 경우는 예외, 가전/디지털 미개봉 새 상품은 개봉 및 설치 후 기능 상 하자가 아닌 단순변심으로 인한 반품은 불가합니다.)</div>
+													<div>- 고객님의 단순변심으로 인한 교환/반품 신청이 상품 수령한 날로부터 7일이 경과한 경우</div>
+													<div>- 고객님의 사용 또는 일부 소비에 의해 상품의 가치가 훼손된 경우</div>
+													<div>- 시간 경과에 따라 재판매가 어려운 상품 등의 가치가 현저히 감소한 경우(신선식품의 경우 선도저하 및 상품불량일 경우 수령일로부터 1~2일 내 교환/반품 신청)</div>
+													<div>- 복제가 가능한 재화 등의 포장을 훼손한 경우(포장인증된 전자제품, DVD,CD 도서 등 복제 가능한 상품)</div>
+													<div>- 배송된 상품이 하자 없음을 확인한 후 설치가 완료된 상품의 경우(가전,가구,헬스기구 등)</div>
+													<div>- 고객님의 요청에 따라 개별적으로 주문제작되는 상품의 경우(수제화, 귀금속 등)</div>
+													<div>- 구매한 상품의 구성품이 누락된 경우(화장품 세트, 의류부착 악세서리, 가전제품 부속품,사은품 등)</div>
+													<div>- 기타,상품의 교환, 환불 및 상품 결함 등의 보상은 재정경제부고시,소비자피해보상규정에 의함</div>
+											      </td>
+											    </tr>
+											  </tbody>
+											</table>
+											<br>
+											<h3 class="text-uppercase heading-text-color font-weight-semibold">환불 안내</h3>
+											<table class="table auto-linebreak">
+											  <tbody>
+											  	<tr>
+											      <th scope="row" class="table-back">카드 결제 환불</th>
+											      <td>
+											      	<div>- 결제 당일 취소는 카드사 홈페이지에서 당일 취소확인이 가능합니다.</div>
+													<div>- 익일 취소일 경우 카드사 사정에 따라 3-7일 후 해당 카드사 홈페이지에서 취소 내역을 확인하실 수 있습니다.</div>
+											      </td>
+											    </tr>
+											    <tr>
+											      <th scope="row" class="table-back">현금결제</th>
+											      <td>
+											      	<div>- 취소/반품 신청 시, 환불계좌를 등록하시면 물류 센터에서 반품제품을 확인한 뒤 영업일 3일 이내에 환불처리 됩니다.</div>
+											      </td>
+											    </tr>
+											  </tbody>
+											</table>	
+                                    </div><!-- End .add-product-review -->
+                                </div><!-- End .product-reviews-content -->
+                            </div><!-- End .tab-pane -->
+                            
                         </div><!-- End .product-single-tabs -->
                     </div><!-- End .col-lg-9 -->
 

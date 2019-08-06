@@ -440,6 +440,11 @@
 	.expic_all{
 		overflow: hidden;
 	}
- .table-back{
- 	background: #E7EAED;
- }
+.table-back {
+	background: #E7EAED;
+	width: 17%;
+}
+.auto-linebreak tbody tr td div {
+	text-indent: -9px; 
+	padding-left: 9px;
+}
