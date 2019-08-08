@@ -6,11 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Color;
-import iducs.springboot.board.entity.ClothesSizeEntity;
 import iducs.springboot.board.entity.ColorEntity;
-import iducs.springboot.board.repository.ClothesSizeRepository;
 import iducs.springboot.board.repository.ColorRepository;
 
 @Service("colorService")

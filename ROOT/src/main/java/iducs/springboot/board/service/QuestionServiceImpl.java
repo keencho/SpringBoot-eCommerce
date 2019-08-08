@@ -1,8 +1,6 @@
 package iducs.springboot.board.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +12,8 @@ import org.springframework.stereotype.Service;
 
 import iducs.springboot.board.domain.Comment;
 import iducs.springboot.board.domain.Question;
-import iducs.springboot.board.domain.User;
 import iducs.springboot.board.entity.CommentEntity;
 import iducs.springboot.board.entity.QuestionEntity;
-import iducs.springboot.board.entity.UserEntity;
 import iducs.springboot.board.repository.QuestionRepository;
 
 @Service("questionService")

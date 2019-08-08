@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import iducs.springboot.board.domain.Category;
 import iducs.springboot.board.domain.Division;
 
 

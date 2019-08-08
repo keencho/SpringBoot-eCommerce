@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import iducs.springboot.board.domain.Category;
-import iducs.springboot.board.domain.Comment;
 import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.entity.CategoryEntity;
-import iducs.springboot.board.entity.CommentEntity;
 import iducs.springboot.board.entity.DivisionEntity;
 import iducs.springboot.board.repository.CategoryRepository;
 

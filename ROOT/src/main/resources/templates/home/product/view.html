@@ -1,54 +1,7 @@
 <th:block th:include="home/main/header.html"></th:block>
 	<th:block th:include="home/main/nav.html"></th:block>
 	<style>
-		#qna_popup {
-	  	display: none;
-	  	padding: 10px;
-		width: 700px;
-		height: 600px;
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		background-color: #fff;
-		border-radius: 5px;
-		text-align: center;
-		z-index: 1201; /* 1px higher than the overlay layer */
-		border: 2px solid;
-		border-color: #2C7FC3;
-		border-radius: 5px;
-		z-index : 100;
-	}
-	#qna_popup .wrap {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -86px;
-	margin-left: -89px;
-	text-align: center;
-}
-#qna_popup a {
-	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	display: inline;
-	margin: 20px auto;
-	max-width: 30px;
-	text-decoration: none;
-	border-radius: 4px;
-	padding: 5px 10px;
-}
 
-#qna_popup a.button {
-	color: #000;
-	box-shadow: #2C7FC3 0 0px 0px 1px inset;
-}
-
-#qna_popup a.button:hover {
-	color: rgba(255, 255, 255, 0.85);
-	box-shadow: #2C7FC3 0 0px 0px 40px inset;
-}
 	</style>
 		<!-- 로그인 팝업 -->
 		<div id="login_popup"></div>
@@ -218,7 +171,7 @@
                                         <a class="nav-link" id="product-tab-tags" href="#product-information-content" data-toggle="tab">상품정보</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="product-tab-reviews" href="#product-reviews-content" data-toggle="tab">Reviews</a>
+                                        <a class="nav-link" id="product-tab-reviews" href="#product-reviews-content" data-toggle="tab">리뷰(추후)</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="product-tab-qna" href="#product-qna-content" data-toggle="tab">상품 문의</a>
@@ -242,7 +195,7 @@
                                 <div class="product-size-content">
                                     <div class="row">
                                     	<div class="col-md-12">
-                                           <table class="table table-bordered">
+                                           <table class="table table-bordered text-center">
 											  <thead class="table-back">
 											    <tr>
 											      <th scope="col"></th>
@@ -444,14 +397,14 @@
 														<a href="#">
 														<span>
 															<strong>
-																전체(00)
+																전체(<span th:text="${productquestion.size()}"></span>)
 															</strong>
 														</span>
 														</a>
 														&nbsp&nbsp&nbsp 
 														<a href="#">
 															<span>
-																답변완료(00)
+																답변완료(<span th:text="${productquestionComplete}"></span>)
 															</span>
 														</a>
 													</div>
@@ -464,38 +417,55 @@
 											<table class="table">
 												<thead class="thead-light">
 													<tr>
-														<th scope="col">번호</th>
-														<th scope="col">답변상태</th>
-														<th scope="col">문의유형</th>
-														<th scope="col">제목</th>
-														<th scope="col">작성자</th>
-														<th scope="col">작성일</th>
+														<th scope="col" class="text-center">번호</th>
+														<th scope="col" class="text-center">답변상태</th>
+														<th scope="col" class="text-center">문의유형</th>
+														<th scope="col" class="text-center" width="50%">제목</th>
+														<th scope="col" class="text-center">작성자</th>
+														<th scope="col" class="text-center">작성일</th>
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<th scope="row">1</th>
-														<td>Mark</td>
-														<td>Otto</td>
-														<td>@mdo</td>
-														<td>Otto</td>
-														<td>@mdo</td>
-													</tr>
-													<tr>
-														<th scope="row">2</th>
-														<td>Jacob</td>
-														<td>Thornton</td>
-														<td>@fat</td>
-														<td>Otto</td>
-														<td>@mdo</td>
-													</tr>
-													<tr>
-														<th scope="row">3</th>
-														<td>Larry</td>
-														<td>the Bird</td>
-														<td>@twitter</td>
-														<td>Otto</td>
-														<td>@mdo</td>
+													<div th:each="question : ${productquestion}">
+														<tr>
+															<th scope="row" th:text="${question.personal_no}"></th>
+															<td th:if="${question.status == 0}" th:text="답변대기"></td>
+															<td th:if="${question.status == 1}" th:text="답변완료"></td>
+															<td th:if="${question.type == 0}" th:text="사이즈"></td>
+															<td th:if="${question.type == 1}" th:text="@{'디자인/색상'}"></td>
+															<td th:if="${question.type == 2}" th:text="@{'배송/교환/반품'}"></td>
+															<td th:if="${question.type == 3}" th:text="기타"></td>
+															<td>
+																<span th:text="${question.name}" style="cursor:pointer" class="question_name"></span>	
+															</td>
+															<td th:text="${question.user_no.id}"></td>
+															<td th:text="${question.regdate}"></td>
+														</tr>
+														<tr style="background-color: #E7EAED; display: none;" class="question_answer">
+															<td></td>
+															<td></td>
+															<td></td>
+															<td>
+																<div>
+																	<img src="/uploads/icon/question.svg" width="20px" height="20px" style="display:inline;">&nbsp
+																	<span th:text="${question.contents}"></span>
+																	<br>
+																	<br>
+																</div>
+																<div th:if="${question.status != 0}" style="border-top: 1px solid #DADEE3;">
+																	<br>
+																	<img src="/uploads/icon/answer.svg" width="20px" height="20px" style="display:inline;">&nbsp&nbsp
+																	<span th:text="${question.answer}"></span>
+																	<br>
+																	<br>
+																</div>
+															</td>
+															<td></td>
+															<td></td>
+														</tr>
+													</div>
+													<tr th:if="${productquestion.size() == 0}">
+													zz
 													</tr>
 												</tbody>
 											</table>

@@ -260,6 +260,17 @@
 			});
 	 } 
 }
+ 
+// 상품별 문의
+ $(document).ready(function () {
+ 	$(document).on('click', '.question_name', function() {
+ 		if($(this).parents('tr').next('tr').is(":visible")){
+ 			$(this).parents('tr').next('tr').slideUp(1);
+ 		} else {
+ 			$(this).parents('tr').next('tr').slideDown(1);
+ 		}
+ 	})
+ })
     </script>
 </body>
 </html>

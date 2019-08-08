@@ -10,11 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import iducs.springboot.board.domain.Question;
 import iducs.springboot.board.domain.User;
-import iducs.springboot.board.entity.QuestionEntity;
 import iducs.springboot.board.entity.UserEntity;
-import iducs.springboot.board.exception.ResourceNotFoundException;
 import iducs.springboot.board.repository.UserRepository;
 
 @Service//("userService")

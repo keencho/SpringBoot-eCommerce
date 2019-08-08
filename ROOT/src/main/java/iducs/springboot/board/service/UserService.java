@@ -3,11 +3,9 @@ package iducs.springboot.board.service;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import iducs.springboot.board.domain.User;
-import iducs.springboot.board.entity.QuestionEntity;
 import iducs.springboot.board.entity.UserEntity;
 
 public interface UserService {

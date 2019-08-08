@@ -43,7 +43,7 @@ public class ProductCommunicationController {
 		int type = Integer.parseInt(s_type); // 상품문의의 유형
 		User user = (User) session.getAttribute("user");
 		Date d = new Date();
-		SimpleDateFormat todayFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat todayFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String today = todayFormat.format(d); // 문의 등록일
 		long product_no = Long.parseLong(s_product_no);
 		Product product = productService.getProductById(product_no);

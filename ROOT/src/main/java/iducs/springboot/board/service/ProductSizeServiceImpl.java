@@ -4,12 +4,9 @@ package iducs.springboot.board.service;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import iducs.springboot.board.domain.Product;
 import iducs.springboot.board.domain.ProductSize;
-import iducs.springboot.board.entity.ProductEntity;
 import iducs.springboot.board.entity.ProductSizeEntity;
 import iducs.springboot.board.repository.ProductSizeRepository;
 

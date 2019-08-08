@@ -6,11 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Product;
 import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.domain.ProductStock;
@@ -18,7 +15,6 @@ import iducs.springboot.board.entity.ProductEntity;
 import iducs.springboot.board.entity.ProductSizeEntity;
 import iducs.springboot.board.entity.ProductStockEntity;
 import iducs.springboot.board.repository.ProductRepository;
-import iducs.springboot.board.repository.ProductSizeRepository;
 
 @Service("ProductSize")
 public class ProductServiceImpl implements ProductService{

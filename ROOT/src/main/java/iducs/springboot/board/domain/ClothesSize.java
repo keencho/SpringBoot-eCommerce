@@ -1,7 +1,5 @@
 package iducs.springboot.board.domain;
 
-import java.util.List;
-
 public class ClothesSize {
 	private long no;
 	private String name;

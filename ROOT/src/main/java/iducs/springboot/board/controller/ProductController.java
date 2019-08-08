@@ -3,6 +3,7 @@ package iducs.springboot.board.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import iducs.springboot.board.domain.Category;
 import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
+import iducs.springboot.board.domain.ProductQuestion;
 import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.domain.Section;
@@ -33,6 +35,7 @@ import iducs.springboot.board.service.CategoryService;
 import iducs.springboot.board.service.ClothesSizeService;
 import iducs.springboot.board.service.ColorService;
 import iducs.springboot.board.service.DivisionService;
+import iducs.springboot.board.service.ProductQuestionService;
 import iducs.springboot.board.service.ProductService;
 import iducs.springboot.board.service.ProductSizeService;
 import iducs.springboot.board.service.ProductStockService;
@@ -57,7 +60,9 @@ public class ProductController {
 	ProductSizeService productsizeService;
 	@Autowired
 	ProductStockService productstockService;
-
+	@Autowired
+	ProductQuestionService productquestionService;
+	
 	@GetMapping("/list/category/{cno}")
 	public String productCategoryList(@PathVariable("cno") long categoryno,
 			@PageableDefault(size = 9, sort = "no", direction = Sort.Direction.ASC) Pageable pageable, Model model,
@@ -316,6 +321,8 @@ public class ProductController {
 		Product product = productService.getProductById(no);
 		List<ProductStock> sizeStock = productstockService.findSizeByProductNo(no);
 		List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
+		List<ProductQuestion> productQuestion = productquestionService.getProductQuestion(no);
+		Collections.reverse(productQuestion);
 		
 		String deliveryDate = null;
 		Calendar cal = Calendar.getInstance();
@@ -330,11 +337,28 @@ public class ProductController {
 			System.out.println("null~"); // null 체크용 try~catch문
 		}
 		
+		int questionComplete = 0; //  상품 문의중 답변이 완료된 문의들을 count하기위한 변수
+		for(int i=0; i < productQuestion.size(); i++) {
+			// 불특정 다수의 고객이 문의 작성자의 풀id를 확인할 수 없도록 치환하는 작업
+			String id = productQuestion.get(i).getUser_no().getId(); 
+			String idSubstring = id.substring(0, 4);
+			int length = id.length() - idSubstring.length();
+			String replace = new String(new char[length]).replace("\0", "*");
+			productQuestion.get(i).getUser_no().setId(idSubstring + replace);
+			
+			// 답변 완료된 문의를 count
+			if(productQuestion.get(i).getStatus() == 1) {
+				questionComplete += 1;
+			}
+		}
+		
 		model.addAttribute("product", product);
 		model.addAttribute("size", sizeStock);
 		model.addAttribute("color", colorStock);
 		model.addAttribute("delivery", deliveryDate);
 		model.addAttribute("point", point);
+		model.addAttribute("productquestion", productQuestion);
+		model.addAttribute("productquestionComplete", questionComplete);
 		return "/home/product/view";
 	}
 

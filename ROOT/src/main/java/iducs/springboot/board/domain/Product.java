@@ -2,8 +2,6 @@ package iducs.springboot.board.domain;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class Product {
 	private long no;	// Primaray Key
 	private Category category;	// 카테고리 번호

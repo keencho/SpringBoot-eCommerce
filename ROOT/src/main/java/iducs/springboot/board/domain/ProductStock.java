@@ -1,7 +1,5 @@
 package iducs.springboot.board.domain;
 
-import java.util.List;
-
 public class ProductStock {
 	private long no;	// primary key
 	private Product product_no;	// 상품 번호
