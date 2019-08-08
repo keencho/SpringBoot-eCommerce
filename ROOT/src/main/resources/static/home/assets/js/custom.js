@@ -1047,3 +1047,34 @@
 		});
 	}
 	
+	// 상품설명 전체보기, 닫기
+    $(function(){
+    	 var offset = $( '.expic' ).offset();
+    	  $("#expic_button > button").click ( function(){
+    		  if($(this).hasClass("checkcrop")){
+    			  $(this).removeClass("checkcrop");﻿
+    			  $("#expic").removeClass('expic');
+    			  $("#expic").addClass('expic_all');
+    			  $('#spancrop span').html('상품설명 닫기');
+    		  }
+    		  else{
+    			  $(this).addClass("checkcrop");
+    			  $("#expic").removeClass('expic_all');
+    			  $("#expic").addClass('expic');
+    			  $('#spancrop span').html('상품설명 전체보기');
+    			  $('html, body').animate({scrollTop : (offset.top)}, 100);
+    		  }
+    	 });
+    });
+	
+ // Q&A 팝업 레이어
+    $(document).ready(function () {
+    	$('#qnasubmit').click(function () {
+    		$("#qna_popup").css({
+    			"top": (($(window).height()-$("#qna_popup").outerHeight())/2+$(window).scrollTop())+"px",
+    			"left": (($(window).width()-$("#qna_popup").outerWidth())/2+$(window).scrollLeft())+"px"
+    			 });
+    		$( "#qna_popup" ).load( ".qna_popup" ).fadeIn(100);
+    	});
+    });
+	

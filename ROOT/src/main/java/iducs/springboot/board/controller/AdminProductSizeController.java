@@ -13,18 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import iducs.springboot.board.domain.Category;
 import iducs.springboot.board.domain.ClothesSize;
-import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
 import iducs.springboot.board.domain.ProductSize;
-import iducs.springboot.board.domain.Section;
-import iducs.springboot.board.service.CategoryService;
 import iducs.springboot.board.service.ClothesSizeService;
-import iducs.springboot.board.service.DivisionService;
 import iducs.springboot.board.service.ProductService;
 import iducs.springboot.board.service.ProductSizeService;
-import iducs.springboot.board.service.SectionService;
 
 @Controller
 @RequestMapping("/admin/product/size")

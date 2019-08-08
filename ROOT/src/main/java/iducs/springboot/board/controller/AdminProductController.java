@@ -1,19 +1,11 @@
 package iducs.springboot.board.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -22,8 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,10 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import iducs.springboot.board.domain.Category;
 import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
-import iducs.springboot.board.domain.ProductSize;
-import iducs.springboot.board.domain.Question;
 import iducs.springboot.board.domain.Section;
-import iducs.springboot.board.entity.ProductEntity;
 import iducs.springboot.board.service.CategoryService;
 import iducs.springboot.board.service.ClothesSizeService;
 import iducs.springboot.board.service.DivisionService;

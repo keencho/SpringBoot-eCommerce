@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import iducs.springboot.board.domain.Category;
 import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Color;
-import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
 import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.service.ClothesSizeService;

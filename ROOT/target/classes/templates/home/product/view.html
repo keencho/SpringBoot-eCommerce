@@ -64,33 +64,34 @@
 						<tr>
 							<th scope="row" class="table-back">문의유형</th>
 							<td align="left">
-								<input type="radio" name="chk_info" value="0" checked>사이즈
+								<input type="radio" name="question_type" value="0" checked>사이즈
 								&nbsp&nbsp&nbsp
-								<input type="radio" name="chk_info" value="1">디자인/색상
+								<input type="radio" name="question_type" value="1">디자인/색상
 								&nbsp&nbsp&nbsp
-								<input type="radio" name="chk_info" value="2">배송/교환/반품
+								<input type="radio" name="question_type" value="2">배송/교환/반품
 								&nbsp&nbsp&nbsp
-								<input type="radio" name="chk_info" value="3">기타
+								<input type="radio" name="question_type" value="3">기타
 								&nbsp&nbsp&nbsp
 							</td>
 						</tr>
 						<tr>
 							<th scope="row" class="table-back">제목</th>
 							<td align="left">
-								<input type="text" size="70" name="name" required><br>
+								<input type="text" size="70" name="name" id="question_name" required><br>
 								※30자 이내로 입력해주세요
 							</td>
 						</tr>
 						<tr>
 							<th scope="row" class="table-back">내용</th>
 							<td align="left">
-								<textarea style="resize: none;" rows="12" cols="70" name="contents" placeholder="문의 내용을 입력해 주세요." required></textarea><br>
+								<textarea style="resize: none;" rows="12" cols="70" id="question_contents" name="contents" placeholder="문의 내용을 입력해 주세요." required></textarea><br>
 								※ 상품과 관련없는 내용은 통보 없이 삭제될 수 있습니다.
 							</td>
 						</tr>
 					</tbody>
 				</table> 
-				<a style="cursor: pointer" onclick="location.href='/cart'" class="button">등록하기</a>
+				<input type="hidden" id="product_no" th:value="${product.no}">
+				<a style="cursor: pointer" onclick="product_question_add()" class="button">등록하기</a>
 		  		<a style="cursor: pointer" onclick="$(this).qnaPopupClose();" class="button">닫기</a>
 		</span>		
 		</div>

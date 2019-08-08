@@ -7,11 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import iducs.springboot.board.domain.ProductQuestion;
-import iducs.springboot.board.domain.Section;
 import iducs.springboot.board.entity.ProductQuestionEntity;
-import iducs.springboot.board.entity.SectionEntity;
 import iducs.springboot.board.repository.ProductQuestionRepository;
-import iducs.springboot.board.repository.SectionRepository;
 
 @Service("productQuestionService")
 public class ProductQuestionServiceImpl implements ProductQuestionService{

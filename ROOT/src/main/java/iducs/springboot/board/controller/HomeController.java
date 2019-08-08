@@ -1,11 +1,6 @@
 package iducs.springboot.board.controller;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import iducs.springboot.board.domain.Section;
-import iducs.springboot.board.domain.User;
 import iducs.springboot.board.service.SectionService;
-import iducs.springboot.board.utils.HttpSessionUtils;
 
 @Controller
 public class HomeController {

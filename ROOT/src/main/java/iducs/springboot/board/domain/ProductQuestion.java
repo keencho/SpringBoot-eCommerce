@@ -1,7 +1,5 @@
 package iducs.springboot.board.domain;
 
-import java.util.List;
-
 public class ProductQuestion {
 	private long no;
 	private Product product_no;

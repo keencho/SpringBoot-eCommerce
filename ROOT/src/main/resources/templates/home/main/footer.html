@@ -222,40 +222,44 @@
     <script src="/home/assets/js/main.min.js?ver=2"></script>
     
     <!-- Custom JS File -->
-    <script src="/home/assets/js/custom.js?ver=30"></script>
+    <script src="/home/assets/js/custom.js?ver=31"></script>
     <!-- .load()메소드를 사용했을시 main.js를 다시 불러오기 위한 reload function -->
     <script src="/home/assets/js/reload_main.js"></script>
     <script>
-	// 상품설명 전체보기, 닫기
-    $(function(){
-    	 var offset = $( '.expic' ).offset();
-    	  $("#expic_button > button").click ( function(){
-    		  if($(this).hasClass("checkcrop")){
-    			  $(this).removeClass("checkcrop");﻿
-    			  $("#expic").removeClass('expic');
-    			  $("#expic").addClass('expic_all');
-    			  $('#spancrop span').html('상품설명 닫기');
-    		  }
-    		  else{
-    			  $(this).addClass("checkcrop");
-    			  $("#expic").removeClass('expic_all');
-    			  $("#expic").addClass('expic');
-    			  $('#spancrop span').html('상품설명 전체보기');
-    			  $('html, body').animate({scrollTop : (offset.top)}, 100);
-    		  }
-    	 });
-    });
-	
- // Q&A 팝업 레이어
-    $(document).ready(function () {
-    	$('#qnasubmit').click(function () {
-    		$("#qna_popup").css({
-    			"top": (($(window).height()-$("#qna_popup").outerHeight())/2+$(window).scrollTop())+"px",
-    			"left": (($(window).width()-$("#qna_popup").outerWidth())/2+$(window).scrollLeft())+"px"
-    			 });
-    		$( "#qna_popup" ).load( ".qna_popup" ).fadeIn(100);
-    	});
-    });
+ 
+ // 상품문의 등록
+ function product_question_add(){
+	 var no = $('#product_no').val();
+	 var type = $('input[name="question_type"]:checked').val();
+	 var name = $('#question_name').val();
+	 var contents = $('#question_contents').val();
+	 if (name == ''){
+		 alert("제목을 입력해주세요!");
+	 } else if (name.length > 30){
+		 alert("제목은 영문자 포함 30자 이내로만 등록 가능합니다.");
+	 } else if (contents == ''){
+		 alert("문의 내용을 입력해주세요!");
+	 } else {
+		 $.ajax({
+				url : "/product/communication/question/add",
+				type : "POST",
+				data : {
+					"product_no" : no,
+					"type" : type,
+					"name" : name,
+					"contents" : contents
+				},
+				dataType : "html",
+				success : function() {
+					alert("상품 문의가 등록되었습니다!");
+					window.location.reload(); 				 
+				},
+				error : function() {
+					alert("상품 문의 등록이 실패하였습니다.");
+				}
+			});
+	 } 
+}
     </script>
 </body>
 </html>

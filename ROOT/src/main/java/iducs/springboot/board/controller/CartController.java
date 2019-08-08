@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import iducs.springboot.board.domain.Product;
 import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.domain.ProductStock;
-import iducs.springboot.board.domain.Section;
 import iducs.springboot.board.service.ProductService;
 import iducs.springboot.board.service.ProductSizeService;
 import iducs.springboot.board.service.ProductStockService;

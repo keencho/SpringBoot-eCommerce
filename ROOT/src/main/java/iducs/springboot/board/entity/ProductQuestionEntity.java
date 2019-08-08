@@ -19,7 +19,7 @@ import iducs.springboot.board.domain.Section;
 
 
 @Entity
-@Table(name = "productquestion")
+@Table(name = "product_question")
 public class ProductQuestionEntity {
 	@Id
 	@Column(name="no")
