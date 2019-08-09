@@ -199,4 +199,16 @@ public class ProductServiceImpl implements ProductService{
 		return product;
 	}
 
+
+	@Override
+	public List<Product> getProductBySectionNo(long no) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findBySectionNo(no);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
 }

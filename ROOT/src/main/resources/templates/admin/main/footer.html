@@ -65,6 +65,31 @@
 
     <!-- Custom Theme Scripts -->
     <script src="/admin/build/js/custom.min.js"></script>
-	
+	<script>
+	function product_question_answer(no) {
+		var answer = $('#answer').val();
+		answer = answer.replace(/(?:\r\n|\r|\n)/g, '<br>');
+		 if(answer == '') {
+			 alert("답변을 입력하세요");
+		 } else {
+			 $.ajax({
+					url : "/admin/communication/product/question/update",
+					type : "POST",
+					data : {
+						"no" : no,
+						"status" : 1,
+						"answer" : answer
+					},
+					dataType : "html",
+					success : function(result) {
+						location.href=result;		 
+					},
+					error : function() {
+						alert("실패");
+					}
+				});
+		 }
+	}
+	</script>
   </body>
 </html>

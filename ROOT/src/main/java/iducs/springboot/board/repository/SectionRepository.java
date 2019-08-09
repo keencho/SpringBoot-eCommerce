@@ -14,5 +14,6 @@ public interface SectionRepository extends JpaRepository<SectionEntity, Long>{
 	SectionEntity findByNo(long no);
 	
 	List<SectionEntity> findAll(Sort sort);
+	List<SectionEntity> findByDivisionNo(long no);
 
 }

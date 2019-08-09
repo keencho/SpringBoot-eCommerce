@@ -8,6 +8,7 @@ public interface DivisionService {
 	Division getDivisionByNo(long no);
 
 	List<Division> getDivision();
+	List<Division> getDivisionByCategoryNo(long no);
 	
 	void saveDivision(Division division);
 	void updateDivision(Division division);

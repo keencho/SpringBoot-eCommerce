@@ -55,6 +55,17 @@ public class DivisionServiceImpl implements DivisionService{
 		repository.delete(entity);
 	}
 
+	@Override
+	public List<Division> getDivisionByCategoryNo(long no) {
+		List<Division> division = new ArrayList<Division>();
+		List<DivisionEntity> entities = repository.findByCategoryNo(no);
+		for(DivisionEntity entity : entities) {
+			Division div = entity.buildDomain();
+			division.add(div);
+		}
+		return division;
+	}
+
 
 
 

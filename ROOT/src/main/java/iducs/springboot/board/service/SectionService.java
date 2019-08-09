@@ -8,6 +8,7 @@ public interface SectionService {
 	Section getSectionByNo(long no);
 	
 	List<Section> getSection();
+	List<Section> getSectionByDivisionNo(long no);
 	
 	void saveSection(Section section);
 	void updateSection(Section section);

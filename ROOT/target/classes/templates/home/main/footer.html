@@ -233,6 +233,7 @@
 	 var type = $('input[name="question_type"]:checked').val();
 	 var name = $('#question_name').val();
 	 var contents = $('#question_contents').val();
+	 contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br>');
 	 if (name == ''){
 		 alert("제목을 입력해주세요!");
 	 } else if (name.length > 30){
@@ -267,10 +268,27 @@
  		if($(this).parents('tr').next('tr').is(":visible")){
  			$(this).parents('tr').next('tr').slideUp(1);
  		} else {
+ 			$(".question_name").parents('tr').next('tr').slideUp(1);
  			$(this).parents('tr').next('tr').slideDown(1);
  		}
  	})
  })
-    </script>
+ 
+// 상품별 문의 pagination load() 처리
+$(function(){
+	$(document).on("click","#paginationajax_question a",function(e) {
+		$("#qna-pagination-load").hide(); 
+		$("#qna-pagination-load").load($(this).attr("href") + " div#qna-pagination-load").show();
+		e.preventDefault();
+	});
+});
+
+// 상품별 문의 sorting ajax 처리
+function product_question_sort(productno, sortno) {
+	$("#qna-pagination-load").hide();
+	$("#qna-pagination-load").load("/product/communication/question/list/" + productno + "/" + sortno + " div#qna-pagination-load").show();
+	e.preventDefault();
+}
+ </script>
 </body>
 </html>

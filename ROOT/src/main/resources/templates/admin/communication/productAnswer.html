@@ -1,0 +1,69 @@
+<th:block th:include="admin/main/header.html"></th:block>
+<!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">	
+                    <h2>답변하기
+					</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+						<table class="table table-borderless">
+						  <tbody>
+							<tr>
+							  <th scope="row">분류</th>
+							  <td>
+							  	<span th:text="${question.product_no.category.name}"></span> /
+							  	<span th:text="${question.product_no.division.name}"></span> /
+							  	<span th:text="${question.product_no.section.name}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">상품명</th>
+							  <td th:text="${question.product_no.name}"></td>
+							</tr>
+							<tr>
+							  <th scope="row">작성자</th>
+							  <td th:text="${question.user_no.name}"></td>
+							</tr>
+							<tr>
+							  <th scope="row">등록일</th>
+							  <td th:text="${question.regdate}"></td>
+							</tr>							
+							<tr>
+							  <th scope="row">문의 유형</th>
+							    <td th:if="${question.type == 0}" th:text="사이즈"></td>
+					 	 	 	<td th:if="${question.type == 1}" th:text="@{'디자인/색상'}"></td>
+						  		<td th:if="${question.type == 2}" th:text="@{'배송/교환/반품'}"></td>
+						  		<td th:if="${question.type == 3}" th:text="기타"></td>
+							</tr>
+							<tr>
+							  <th scope="row">제목</th>
+							  <td th:text="${question.name}"></td>
+							</tr>
+							<tr>
+							  <th scope="row">질문내용</th>
+							  <td th:utext="${question.contents}">></td>
+							</tr>
+							<tr>
+							  <th scope="row">답변</th>
+							  <td><textarea style="resize: none; width:100%;" rows="20" id="answer" placeholder="답변 내용을 입력하세요." th:text="${#strings.replace(question.answer, '&lt;br&gt;', '&#10;')}"></textarea></td>
+							</tr>
+						  </tbody>
+						</table>
+						<div align="center">
+						  <button type="submit" class="btn btn-success" th:onClick="@{'product_question_answer(\'{no}\')'(no=${question.no})}">답변하기</button>
+						  <button type="button" class="btn btn-primary" onClick="history.back();">이전화면</button>
+                        </div>
+						</div>
+                  </div>
+                </div>
+              </div>     
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+<th:block th:include="admin/main/footer.html"></th:block>

@@ -1067,7 +1067,7 @@
     	 });
     });
 	
- // Q&A 팝업 레이어
+    // Q&A 팝업 레이어
     $(document).ready(function () {
     	$('#qnasubmit').click(function () {
     		$("#qna_popup").css({

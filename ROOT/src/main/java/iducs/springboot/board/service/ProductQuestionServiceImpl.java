@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import iducs.springboot.board.domain.ProductQuestion;
@@ -24,9 +26,9 @@ public class ProductQuestionServiceImpl implements ProductQuestionService{
 	}
 
 	@Override
-	public List<ProductQuestion> getProductQuestion(long no) {
+	public List<ProductQuestion> getProductQuestion(long no, Pageable questionPageable) {
 		List<ProductQuestion> productquestion = new ArrayList<ProductQuestion>();
-		List<ProductQuestionEntity> entities = repository.findByProductNo(no);
+		List<ProductQuestionEntity> entities = repository.findByProductNo(no, questionPageable);
 		for(ProductQuestionEntity entity : entities) {
 			ProductQuestion product = entity.buildDomain();
 			productquestion.add(product);
@@ -38,6 +40,40 @@ public class ProductQuestionServiceImpl implements ProductQuestionService{
 	public List<ProductQuestion> findAll() {
 		List<ProductQuestion> productquestion = new ArrayList<ProductQuestion>();
 		List<ProductQuestionEntity> entities = repository.findAll();
+		for(ProductQuestionEntity entity : entities) {
+			ProductQuestion product = entity.buildDomain();
+			productquestion.add(product);
+		}
+		return productquestion;
+	}
+	
+	@Override
+	public Page<ProductQuestionEntity> getProductQuestionPage(Pageable questionPageable, long no) {
+		Page<ProductQuestionEntity> entities = repository.findByProductNo(questionPageable, no);
+		return entities;
+	}
+	
+	@Override
+	public List<ProductQuestion> getProductQuestionStatus(long no, int status, Pageable questionPageable) {
+		List<ProductQuestion> productquestion = new ArrayList<ProductQuestion>();
+		List<ProductQuestionEntity> entities = repository.findByProductNoAndStatus(no, questionPageable, status);
+		for(ProductQuestionEntity entity : entities) {
+			ProductQuestion product = entity.buildDomain();
+			productquestion.add(product);
+		}
+		return productquestion;
+	}
+
+	@Override
+	public Page<ProductQuestionEntity> getProductQuestionStatusPage(Pageable questionPageable, long no, int status) {
+		Page<ProductQuestionEntity> entities = repository.findByProductNoAndStatus(questionPageable, no, status);
+		return entities;
+	}
+	
+	@Override
+	public List<ProductQuestion> getProductQuestionOriginal(long no) {
+		List<ProductQuestion> productquestion = new ArrayList<ProductQuestion>();
+		List<ProductQuestionEntity> entities = repository.findByProductNo(no);
 		for(ProductQuestionEntity entity : entities) {
 			ProductQuestion product = entity.buildDomain();
 			productquestion.add(product);
@@ -65,5 +101,4 @@ public class ProductQuestionServiceImpl implements ProductQuestionService{
 		entitiy.buildEntity(productquestion);
 		repository.delete(entitiy);
 	}
-	
 }

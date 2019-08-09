@@ -31,6 +31,7 @@ import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.domain.Section;
 import iducs.springboot.board.entity.ProductEntity;
+import iducs.springboot.board.entity.ProductQuestionEntity;
 import iducs.springboot.board.service.CategoryService;
 import iducs.springboot.board.service.ClothesSizeService;
 import iducs.springboot.board.service.ColorService;
@@ -317,12 +318,17 @@ public class ProductController {
 	}
 	
 	@GetMapping("/view/{no}")
-	public String viewProduct(@PathVariable(value = "no") Long no, Model model) {
+	public String viewProduct(
+			@PathVariable(value = "no") Long no, 
+			@PageableDefault(size = 5, sort = "no", direction = Sort.Direction.DESC) Pageable questionPageable,
+			Model model,
+			HttpServletRequest request) throws Exception{
 		Product product = productService.getProductById(no);
 		List<ProductStock> sizeStock = productstockService.findSizeByProductNo(no);
 		List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
-		List<ProductQuestion> productQuestion = productquestionService.getProductQuestion(no);
-		Collections.reverse(productQuestion);
+		List<ProductQuestion> productQuestion = productquestionService.getProductQuestion(no, questionPageable);
+		List<ProductQuestion> productQuestionOriginal = productquestionService.getProductQuestionOriginal(no);
+		Page<ProductQuestionEntity> questionPage = productquestionService.getProductQuestionPage(questionPageable, no);
 		
 		String deliveryDate = null;
 		Calendar cal = Calendar.getInstance();
@@ -345,19 +351,22 @@ public class ProductController {
 			int length = id.length() - idSubstring.length();
 			String replace = new String(new char[length]).replace("\0", "*");
 			productQuestion.get(i).getUser_no().setId(idSubstring + replace);
-			
+		}
+		for(int i=0; i < productQuestionOriginal.size(); i++) {
 			// 답변 완료된 문의를 count
-			if(productQuestion.get(i).getStatus() == 1) {
+			if (productQuestionOriginal.get(i).getStatus() == 1) {
 				questionComplete += 1;
 			}
 		}
-		
+
 		model.addAttribute("product", product);
 		model.addAttribute("size", sizeStock);
 		model.addAttribute("color", colorStock);
 		model.addAttribute("delivery", deliveryDate);
 		model.addAttribute("point", point);
+		model.addAttribute("productquestionOriginal", productQuestionOriginal);
 		model.addAttribute("productquestion", productQuestion);
+		model.addAttribute("questionPage", questionPage);
 		model.addAttribute("productquestionComplete", questionComplete);
 		return "/home/product/view";
 	}

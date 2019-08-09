@@ -55,6 +55,17 @@ public class SectionServiceImpl implements SectionService{
 		entity.buildEntity(section);
 		repository.delete(entity);
 	}
+
+	@Override
+	public List<Section> getSectionByDivisionNo(long no) {
+		List<Section> section = new ArrayList<Section>();
+		List<SectionEntity> entities = repository.findByDivisionNo(no);
+		for(SectionEntity entity : entities) {
+			Section sec = entity.buildDomain();
+			section.add(sec);
+		}
+		return section;
+	}
 	
 	
 }

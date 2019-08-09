@@ -20,6 +20,7 @@ public interface ProductService {
 	
 	List<Product> getProductBySectionNo(long no, Pageable pageable);
 	List<Product> getProductBySectionNoSize(long no, String[] sizeArray, String[] colorArray, long price1, long price2, Pageable pageable);
+	List<Product> getProductBySectionNo(long no);
 	
 	List<Product> getRelatedProductByCategoryNo(long no);
 
