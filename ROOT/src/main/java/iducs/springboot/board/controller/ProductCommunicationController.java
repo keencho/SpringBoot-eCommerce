@@ -21,14 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import iducs.springboot.board.domain.ClothesSize;
-import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
 import iducs.springboot.board.domain.ProductQuestion;
-import iducs.springboot.board.domain.ProductStock;
-import iducs.springboot.board.domain.Section;
 import iducs.springboot.board.domain.User;
-import iducs.springboot.board.entity.ProductEntity;
 import iducs.springboot.board.entity.ProductQuestionEntity;
 import iducs.springboot.board.service.ProductQuestionService;
 import iducs.springboot.board.service.ProductService;
@@ -72,13 +67,13 @@ public class ProductCommunicationController {
 	}
 	
 	@GetMapping("/question/list/{productno}/{sort}")
-	public String questionSortList(
+	public String questionSortList(	// 상품별 문의에 전체 / 답변완료 sorting
 			@PathVariable(value = "productno") long product_no,
 			@PathVariable(value = "sort") int sort,
 			@PageableDefault(size = 5, sort = "no", direction = Sort.Direction.DESC) Pageable questionPageable,
 			Model model,
 			HttpServletRequest request
-			) throws Exception { // Ajax id 중복체크
+			) throws Exception {
 		if (sort == 0) {
 			List<ProductQuestion> productQuestion = productquestionService.getProductQuestion(product_no, questionPageable);
 			Page<ProductQuestionEntity> questionPage = productquestionService.getProductQuestionPage(questionPageable, product_no);

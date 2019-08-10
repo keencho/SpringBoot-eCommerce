@@ -3,7 +3,6 @@ package iducs.springboot.board.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -328,6 +327,8 @@ public class ProductController {
 		List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
 		List<ProductQuestion> productQuestion = productquestionService.getProductQuestion(no, questionPageable);
 		List<ProductQuestion> productQuestionOriginal = productquestionService.getProductQuestionOriginal(no);
+		List<Product> productCategory = productService.get6ProductByCategoryNo(product.getCategory().getNo());
+		List<Product> productDivision = productService.get3ProductByDivisionNo(product.getDivision().getNo());
 		Page<ProductQuestionEntity> questionPage = productquestionService.getProductQuestionPage(questionPageable, no);
 		
 		String deliveryDate = null;
@@ -368,6 +369,8 @@ public class ProductController {
 		model.addAttribute("productquestion", productQuestion);
 		model.addAttribute("questionPage", questionPage);
 		model.addAttribute("productquestionComplete", questionComplete);
+		model.addAttribute("productCategory", productCategory);
+		model.addAttribute("productDivision", productDivision);
 		return "/home/product/view";
 	}
 

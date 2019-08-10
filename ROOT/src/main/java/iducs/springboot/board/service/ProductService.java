@@ -23,6 +23,9 @@ public interface ProductService {
 	List<Product> getProductBySectionNo(long no);
 	
 	List<Product> getRelatedProductByCategoryNo(long no);
+	
+	List<Product> get6ProductByCategoryNo(long no);
+	List<Product> get3ProductByDivisionNo(long no);
 
 	Page<ProductEntity> getProductByCategoryNoPage(Pageable pageable, long no);
 	Page<ProductEntity> getProductByCategoryNoPageSize(Pageable pageable, long no, String[] sizeArray, String[] colorArray, long price1, long price2);

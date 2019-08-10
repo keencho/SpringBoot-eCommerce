@@ -211,4 +211,28 @@ public class ProductServiceImpl implements ProductService{
 		return product;
 	}
 
+
+	@Override
+	public List<Product> get6ProductByCategoryNo(long no) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findTop6ByCategoryNo(no);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
+
+	@Override
+	public List<Product> get3ProductByDivisionNo(long no) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findTop3ByDivisionNo(no);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
 }
