@@ -671,7 +671,7 @@
 		
 	});
 	
-	// 장바구니 ajax 수량체크
+	//장바구니 ajax 수량체크
 	function cartOptionStockCheck(no) {
 		var size=Number($("#cart_ajax_size option:selected").val());
 		var color=Number($("#cart_ajax_color option:selected").val());
@@ -847,12 +847,16 @@
 			type : "POST",
 			data : {
 				"no" : cartno,
+				"productno" : no,
 				"size" : size,
 				"color" : color
 			},
 			dataType : "html",
-			success : function() {
-				location.href="/cart";	 
+			success : function(result) {
+				if(result == 0)
+					location.href="/cart";
+				else
+					alert("현재 선택된 옵션입니다. 변경할 옵션을 선택해주세요.");
 			}
 		});
 		

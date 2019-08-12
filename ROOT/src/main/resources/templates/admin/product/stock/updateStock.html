@@ -65,7 +65,7 @@ function find_color() {
                   </div>
 					<div class="x_content">
                     <br />
-                    <form class="form-horizontal form-label-left" th:action="@{'/admin/product/stock/update/{no}'(no=${stock.no})}" name="productStockAddForm" th:method="put" enctype="multipart/form-data">
+                    <form class="form-horizontal form-label-left" th:action="@{'/admin/product/stock/update/{no}'(no=${stock.no})}" name="productStockAddForm" th:method="put">
                     
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">상품명 
@@ -110,7 +110,7 @@ function find_color() {
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div align="center">
-                          <button type="submit" class="btn btn-success">추가</button>
+                          <button type="submit" class="btn btn-success">수정</button>
                           <button class="btn btn-primary" type="button" onClick="history.back();">취소</button>
                         </div>
                       </div>

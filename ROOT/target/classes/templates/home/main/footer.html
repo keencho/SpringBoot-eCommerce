@@ -222,7 +222,7 @@
     <script src="/home/assets/js/main.min.js?ver=2"></script>
     
     <!-- Custom JS File -->
-    <script src="/home/assets/js/custom.js?ver=31"></script>
+    <script src="/home/assets/js/custom.js?ver=37"></script>
     <!-- .load()메소드를 사용했을시 main.js를 다시 불러오기 위한 reload function -->
     <script src="/home/assets/js/reload_main.js"></script>
     <script>
@@ -289,6 +289,75 @@ function product_question_sort(productno, sortno) {
 	$("#qna-pagination-load").load("/product/communication/question/list/" + productno + "/" + sortno + " div#qna-pagination-load").show();
 	e.preventDefault();
 }
+
+/* 퀵뷰(색상) active class 추가, 삭제 */
+$(function(){
+	var Btn = $(".config-swatch-list > li");
+		Btn.click(function(){ 
+			if($(this).hasClass("active")){
+				$(this).removeClass("active");
+			} else {
+				Btn.removeClass("active");
+				$(this).addClass("active");
+			}
+		});
+});
+
+
+function product_view_stock(no, color, colorNo) {
+	var size=$("#view_ajax_size option:selected").text();
+	var sizeNo=Number($("#view_ajax_size option:selected").val());
+	var price=$("#product_price").text();
+	
+	if (color == null) {
+		color = $(".view_ajax_color > li.active > a").text();
+		var colorNo = Number($(".view_ajax_color > li.active").val());
+	}
+	
+	if (color != '' && size != "사이즈를 선택하세요"){
+		$.ajax({
+			url : "/cart/option/stockCheck",
+			type : "POST",
+			data : {
+				"no" : no,
+				"size" : sizeNo,
+				"color" : colorNo
+			},
+			dataType : "html",
+			success : function(result) {
+				if (result > 0) {
+					$('#view_ajax_size').prop('selectedIndex',0);
+					$(".config-swatch-list > li").removeClass("active");
+					$("#goods_selected:last").append("<div class='product-single-filter goods'>"
+													+ "<span class='goods_option'>" + color + "</span>"
+													+ "<span>,&nbsp</span>"
+													+ "<span class='goods_option'>" + size + "</span>"
+													+ "<div class='goods_qty'>"
+													+ "<div class='product-single-qty'>"
+													+ "<input class='horizontal-quantity form-control' type='text'>"
+													+ "</div>" + "</div>"
+													+ "<strong class='goods_price'>" + price + "</strong>"
+													+ "<a class='icon-cancel goods_option goods_cancel'></a>"
+													+ "</div>");
+					reload_main();
+				} else {
+					alert("수량이 부족합니다. 다른 옵션을 선택해주세요");
+				} 				 
+			}
+		});
+	}
+		
+}
+
+
+$(function()
+		{
+		    $('.horizontal-quantity').click(function()
+		    {
+		       alert("zz");
+		    });
+		});
  </script>
 </body>
+
 </html>

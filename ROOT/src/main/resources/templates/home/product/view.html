@@ -117,7 +117,7 @@
 
                                         <div class="price-box">
                                             <span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
-                                            <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
+                                            <span id="product_price" class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
                                         </div><!-- End .price-box -->
                                         <div class="product-desc">
                                             <label>배송비</label>0원<br>
@@ -128,20 +128,25 @@
                                         <div class="product-filters-container">
                                             <div class="product-single-filter">
 						                        <label>사이즈:</label>
-						                        <select id="quick_cart_ajax_size" class="form-control" style="width: 200px; height:48px;">
+						                        <select id="view_ajax_size" class="form-control" style="width: 200px; height:48px;" th:onchange="@{'product_view_stock(\'{no}\')'(no=${product.no})}">
 													<option value="0">사이즈를 선택하세요</option>
 										        	<option th:each="size : ${size}" th:value="${size.size_no.no}" th:text="${size.size_no.name}"></option>
 										        </select>
 						                    </div><!-- End .product-single-filter -->
 						                    <div class="product-single-filter">
 						                        <label>색상:</label>
-						                        <ul class="config-swatch-list">
-						                            <li th:each="color : ${color}" th:value="${color.color_no.no}">
-						                                <a href="#" th:style="@{background-color: rgb({color});(color=${color.color_no.rgb})}" th:title="${color.color_no.name}" th:text="${color.color_no.name}"></a>
+						                        <ul class="config-swatch-list view_ajax_color">
+						                            <li th:each="color : ${color}" th:value="${color.color_no.no}" >
+						                                <a href="#" th:onclick="@{'product_view_stock(\'{no}\', \'{color}\', \'{colorNo}\')'(no=${product.no}, color=${color.color_no.name}, colorNo=${color.color_no.no})}" th:style="@{background-color: rgb({color});(color=${color.color_no.rgb})}" th:title="${color.color_no.name}" th:text="${color.color_no.name}"></a>
 						                            </li>
 						                        </ul>
 						                    </div><!-- End .product-single-filter -->
+						                    
+						                    <!-- 상품 선택시 아래 소스에 사이에 추가 -->
+						                    <div id="goods_selected" onchange="change_qty()"></div>
+   
                                         </div><!-- End .product-filters-container -->
+
                                         <div class="product-action product-all-icons">
 											<a href="#" class="paction icon-dollar" title="구매">
 						                    	<span>바로 구매&nbsp&nbsp</span>

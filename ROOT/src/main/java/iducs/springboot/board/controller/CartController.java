@@ -160,15 +160,15 @@ public class CartController {
 		} else { // cart session이 존재하면
 			List<Product> cart = (List<Product>) session.getAttribute("cart"); // cart session의 정보를 불러옴
 			total = (int)session.getAttribute("total");
-			for(int i = 0; i < cart.size(); i++) {
-				cartno = i + 1; // 새로 삽일될 정보의 인덱스는 cart session의 마지막 인덱스 +1
-				product.setCartNo(cartno);
-			}
-			int index = this.exists(no, cart); // 장바구니에 현재 고객이 선택한 상품이 있는지 확인
+			int index = this.exists(no, cart, color, size); // 장바구니에 현재 고객이 선택한 상품이 있는지 확인
 			if(index == -1) { // 장바구니에 현재 고객이 선택한 상품이 없으면..
+				for(int i = 0; i < cart.size(); i++) {
+					cartno = i + 1; // 새로 삽일될 정보의 인덱스는 cart session의 마지막 인덱스 +1
+					product.setCartNo(cartno);
+				}
 				cart.add(cartno,  product);				
 			} else {  // 장바구니에 현재 고객이 선택한 상품이 있으면 장바구니에 들어있는 상품의 수량 +1(이 경우 옵션은 기존의 옵션을 채택)
-					  // list에서 선택했을때는 옵션 고려 하지 않지만 후에 view 페이지에서 옵션선택시 기존의 옵션을 채택할지 새로운 옵션을 채택할지 다시 생각하기
+					  // list에서 선택했을때는 옵션 고려 하지 않지만 후에 view 페이지에서 옵션선택시 기존의 옵션을 채택할지 새로운 옵션을 채택할지 다시 생각하기 --> 상품의 옵션이 다르면 다른 상품으로 인식하도록 변경
 				int quantity = cart.get(index).getCartQty() + qty;
 				cart.get(index).setCartQty(quantity);
 			}
@@ -180,15 +180,40 @@ public class CartController {
 	
 	@ResponseBody
 	@PostMapping("/updateOption")
-	public void cartUpdateOption(
-			@RequestParam(value = "no") int no,
+	public int cartUpdateOption(
+			@RequestParam(value = "no") long no,
+			@RequestParam(value = "productno") long productno,
 			@RequestParam(value = "color") String color,
 			@RequestParam(value = "size") String size,
 			HttpSession session
 			) {
 		List<Product> cart = (List<Product>) session.getAttribute("cart");
-		cart.get(no).setCartColor(color);
-		cart.get(no).setCartSize(size);
+		int index = this.exists(productno, cart, color, size);
+		if(index == -1) {
+			cart.get((int) no).setCartColor(color);
+			cart.get((int) no).setCartSize(size);
+		} else {
+			if(index != no) {
+				cart.get(index).setCartQty(cart.get(index).getCartQty() + cart.get((int) no).getCartQty());
+				cart.remove((int) no);
+				int total = 0;
+				try {
+					for(int i = 0; i< cart.size(); i ++) {
+						if(no < cart.get((int) (no + i)).getCartNo()) {
+							cart.get((int) (no + i)).setCartNo(cart.get((int) (no+i)).getCartNo() -1);
+						}
+					}
+				} catch (Exception e) {
+				}
+				for(int i = 0; i< cart.size(); i ++) {
+					total = total + (cart.get(i).getCartPrice() * cart.get(i).getCartQty());
+				}
+				session.setAttribute("total", total);
+			} else {
+				return -1;
+			}
+		}
+		return 0;
 	}
 	
 	@ResponseBody
@@ -204,13 +229,14 @@ public class CartController {
 		cart.get(no).setCartQty(qty);
 		total = total + ((qty - originalQty) * cart.get(no).getCartPrice());
 		session.setAttribute("total", total);
-		System.out.println(qty);
 	}
 	 
-	private int exists(Long id, List<Product> cart) { // 장바구니에 이미 선택한 상품이 있는지 확인
+	private int exists(Long id, List<Product> cart, String color, String size) { // 장바구니에 이미 선택한 상품이 있는지 확인
 		for(int i = 0; i < cart.size(); i++) {
 			if ( cart.get(i).getNo() == id){
-				return i;
+				if (cart.get(i).getCartColor().equals(color) == true && cart.get(i).getCartSize().equals(size) == true) {
+					return i;
+				}
 			}
 		}
 		return -1;

@@ -519,3 +519,28 @@
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #2C7FC3 0 0px 0px 40px inset;
 }
+
+.goods {
+	background: #F4F4F4;
+	padding-bottom: 0rem !important;
+	padding-top: 1rem !important;
+	padding-left: 20px;
+}
+
+.goods_qty {
+	padding-left: 65px;
+}
+
+.goods_option {
+	padding-bottom: 10px;
+}
+
+.goods_price {
+	padding-left: 15px;
+	padding-bottom: 10px;
+}
+
+.goods_cancel {
+	padding-left: 6px;
+	font-size: 1.5em;
+}

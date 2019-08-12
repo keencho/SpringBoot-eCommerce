@@ -87,15 +87,15 @@ public class AdminProductStockController {
 	}
 
 	@PutMapping("/update/{no}")
-	public String productSizeUpdateSizePut(@PathVariable(value = "no") Long no, Long productno, Long size_no, Long color_no,
-			@Valid ProductStock updateProductStock, Model model) {
+	public String productSizeUpdateSizePut(@PathVariable(value = "no") Long no, Long productno, Long size_no, Long color_no, String stock,
+			Model model) {
 		ClothesSize clothessize = clothessizeService.getClothesSizeByNo(size_no);
 		Color color = colorService.getColorByNo(color_no);
 		ProductStock productstock = productstockService.getProductStockById(no);
 
 		productstock.setSize_no(clothessize);
 		productstock.setColor_no(color);
-		productstock.setStock(updateProductStock.getStock());
+		productstock.setStock(stock);
 
 		productstockService.updateProductStock(productstock);
 		return "redirect:/admin/product/stock/add/" + productno;
