@@ -151,12 +151,13 @@ public class CartController {
 		product.setCartQty(qty);
 		product.setCartPrice(Integer.parseInt(product.getListprice()));
 		product.setCartNo(cartno);
-		int total = product.getCartPrice() * product.getCartQty(); // 이 total은 
+		int total = 0;
+		// int total = product.getCartPrice() * product.getCartQty(); // 이 total은 
 		if(session.getAttribute("cart") == null) { // cart session이 존재하지 않으면 새로 생성
 			List<Product> cart = new ArrayList<Product>();
 			cart.add(cartno, product);
 			session.setAttribute("cart", cart);
-			session.setAttribute("total", total);
+			session.setAttribute("total", Integer.parseInt(product.getListprice()) * qty);
 		} else { // cart session이 존재하면
 			List<Product> cart = (List<Product>) session.getAttribute("cart"); // cart session의 정보를 불러옴
 			total = (int)session.getAttribute("total");
@@ -166,13 +167,15 @@ public class CartController {
 					cartno = i + 1; // 새로 삽일될 정보의 인덱스는 cart session의 마지막 인덱스 +1
 					product.setCartNo(cartno);
 				}
-				cart.add(cartno,  product);				
+				total = total + (qty * Integer.parseInt(product.getListprice()));
+				cart.add(cartno, product);				
 			} else {  // 장바구니에 현재 고객이 선택한 상품이 있으면 장바구니에 들어있는 상품의 수량 +1(이 경우 옵션은 기존의 옵션을 채택)
 					  // list에서 선택했을때는 옵션 고려 하지 않지만 후에 view 페이지에서 옵션선택시 기존의 옵션을 채택할지 새로운 옵션을 채택할지 다시 생각하기 --> 상품의 옵션이 다르면 다른 상품으로 인식하도록 변경
 				int quantity = cart.get(index).getCartQty() + qty;
 				cart.get(index).setCartQty(quantity);
+				total = total + (qty * Integer.parseInt(product.getListprice()));
 			}
-			total = total + (product.getCartQty() * product.getCartPrice());
+			
 			session.setAttribute("cart", cart);
 			session.setAttribute("total", total);
 		}

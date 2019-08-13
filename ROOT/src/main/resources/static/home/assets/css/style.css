@@ -5752,32 +5752,34 @@ a:focus {
 
 .config-swatch-list,
 .config-size-list,
-.config-swatch-list2 {
+.config-swatch-list2,
+.config-swatch-list3 {
   margin: 0;
   padding: 0;
   font-size: 0;
   list-style: none;
 }
 
-.config-swatch-list li, .config-swatch-list2 li {
+.config-swatch-list li, .config-swatch-list2 li, .config-swatch-list3 li {
   display: -ms-inline-flexbox;
   display: inline-flex;
   margin-right: .4rem;
   margin-bottom: .4rem;
 }
 
-.config-swatch-list a, .config-swatch-list2 a {
+.config-swatch-list a, .config-swatch-list2 a, .config-swatch-list3 a {
   display: block;
   position: relative;
   width: 2.2rem;
   height: 2.2rem;
   transition: all .3s;
 }
-.config-swatch-list a:hover, .config-swatch-list a:focus, .config-swatch-list2 a:hover, .config-swatch-list2 a:focus {
+.config-swatch-list a:hover, .config-swatch-list a:focus, .config-swatch-list2 a:hover, .config-swatch-list2 a:focus,
+.config-swatch-list3 a:hover, .config-swatch-list3 a:focus {
   box-shadow: 0 0 0 .1rem #fff, 0 0 0 .2rem #dfdfdf;
 }
 
-.config-swatch-list li.active a::before, .config-swatch-list2 li.active a::before {
+.config-swatch-list li.active a::before, .config-swatch-list2 li.active a::before, .config-swatch-list3 li.active a::before {
   display: inline-block;
   position: absolute;
   top: 50%;
@@ -6223,7 +6225,7 @@ a:focus {
   margin-bottom: 3.2rem;
 }
 .product-single-details .container {
-  display: none;
+  /* display: none; */
   -ms-flex-align: center;
   align-items: center;
 }

@@ -51,6 +51,7 @@
                                         </td>
                                         <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.cartPrice * cart.cartQty, 0, 'COMMA')})}">
                                         </td>
+                                        <input type="hidden" name="each_price" th:value="${cart.cartPrice * cart.cartQty}">
                                     </tr>
                                     <tr class="product-action-row">
                                         <td colspan="4" class="clearfix">
@@ -103,8 +104,9 @@
                                 <tfoot>
                                     <tr>
                                     	<td>총 합계</td>
-                                        <td th:if="${session.total}" th:text="@{'{price}원'(price=${#numbers.formatInteger(session.total, 0, 'COMMA')})}"></td>
+                                        <td th:if="${session.total}" class="cart_total"></td>
                                         <td th:unless="${session.total}" >0원</td>
+
                                     </tr>
                                 </tfoot>
                             </table>

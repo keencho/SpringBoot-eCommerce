@@ -19,10 +19,13 @@
     <link rel="stylesheet" href="/home/assets/css/bootstrap.min.css">
 
     <!-- Main CSS File -->
+    <!-- 끝나고 고치기 
     <link rel="stylesheet" href="/home/assets/css/style.min.css?ver=19">
+    -->
+    <link rel="stylesheet" href="/home/assets/css/style.css?ver=20">
     
     <!-- Custom CSS File -->
-    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=32">
+    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=37">
     
     <!-- font-awesome -->
     <link href="/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
@@ -139,7 +142,7 @@
 
                                     <div class="dropdown-cart-total" th:if="${session.cart != null}">
                                         <span>합계</span>
-                                        <span class="cart-total-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(session.total, 0, 'COMMA')})}">$134.00</span>
+                                        <span class="cart-total-price" id="header_cart_total"></span>
                                     </div><!-- End .dropdown-cart-total -->
 
                                     <div class="dropdown-cart-action" th:if="${session.cart != null}">

@@ -118,6 +118,7 @@
                                         <div class="price-box">
                                             <span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
                                             <span id="product_price" class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
+                                            <input type="hidden" id="original_price" th:value="${product.listprice}">
                                         </div><!-- End .price-box -->
                                         <div class="product-desc">
                                             <label>배송비</label>0원<br>
@@ -133,31 +134,38 @@
 										        	<option th:each="size : ${size}" th:value="${size.size_no.no}" th:text="${size.size_no.name}"></option>
 										        </select>
 						                    </div><!-- End .product-single-filter -->
-						                    <div class="product-single-filter">
-						                        <label>색상:</label>
-						                        <ul class="config-swatch-list view_ajax_color">
-						                            <li th:each="color : ${color}" th:value="${color.color_no.no}" >
-						                                <a href="#" th:onclick="@{'product_view_stock(\'{no}\', \'{color}\', \'{colorNo}\')'(no=${product.no}, color=${color.color_no.name}, colorNo=${color.color_no.no})}" th:style="@{background-color: rgb({color});(color=${color.color_no.rgb})}" th:title="${color.color_no.name}" th:text="${color.color_no.name}"></a>
-						                            </li>
-						                        </ul>
+						                    <div class="product-single-filter choose_first">
+						                    	<div style="margin: auto !important;">
+							                		<strong>※ 사이즈를 선택해주세요.</strong>
+							                	</div>
+						                    </div><!-- End .product-single-filter -->
+						                    <div class="product-single-filter choose_color" style="display: none;">
+							                	<label>색상:</label>
+							                        <ul class="config-swatch-list3 view_ajax_color">
+							                            <li th:each="color : ${color}" th:value="${color.color_no.no}" >
+							                                <a href="#" th:onclick="@{'product_view_stock(\'{no}\', \'{color}\', \'{colorNo}\')'(no=${product.no}, color=${color.color_no.name}, colorNo=${color.color_no.no})}" th:style="@{background-color: rgb({color});(color=${color.color_no.rgb})}" th:title="${color.color_no.name}" th:text="${color.color_no.name}"></a>
+							                            </li>
+							                        </ul>
 						                    </div><!-- End .product-single-filter -->
 						                    
 						                    <!-- 상품 선택시 아래 소스에 사이에 추가 -->
 						                    <div id="goods_selected" onchange="change_qty()"></div>
    
                                         </div><!-- End .product-filters-container -->
-
                                         <div class="product-action product-all-icons">
-											<a href="#" class="paction icon-dollar" title="구매">
+											<a href="#" th:if="${session.user == null}" th:onclick="@{'product_order_page(\'0\',\'{no}\')'(no=${product.no})}" class="paction icon-dollar" title="구매">
 						                    	<span>바로 구매&nbsp&nbsp</span>
 						                    </a>
-						                    <a href="#" th:onclick="@{'cartQuickOptionAjax(\'{no}\')'(no=${product.no})}" class="paction add-cart" title="장바구니에 추가">
+						                    <a href="#" th:unless="${session.user == null}" th:onclick="@{'product_order_page(\'{userno}\',\'{no}\')'(userno=${session.user.no}, no=${product.no})}" class="paction icon-dollar" title="구매">
+						                    	<span>바로 구매&nbsp&nbsp</span>
+						                    </a>
+						                    <a href="#" th:onclick="@{'cart_add_view(\'{no}\')'(no=${product.no})}" class="paction add-cart" title="장바구니에 추가">
 						                        <span>장바구니</span>
 						                    </a>
-						                    <a style="cursor: pointer;" onclick="quick_login_popup()" class="paction add-wishlist" title="위시 리스트에 추가" th:if="${session.user == null}">
+						                    <a style="cursor: pointer;" onclick="login_popup()" class="paction add-wishlist" title="위시 리스트에 추가" th:if="${session.user == null}">
 						                    	<span>위시 리스트에 추가</span>
 						                    </a>
-						                    <a style="cursor: pointer;" th:onclick="@{'wishlist_quick_ajax_add(\'{no}\', \'{productno}\')'(no=${session.user.no}, productno=${product.no})}" class="paction add-wishlist" title="위시 리스트에 추가" th:unless="${session.user == null}">
+						                    <a style="cursor: pointer;" th:onclick="@{'wishlist_ajax_add(\'{no}\', \'{productno}\')'(no=${session.user.no}, productno=${product.no})}" class="paction add-wishlist" title="위시 리스트에 추가" th:unless="${session.user == null}">
 						                    	<span>위시 리스트에 추가</span>
 						                    </a>
                                         </div><!-- End .product-action -->

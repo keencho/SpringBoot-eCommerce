@@ -522,25 +522,12 @@
 
 .goods {
 	background: #F4F4F4;
-	padding-bottom: 0rem !important;
+	padding-bottom: 1rem !important;
 	padding-top: 1rem !important;
-	padding-left: 20px;
-}
-
-.goods_qty {
-	padding-left: 65px;
 }
 
 .goods_option {
-	padding-bottom: 10px;
+	display: inline-block;
+	padding-top: 10px !important;
 }
 
-.goods_price {
-	padding-left: 15px;
-	padding-bottom: 10px;
-}
-
-.goods_cancel {
-	padding-left: 6px;
-	font-size: 1.5em;
-}
