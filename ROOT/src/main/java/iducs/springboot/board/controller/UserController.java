@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,14 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import iducs.springboot.board.domain.User;
+import iducs.springboot.board.domain.UserAddress;
+import iducs.springboot.board.service.UserAddressService;
 import iducs.springboot.board.service.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	@Autowired UserService userService; 
-	// 의존성 주입(Dependency Injection)
-	// @Component, @Controller, @Repository, @Service 표시된 클래스형 빈 객체를 스프링이 스캔하여 등록하고, @Autowired 등 요청시 주입 	
+	@Autowired UserAddressService userAddressService;
+	
 	@GetMapping("/register")
 	public String createUserForm(Model model) {
 		Date today = new Date();
@@ -34,9 +37,26 @@ public class UserController {
 		return "home/user/register";
 	}
 	@PostMapping("/register")
-	public String createUser(@Valid User formUser, Model model) {
-		userService.saveUser(formUser); 
-		model.addAttribute("user", formUser);
+	public String createUser(
+			String name,
+			String email,
+			String id,
+			String phone,
+			String joinday,
+			String rank,
+			String password,
+			String zipcode,
+			String address,
+			String detailaddress,
+			String reference,
+			Model model) {
+		
+		User user = new User(id, password, name, email, phone, rank, joinday, "0");
+		userService.saveUser(user);
+		
+		User userInfo = userService.getUserById(id);
+		UserAddress userAddress = new UserAddress(userInfo, zipcode, address, detailaddress, reference, 0);
+		userAddressService.saveUserAddress(userAddress);
 		return "home/user/complete";
 	}
 	@ResponseBody

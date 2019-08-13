@@ -7,27 +7,21 @@ public class User {
 	private String name;
 	private String email;
 	private String phone;
-	private String zipcode;
-	private String address;
-	private String detailaddress;
-	private String reference;
 	private String rank;
 	private String joinday;
+	private String point;
 	
 	public User()  {}
-	public User(String id, String password, String name, String email, String phone, String zipcode, String address, String detailaddress, String  reference, String rank, String joinday) {
+	public User(String id, String password, String name, String email, String phone, String rank, String joinday, String point) {
 		super();
 		this.id = id;
 		this.password = password;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		this.zipcode = zipcode;
-		this.address = address;
-		this.detailaddress = detailaddress;
-		this.reference = reference;
 		this.rank = rank;
 		this.joinday = joinday;
+		this.point = point;
 	}
 
 	public long getNo() {
@@ -78,38 +72,6 @@ public class User {
 		this.phone = phone;
 	}
 
-	public String getZipcode() {
-		return zipcode;
-	}
-
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getDetailaddress() {
-		return detailaddress;
-	}
-
-	public void setDetailaddress(String detailaddress) {
-		this.detailaddress = detailaddress;
-	}
-
-	public String getReference() {
-		return reference;
-	}
-
-	public void setReference(String reference) {
-		this.reference = reference;
-	}
-
 	public String getRank() {
 		return rank;
 	}
@@ -125,7 +87,10 @@ public class User {
 	public void setJoinday(String joinday) {
 		this.joinday = joinday;
 	}
-
-	
-	
+	public String getPoint() {
+		return point;
+	}
+	public void setPoint(String point) {
+		this.point = point;
+	}
 }

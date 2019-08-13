@@ -243,7 +243,11 @@
 		 location.href = "/checkout/getForm";
 	 }
  }
-
+	/* 폰 번호 합치기 */
+	function phone_submit() {
+		var r = document.register;
+		r.phone.value = r.phone1.value + r.phone2.value + r.phone3.value;
+	}
 
  </script>
 </body>

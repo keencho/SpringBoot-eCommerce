@@ -18,7 +18,7 @@
 	                            <h2 class="title">회원가입</h2>
 	                            <p>간단한 회원가입으로 사이트의 모든 컨텐츠를 이용하실 수 있습니다.</p>
 	                        </div><!-- End .heading -->
-	                        <form name="register" class="login_form row" action="/user/register" onsubmit="phone_submit()" method="post">
+	                        <form name="register" class="login_form row" action="/user/register" method="post">
 	                                <div class="col-lg-6 form-group">
 	                                    <input class="form-control" name="name" type="text" placeholder="이름" required>
 	                                </div>
@@ -30,15 +30,15 @@
 	                                    <input class="form-control" name="id" id="id" type="text" placeholder="아이디" oninput="idCheck()" required>
 	                                </div>
 	                                <div class="col-lg-2 form-group" style="padding-left: 60px">
-	                                    <input class="form-control" name="phone1" type="tel" placeholder="휴대폰 번호" required>
+	                                    <input class="form-control" name="phone1"  maxlength="4" type="tel" placeholder="휴대폰 번호" onchange="phone_submit()" required>
 	                                </div>
-	                                <div class="col-lg-2 form-group" style="padding-left: 40px; padding-right: 40px">
-	                                    <input class="form-control" name="phone2" type="tel" required>
+	                                <div class="col-lg-2 form-group" style="padding-left: 40px; padding-right: 40px" onchange="phone_submit()">
+	                                    <input class="form-control" name="phone2" maxlength="4" type="tel" required>
 	                                </div>
 	                                <div class="col-lg-2 form-group" style="padding-right: 60px">
-	                                    <input class="form-control" name="phone3" type="tel" required>
+	                                    <input class="form-control" name="phone3" maxlength="3" type="tel" onchange="phone_submit()" required>
+	                                    <input type="hidden" name="phone" value="">
 	                                </div>
-	                                <input type="hidden" name="phone" value="">
 	                                <div class="col-lg-6 form-group">
 	                                    <input class="form-control" name="password" id="password" type="password" placeholder="비밀번호" onchange="pwCheck()" required>
 	                                </div>

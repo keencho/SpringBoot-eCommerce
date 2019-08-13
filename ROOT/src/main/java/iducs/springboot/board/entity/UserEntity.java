@@ -15,20 +15,31 @@ public class UserEntity {
 	@Id
 	@Column(name="no")
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long no; // database에서 sequence number, primary key 역할
-	@Column(nullable=false, length=20, unique=true) // null 하용 안함, 유일키
-	private String id;	
-	@Column(nullable=false)
+	private Long no;
+	
+	@Column(name="id", nullable=false, length=20, unique=true)
+	private String id;
+	
+	@Column(name="password",nullable=false)
 	private String password;
+	
+	@Column(name="name", nullable=false, length=20, unique=false)
 	private String name;
+	
+	@Column(name="email", nullable=false, length=64, unique=false)
 	private String email;
+	
+	@Column(name="phone", nullable=false, length=64, unique=false)
 	private String phone;
-	private String zipcode;
-	private String address;
-	private String detailaddress;
-	private String reference;
+	
+	@Column(name="ranking", nullable=false, length=5, unique=false)
 	private String rank;
+	
+	@Column(name="joinday", nullable=false, length=64, unique=false)
 	private String joinday;
+	
+	@Column(name="point", nullable=false, length=64, unique=false)
+	private String point;
 		
 	public Long getNo() {
 		return no;
@@ -66,30 +77,6 @@ public class UserEntity {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getZipcode() {
-		return zipcode;
-	}
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getDetailaddress() {
-		return detailaddress;
-	}
-	public void setDetailaddress(String detailaddress) {
-		this.detailaddress = detailaddress;
-	}
-	public String getReference() {
-		return reference;
-	}
-	public void setReference(String reference) {
-		this.reference = reference;
-	}
 	public String getRank() {
 		return rank;
 	}
@@ -102,6 +89,13 @@ public class UserEntity {
 	public void setJoinday(String joinday) {
 		this.joinday = joinday;
 	}
+	
+	public String getPoint() {
+		return point;
+	}
+	public void setPoint(String point) {
+		this.point = point;
+	}
 	public User buildDomain() {
 		User user = new User();
 		user.setNo(no);
@@ -110,12 +104,9 @@ public class UserEntity {
 		user.setName(name);
 		user.setEmail(email);
 		user.setPhone(phone);
-		user.setZipcode(zipcode);
-		user.setAddress(address);
-		user.setDetailaddress(detailaddress);
-		user.setReference(reference);
 		user.setRank(rank);
 		user.setJoinday(joinday);
+		user.setPoint(point);
 		return user;
 	}	
 	public void buildEntity(User user) {
@@ -125,11 +116,8 @@ public class UserEntity {
 		name = user.getName();
 		email = user.getEmail();
 		phone = user.getPhone();
-		zipcode = user.getZipcode();
-		address = user.getAddress();
-		detailaddress = user.getDetailaddress();
-		reference = user.getReference();
 		rank = user.getRank();
 		joinday = user.getJoinday();
+		point = user.getPoint();
 	}
 }
