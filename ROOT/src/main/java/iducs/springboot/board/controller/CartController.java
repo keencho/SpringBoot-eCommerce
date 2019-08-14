@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import iducs.springboot.board.domain.ClothesSize;
+import iducs.springboot.board.domain.Color;
 import iducs.springboot.board.domain.Product;
 import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.domain.ProductStock;
+import iducs.springboot.board.service.ClothesSizeService;
+import iducs.springboot.board.service.ColorService;
 import iducs.springboot.board.service.ProductService;
 import iducs.springboot.board.service.ProductSizeService;
 import iducs.springboot.board.service.ProductStockService;
@@ -31,6 +35,10 @@ public class CartController {
 	ProductStockService productstockService;
 	@Autowired
 	ProductSizeService productsizeService;
+	@Autowired
+	ClothesSizeService clothessizeService;
+	@Autowired
+	ColorService colorService;
 	
 	@GetMapping("")
 	public String cart(Model model) {
@@ -129,10 +137,15 @@ public class CartController {
 			@RequestParam(value = "color") long color,
 			@RequestParam(value = "size") long size
 			) { // Ajax product 결과값 체크
-		ProductStock stock = productstockService.stockCheck(no, color, size);
-		ProductStock stockResult = productstockService.getProductStockById(stock.getNo());
-		int result = Integer.parseInt(stockResult.getStock());
-		return result;
+		try {
+			ProductStock stock = productstockService.stockCheck(no, color, size);
+			ProductStock stockResult = productstockService.getProductStockById(stock.getNo());
+			int result = Integer.parseInt(stockResult.getStock());
+			return result;
+		} catch (Exception e) {
+			return 0;
+		}
+		
 	}
 	
 	@ResponseBody
@@ -145,12 +158,18 @@ public class CartController {
 			HttpSession session
 			) {
 		Product product = productService.getProductById(no);
+		ClothesSize clothesSize = clothessizeService.getClothesSizeByName(size);
+		Color colorGet = colorService.getColorByName(color);
+		String colorNo = Long.toString(colorGet.getNo());
+		String sizeNo = Long.toString(clothesSize.getNo());
 		int cartno = 0;
 		product.setCartSize(size); // domain에 cart가 붙어있으면 db용이 아닌 장바구니용(따라서 entity에는 이에대한 변수가 존재하지 않음)
 		product.setCartColor(color);
 		product.setCartQty(qty);
 		product.setCartPrice(Integer.parseInt(product.getListprice()));
 		product.setCartNo(cartno);
+		product.setCartColorNo(colorNo);
+		product.setCartSizeNo(sizeNo);
 		int total = 0;
 		// int total = product.getCartPrice() * product.getCartQty(); // 이 total은 
 		if(session.getAttribute("cart") == null) { // cart session이 존재하지 않으면 새로 생성
@@ -191,10 +210,17 @@ public class CartController {
 			HttpSession session
 			) {
 		List<Product> cart = (List<Product>) session.getAttribute("cart");
+		ClothesSize clothesSize = clothessizeService.getClothesSizeByName(size);
+		Color colorGet = colorService.getColorByName(color);
+		String colorNo = Long.toString(colorGet.getNo());
+		String sizeNo = Long.toString(clothesSize.getNo());
+		
 		int index = this.exists(productno, cart, color, size);
 		if(index == -1) {
 			cart.get((int) no).setCartColor(color);
 			cart.get((int) no).setCartSize(size);
+			cart.get((int) no).setCartColorNo(colorNo);
+			cart.get((int) no).setCartSizeNo(sizeNo);
 		} else {
 			if(index != no) {
 				cart.get(index).setCartQty(cart.get(index).getCartQty() + cart.get((int) no).getCartQty());

@@ -54,4 +54,12 @@ public class ColorServiceImpl implements ColorService{
 		entity.buildEntity(color);
 		repository.delete(entity);
 	}
+
+	@Override
+	public Color getColorByName(String name) {
+		ColorEntity colorEntity = repository.findByName(name);
+		if(colorEntity == null)
+			return null;
+		return colorEntity.buildDomain();
+	}
 }

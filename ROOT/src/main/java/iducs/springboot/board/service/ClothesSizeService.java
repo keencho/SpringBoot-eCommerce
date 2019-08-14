@@ -6,6 +6,7 @@ import iducs.springboot.board.domain.ClothesSize;
 
 public interface ClothesSizeService {
 	ClothesSize getClothesSizeByNo(long no);
+	ClothesSize getClothesSizeByName(String name);
 	
 	List<ClothesSize> getClothesSize();
 	

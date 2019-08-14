@@ -11,6 +11,7 @@ import iducs.springboot.board.entity.ColorEntity;
 @Repository
 public interface ColorRepository extends JpaRepository<ColorEntity, Long>{
 	ColorEntity findByNo(long no);
+	ColorEntity findByName(String name);
 	
 	List<ColorEntity> findAll(Sort sort);
 }

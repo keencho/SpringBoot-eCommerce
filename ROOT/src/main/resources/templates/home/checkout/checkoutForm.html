@@ -97,49 +97,32 @@
 
                     <div class="col-lg-4">
                         <div class="order-summary">
-                            <h3>Summary</h3>
+                            <h3>주문하실 상품</h3>
 
                             <h4>
-                                <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">2 products in Cart</a>
+                                <a data-toggle="collapse" href="#order-cart-section" class="" role="button" aria-expanded="true" aria-controls="order-cart-section" th:text="@{'{count}개의 상품'(count=${session.info.size()})}"><span>개의 상품</span></a>
                             </h4>
 
-                            <div class="collapse" id="order-cart-section">
+                            <div class="collapse show" id="order-cart-section">
                                 <table class="table table-mini-cart">
                                     <tbody>
-                                        <tr>
+                                        <tr th:each="info : ${session.info}">
                                             <td class="product-col">
                                                 <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="assets/images/products/product-1.jpg" alt="product">
+                                                    <a th:href="@{'/product/view/{no}'(no=${info.no.no})}" class="product-image" target="_blank">
+                                                        <img th:src="@{'/uploads/{date}/{pic}'(date=${info.no.regdate}, pic=${info.no.pic1})}" alt="product">
                                                     </a>
                                                 </figure>
                                                 <div>
                                                     <h2 class="product-title">
-                                                        <a href="product.html">Men Watch</a>
+                                                        <a th:href="@{'/product/view/{no}'(no=${info.no.no})}" th:text="${info.no.name}"></a>
                                                     </h2>
-
-                                                    <span class="product-qty">Qty: 4</span>
+													<span class="product-qty">옵션: <span th:text="${info.color}"></span>, <span th:text="${info.size}"></span></span>
+                                                    <span class="product-qty">수량: <span th:text="${info.qty}"></span>개</span>
                                                 </div>
+                                                <td class="price-col"th:text="@{'{price}원'(price=${#numbers.formatInteger(info.price * info.qty, 0, 'COMMA')})}"></td>
                                             </td>
-                                            <td class="price-col">$17.90</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="product-col">
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="assets/images/products/product-2.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <div>
-                                                    <h2 class="product-title">
-                                                        <a href="product.html">Men Watch-Black</a>
-                                                    </h2>
-
-                                                    <span class="product-qty">Qty: 4</span>
-                                                </div>
-                                            </td>
-                                            <td class="price-col">$7.90</td>
+                                            
                                         </tr>
                                     </tbody>    
                                 </table>
@@ -251,3 +234,17 @@
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
  <th:block th:include="home/main/footer.html"></th:block>
+ <script>
+    /* function noEvent() {
+    	if (event.keyCode == 116) {
+    		event.keyCode= 2;
+    		alert("새로고침키는 사용하실수 없습니다.");
+    		return false;
+    	}
+    	else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82)){
+    		return false;
+    	}
+    }
+    document.onkeydown = noEvent; */
+    
+</script>

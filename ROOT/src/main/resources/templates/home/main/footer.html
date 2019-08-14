@@ -222,16 +222,80 @@
     <script src="/home/assets/js/main.min.js?ver=2"></script>
     
     <!-- Custom JS File -->
-    <script src="/home/assets/js/custom.js?ver=38"></script>
+    <script src="/home/assets/js/custom.js?ver=39"></script>
     <!-- .load()메소드를 사용했을시 main.js를 다시 불러오기 위한 reload function -->
     <script src="/home/assets/js/reload_main.js"></script>
     <script>
- function product_order_page(userno, no){
-	 if (userno == 0) {
+function cart_order_page(no){
+	if(no == -1) {
+		alert("장바구니에 상품이 없습니다.");
+	} else if(no == 0) {
+		var productList = new Array();
+		for(var i = 0; i < $(".cart_count").length; i ++){
+			 var productData = new Object();
+			 var productno = $("input[name='hidden_cart_no']").eq(i).val();
+			 var option = $("input[name='hidden_option']").eq(i).val();
+			 var str = option.split('/');
+			 var size = str[0];
+			 var color = str[1];
+			 var qty = $('input[name=product_qty]').eq(i).val();
+			 
+			 productData.no = productno;
+			 productData.size = size;
+			 productData.color = color;
+			 productData.qty = qty;
+			 
+			 productList.push(productData);
+		}
+		var jsonProductData = JSON.stringify(productList);
+			 $.ajax({
+		        type : "POST",
+		        contentType: 'application/json',
+		        dataType : "json",
+		        url : "/checkout/jsonData",
+		        data : jsonProductData,
+		        success : function(data) {
+		              location.href="/checkout/getForm";
+		        },
+		        error : function(e) {
+		               alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+		        }
+		});
+	} else if (no == 1){
 		 var check = confirm("비회원으로 구매를 진행하시면 추후 교환/환불 등에 어려움이 있을 수 있고, 포인트를 적립하실 수 없습니다.\n그래도 비회원으로 구매하시겠습니까?");
 		 var url="/user/loginPopup";
-		 if(check == true){
-		 	location.href = "/checkout/getForm";
+		 if (check == true){
+			 var productList = new Array();
+				for(var i = 0; i < $(".cart_count").length; i ++){
+					 var productData = new Object();
+					 var productno = $("input[name='hidden_cart_no']").eq(i).val();
+					 var option = $("input[name='hidden_option']").eq(i).val();
+					 var str = option.split('/');
+					 var size = str[0];
+					 var color = str[1];
+					 var qty = $('input[name=product_qty]').eq(i).val();
+					 
+					 productData.no = productno;
+					 productData.size = size;
+					 productData.color = color;
+					 productData.qty = qty;
+					 
+					 productList.push(productData);
+				}
+				var jsonProductData = JSON.stringify(productList);
+					 $.ajax({
+				        type : "POST",
+				        contentType: 'application/json',
+				        dataType : "json",
+				        url : "/checkout/jsonData",
+				        data : jsonProductData,
+				        success : function(data) {
+				              location.href="/checkout/getForm";
+				        },
+				        error : function(e) {
+				               alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+				        }
+				});
 		 } else {
 			 $("#login_popup").css({
 					"top": (($(window).height()-$("#login_popup").outerHeight())/2+$(window).scrollTop())+"px",
@@ -239,15 +303,9 @@
 				 });
 				$("#login_popup").load(url + " #modal-wrapper").fadeIn(300);
 		 }
-	 } else {
-		 location.href = "/checkout/getForm";
-	 }
- }
-	/* 폰 번호 합치기 */
-	function phone_submit() {
-		var r = document.register;
-		r.phone.value = r.phone1.value + r.phone2.value + r.phone3.value;
 	}
+}
+
 
  </script>
 </body>

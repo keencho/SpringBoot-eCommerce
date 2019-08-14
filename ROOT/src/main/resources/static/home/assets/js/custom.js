@@ -1177,7 +1177,7 @@
    	}
    	
    	for(var i=0; i<$("input[name='hidden_option']").length; i++){
-   		if($("input[name='hidden_option']").eq(i).val() == sizeNo + "" + colorNo){
+   		if($("input[name='hidden_option']").eq(i).val() == sizeNo + "/" + colorNo){
    			$('#view_ajax_size').prop('selectedIndex',0);
    			$(".choose_color").hide();
    			$(".choose_first").show();
@@ -1198,7 +1198,7 @@
    			dataType : "html",
    			success : function(result) {	
    				if (result > 0) {
-   					if( $('input[name=hidden_option]').val() == colorNo + "" + sizeNo){
+   					if( $('input[name=hidden_option]').val() == colorNo + "/" + sizeNo){
 
    					} else {
    						$('#view_ajax_size').prop('selectedIndex',0);
@@ -1208,7 +1208,7 @@
    														+ "<div class='row'>"
    														+ "<div class='col'>"
    														+ "<input type='hidden' name='hidden_cart' value='" + size + "/" + color + "'>"
-   														+ "<input type='hidden' name='hidden_option' value='" + sizeNo + "" + colorNo + "'>"
+   														+ "<input type='hidden' name='hidden_option' value='" + sizeNo + "/" + colorNo + "'>"
    														+ "<span class='goods_option'>" + color + "</span>"
    														+ "<span>,&nbsp</span>"
    														+ "<span class='goods_option'>" + size + "</span>"
@@ -1298,4 +1298,88 @@
    	 $(".cart_total").text(total.toLocaleString('en')+"원");
    	 $("#header_cart_total").text(total.toLocaleString('en')+"원");
    });
-	
+   
+   // 상품에서 직접 구매 접근
+   function product_order_page(userno, no){
+		if($("input[name='hidden_cart']").val() == null){
+		   	alert("최소 한가지의 옵션 세트를 선택해주세요.");
+		} else {
+			 if (userno == 0) {
+				 var check = confirm("비회원으로 구매를 진행하시면 추후 교환/환불 등에 어려움이 있을 수 있고, 포인트를 적립하실 수 없습니다.\n그래도 비회원으로 구매하시겠습니까?");
+				 var url="/user/loginPopup";
+				 if(check == true){
+					 var productList = new Array();
+					 var sizeNo=Number($("#view_ajax_size option:selected").val());
+					 for(var i=0; i<$("input[name='product_qty']").length; i++){
+						 var productData = new Object();
+						 var option = $("input[name='hidden_option']").eq(i).val();
+						 var str = option.split('/');
+						 var size = str[0];
+						 var color = str[1];
+						 var qty = $('input[name=product_qty]').eq(i).val();
+						 
+						 productData.no = no;
+						 productData.size = size;
+						 productData.color = color;
+						 productData.qty = qty;
+						 
+						 productList.push(productData);
+						 
+					 }
+					 var jsonProductData = JSON.stringify(productList);
+						 $.ajax({
+			                 type : "POST",
+			                 contentType: 'application/json',
+			                 dataType : "json",
+			                 url : "/checkout/jsonData",
+			                 data : jsonProductData,
+			                 success : function(data) {
+			                       location.href="/checkout/getForm";
+			                 },
+			                 error : function(e) {
+			                        alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+			                 }
+			         });
+				 } else {
+					 $("#login_popup").css({
+							"top": (($(window).height()-$("#login_popup").outerHeight())/2+$(window).scrollTop())+"px",
+							"left": (($(window).width()-$("#login_popup").outerWidth())/2+$(window).scrollLeft())+"px",
+						 });
+						$("#login_popup").load(url + " #modal-wrapper").fadeIn(300);
+				 }
+			 } else {
+				 var productList = new Array();
+				 var sizeNo=Number($("#view_ajax_size option:selected").val());
+				 for(var i=0; i<$("input[name='product_qty']").length; i++){
+					 var productData = new Object();
+					 var option = $("input[name='hidden_option']").eq(i).val();
+					 var str = option.split('/');
+					 var size = str[0];
+					 var color = str[1];
+					 var qty = $('input[name=product_qty]').eq(i).val();
+					 
+					 productData.no = no;
+					 productData.size = size;
+					 productData.color = color;
+					 productData.qty = qty;
+					 
+					 productList.push(productData);
+					 
+				 }
+				 var jsonProductData = JSON.stringify(productList);
+					 $.ajax({
+		                 type : "POST",
+		                 contentType: 'application/json',
+		                 dataType : "json",
+		                 url : "/checkout/jsonData",
+		                 data : jsonProductData,
+		                 success : function(data) {
+		                       location.href="/checkout/getForm";
+		                 },
+		                 error : function(e) {
+		                        alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+		                 }
+		         });		 
+			 }
+		}
+	 }

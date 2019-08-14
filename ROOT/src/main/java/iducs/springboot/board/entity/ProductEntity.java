@@ -60,13 +60,13 @@ public class ProductEntity {
 	@Column(name="color", nullable=false, length=50)
 	private String color;
 	
-	@Column(name="madeby", nullable=false, length=30)
+	@Column(name="madeby", nullable=false, length=128)
 	private String madeby;
 	
 	@Column(name="madein", nullable=false, length=50)
 	private String madein;
 	
-	@Column(name="caution", nullable=false, length=100)
+	@Column(name="caution", nullable=false, length=1024)
 	private String caution;
 	
 	@Column(name="date", nullable=false, length=30)

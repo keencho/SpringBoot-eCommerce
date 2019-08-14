@@ -11,6 +11,7 @@ import iducs.springboot.board.entity.ClothesSizeEntity;
 @Repository
 public interface ClothesSizeRepository extends JpaRepository<ClothesSizeEntity, Long>{
 	ClothesSizeEntity findByNo(long no);
+	ClothesSizeEntity findByName(String name);
 	
 	List<ClothesSizeEntity> findAll(Sort sort);
 }

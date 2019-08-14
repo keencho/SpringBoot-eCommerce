@@ -28,6 +28,8 @@ public class Product {
 	private String regdate;	//상품 등록일
 	private String cartSize; // 앞에 cart가 붙으면 장바구니용 변수임
 	private String cartColor;
+	private String cartSizeNo;
+	private String cartColorNo;
 	private int cartQty;
 	private int cartPrice;
 	private int cartNo;
@@ -304,6 +306,26 @@ public class Product {
 	public void setCartNo(int cartNo) {
 		this.cartNo = cartNo;
 	}
+
+	public String getCartSizeNo() {
+		return cartSizeNo;
+	}
+
+	public void setCartSizeNo(String cartSizeNo) {
+		this.cartSizeNo = cartSizeNo;
+	}
+
+	public String getCartColorNo() {
+		return cartColorNo;
+	}
+
+	public void setCartColorNo(String cartColorNo) {
+		this.cartColorNo = cartColorNo;
+	}
+
+
+
+
 	
 
 	

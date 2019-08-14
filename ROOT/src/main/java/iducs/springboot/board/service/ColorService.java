@@ -6,6 +6,7 @@ import iducs.springboot.board.domain.Color;
 
 public interface ColorService {
 	Color getColorByNo(long no);
+	Color getColorByName(String name);
 	
 	List<Color> getColor();
 	

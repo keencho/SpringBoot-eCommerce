@@ -55,4 +55,12 @@ public class ClothesSizeServiceImpl implements ClothesSizeService{
 		repository.delete(entity);
 	}
 
+	@Override
+	public ClothesSize getClothesSizeByName(String name) {
+		ClothesSizeEntity clothessizeEntity = repository.findByName(name);
+		if(clothessizeEntity == null)
+			return null;
+		return clothessizeEntity.buildDomain();
+	}
+
 }
