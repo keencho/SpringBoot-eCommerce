@@ -10,6 +10,7 @@ import iducs.springboot.board.entity.UserAddressEntity;
 @Repository
 public interface UserAddressRepository	extends JpaRepository<UserAddressEntity, Long> {
 	UserAddressEntity findByNo(long no);
+	UserAddressEntity findTop1ByUserNoOrderByNoDesc(long no);
 	
 	List<UserAddressEntity> findByUserNo(long no);
 

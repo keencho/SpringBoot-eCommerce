@@ -9,10 +9,10 @@ public class User {
 	private String phone;
 	private String rank;
 	private String joinday;
-	private String point;
+	private int point;
 	
 	public User()  {}
-	public User(String id, String password, String name, String email, String phone, String rank, String joinday, String point) {
+	public User(String id, String password, String name, String email, String phone, String rank, String joinday, int point) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -87,10 +87,11 @@ public class User {
 	public void setJoinday(String joinday) {
 		this.joinday = joinday;
 	}
-	public String getPoint() {
+	public int getPoint() {
 		return point;
 	}
-	public void setPoint(String point) {
+	public void setPoint(int point) {
 		this.point = point;
 	}
+	
 }

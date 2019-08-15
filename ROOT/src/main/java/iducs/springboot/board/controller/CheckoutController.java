@@ -19,9 +19,13 @@ import iducs.springboot.board.domain.Checkout;
 import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Color;
 import iducs.springboot.board.domain.Product;
+import iducs.springboot.board.domain.User;
+import iducs.springboot.board.domain.UserAddress;
 import iducs.springboot.board.service.ClothesSizeService;
 import iducs.springboot.board.service.ColorService;
 import iducs.springboot.board.service.ProductService;
+import iducs.springboot.board.service.UserAddressService;
+import iducs.springboot.board.service.UserService;
 
 @Controller
 @RequestMapping("/checkout")
@@ -29,11 +33,18 @@ public class CheckoutController {
 	@Autowired ProductService productService;
 	@Autowired ClothesSizeService sizeService;
 	@Autowired ColorService colorService;
+	@Autowired UserService userService;
+	@Autowired UserAddressService addressService;
 
 	@GetMapping("/getForm")
 	public String checkoutForm(Model model, HttpSession session) {
 		if(session.getAttribute("info") == null) {
 			return "redirect:/404";
+		}
+		if(session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			List<UserAddress> address = addressService.getAddressByUserNo(user.getNo());
+			model.addAttribute("address", address);
 		}
 		return "home/checkout/checkoutForm";
 	}

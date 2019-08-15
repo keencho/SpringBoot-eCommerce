@@ -3,6 +3,8 @@ package iducs.springboot.board.domain;
 public class UserAddress {
 	private long no; // primary key
 	private User user_no;
+	private String name;
+	private String phone;
 	private String zipcode;
 	private String address;
 	private String detailaddress;
@@ -11,9 +13,12 @@ public class UserAddress {
 	
 	public UserAddress() {}
 
-	public UserAddress(User user_no, String zipcode, String address, String detailaddress, String reference, int basic) {
+	public UserAddress(User user_no, String name, String phone, String zipcode, String address,
+			String detailaddress, String reference, int basic) {
 		super();
 		this.user_no = user_no;
+		this.name = name;
+		this.phone = phone;
 		this.zipcode = zipcode;
 		this.address = address;
 		this.detailaddress = detailaddress;
@@ -35,6 +40,22 @@ public class UserAddress {
 
 	public void setUser_no(User user_no) {
 		this.user_no = user_no;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getZipcode() {
@@ -76,6 +97,6 @@ public class UserAddress {
 	public void setBasic(int basic) {
 		this.basic = basic;
 	}
-	
+
 	
 }

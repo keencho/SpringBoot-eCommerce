@@ -39,7 +39,7 @@ public class UserEntity {
 	private String joinday;
 	
 	@Column(name="point", nullable=false, length=64, unique=false)
-	private String point;
+	private int point;
 		
 	public Long getNo() {
 		return no;
@@ -90,10 +90,10 @@ public class UserEntity {
 		this.joinday = joinday;
 	}
 	
-	public String getPoint() {
+	public int getPoint() {
 		return point;
 	}
-	public void setPoint(String point) {
+	public void setPoint(int point) {
 		this.point = point;
 	}
 	public User buildDomain() {

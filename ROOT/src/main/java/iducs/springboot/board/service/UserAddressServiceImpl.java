@@ -55,5 +55,13 @@ public class UserAddressServiceImpl implements UserAddressService{
 		repository.delete(entity);
 	}
 
+	@Override
+	public UserAddress getAddressByUserNoOrderByDesc(long no) {
+		UserAddressEntity userAddressEntity = repository.findTop1ByUserNoOrderByNoDesc(no);
+		if(userAddressEntity == null)
+			return null;
+		return userAddressEntity.buildDomain();
+	}
+
 	
 }

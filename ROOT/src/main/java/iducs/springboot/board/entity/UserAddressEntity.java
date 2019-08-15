@@ -23,6 +23,8 @@ public class UserAddressEntity {
 	@JoinColumn(name = "user_no", nullable=false, unique = false)
 	private UserEntity user;
 	
+	private String name;
+	private String phone;
 	private String zipcode;
 	private String address;
 	private String detailaddress;
@@ -72,10 +74,25 @@ public class UserAddressEntity {
 	public void setBasic(int basic) {
 		this.basic = basic;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public UserAddress buildDomain() {
 		UserAddress userAddress = new UserAddress();
 		userAddress.setNo(no);
 		userAddress.setUser_no(user.buildDomain());
+		userAddress.setName(name);
+		userAddress.setPhone(phone);
 		userAddress.setZipcode(zipcode);
 		userAddress.setAddress(address);
 		userAddress.setDetailaddress(detailaddress);
@@ -90,6 +107,8 @@ public class UserAddressEntity {
 		detailaddress = userAddress.getDetailaddress();
 		reference = userAddress.getReference();
 		basic = userAddress.getBasic();
+		name = userAddress.getName();
+		phone = userAddress.getPhone();
 		
 		UserEntity userEntity = new UserEntity();
 		userEntity.buildEntity(userAddress.getUser_no());

@@ -11,6 +11,7 @@ import iducs.springboot.board.entity.UserEntity;
 
 public interface UserAddressService {
 	UserAddress getAddressByNo(long no);
+	UserAddress getAddressByUserNoOrderByDesc(long no);
 	List<UserAddress> getAddressByUserNo(long no);
 	
 	void saveUserAddress(UserAddress useraddress); // 생성

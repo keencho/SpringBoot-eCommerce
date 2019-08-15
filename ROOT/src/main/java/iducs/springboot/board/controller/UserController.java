@@ -51,11 +51,11 @@ public class UserController {
 			String reference,
 			Model model) {
 		
-		User user = new User(id, password, name, email, phone, rank, joinday, "0");
+		User user = new User(id, password, name, email, phone, rank, joinday, 0);
 		userService.saveUser(user);
 		
 		User userInfo = userService.getUserById(id);
-		UserAddress userAddress = new UserAddress(userInfo, zipcode, address, detailaddress, reference, 0);
+		UserAddress userAddress = new UserAddress(userInfo, name, phone, zipcode, address, detailaddress, reference, 0);
 		userAddressService.saveUserAddress(userAddress);
 		return "home/user/complete";
 	}
@@ -67,6 +67,7 @@ public class UserController {
 		if(user1!=null) result=1;
 		return result;
 	}
+	
 	@GetMapping("/login")
 	public String loginForm() {
 		return "home/user/login";
@@ -124,5 +125,72 @@ public class UserController {
 		out.println("<script>alert('로그아웃이 완료되었습니다.'); location.href='/';</script>");
 		out.flush();
 		return null;
+	}
+	
+	@ResponseBody
+	@PostMapping("/addAddress")
+	public Long addAddress(
+			@RequestParam(value = "user_no") long user_no,
+			@RequestParam(value = "name") String name,
+			@RequestParam(value = "phone") String phone,
+			@RequestParam(value = "zipcode") String zipcode,
+			@RequestParam(value = "address") String address,
+			@RequestParam(value = "detailaddress") String detailaddress,
+			@RequestParam(value = "reference") String reference
+			) {
+		User user = userService.getUserByNo(user_no);
+		UserAddress userAddress = new UserAddress(user, name, phone, zipcode, address, detailaddress, reference, 1);
+		userAddressService.saveUserAddress(userAddress);
+		UserAddress getLastIndex = userAddressService.getAddressByUserNoOrderByDesc(user_no);
+		return getLastIndex.getNo();
+	}
+	
+	@ResponseBody
+	@PostMapping("/checkAddress")
+	public int checkAddress(
+			@RequestParam(value = "user_no") long no	
+			) {
+		List<UserAddress> address = userAddressService.getAddressByUserNo(no);
+		System.out.println(address.size());
+		return address.size();
+	}
+	
+	@ResponseBody
+	@PostMapping("/checkPoint")
+	public int checkPoint(
+			@RequestParam(value = "no") long no,
+			@RequestParam(value = "point") int point
+			) {
+		User user = userService.getUserByNo(no);
+		if(user.getPoint() < 2000 || user.getPoint() < point) {
+			return 1;
+		}
+
+		if(user.getPoint() >= 2000 && user.getPoint() >= point) {	// 고객의 포인트가 2000보다 많고 입력한 포인트값이 보유한 포인트 값보다 작을때 --> 성공
+			return 0;
+		}
+		return 0;
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateAddress")
+	public int updateAddress(
+			@RequestParam(value = "no") long no,
+			@RequestParam(value = "name") String name,
+			@RequestParam(value = "phone") String phone,
+			@RequestParam(value = "zipcode") String zipcode,
+			@RequestParam(value = "address") String address,
+			@RequestParam(value = "detailaddress") String detailaddress,
+			@RequestParam(value = "reference") String reference
+			) {
+		UserAddress userAddress = userAddressService.getAddressByNo(no);
+		userAddress.setName(name);
+		userAddress.setPhone(phone);
+		userAddress.setZipcode(zipcode);
+		userAddress.setAddress(address);
+		userAddress.setDetailaddress(detailaddress);
+		userAddress.setReference(reference);
+		userAddressService.updateUserAddress(userAddress);
+		return 1;
 	}
 }
