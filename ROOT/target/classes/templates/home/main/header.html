@@ -42,7 +42,7 @@
                                 <ul>
                                     <li th:unless="${session.user}"><a href="/user/register">회원가입</a></li>
                                     <li th:unless="${session.user}"><a href="/user/login">로그인</a></li>
-                                    <li th:if="${session.userRank=='0'}"><a href="/admin">관리자</a></li>
+                                    <li th:if="${session.user !=null && session.user.rank == '0'}"><a href="/admin">관리자</a></li>
                                     <li th:if="${session.user}"><a th:href="@{'/wishlist/{no}'(no=${session.user.no})}">위시 리스트</a></li>
                                     <li th:if="${session.user}"><a href="/user/logout">로그아웃</a></li>
                                 </ul>

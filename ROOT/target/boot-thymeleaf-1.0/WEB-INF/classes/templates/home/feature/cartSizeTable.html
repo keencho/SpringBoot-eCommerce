@@ -1,0 +1,42 @@
+	<div class="size_table btn-popup01">
+	<br>
+		<h3><font color="#2C7FC3" th:text="${product.name}"></font> 사이즈표</h3>
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th th:if="${clothesSize.top_length != ''}" th:text="@{'전체길이(cm)'}"></th>
+		      <th th:if="${clothesSize.top_shoulder != ''}" th:text="@{'어깨너비(cm)'}"></th>
+		      <th th:if="${clothesSize.top_sleeve != ''}" th:text="@{'소매길이(cm)'}"></th>
+		      <th th:if="${clothesSize.top_chest != ''}" th:text="@{'가슴둘레(cm)'}"></th>
+		      
+		      <th th:if="${clothesSize.bot_length != ''}" th:text="@{'전체길이(cm)'}"></th>
+		      <th th:if="${clothesSize.bot_hip != ''}" th:text="@{'엉덩이둘레(cm)'}"></th>
+		      <th th:if="${clothesSize.bot_rise != ''}" th:text="@{'앞밑위 길이(cm)'}"></th>
+		      <th th:if="${clothesSize.bot_thigh != ''}" th:text="@{'허벅지 둘레(cm)'}"></th>
+		      <th th:if="${clothesSize.bot_under != ''}" th:text="@{'밑단 둘레(cm)'}"></th>
+		      <th th:if="${clothesSize.bot_waist != ''}" th:text="@{'허리둘레(cm)'}"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="productSize : ${product.productsize}">
+		      <th scope="row" th:text="${productSize.size_no.name}"></th>
+		      <th th:if="${productSize.top_length != ''}" th:text="${productSize.top_length}"></th>
+		      <th th:if ="${productSize.top_shoulder != ''}" th:text="${productSize.top_shoulder}"></th>
+		      <th th:if ="${productSize.top_sleeve != ''}" th:text="${productSize.top_sleeve}"></th>
+		      <th th:if ="${productSize.top_chest != ''}" th:text="${productSize.top_chest}"></th>
+		      
+		      <th th:if ="${productSize.bot_length!= ''}" th:text="${productSize.bot_length}"></th>
+		      <th th:if ="${productSize.bot_hip!= ''}" th:text="${productSize.bot_hip}"></th>
+		      <th th:if ="${productSize.bot_rise!= ''}" th:text="${productSize.bot_rise}"></th>
+		      <th th:if ="${productSize.bot_thigh!= ''}" th:text="${productSize.bot_thigh}"></th>
+		      <th th:if ="${productSize.bot_under!= ''}" th:text="${productSize.bot_under}"></th>
+		      <th th:if ="${productSize.bot_waist!= ''}" th:text="${productSize.bot_waist}"></th>
+		    </tr>
+		    
+		  </tbody>
+		  
+		</table>
+  		<a style="cursor: pointer" onclick="$(this).sizeTableClose();" class="button">닫기</a>
+	</div>
+	</div>

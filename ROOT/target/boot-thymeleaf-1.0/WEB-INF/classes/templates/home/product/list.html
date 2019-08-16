@@ -1,5 +1,12 @@
 <th:block th:include="home/main/header.html"></th:block>
 	<th:block th:include="home/main/nav.html"></th:block>
+<!-- 장바구니 옵션 선택 팝업 레이어를 불러오기 위한 div 지정 -->
+<div id="cart_ajax_option"></div>
+<div id="cart_ajax_complete"></div>
+<div id="cart_ajax_sizeTable"></div>
+<div id="wishlist_ajax_complete"></div>
+<!-- 로그인 -->
+<div id="login_popup"></div>
 <main class="main">
             <div class="banner banner-cat" style="background-image: url('/home/assets/images/product-list.jpg');">
             	
@@ -33,7 +40,7 @@
 	 <div class="container">
                 <div class="row">
                     <div class="col-lg-9" >
-                     <div id="ajax_product_list">
+                     <div id="ajax_product_list">              
                         <nav class="toolbox">
                             <div class="toolbox-left">
                                 <div class="toolbox-item toolbox-sort">
@@ -83,10 +90,10 @@
                             <div class="col-6 col-md-4 data_bno" th:each="product : ${product}" th:data-bno="${product.no}">
                                 <div class="product">
                                     <figure class="product-image-container">
-                                        <a href="product.html" class="product-image">
+                                        <a th:href="@{'/product/view/{no}'(no=${product.no})}" class="product-image">
                                             <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product">
                                         </a>
-                                        <a href="/home/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
+                                        <a th:href="@{'/product/quickview/{no}'(no=${product.no})}" class="btn-quickview" >상품 미리보기</a>
                                     </figure>
                                     <div class="product-details">
                                         <div class="ratings-container">
@@ -95,7 +102,7 @@
                                             </div><!-- End .product-ratings -->
                                         </div><!-- End .product-container -->
                                         <h2 class="product-title">
-                                            <a href="product.html" th:text="${product.name}"></a>
+                                            <a th:href="@{'/product/view/{no}'(no=${product.no})}" th:text="${product.name}"></a>
                                         </h2>
                                         <div class="price-box">
                                             <span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
@@ -103,16 +110,19 @@
                                         </div><!-- End .price-box -->
 
                                         <div class="product-action">
-                                            <a href="#" class="paction add-wishlist" title="위시 리스트에 추가">
+                                            <a style="cursor: pointer;" onclick="login_popup()" class="paction add-wishlist" title="위시 리스트에 추가" th:if="${session.user == null}">
+                                                <span>위시 리스트에 추가</span>
+                                            </a>
+                                            <a style="cursor: pointer;" th:onclick="@{'wishlist_ajax_add(\'{no}\', \'{productno}\')'(no=${session.user.no}, productno=${product.no})}" class="paction add-wishlist" title="위시 리스트에 추가" th:unless="${session.user == null}">
                                                 <span>위시 리스트에 추가</span>
                                             </a>
 
-                                            <a href="product.html" class="paction add-cart" title="장바구니에 추가">
+                                            <a style="cursor: pointer;" class="paction add-cart" title="장바구니에 추가" th:onclick="@{'cartOptionAjax(\'{no}\')'(no=${product.no})}">
                                                 <span>장바구니에 추가</span>
                                             </a>
 
-                                            <a href="#" class="paction add-compare" title="비교하기에 추가">
-                                                <span>비교하기에 추가</span>
+                                            <a th:href="@{'/product/view/{no}'(no=${product.no})}" class="paction icon-magnifier" title="새창으로 보기" target="_blank">
+                                                <span>새창으로 보기</span>
                                             </a>
                                         </div><!-- End .product-action -->
                                     </div><!-- End .product-details -->
@@ -181,10 +191,7 @@
 	                            </ul>
                             </div>
                             <!-- pagination end -->
-                            
                         </nav>
-                        
-                       
                     </div>
                     </div><!-- End .col-lg-9 -->
                     
@@ -194,9 +201,8 @@
                             <div class="widget">
                                 <h3 class="widget-title">
                                     <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1" th:if="${categoryname}" th:text="${categoryname.name}"></a>
-                                    <!-- <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1" th:if="${divisionname}" th:text="@{'{cname} / {dname}'(cname=${divisionname.category.name}, dname=${divisionname.name})}"></a> -->
-                                    <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1" th:if="${divisionname}" th:text="${divisionname.name}"></a>
-                                    <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1" th:if="${sectionname}" th:text="${sectionname.name}"></a>
+                                    <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1" th:if="${divisionname}" th:text="${divisionname.category.name}"></a>
+                                    <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1" th:if="${sectionname}" th:text="${sectionname.category.name}"></a>
                                 </h3>
                                 <script>
 
@@ -207,7 +213,6 @@
 										  <div class="navbar-default">
 										  	<div th:if="${categoryname}">
 											    <ul class="navbar-nav" th:each="division : ${division}" th:if="${categoryname.no == division.category.no}">
-											    <!-- li태그에 open 붙이고, ul에 style=display: block; 지정하기 -->
 											        <li class="dropdown"><a style="cursor:pointer;" th:text="${division.name}"></a>&#x25BE;
 											            <ul class="dropdown-menu">
 											                <li th:each="section : ${section}" th:if="${division.no == section.division.no}">
@@ -221,8 +226,8 @@
 										    <div th:if="${divisionname}">
 											    <ul class="navbar-nav" th:each="division : ${division}" th:if="${divisionname.category.no == division.category.no}">
 											    <!-- li태그에 open 붙이고, ul에 style=display: block; 지정하기 -->
-											        <li class="dropdown"><a style="cursor:pointer;" th:text="${division.name}"></a>&#x25BE;
-											            <ul class="dropdown-menu">
+											        <li th:class=" ${divisionname.no == division.no} ? 'dropdown open' : 'dropdown'"><a style="cursor:pointer;" th:text="${division.name}"></a>&#x25BE;
+											            <ul class="dropdown-menu" th:style="${divisionname.no == division.no} ? 'display: block' : ''">
 											                <li th:each="section : ${section}" th:if="${division.no == section.division.no}">
 											                	<a th:href="@{'/product/list/section/{sno}'(sno=${section.no})}" th:text="${section.name}"></a>
 											                </li>
@@ -234,8 +239,8 @@
 										    <div th:if="${sectionname}">
 											    <ul class="navbar-nav" th:each="division : ${division}" th:if="${sectionname.category.no == division.category.no}">
 											    <!-- li태그에 open 붙이고, ul에 style=display: block; 지정하기 -->
-											        <li class="dropdown"><a style="cursor:pointer;" th:text="${division.name}"></a>&#x25BE;
-											            <ul class="dropdown-menu">
+											        <li th:class=" ${sectionname.division.no == division.no} ? 'dropdown open' : 'dropdown'"><a style="cursor:pointer;" th:text="${division.name}"></a>&#x25BE;
+											            <ul class="dropdown-menu" th:style="${sectionname.division.no == division.no} ? 'display: block' : ''">
 											                <li th:each="section : ${section}" th:if="${division.no == section.division.no}">
 											                	<a th:href="@{'/product/list/section/{sno}'(sno=${section.no})}" th:text="${section.name}"></a>
 											                </li>
@@ -269,11 +274,11 @@
                                     <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_division_ajax(\'{dno}\'); return false;'(dno=${divisionname.no})}" value="100000~500000" style="width: 200px;">100,000원 이상</a>         	      
                                 </div><!-- End .collapse -->
                                 <div class="collapse show price_class" id="widget-body-2" th:if="${sectionname}" align="center">
-                                	<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="0~10000" style="width: 200px;">10,000원 이하</a>
-									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="10000~40000" style="width: 200px;">10,000 ~ 40,000원</a>
-									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="40000~70000" style="width: 200px;">40,000 ~ 70,000원</a>
-                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="70000~100000" style="width: 200px;">70,000 ~ 100,000원</a>
-                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(cno=${sectionname.no})}" value="100000~500000" style="width: 200px;">100,000원 이상</a>         	      
+                                	<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="0~10000" style="width: 200px;">10,000원 이하</a>
+									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="10000~40000" style="width: 200px;">10,000 ~ 40,000원</a>
+									<a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="40000~70000" style="width: 200px;">40,000 ~ 70,000원</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="70000~100000" style="width: 200px;">70,000 ~ 100,000원</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary" th:onclick="@{'javascript:filter_section_ajax(\'{sno}\'); return false;'(sno=${sectionname.no})}" value="100000~500000" style="width: 200px;">100,000원 이상</a>         	      
                                 </div><!-- End .collapse -->
                             </div><!-- End .widget -->
                             <div class="widget">
@@ -308,19 +313,19 @@
                                 </h3>
                                 <div class="collapse show" id="widget-body-6">
                                     <div class="widget-body">
-                                        <ul class="config-swatch-list" id="color_class" th:if="${categoryname}">
+                                        <ul class="config-swatch-list2" id="color_class" th:if="${categoryname}">
                                             <li th:each="productcolor : ${productcolor}" th:value="${productcolor.color_no.no}">
                                                 <a th:unless="${productcolor.color_no.name == 'White'}" th:style="@{background-color: rgb({color}); cursor:pointer;(color=${productcolor.color_no.rgb})}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_category_ajax(\'{size}\')'(size=${productcolor.product_no.category.no})}"></a>
                                                 <a style="cursor:pointer; border-style: solid; border-width: 1px;" th:if="${productcolor.color_no.name == 'White'}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_category_ajax(\'{size}\')'(size=${productcolor.product_no.category.no})}"></a>
                                             </li>
                                         </ul>
-                                        <ul class="config-swatch-list" id="color_class" th:if="${divisionname}">
+                                        <ul class="config-swatch-list2" id="color_class" th:if="${divisionname}">
                                             <li th:each="productcolor : ${productcolor}" th:value="${productcolor.color_no.no}">
                                                 <a th:unless="${productcolor.color_no.name == 'White'}" th:style="@{background-color: rgb({color}); cursor:pointer;(color=${productcolor.color_no.rgb})}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_division_ajax(\'{size}\')'(size=${productcolor.product_no.division.no})}"></a>
                                                 <a style="cursor:pointer; border-style: solid; border-width: 1px;" th:if="${productcolor.color_no.name == 'White'}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_division_ajax(\'{size}\')'(size=${productcolor.product_no.division.no})}"></a>
                                             </li>
                                         </ul>
-                                        <ul class="config-swatch-list" id="color_class" th:if="${sectionname}">
+                                        <ul class="config-swatch-list2" id="color_class" th:if="${sectionname}">
                                             <li th:each="productcolor : ${productcolor}" th:value="${productcolor.color_no.no}">
                                                 <a th:unless="${productcolor.color_no.name == 'White'}" th:style="@{background-color: rgb({color}); cursor:pointer;(color=${productcolor.color_no.rgb})}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_section_ajax(\'{size}\')'(size=${productcolor.product_no.section.no})}"></a>
                                                 <a style="cursor:pointer; border-style: solid; border-width: 1px;" th:if="${productcolor.color_no.name == 'White'}" th:title="${productcolor.color_no.name}" th:onclick="@{'javascript:filter_section_ajax(\'{size}\')'(size=${productcolor.product_no.section.no})}"></a>
@@ -331,20 +336,21 @@
                             </div><!-- End .widget -->
 
                             <div class="widget widget-featured">
-                                <h3 class="widget-title">Featured Products</h3>
-                                
+                                <h3 class="widget-title" th:if="${categoryname}"><span th:text="${categoryname.name}"></span> 관련상품</h3>
+                                <h3 class="widget-title" th:if="${divisionname}"><span th:text="${divisionname.category.name}"></span> 관련상품</h3>
+                                <h3 class="widget-title" th:if="${sectionname}"><span th:text="${sectionname.category.name}"></span> 관련상품</h3>  
                                 <div class="widget-body">
                                     <div class="owl-carousel widget-featured-products">
                                         <div class="featured-col">
-                                            <div class="product product-sm">
+                                            <div class="product product-sm" th:each="related : ${related}">
                                                 <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/small/product-1.jpg" alt="product">
+                                                    <a th:href="@{'/product/view/{no}'(no=${related.no})}" class="product-image">
+                                                        <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${related.regdate}, pic=${related.pic1})}" alt="product">
                                                     </a>
                                                 </figure>
                                                 <div class="product-details">
                                                     <h2 class="product-title">
-                                                        <a href="product.html">Mouse</a>
+                                                        <a th:href="@{'/product/view/{no}'(no=${related.no})}" th:text="${related.name}"></a>
                                                     </h2>
                                                     <div class="ratings-container">
                                                         <div class="product-ratings">
@@ -352,108 +358,22 @@
                                                         </div><!-- End .product-ratings -->
                                                     </div><!-- End .product-container -->
                                                     <div class="price-box">
-                                                        <span class="product-price">$45.00</span>
-                                                    </div><!-- End .price-box -->
-                                                </div><!-- End .product-details -->
-                                            </div><!-- End .product -->
-
-                                            <div class="product product-sm">
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/home-featured-1.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h2 class="product-title">
-                                                        <a href="product.html">Headset</a>
-                                                    </h2>
-                                                    <div class="ratings-container">
-                                                        <div class="product-ratings">
-                                                            <span class="ratings" style="width:20%"></span><!-- End .ratings -->
-                                                        </div><!-- End .product-ratings -->
-                                                    </div><!-- End .product-container -->
-                                                    <div class="price-box">
-                                                        <span class="old-price">$60.00</span>
-                                                        <span class="product-price">$45.00</span>
-                                                    </div><!-- End .price-box -->
-                                                </div><!-- End .product-details -->
-                                            </div><!-- End .product -->
-
-                                            <div class="product product-sm">
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/home-featured-2.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h2 class="product-title">
-                                                        <a href="product.html">Technicca</a>
-                                                    </h2>
-                                                    <div class="ratings-container">
-                                                        <div class="product-ratings">
-                                                            <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                                                        </div><!-- End .product-ratings -->
-                                                    </div><!-- End .product-container -->
-                                                    <div class="price-box">
-                                                        <span class="product-price">$50.00</span>
+                                                        <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(related.listprice, 0, 'COMMA')})}"></span>
                                                     </div><!-- End .price-box -->
                                                 </div><!-- End .product-details -->
                                             </div><!-- End .product -->
                                         </div><!-- End .featured-col -->
 
                                         <div class="featured-col">
-                                            <div class="product product-sm">
+                                            <div class="product product-sm" th:each="related2 : ${related2}">
                                                 <figure class="product-image-container">
                                                     <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/home-featured-3.jpg" alt="product">
+                                                        <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${related2.regdate}, pic=${related2.pic1})}" alt="product">
                                                     </a>
                                                 </figure>
                                                 <div class="product-details">
                                                     <h2 class="product-title">
-                                                        <a href="product.html">Skullcanddy</a>
-                                                    </h2>
-                                                    <div class="ratings-container">
-                                                        <div class="product-ratings">
-                                                            <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                                                        </div><!-- End .product-ratings -->
-                                                    </div><!-- End .product-container -->
-                                                    <div class="price-box">
-                                                        <span class="old-price">$50.00</span>
-                                                        <span class="product-price">$35.00</span>
-                                                    </div><!-- End .price-box -->
-                                                </div><!-- End .product-details -->
-                                            </div><!-- End .product -->
-
-                                            <div class="product product-sm">
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/home-featured-4.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h2 class="product-title">
-                                                        <a href="product.html">Phillips</a>
-                                                    </h2>
-                                                    <div class="ratings-container">
-                                                        <div class="product-ratings">
-                                                            <span class="ratings" style="width:60%"></span><!-- End .ratings -->
-                                                        </div><!-- End .product-ratings -->
-                                                    </div><!-- End .product-container -->
-                                                    <div class="price-box">
-                                                        <span class="product-price">$29.00</span>
-                                                    </div><!-- End .price-box -->
-                                                </div><!-- End .product-details -->
-                                            </div><!-- End .product -->
-
-                                            <div class="product product-sm">
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="/home/assets/images/products/home-featured-5.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h2 class="product-title">
-                                                        <a href="product.html">Senheisser</a>
+                                                        <a href="product.html" th:text="${related2.name}"></a>
                                                     </h2>
                                                     <div class="ratings-container">
                                                         <div class="product-ratings">
@@ -461,7 +381,7 @@
                                                         </div><!-- End .product-ratings -->
                                                     </div><!-- End .product-container -->
                                                     <div class="price-box">
-                                                        <span class="product-price">$40.00</span>
+                                                        <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(related2.listprice, 0, 'COMMA')})}"></span>
                                                     </div><!-- End .price-box -->
                                                 </div><!-- End .product-details -->
                                             </div><!-- End .product -->
@@ -469,16 +389,10 @@
                                     </div><!-- End .widget-featured-slider -->
                                 </div><!-- End .widget-body -->
                             </div><!-- End .widget -->
-
-                            <div class="widget widget-block">
-                                <h3 class="widget-title">Custom HTML Block</h3>
-                                <h5>This is a custom sub-title.</h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur elitad adipiscing Cras non placerat mi. </p>
-                            </div><!-- End .widget -->
                         </div><!-- End .sidebar-wrapper -->
                     </aside><!-- End .col-lg-3 -->
                 </div><!-- End .row -->
             </div><!-- End .container -->
             <div class="mb-5"></div><!-- margin -->
         </main><!-- End .main -->
- <th:block th:include="home/main/footer.html"></th:block>
+	 <th:block th:include="home/main/footer.html"></th:block>

@@ -1,0 +1,131 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+<!-- 장바구니 옵션 선택 팝업 레이어를 불러오기 위한 div 지정 -->
+<input type="hidden" id="hidden_cart_no"> 
+<div id="cart_ajax_updateOption"></div>
+<div id="cart_ajax_complete"></div>
+<div id="cart_ajax_sizeTable"></div>
+<!-- 로그인 팝업 -->
+<div id="login_popup"></div>
+	 <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">장바구니</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart-table-container">
+                            <table class="table table-cart">
+                                <thead>
+                                    <tr>
+                                    	<th class="product-col">상품</th>
+                                        <th class="price-col">가격</th>
+                                        <th class="qty-col">수량</th>
+                                        <th>합산 가격</th>
+                                    </tr>
+                                </thead>
+                                <tbody th:if="${session.cart != null}" th:each="cart : ${session.cart}" class="cart_count">
+                                    <tr class="product-row">
+                                        <td class="product-col">
+                                            <figure class="product-image-container">
+                                                <a th:href="@{'/product/view/{no}'(no=${cart.no})}" class="product-image" target="_blank">
+                                                    <img th:src="@{'/uploads/{date}/{pic}'(date=${cart.regdate}, pic=${cart.pic1})}" alt="product" style="height:180px;">
+                                                    <input type="hidden" name="hidden_cart_no" th:value="${cart.no}">
+                                                </a>
+                                            </figure>
+                                            <h2 class="product-title">
+                                                <a th:href="@{'/product/view/{no}'(no=${cart.no})}" target="_blank" th:text="${cart.name}"></a><br>
+                                                <font size="2">
+                                                	<span th:text="@{'옵션: {color}, {size}'(color=${cart.cartColor}, size=${cart.cartSize})}"></span>
+                                                	<input type="hidden" name="hidden_option" th:value="@{'{size}/{color}'(size=${cart.cartSizeNo}, color=${cart.cartColorNo})}">
+                                                </font><br><br>
+                                                <a style="cursor: pointer;" th:onclick="@{'cartUpdateOptionAjax(\'{no}\', \'{cartno}\')'(no=${cart.no}, cartno=${cart.cartNo})}"><strong><u>옵션 변경하기</u></strong><i class="icon-angle-right"></i></a>
+                                            </h2>
+                                        </td>
+                                        <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.listprice, 0, 'COMMA')})}"></td>
+                                        <td>
+                                            <input class="vertical-quantity form-control" th:id="@{'cart_qty{no}'(no=${cart.cartNo})}" type="text" name="product_qty" th:value="${cart.cartQty}">
+											<a href="#" th:onclick="@{'cart_update_qty(\'{no}\')'(no=${cart.cartNo})}" title="수정" class="btn-edit"><span class="sr-only">수정</span><i class="icon-pencil">수정</i></a>
+                                        </td>
+                                        <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.cartPrice * cart.cartQty, 0, 'COMMA')})}">
+                                        </td>
+                                        <input type="hidden" name="each_price" th:value="${cart.cartPrice * cart.cartQty}">
+                                    </tr>
+                                    <tr class="product-action-row">
+                                        <td colspan="4" class="clearfix">
+                                            <div class="float-left">
+                                                <a href="#" class="btn-move">위시리스트로 이동</a>
+                                            </div><!-- End .float-left -->
+                                            
+                                            <div class="float-right">
+                                                <a href="#" th:onclick="@{'cart_del(\'{no}\')'(no=${cart.cartNo})}" title="삭제" class="btn-remove"><span class="sr-only">삭제</span></a>
+                                            </div><!-- End .float-right -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" class="clearfix">
+                                            <div class="float-left">
+                                                <a href="/" class="btn btn-outline-secondary">메인으로 가기</a>
+                                            </div><!-- End .float-left -->
+
+                                            <div class="float-right">
+                                                <a href="#" onclick="cart_deleteall()" class="btn btn-outline-secondary btn-clear-cart">장바구니 전체 삭제</a>
+                                            </div><!-- End .float-right -->
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div><!-- End .cart-table-container -->
+                    </div><!-- End .col-lg-8 -->
+
+                    <div class="col-lg-4">
+                        <div class="cart-summary">
+                            <h3>요약</h3>
+                            <table class="table table-totals">
+                                <tbody>
+                                    <tr th:each="cart : ${session.cart}">
+                                        <td><span th:text="${cart.name}"></span><span th:text="@{' X {qty}'(qty=${cart.cartQty})}"></span></td>
+                                        <td th:text="@{'{price}원'(price=${#numbers.formatInteger(cart.cartPrice * cart.cartQty, 0, 'COMMA')})}"></td>
+                                    </tr>
+                                    <tr th:unless="${session.cart}">
+                                    	<td>합계</td>
+                                        <td>0원</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>배송료</td>
+                                        <td>0원</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                    	<td>총 합계</td>
+                                        <td th:if="${session.total}" class="cart_total"></td>
+                                        <td th:unless="${session.total}" >0원</td>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            <div class="checkout-methods">
+                            	<a href="#" th:if="${session.cart == null and session.user == null}" onclick="cart_order_page(-1)" class="btn btn-block btn-sm btn-primary">결제하기</a>
+               					<a href="#" th:if="${session.cart == null and session.user != null}" onclick="cart_order_page(-1)" class="btn btn-block btn-sm btn-primary">결제하기</a>
+                                <a href="#" th:if="${session.cart != null and session.user != null}" onclick="cart_order_page(0)" class="btn btn-block btn-sm btn-primary">결제하기</a>
+                                <a href="#" th:if="${session.cart != null and session.user == null}" onclick="cart_order_page(1)" class="btn btn-block btn-sm btn-primary">결제하기</a>
+                            </div><!-- End .checkout-methods -->
+                        </div><!-- End .cart-summary -->
+                    </div><!-- End .col-lg-4 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-6"></div><!-- margin -->
+        </main><!-- End .main -->
+ <th:block th:include="home/main/footer.html"></th:block>

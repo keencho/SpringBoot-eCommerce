@@ -1,0 +1,353 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">결제</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <ul class="checkout-progress-bar">
+                    <li class="active">
+                        <span>주문서 작성</span>
+                    </li>
+                    <li>
+                        <span>결제완료<br>결제정보 확인</span>
+                    </li>
+                    
+                </ul>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <ul class="checkout-steps">
+                            <li th:if="${session.user != null}">
+                                <h2 class="step-title">주소지 선택</h2>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="addressType" id="inlineRadio1" value="exist" checked="checked">
+								  <label class="form-check-label" for="inlineRadio1">등록된 배송지에서 선택</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="addressType" id="inlineRadio2" value="new">
+								  <label class="form-check-label" for="inlineRadio2">배송지 새로 입력</label>
+								</div>
+                                <div class="shipping-step-addresses add-address-apppend" style="padding-top: 30px;">
+                                    <div th:each="address : ${address}" th:id="@{'address_parent_id{no}'(no=${address.no})}" th:class="${address.basic == 0} ? 'shipping-address-box active' : 'shipping-address-box'">
+	                                    <div th:id="@{'address_id{no}'(no=${address.no})}">
+		                                    <div class="address_box_change">
+		                                        <address>
+		                                            (<span th:text="${address.zipcode}"></span>)<br>
+		                                            <span th:text="${address.address}"></span><br>
+		                                            <span th:text="${address.detailaddress}"></span><br>
+		                                            <span th:text="${address.reference}"></span><br>
+		                                            <span th:text="${address.name}"></span><br>
+		                                            <span th:text="${address.phone}"></span><br>
+		                                        </address>
+		                                    </div>
+	                                        <a href="#" data-toggle="modal" data-target="#updateAddressModal" th:data-name="${address.name}" th:data-phone="${address.phone}" 
+	                                        th:data-zipcode="${address.zipcode}" th:data-address="${address.address}" th:data-detailaddress="${address.detailaddress}" th:data-reference="${address.reference}"
+	                                        th:data-addressno="${address.no}" th:data-basic="${address.basic}" class="btn btn-sm btn-outline-secondary modaldata">           
+	                                            	수정
+	                                        </a>
+	                                         <span class="float-right" th:if="${address.basic == 0}">
+	                                         	<strong>기본 배송지</strong>
+	                                         </span>
+                                         </div>
+                                    </div><!-- End .shipping-address-box -->
+                                </div><!-- End .shipping-step-addresses -->
+                                <a href="#" th:onclick="@{'modalAddAddress(\'{no}\')'(no=${session.user.no})}" class="btn btn-sm btn-outline-secondary btn-new-address modalAddAddress">주소 추가</a>     
+                            </li>
+                             <li th:if="${session.user == null}">
+                                <h2 class="step-title">주소지 입력</h2>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="addressType" id="inlineRadio2" value="new" checked="checked">
+								  <label class="form-check-label" for="inlineRadio2">배송지 새로 입력</label>
+								</div>
+                            </li>
+                             <div class="shipping-step-address new-address-append" style="display: none;">
+                               	<div class="form-group required-field">
+	                                <label>받으실 분</label>
+	                                <input type="text" name="new_name" class="form-control form-control-sm new_name" required>
+	                            </div><!-- End .form-group -->
+	
+	                            <div class="form-group required-field">
+	                                <label>받으실 분의 전화번호</label>
+	                                <input type="text" maxlength="11" name="new_phone" class="form-control form-control-sm new_phone" required>
+	                            </div><!-- End .form-group -->
+	
+	                            <div class="form-group">
+	                                <label>우편번호</label><button type="button" style="margin-left: 303px"class="btn btn-primary btn-sm" onclick="sample4_execDaumPostcode();">우편번호 찾기</button>
+	                                <input type="text" name="new_zipcode" id="sample4_postcode" class="form-control form-control-sm new_zipcode" size="1">
+	                            </div><!-- End .form-group -->
+	
+	                            <div class="form-group required-field">
+	                                <label>주소</label>
+	                                <input type="text" name="new_address" id="sample4_address" class="form-control form-control-sm new_address" required>
+	                            </div><!-- End .form-group -->
+	
+	                            <div class="form-group required-field">
+	                                <label>상세주소</label>
+	                                <input type="text" name="new_detailaddress" id="sample4_detailAddress" class="form-control form-control-sm new_detailaddress" required>
+	                            </div><!-- End .form-group -->
+	
+	                            <div class="form-group required-field">
+	                                <label>참고항목</label>
+	                                <input type="text" name="new_reference" id="sample4_extraAddress" class="form-control form-control-sm new_reference" required>
+	                            </div><!-- End .form-group -->
+	                            <br>
+                            </div>
+                            <li>
+                                <div class="checkout-step-shipping" th:if="${session.user != null}">
+                                    <h2 class="step-title">포인트 사용</h2>
+                                    <table class="table table-step-shipping">
+                                        <tbody>
+                                        	<td >
+	                                        <div class="form-group">
+											    <input type="text" class="form-control" name="user_point" placeholder="0원" disabled>
+											</div>
+											</td>
+											<td>
+                                            <div class="custom-control custom-checkbox" style="margin-top: 0rem !important;">
+		                                    	<input type="checkbox" class="custom-control-input" id="address-save" th:if="${session.user.point < 2000}" disabled>
+		                                    	<input type="checkbox" class="custom-control-input" id="address-save" th:if="${session.user.point >= 2000}">
+		                                    	<label class="custom-control-label" for="address-save">
+		                                    		포인트 사용(현재 포인트: <span id="span_current_point" th:value="${session.user.point}" th:text="${session.user.point}"></span>p)
+		                                    		<input type="hidden" id="user_current_point" th:value="${session.user.point}">
+		                                    	</label><br>
+		                                    	※2000원 이상 보유시에만 사용하실 수 있습니다.
+		                                    	<a href="#" th:if="${session.user != null}" th:onclick="@{'point_verify(\'{no}\')'(no=${session.user.no})}" id="point_access" class="btn btn-primary float-right" style="display: none">적용하기</a>                               		
+		                                	</div>
+		                                	<font color="red" style="display: none" id="point_success">포인트가 적용되었습니다.</font>
+		                                	</td>
+                                        </tbody>
+                                    </table>
+                                </div><!-- End .checkout-step-shipping -->
+                                <br>
+                                <div class="checkout-step-shipping">
+                                    <h2 class="step-title">결제 수단 선택</h2>
+
+                                    <table class="table table-step-shipping">
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="radio" name="shipping-method" checked="checked" value="card"></td>
+                                                <td><strong>신용카드</strong></td>
+                                                <td>결제 버튼을 누르시면 결제가 진행됩니다.</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><input type="radio" name="shipping-method" value="deposit"></td>
+                                                <td><strong>실시간 계좌이체</strong></td>
+                                                <td>
+													<select class="custom-select" style="height: 40px !important;" name="account">
+														<option value="0" selected>입금할 계좌</option>
+														<option value="1">신한 110-000-000000</option>
+														<option value="2">우리 112-000-000000</option>
+														<option value="3">국민 114-000-000000</option>
+														
+													</select><div style="padding-top: 10px;">
+														<div class="form-group">
+														    <input type="text" class="form-control" name="account_name" placeholder="입금자명">
+														</div>
+													</div>
+												</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div><!-- End .checkout-step-shipping -->
+                            </li>
+                        </ul>
+                    </div><!-- End .col-lg-8 -->
+
+                    <div class="col-lg-4">
+                        <div class="order-summary">
+                            <h3>주문하실 상품</h3>
+                            <h4>
+                                <a data-toggle="collapse" href="#order-cart-section" class="" role="button" aria-expanded="true" aria-controls="order-cart-section" th:text="@{'{count}개의 상품'(count=${session.info.size()})}"><span>개의 상품</span></a>
+                            </h4>
+                            <div class="collapse show" id="order-cart-section">
+                                <table class="table table-mini-cart">
+                                    <tbody>
+                                        <tr th:each="info : ${session.info}">
+                                            <td class="product-col">
+                                                <figure class="product-image-container">
+                                                    <a th:href="@{'/product/view/{no}'(no=${info.no.no})}" class="product-image" target="_blank">
+                                                        <img th:src="@{'/uploads/{date}/{pic}'(date=${info.no.regdate}, pic=${info.no.pic1})}" alt="product">
+                                                    </a>
+                                                </figure>
+                                                <div>
+                                                    <h2 class="product-title">
+                                                        <a th:href="@{'/product/view/{no}'(no=${info.no.no})}" th:text="${info.no.name}"></a>
+                                                    </h2>
+													<span class="product-qty">옵션: <span th:text="${info.color}"></span>, <span th:text="${info.size}"></span></span>
+                                                    <span class="product-qty">수량: <span th:text="${info.qty}"></span>개</span>
+                                                </div>
+                                                <td class="price-col"th:text="@{'{price}원'(price=${#numbers.formatInteger(info.price * info.qty, 0, 'COMMA')})}"></td>
+                                                <input type="hidden" name="checkout_each_price" th:value="${info.price * info.qty}">
+                                            </td>
+                                        </tr>
+                                    </tbody>    
+                                </table>
+                            </div><!-- End #order-cart-section -->
+                             <div class="collapse show" id="order-cart-section">
+                                <table class="table table-mini-cart">
+                                    <tbody>
+                                    	<div th:if="${session.user != null}" align="center">
+                                    		<font size="2">
+                                    			<strong>
+                                    				구매시 적립 예정 포인트: <span class="checkout_user_point"></span>p
+                                    			</strong>	
+                                    		</font>
+                                    	<br>
+                                    	</div>
+                                    	<br>
+                                      	 <h3>배송비 <span class="float-right"> 0원</span></h3>
+                                      	 <h3>결제하실 총 금액 <span class="float-right checkout_total_price"> 0원</span></h3>
+                                      	 <input type="hidden" name="checkout_hidden_point" th:if="${session.user != null}">
+                                      	 <input type="hidden" name="checkout_hidden_total">
+                                    </tbody>    
+                                </table>
+                            </div><!-- End #order-cart-section -->
+                        </div><!-- End .order-summary -->
+                    </div><!-- End .col-lg-4 -->
+                </div><!-- End .row -->
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="checkout-steps-action">
+                            <a href="#" th:if="${session.user != null}" class="btn btn-primary float-right" th:onclick="@{'purchase(\'{no}\')'(no=${session.user.no})}">결제하기</a>
+                            <a href="#" th:if="${session.user == null}" class="btn btn-primary float-right" onclick="purchase(0)">결제하기</a>
+                        </div><!-- End .checkout-steps-action -->
+                    </div><!-- End .col-lg-8 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-6"></div><!-- margin -->
+        </main><!-- End .main -->
+        
+<!-- Modal(수정) -->
+    <div class="modal fade" id="updateAddressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="addressModalLabel">배송지 수정</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div><!-- End .modal-header -->
+
+                    <div class="modal-body">          
+                            <div class="form-group required-field">
+                                <label>받으실 분</label>
+                                <input type="text" name="modal_name" class="form-control form-control-sm updateModal_name" required>
+                                <input type="hidden" name="modal_no" class="form-control form-control-sm updateModal_no">
+                                <input type="hidden" name="modal_basic" class="form-control form-control-sm updateModal_basic">
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>받으실 분의 전화번호</label>
+                                <input type="text" maxlength="11" name="modal_phone" class="form-control form-control-sm updateModal_phone" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group">
+                                <label>우편번호</label><button type="button" class="btn btn-primary btn-sm float-right" onclick="sample6_execDaumPostcode();">우편번호 찾기</button>
+                                <input type="text" name="modal_zipcode" id="sample6_postcode" class="form-control form-control-sm updateModal_zipcode" size="1">
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>주소</label>
+                                <input type="text" name="modal_address" id="sample6_address" class="form-control form-control-sm updateModal_address" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>상세주소</label>
+                                <input type="text" name="modal_detailaddress" id="sample6_detailAddress" class="form-control form-control-sm updateModal_detailaddress" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>참고항목</label>
+                                <input type="text" name="modal_reference" id="sample6_extraAddress" class="form-control form-control-sm updateModal_reference" required>
+                            </div><!-- End .form-group -->
+                    </div><!-- End .modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link btn-sm" data-dismiss="modal">취소</button>
+                        <button type="button" onclick="modal_address_update_ajax()" class="btn btn-primary btn-sm">정보 수정</button>
+                    </div><!-- End .modal-footer -->
+                </form>
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div>
+ <!-- End .modal -->
+        
+<!-- Modal(추가) -->
+    <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="addressModalLabel">배송지 추가</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div><!-- End .modal-header -->
+
+                    <div class="modal-body">          
+                            <div class="form-group required-field">
+                                <label>받으실 분</label>
+                                <input type="text" name="modal_new_name" class="form-control form-control-sm newModal_name" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>받으실 분의 전화번호</label>
+                                <input type="text" maxlength="11" name="modal_new_phone" class="form-control form-control-sm newModal_phone" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group">
+                                <label>우편번호</label><button type="button" class="btn btn-primary btn-sm float-right" onclick="sample5_execDaumPostcode();">우편번호 찾기</button>
+                                <input type="text" name="modal_new_zipcode" id="sample5_postcode" class="form-control form-control-sm newModal_zipcode" size="1">
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>주소</label>
+                                <input type="text" name="modal_new_address" id="sample5_address" class="form-control form-control-sm newModal_address" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>상세주소</label>
+                                <input type="text" name="modal_new_detailaddress" id="sample5_detailAddress" class="form-control form-control-sm newModal_detailaddress" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>참고항목</label>
+                                <input type="text" name="modal_new_reference" id="sample5_extraAddress" class="form-control form-control-sm newModal_reference" required>
+                            </div><!-- End .form-group -->
+                    </div><!-- End .modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link btn-sm" data-dismiss="modal">취소</button>
+                        <button type="button" th:if="${session.user != null}" th:onclick="@{'modal_address_new_ajax(\'{no}\')'(no=${session.user.no})}" class="btn btn-primary btn-sm">배송지 저장</button>
+                    </div><!-- End .modal-footer -->
+                </form>
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div>
+ <!-- End .modal -->
+ <th:block th:include="home/main/footer.html"></th:block>
+ <script>
+    /* function noEvent() {
+    	if (event.keyCode == 116) {
+    		event.keyCode= 2;
+    		alert("새로고침키는 사용하실수 없습니다.");
+    		return false;
+    	}
+    	else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82)){
+    		return false;
+    	}
+    }
+    document.onkeydown = noEvent; */
+    
+</script>

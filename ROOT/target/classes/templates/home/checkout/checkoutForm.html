@@ -68,6 +68,10 @@
 								</div>
                             </li>
                              <div class="shipping-step-address new-address-append" style="display: none;">
+	                             <div class="form-group required-field" th:if="${session.user == null}">
+	                                <label>비회원 비밀번호 </label>
+	                                <input type="text" maxlength="12" name="new_password" class="form-control form-control-sm new_password" required>
+	                            </div><!-- End .form-group -->
                                	<div class="form-group required-field">
 	                                <label>받으실 분</label>
 	                                <input type="text" name="new_name" class="form-control form-control-sm new_name" required>
@@ -78,7 +82,7 @@
 	                                <input type="text" maxlength="11" name="new_phone" class="form-control form-control-sm new_phone" required>
 	                            </div><!-- End .form-group -->
 	
-	                            <div class="form-group">
+	                            <div class="form-group required-field">
 	                                <label>우편번호</label><button type="button" style="margin-left: 303px"class="btn btn-primary btn-sm" onclick="sample4_execDaumPostcode();">우편번호 찾기</button>
 	                                <input type="text" name="new_zipcode" id="sample4_postcode" class="form-control form-control-sm new_zipcode" size="1">
 	                            </div><!-- End .form-group -->
@@ -97,6 +101,7 @@
 	                                <label>참고항목</label>
 	                                <input type="text" name="new_reference" id="sample4_extraAddress" class="form-control form-control-sm new_reference" required>
 	                            </div><!-- End .form-group -->
+	                            
 	                            <br>
                             </div>
                             <li>
@@ -136,7 +141,6 @@
                                                 <td><strong>신용카드</strong></td>
                                                 <td>결제 버튼을 누르시면 결제가 진행됩니다.</td>
                                             </tr>
-
                                             <tr>
                                                 <td><input type="radio" name="shipping-method" value="deposit"></td>
                                                 <td><strong>실시간 계좌이체</strong></td>
@@ -154,6 +158,14 @@
 													</div>
 												</td>
                                             </tr>
+                                            <tr>
+                                            	<td><input type="checkbox" name="message"></td>
+                                            	<td><strong>배송 메시지</strong></td>
+                                            	<td>
+                                            		<div class="form-group">
+														<input type="text" class="form-control" name="orderer_message" placeholder="배송 메시지">
+													</div> 
+												</td>
                                         </tbody>
                                     </table>
                                 </div><!-- End .checkout-step-shipping -->
@@ -239,7 +251,7 @@
                         </button>
                     </div><!-- End .modal-header -->
 
-                    <div class="modal-body">          
+                    <div class="modal-body">     
                             <div class="form-group required-field">
                                 <label>받으실 분</label>
                                 <input type="text" name="modal_name" class="form-control form-control-sm updateModal_name" required>
@@ -252,7 +264,7 @@
                                 <input type="text" maxlength="11" name="modal_phone" class="form-control form-control-sm updateModal_phone" required>
                             </div><!-- End .form-group -->
 
-                            <div class="form-group">
+                            <div class="form-group required-field">
                                 <label>우편번호</label><button type="button" class="btn btn-primary btn-sm float-right" onclick="sample6_execDaumPostcode();">우편번호 찾기</button>
                                 <input type="text" name="modal_zipcode" id="sample6_postcode" class="form-control form-control-sm updateModal_zipcode" size="1">
                             </div><!-- End .form-group -->
