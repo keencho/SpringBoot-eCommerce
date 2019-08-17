@@ -71,7 +71,7 @@
                              <div class="shipping-step-address new-address-append" style="display: none;">
 	                             <div class="form-group required-field" th:if="${session.user == null}">
 	                                <label>비회원 비밀번호 </label>
-	                                <input type="text" maxlength="12" name="new_password" class="form-control form-control-sm new_password" required>
+	                                <input type="password" maxlength="12" name="new_password" class="form-control form-control-sm new_password" required>
 	                            </div><!-- End .form-group -->
                                	<div class="form-group required-field">
 	                                <label>받으실 분</label>
@@ -194,7 +194,7 @@
                                                 </figure>
                                                 <div>
                                                     <h2 class="product-title">
-                                                        <a th:href="@{'/product/view/{no}'(no=${info.no.no})}" th:text="${info.no.name}"></a>
+                                                        <a th:href="@{'/product/view/{no}'(no=${info.no.no})}" class="product_name_ajax" th:text="${info.no.name}"></a>
                                                     </h2>
 													<span class="product-qty">옵션: <span th:text="${info.color}"></span>, <span th:text="${info.size}"></span></span>
                                                     <span class="product-qty">수량: <span th:text="${info.qty}"></span>개</span>
@@ -355,19 +355,17 @@
             </div><!-- End .modal-content -->
         </div><!-- End .modal-dialog -->
     </div>
- <!-- End .modal -->
- <th:block th:include="home/main/footer.html"></th:block>
+ <!-- End .modal --> 
  <script>
-    /* function noEvent() {
-    	if (event.keyCode == 116) {
-    		event.keyCode= 2;
-    		alert("새로고침키는 사용하실수 없습니다.");
-    		return false;
-    	}
-    	else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82)){
-    		return false;
-    	}
-    }
-    document.onkeydown = noEvent; */
-    
+ function doNotReload(){ 
+	    if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
+	    	alert("새로고침키는 사용하실 수 없습니다.");
+	        event.keyCode = 0; 
+	        event.cancelBubble = true; 
+	        event.returnValue = false; 
+	    } 
+	} 
+	document.onkeydown = doNotReload;
 </script>
+ 
+ <th:block th:include="home/main/footer.html"></th:block>

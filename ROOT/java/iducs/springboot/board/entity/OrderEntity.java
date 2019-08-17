@@ -263,5 +263,25 @@ public class OrderEntity {
 		date = order.getDate();
 		price = order.getPrice();
 	}
+	
+	public void buildEntityNonUser(Order order) {
+		no = order.getNo();		
+		orderno = order.getOrderno();
+		order_name = order.getOrder_name();
+		order_phone = order.getOrder_phone();
+		order_address = order.getOrder_address();
+		check_user = order.getCheck_user();
+		order_password = order.getOrder_password();
+		order_message = order.getOrder_message();
+		pay_type = order.getPay_type();
+		card_id = order.getCard_id();
+		card_shopid = order.getCard_shopid();
+		card_applyno = order.getCard_applyno();
+		account_bank = order.getAccount_bank();
+		account_name = order.getAccount_name();
+		status = order.getStatus();
+		date = order.getDate();
+		price = order.getPrice();
+	}
 
 }

@@ -12,6 +12,7 @@ public interface OrderService {
 	List<Order> findByDate(String date);
 	
 	void saveOrder(Order order);
+	void saveOrderNonUser(Order order);
 	void updateOrder(Order order);
 	void deleteOrder(Order order);
 }

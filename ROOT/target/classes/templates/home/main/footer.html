@@ -221,9 +221,12 @@
     <script src="/home/assets/js/main.min.js?ver=2"></script>
     
     <!-- Custom JS File -->
-    <script src="/home/assets/js/custom.js?ver=40"></script>
+    <script src="/home/assets/js/custom.js?ver=42"></script>
     <!-- .load()메소드를 사용했을시 main.js를 다시 불러오기 위한 reload function -->
     <script src="/home/assets/js/reload_main.js"></script>
+    
+    <!-- 아임포트 결제 데모 -->
+     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <script>
 function cart_order_page(no){
 	if(no == -1) {
@@ -565,41 +568,47 @@ function point_verify(no){
 function payment(no) {
 	var addressType = $('input[name=addressType]:checked').val();
 	var paytype = $('input[name=shipping-method]:checked').val();
-	/* for(var i=0; i<$("input[name='checkout_product_no']").length; i++){
-		var product_no = $("input[name='checkout_product_no']").eq(i).val();
-	} */
-	
-	if (no != 0){	// 회원일 경우
-		if(paytype == 'card'){
-			
-		} else if (paytype == 'deposit'){
-			if(addressType == 'exist'){
-				payment_member_deposit(no, 0);
-			} else {
-				payment_member_deposit(no, 1);
-			}
-			
-		}
-	} else{	// 비회원일 경우
-		alert("비회원");
+
+	if(paytype == 'deposit'){	// 계좌이체의 경우
+		payment_deposit(no, addressType);
+	} else if(paytype == 'card'){	// 카드 결제의 경우
+		payment_card(no, addressType);
 	}
 }
 
-//상품 구매 - 회원 / 계좌이체
-function payment_member_deposit(no, type){
+// 상품 구매 - 카드
+function payment_card(no, addressType){
 	var point = 0;
 	var message = '';
 	var account_bank = $("select[name=account]").val();
 	var account_name = $("input[name=account_name]").val();
 	var total_price = $("input[name=checkout_hidden_total]").val();
-	if (type == 0){	// 기존의 배송지 선택
+	var order_password = '';
+	var product_name = '';
+	for(var i=0; i<$(".product_name_ajax").length; i++){
+		product_name += $(".product_name_ajax").eq(i).text() + "/"; 
+	}
+	product_name = product_name.substr(0, product_name.length -1);
+	if (addressType == 'exist'){	// 기존의 배송지 선택
 		var name = $('.active_jquery').data('name');
 		var phone = $('.active_jquery').data('phone');
+		var address1 = $('.active_jquery').data('zipcode');
+		var address2 = $('.active_jquery').data('address');
+		var address3 = $('.active_jquery').data('detailaddress');
+		var address4 = $('.active_jquery').data('reference');
 		var address = "(" + $('.active_jquery').data('zipcode') + ")" + $('.active_jquery').data('address') + " " + $('.active_jquery').data('detailaddress') + " " + $('.active_jquery').data('reference');
-	} else if (type == 1){	// 새로운 배송지 선택
+	} else if (addressType == 'new'){	// 새로운 배송지 선택
 		var name = $("input[name='new_name']").val();
 		var phone = $("input[name='new_phone']").val();
+		var address1 = $("input[name='new_zipcode']").val();
+		var address2 = $("input[name='new_address']").val();
+		var address3 = $("input[name='new_detailaddress']").val();
+		var address4 = $("input[name='new_reference']").val();
 		var address = "(" + $("input[name='new_zipcode']").val() + ")" + $("input[name='new_address']").val() + " " + $("input[name='new_detailaddress']").val() + " " + $("input[name='new_reference']").val();
+		var order_password = $("input[name='new_password']").val();
+		if(order_password == null){
+			order_password = '';
+		}		
 	}
 	if($("input[name='point_check']").is(":checked") == true){
 		point = $("#user_point").val();
@@ -612,9 +621,139 @@ function payment_member_deposit(no, type){
 	}
 	if (name == ''){
 		alert("이름을 입력하세요");
-	} else if(phone == ''){
+	} else if(no == 0 && order_password == ''){
+		alert("비회원 비밀번호를 입력해주세요.");
+	}else if(phone == ''){
 		alert("휴대폰 번호를 입력하세요");
-	} else if(address == ''){
+	} else if(address1 =='' || address2 =='' || address3 =='' || address4 ==''){
+		alert("모든 주소를 입력하세요");
+	} else {
+		var IMP = window.IMP;
+		IMP.init("imp93876938");
+		
+		IMP.request_pay({
+			pg : 'html5_inicis',
+			pay_method : 'card',
+			merchant_uid : 'merchant_' + new Date().getTime(),
+			name : product_name,
+			amount : 100, // 가상결제 이므로 카드결제 시스템에서의 상품 가격은 100원으로 통일
+			buyer_name : name,
+			buyer_tel : phone,
+			buyer_addr : address
+		}, function(rsp) {
+			if ( rsp.success ) {
+				var msg = '결제가 완료되었습니다.';
+				msg += '고유ID : ' + rsp.imp_uid;				// 고유 거래 번호
+				msg += '상점 거래ID : ' + rsp.merchant_uid;	// 가맹점에서 생성하는 고유 주문번호
+				msg += '결제 금액 : ' + rsp.paid_amount;		// 결제 금액 (1000원)
+				msg += '카드 승인번호 : ' + rsp.apply_num;		// 승인 번호
+				$.ajax({
+					url : "/order/card",
+					type : "POST",
+					data : {
+						"order_name" : name,
+						"order_phone" : phone,
+						"order_address" : address,
+						"user_no" : no,
+						"order_message" : message,
+						"card_id" : rsp.imp_uid,
+						"card_shopid" : rsp.merchant_uid,
+						"card_applyno" : rsp.apply_num,
+						"point" : point,
+						"total_price" : total_price,
+						"order_password" : order_password
+					},
+					dataType : "html",
+					success : function() {
+						$.ajax({
+							url : "/order/get/lastOrder",
+							type : "POST",
+							dataType : "html",
+							success : function(order_no){
+								for(var i=0; i<$(".product_info").length; i++){
+									var product_no = $("input[name='checkout_product_no']").eq(i).val();
+									var product_size = $("input[name='checkout_product_size']").eq(i).val();
+									var product_color = $("input[name='checkout_product_color']").eq(i).val();
+									var product_qty = $("input[name='checkout_product_qty']").eq(i).val();
+									var product_price = $("input[name='checkout_product_price']").eq(i).val();
+									$.ajax({
+										url : "/order/info/add",
+										type : "POST",
+										dataType : "html",
+										data : {
+											"order_no" : order_no,
+											"product_no" : product_no,
+											"size_no" : product_size,
+											"color_no" : product_color,
+											"qty" : product_qty,
+											"price" : product_price,
+										},
+										success : function(){
+										},
+										error : function() {
+											alert('결제 실패');
+										}
+									});
+								}
+								location.replace("/order/complete/" + order_no);
+							}
+						});
+					}
+				});
+			} else {
+				var msg = '결제에 실패하였습니다.';
+				msg += '에러내용 : ' + rsp.error_msg;
+			}
+			alert(msg);
+		});
+	}
+}
+
+// 상품 구매 - 계좌이체
+function payment_deposit(no, addressType){
+	var point = 0;
+	var message = '';
+	var account_bank = $("select[name=account]").val();
+	var account_name = $("input[name=account_name]").val();
+	var total_price = $("input[name=checkout_hidden_total]").val();
+	var order_password = '';
+	if (addressType == 'exist'){	// 기존의 배송지 선택
+		var name = $('.active_jquery').data('name');
+		var phone = $('.active_jquery').data('phone');
+		var address1 = $('.active_jquery').data('zipcode');
+		var address2 = $('.active_jquery').data('address');
+		var address3 = $('.active_jquery').data('detailaddress');
+		var address4 = $('.active_jquery').data('reference');
+		var address = "(" + $('.active_jquery').data('zipcode') + ")" + $('.active_jquery').data('address') + " " + $('.active_jquery').data('detailaddress') + " " + $('.active_jquery').data('reference');
+	} else if (addressType == 'new'){	// 새로운 배송지 선택
+		var name = $("input[name='new_name']").val();
+		var phone = $("input[name='new_phone']").val();
+		var address1 = $("input[name='new_zipcode']").val();
+		var address2 = $("input[name='new_address']").val();
+		var address3 = $("input[name='new_detailaddress']").val();
+		var address4 = $("input[name='new_reference']").val();
+		var address = "(" + $("input[name='new_zipcode']").val() + ")" + $("input[name='new_address']").val() + " " + $("input[name='new_detailaddress']").val() + " " + $("input[name='new_reference']").val();
+		var order_password = $("input[name='new_password']").val();
+		if(order_password == null){
+			order_password = '';
+		}		
+	}
+	if($("input[name='point_check']").is(":checked") == true){
+		point = $("#user_point").val();
+		if (point == ''){
+			point = 0;
+		}
+	} 
+	if($("input[name='message']").is(":checked") == true){
+		message = $("input[name='orderer_message']").val();
+	}
+	if (name == ''){
+		alert("이름을 입력하세요");
+	} else if(no == 0 && order_password == ''){
+		alert("비회원 비밀번호를 입력해주세요.");
+	}else if(phone == ''){
+		alert("휴대폰 번호를 입력하세요");
+	} else if(address1 =='' || address2 =='' || address3 =='' || address4 ==''){
 		alert("모든 주소를 입력하세요");
 	}
 	else if (account_bank == 0){
@@ -623,7 +762,7 @@ function payment_member_deposit(no, type){
 		alert("올바른 입금자명을 입력해주세요!");
 	} else {
 		$.ajax({
-			url : "/order/member/deposit",
+			url : "/order/deposit",
 			type : "POST",
 			data : {
 				"order_name" : name,
@@ -635,6 +774,7 @@ function payment_member_deposit(no, type){
 				"account_name" : account_name,
 				"point" : point,
 				"total_price" : total_price,
+				"order_password" : order_password
 			},
 			dataType : "html",
 			success : function() {
@@ -668,7 +808,7 @@ function payment_member_deposit(no, type){
 								}
 							});
 						}
-						location.href="/order/complete/" + order_no;
+						location.replace("/order/complete/" + order_no);
 					}
 				});
 			},

@@ -48,8 +48,8 @@ public class OrderController {
 	@Autowired OrderInfoService orderInfoService;
 
 	@ResponseBody
-	@PostMapping("/member/deposit")
-	public void orderMemberExistDeposit(
+	@PostMapping("/deposit")
+	public void orderDeposit(
 			@RequestParam(value="order_name") String order_name,
 			@RequestParam(value="order_phone") String order_phone,
 			@RequestParam(value="order_address") String order_address,
@@ -58,21 +58,64 @@ public class OrderController {
 			@RequestParam(value="account_bank") int account_bank,
 			@RequestParam(value="account_name") String account_name,
 			@RequestParam(value="point") int point,
-			@RequestParam(value="total_price") String total_price
+			@RequestParam(value="total_price") String total_price,
+			@RequestParam(value="order_password") String order_password,
+			HttpSession session
 			) {
 		Date d = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd");
-		User user = userService.getUserByNo(user_no);
 		String orderno = this.produceOrderno();
-		System.out.println(orderno);
-		if (point != 0) {	// 포인트 차감
-			user.setPoint(user.getPoint()-point);
-			userService.updateUser(user);
-		}
-		
-		Order order = new Order(orderno, order_name, order_phone, order_address, 0, null, user, order_message, 1, null, null, null, account_bank, account_name, 1, today.format(d), total_price);
-		orderService.saveOrder(order);
+		User user = userService.getUserByNo(user_no);
 
+		if (user_no != 0) { // 회원일 경우
+			if (point != 0) {	// 포인트 차감
+				user.setPoint(user.getPoint()-point);
+				userService.updateUser(user);
+			}
+			Order order = new Order(orderno, order_name, order_phone, order_address, 0, null, user, order_message, 1, null, null, null, account_bank, account_name, 1, today.format(d), total_price);
+			orderService.saveOrder(order);
+		} else if (user_no == 0) {	// 비회원일 경우
+			Order order = new Order(orderno, order_name, order_phone, order_address, 1, order_password, userService.getUserByNo(-1), order_message, 1, null, null, null, account_bank, account_name, 1, today.format(d), total_price);
+			orderService.saveOrder(order);
+		}
+		session.removeAttribute("cart");
+		session.removeAttribute("total");
+	}
+	
+	@ResponseBody
+	@PostMapping("/card")
+	public void orderCard(
+			@RequestParam(value="order_name") String order_name,
+			@RequestParam(value="order_phone") String order_phone,
+			@RequestParam(value="order_address") String order_address,
+			@RequestParam(value="user_no") Long user_no,
+			@RequestParam(value="order_message") String order_message,
+			@RequestParam(value="point") int point,
+			@RequestParam(value="total_price") String total_price,
+			@RequestParam(value="order_password") String order_password,
+			@RequestParam(value="card_id") String card_id,
+			@RequestParam(value="card_shopid") String card_shopid,
+			@RequestParam(value="card_applyno") String card_applyno,
+			HttpSession session
+			) {
+		Date d = new Date();
+		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd");
+		String orderno = this.produceOrderno();
+		User user = userService.getUserByNo(user_no);
+
+		if (user_no != 0) { // 회원일 경우
+			if (point != 0) {	// 포인트 차감
+				user.setPoint(user.getPoint()-point);
+				userService.updateUser(user);
+			}
+			Order order = new Order(orderno, order_name, order_phone, order_address, 0, order_password, user, order_message, 0, card_id, card_shopid, card_applyno, 0, null, 0, today.format(d), total_price);
+			orderService.saveOrder(order);
+		} else if (user_no == 0) {	// 비회원일 경우
+			Order order = new Order(orderno, order_name, order_phone, order_address, 1, order_password, userService.getUserByNo(-1), order_message, 0, card_id, card_shopid, card_applyno, 0, null, 0, today.format(d), total_price);
+			orderService.saveOrder(order);
+		}
+		session.removeAttribute("cart");
+		session.removeAttribute("total");
 	}
 	
 	@ResponseBody

@@ -56,6 +56,13 @@ public class OrderServiceImpl implements OrderService{
 		entity.buildEntity(order);
 		repository.save(entity);
 	}
+	
+	@Override
+	public void saveOrderNonUser(Order order) {
+		OrderEntity entity = new OrderEntity();
+		entity.buildEntityNonUser(order);
+		repository.save(entity);
+	}
 
 	@Override
 	public void updateOrder(Order order) {

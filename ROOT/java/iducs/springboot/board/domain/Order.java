@@ -21,9 +21,8 @@ public class Order {
 	private int status;				// 현재 상태
 	private String date;			// 결제 완료일
 	private String price;			// 결제 순간의 총 가격
-	public Order() {}
 	
-
+	public Order() {}
 	public Order(String orderno, String order_name, String order_phone, String order_address, int check_user,
 			String order_password, User user, String order_message, int pay_type, String card_id, String card_shopid,
 			String card_applyno, int account_bank, String account_name, int status, String date, String price) {
@@ -46,7 +45,6 @@ public class Order {
 		this.date = date;
 		this.price = price;
 	}
-
 
 	public long getNo() {
 		return no;
