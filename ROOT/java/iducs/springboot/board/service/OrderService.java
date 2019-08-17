@@ -9,6 +9,7 @@ public interface OrderService {
 	
 	List<Order> findAll();
 	List<Order> findByNoOrderByNoDesc(long no);
+	List<Order> findByDate(String date);
 	
 	void saveOrder(Order order);
 	void updateOrder(Order order);

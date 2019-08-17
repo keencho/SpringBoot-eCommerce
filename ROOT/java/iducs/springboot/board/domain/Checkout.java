@@ -4,6 +4,8 @@ public class Checkout {
 	private Product no;	// Primaray Key
 	private String size;
 	private String color;
+	private long colorNo;
+	private long sizeNo;
 	private long price;
 	private long qty;
 	
@@ -37,6 +39,18 @@ public class Checkout {
 	}
 	public void setPrice(long price) {
 		this.price = price;
+	}
+	public long getColorNo() {
+		return colorNo;
+	}
+	public void setColorNo(long colorNo) {
+		this.colorNo = colorNo;
+	}
+	public long getSizeNo() {
+		return sizeNo;
+	}
+	public void setSizeNo(long sizeNo) {
+		this.sizeNo = sizeNo;
 	}
 	
 }

@@ -71,4 +71,15 @@ public class OrderServiceImpl implements OrderService{
 		repository.delete(entity);
 	}
 
+	@Override
+	public List<Order> findByDate(String date) {
+		List<Order> order = new ArrayList<Order>();
+		List<OrderEntity> entities = repository.findByDateOrderByNoAsc(date);
+		for(OrderEntity entity : entities) {
+			Order ord = entity.buildDomain();
+			order.add(ord);
+		}
+		return order;
+	}
+
 }

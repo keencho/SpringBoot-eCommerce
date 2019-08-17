@@ -20,11 +20,7 @@ public class OrderEntity {
 	private Long no;
 	
 	@Column(name="orderno", nullable=false, length=100, unique=false)
-	private Long orderno;
-	
-	@ManyToOne
-	@JoinColumn(name = "product_no", nullable=false, unique = false)
-	private ProductEntity product;
+	private String orderno;
 	
 	@Column(name="order_name", nullable=false, length=64, unique=false)
 	private String order_name;
@@ -47,12 +43,6 @@ public class OrderEntity {
 	
 	@Column(name="order_message", nullable=true, length=128, unique=false)
 	private String order_message;
-	
-	@Column(name="qty", nullable=false, length=10, unique=false)
-	private int qty;
-	
-	@Column(name="price", nullable=false, length=30, unique=false)
-	private int price;
 	
 	@Column(name="pay_type", nullable=false, length=5, unique=false)
 	private int pay_type;
@@ -77,6 +67,9 @@ public class OrderEntity {
 	
 	@Column(name="date", nullable=false, length=64, unique=false)
 	private String date;
+	
+	@Column(name="price", nullable=false, length=64, unique=false)
+	private String price;
 
 	public Long getNo() {
 		return no;
@@ -86,20 +79,12 @@ public class OrderEntity {
 		this.no = no;
 	}
 
-	public Long getOrderno() {
+	public String getOrderno() {
 		return orderno;
 	}
 
-	public void setOrderno(Long orderno) {
+	public void setOrderno(String orderno) {
 		this.orderno = orderno;
-	}
-
-	public ProductEntity getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductEntity product) {
-		this.product = product;
 	}
 
 	public String getOrder_name() {
@@ -142,8 +127,6 @@ public class OrderEntity {
 		this.order_password = order_password;
 	}
 
-	
-
 	public UserEntity getUser() {
 		return user;
 	}
@@ -158,26 +141,6 @@ public class OrderEntity {
 
 	public void setOrder_message(String order_message) {
 		this.order_message = order_message;
-	}
-
-	public int getQty() {
-		return qty;
-	}
-
-	public void setQty(int qty) {
-		this.qty = qty;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
-	public int getPay_type() {
-		return pay_type;
 	}
 
 	public void setPay_type(int pay_type) {
@@ -239,12 +202,24 @@ public class OrderEntity {
 	public void setDate(String date) {
 		this.date = date;
 	}
+	
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public int getPay_type() {
+		return pay_type;
+	}
 
 	public Order buildDomain() {
 		Order order = new Order();
 		order.setNo(no);
 		order.setOrderno(orderno);
-		order.setProduct(product.buildDomain());
 		order.setOrder_name(order_name);
 		order.setOrder_phone(order_phone);
 		order.setOrder_address(order_address);
@@ -252,8 +227,6 @@ public class OrderEntity {
 		order.setOrder_password(order_password);
 		order.setUser(user.buildDomain());
 		order.setOrder_message(order_message);
-		order.setQty(qty);
-		order.setPrice(price);
 		order.setPay_type(pay_type);
 		order.setCard_id(card_id);
 		order.setCard_shopid(card_shopid);
@@ -262,15 +235,12 @@ public class OrderEntity {
 		order.setAccount_name(account_name);
 		order.setStatus(status);
 		order.setDate(date);
+		order.setPrice(price);
 		return order;
 	}
 	
 	public void buildEntity(Order order) {
 		no = order.getNo();
-		
-		ProductEntity productEntity = new ProductEntity();
-		productEntity.buildEntity(order.getProduct());
-		product = productEntity;
 		
 		UserEntity userEntity = new  UserEntity();
 		userEntity.buildEntity(order.getUser());
@@ -283,8 +253,6 @@ public class OrderEntity {
 		check_user = order.getCheck_user();
 		order_password = order.getOrder_password();
 		order_message = order.getOrder_message();
-		qty = order.getQty();
-		price = order.getPrice();
 		pay_type = order.getPay_type();
 		card_id = order.getCard_id();
 		card_shopid = order.getCard_shopid();
@@ -293,6 +261,7 @@ public class OrderEntity {
 		account_name = order.getAccount_name();
 		status = order.getStatus();
 		date = order.getDate();
+		price = order.getPrice();
 	}
 
 }

@@ -47,9 +47,10 @@
 		                                            <span th:text="${address.phone}"></span><br>
 		                                        </address>
 		                                    </div>
-	                                        <a href="#" data-toggle="modal" data-target="#updateAddressModal" th:data-name="${address.name}" th:data-phone="${address.phone}" 
+	                                        <a href="#" th:class="${address.basic == 0} ? 'btn btn-sm btn-outline-secondary modaldata active-data active_jquery' : 'btn btn-sm btn-outline-secondary modaldata active-data'"
+	                                        data-toggle="modal" data-target="#updateAddressModal" th:data-name="${address.name}" th:data-phone="${address.phone}" 
 	                                        th:data-zipcode="${address.zipcode}" th:data-address="${address.address}" th:data-detailaddress="${address.detailaddress}" th:data-reference="${address.reference}"
-	                                        th:data-addressno="${address.no}" th:data-basic="${address.basic}" class="btn btn-sm btn-outline-secondary modaldata">           
+	                                        th:data-addressno="${address.no}" th:data-basic="${address.basic}" value="zz">           
 	                                            	수정
 	                                        </a>
 	                                         <span class="float-right" th:if="${address.basic == 0}">
@@ -83,7 +84,7 @@
 	                            </div><!-- End .form-group -->
 	
 	                            <div class="form-group required-field">
-	                                <label>우편번호</label><button type="button" style="margin-left: 303px"class="btn btn-primary btn-sm" onclick="sample4_execDaumPostcode();">우편번호 찾기</button>
+	                                <label>우편번호</label><button type="button" style="margin-left: 292px"class="btn btn-primary btn-sm" onclick="sample4_execDaumPostcode();">우편번호 찾기</button>
 	                                <input type="text" name="new_zipcode" id="sample4_postcode" class="form-control form-control-sm new_zipcode" size="1">
 	                            </div><!-- End .form-group -->
 	
@@ -116,11 +117,12 @@
 											</td>
 											<td>
                                             <div class="custom-control custom-checkbox" style="margin-top: 0rem !important;">
-		                                    	<input type="checkbox" class="custom-control-input" id="address-save" th:if="${session.user.point < 2000}" disabled>
-		                                    	<input type="checkbox" class="custom-control-input" id="address-save" th:if="${session.user.point >= 2000}">
+		                                    	<input type="checkbox" name="point_check" class="custom-control-input" id="address-save" th:if="${session.user.point < 2000}" disabled>
+		                                    	<input type="checkbox" name="point_check" class="custom-control-input" id="address-save" th:if="${session.user.point >= 2000}">
 		                                    	<label class="custom-control-label" for="address-save">
 		                                    		포인트 사용(현재 포인트: <span id="span_current_point" th:value="${session.user.point}" th:text="${session.user.point}"></span>p)
 		                                    		<input type="hidden" id="user_current_point" th:value="${session.user.point}">
+		                                    		<input type="hidden" id="user_point">
 		                                    	</label><br>
 		                                    	※2000원 이상 보유시에만 사용하실 수 있습니다.
 		                                    	<a href="#" th:if="${session.user != null}" th:onclick="@{'point_verify(\'{no}\')'(no=${session.user.no})}" id="point_access" class="btn btn-primary float-right" style="display: none">적용하기</a>                               		
@@ -155,6 +157,7 @@
 														<div class="form-group">
 														    <input type="text" class="form-control" name="account_name" placeholder="입금자명">
 														</div>
+															※<span th:text="${date}"></span>까지 입금하셔야 진행이 가능합니다.
 													</div>
 												</td>
                                             </tr>
@@ -182,7 +185,7 @@
                             <div class="collapse show" id="order-cart-section">
                                 <table class="table table-mini-cart">
                                     <tbody>
-                                        <tr th:each="info : ${session.info}">
+                                        <tr th:each="info : ${session.info}" class="product_info">
                                             <td class="product-col">
                                                 <figure class="product-image-container">
                                                     <a th:href="@{'/product/view/{no}'(no=${info.no.no})}" class="product-image" target="_blank">
@@ -198,11 +201,16 @@
                                                 </div>
                                                 <td class="price-col"th:text="@{'{price}원'(price=${#numbers.formatInteger(info.price * info.qty, 0, 'COMMA')})}"></td>
                                                 <input type="hidden" name="checkout_each_price" th:value="${info.price * info.qty}">
+                                                <input type="hidden" name="checkout_product_no" th:value="${info.no.no}">
+                                                <input type="hidden" name="checkout_product_size" th:value="${info.sizeNo}">
+                                                <input type="hidden" name="checkout_product_color" th:value="${info.colorNo}">
+                                                <input type="hidden" name="checkout_product_qty" th:value="${info.qty}"> 
+                                                <input type="hidden" name="checkout_product_price" th:value="${info.price}">
                                             </td>
                                         </tr>
                                     </tbody>    
                                 </table>
-                            </div><!-- End #order-cart-section -->
+                            </div><!-- End #order-cart-section -->   
                              <div class="collapse show" id="order-cart-section">
                                 <table class="table table-mini-cart">
                                     <tbody>
@@ -229,8 +237,8 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="checkout-steps-action">
-                            <a href="#" th:if="${session.user != null}" class="btn btn-primary float-right" th:onclick="@{'purchase(\'{no}\')'(no=${session.user.no})}">결제하기</a>
-                            <a href="#" th:if="${session.user == null}" class="btn btn-primary float-right" onclick="purchase(0)">결제하기</a>
+                            <a href="#" th:if="${session.user != null}" class="btn btn-primary float-right" th:onclick="@{'payment(\'{no}\')'(no=${session.user.no})}">결제하기</a>
+                            <a href="#" th:if="${session.user == null}" class="btn btn-primary float-right" onclick="payment(0)">결제하기</a>
                         </div><!-- End .checkout-steps-action -->
                     </div><!-- End .col-lg-8 -->
                 </div><!-- End .row -->

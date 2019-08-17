@@ -310,7 +310,8 @@ $(document).on("click", ".address_box_change", function() {
 	if ($(this).parent().parent().hasClass('active') == false) {
 		$('.shipping-address-box').removeClass('active');
 		$(this).parent().parent().addClass('active');
-		
+		$(".active-data").removeClass('active_jquery');
+		$(this).parent().children(".active-data").addClass('active_jquery');
 	}
 });
 
@@ -375,9 +376,11 @@ function modal_address_update_ajax() {
 					  + "<span>" + reference + "</span><br>"
 					  + "<span>" + name + "</span><br>"
 					  + "<span>" + phone + "</span><br>"
-					  + "</address>"
+					  + "</address></div>"
 					  + "<a href='#' data-toggle='modal' data-target='#updateAddressModal' data-name='" + name + "' data-phone='" + phone + "' data-zipcode='" + zipcode + "' "
-					  + "data-address='" + address +"' data-detailaddress='" + detailaddress + "' data-reference='" + reference + "' data-addressno='" + no + "' class='btn btn-sm btn-outline-secondary modaldata'>"
+					  + "data-address='" + address +"' data-detailaddress='" + detailaddress + "' data-reference='" + reference + "' data-addressno='" + no + "' class='btn btn-sm btn-outline-secondary modaldata"
+					  + (basic == 0 ? ' active-data active_jquery' : ' active-data')
+					  + "'>"
 					  + "수정</a>"
 					  + (basic == 0 ? "<span class='float-right'><strong>기본 배송지</strong></span>" : '')
 					  + "</div>"
@@ -451,6 +454,7 @@ function modal_address_new_ajax(no) {
 			success : function(result) {
 				$('#addressModal').modal("hide");
 				$('.shipping-address-box').removeClass('active');
+				$(".active-data").removeClass('active_jquery');
 				$(".add-address-apppend").append(
 					"<div id='address_parent_id" + result + "' class='shipping-address-box active'>"
 				  + "<div id='address_id" + result + "'>"
@@ -462,11 +466,10 @@ function modal_address_new_ajax(no) {
 				  + "<span>" + reference + "</span><br>"
 				  + "<span>" + name + "</span><br>"
 				  + "<span>" + phone + "</span><br>"
-				  + "</address>"
+				  + "</address></div>"
 				  + "<a href='#' data-toggle='modal' data-target='#updateAddressModal' data-name='" + name + "' data-phone='" + phone + "' data-zipcode='" + zipcode + "' "
-				  + "data-address='" + address +"' data-detailaddress='" + detailaddress + "' data-reference='" + reference + "' data-addressno='" + result + "'data-basic='1' class='btn btn-sm btn-outline-secondary modaldata'>"
+				  + "data-address='" + address +"' data-detailaddress='" + detailaddress + "' data-reference='" + reference + "' data-addressno='" + result + "'data-basic='1' class='btn btn-sm btn-outline-secondary modaldata active-data active_jquery'>"
 				  + "수정</a>"
-				  + "</div>"
 				  + "</div>"
 				  + "</div>");
 			},
@@ -489,14 +492,6 @@ $(document).on("change", "input[name='addressType']", function() {
 		$('.new-address-append').show();
 	}
 });
-
-function purchase(no) {
-	if (no != 0){
-		alert("회원");
-	} else{
-		alert("비회원");
-	}
-}
 
 // 주소지 방식 기본(비회원)
 $( document ).ready(function() {
@@ -534,6 +529,7 @@ function point_verify(no){
 	var total = $("input[name='checkout_hidden_total']").val();
 	var point = $("input[name='user_point']").val();
 	var current_point = $("#user_current_point").val();
+	var use_point = $("#user_point").val();
 	if(current_point - point < 0) {
 		alert("입력하신 포인트가 적용 가능한 남은 포인트보다 많습니다.");
 	}
@@ -556,9 +552,128 @@ function point_verify(no){
 					$(".checkout_total_price").text((total-point).toLocaleString('en')+"원");
 					$("#user_current_point").val(current_point-point);
 					$("#span_current_point").text((current_point-point));
+					$("#user_point").val(Number(use_point) + Number(point));
 				} else if(result == 1){
 					alert("사용하실 수 없는 포인트입니다. 확인후 다시 시도해주세요.");
 				}
+			}
+		});
+	}
+}
+
+// 상품 구매
+function payment(no) {
+	var addressType = $('input[name=addressType]:checked').val();
+	var paytype = $('input[name=shipping-method]:checked').val();
+	/* for(var i=0; i<$("input[name='checkout_product_no']").length; i++){
+		var product_no = $("input[name='checkout_product_no']").eq(i).val();
+	} */
+	
+	if (no != 0){	// 회원일 경우
+		if(paytype == 'card'){
+			
+		} else if (paytype == 'deposit'){
+			if(addressType == 'exist'){
+				payment_member_deposit(no, 0);
+			} else {
+				payment_member_deposit(no, 1);
+			}
+			
+		}
+	} else{	// 비회원일 경우
+		alert("비회원");
+	}
+}
+
+//상품 구매 - 회원 / 계좌이체
+function payment_member_deposit(no, type){
+	var point = 0;
+	var message = '';
+	var account_bank = $("select[name=account]").val();
+	var account_name = $("input[name=account_name]").val();
+	var total_price = $("input[name=checkout_hidden_total]").val();
+	if (type == 0){	// 기존의 배송지 선택
+		var name = $('.active_jquery').data('name');
+		var phone = $('.active_jquery').data('phone');
+		var address = "(" + $('.active_jquery').data('zipcode') + ")" + $('.active_jquery').data('address') + " " + $('.active_jquery').data('detailaddress') + " " + $('.active_jquery').data('reference');
+	} else if (type == 1){	// 새로운 배송지 선택
+		var name = $("input[name='new_name']").val();
+		var phone = $("input[name='new_phone']").val();
+		var address = "(" + $("input[name='new_zipcode']").val() + ")" + $("input[name='new_address']").val() + " " + $("input[name='new_detailaddress']").val() + " " + $("input[name='new_reference']").val();
+	}
+	if($("input[name='point_check']").is(":checked") == true){
+		point = $("#user_point").val();
+		if (point == ''){
+			point = 0;
+		}
+	} 
+	if($("input[name='message']").is(":checked") == true){
+		message = $("input[name='orderer_message']").val();
+	}
+	if (name == ''){
+		alert("이름을 입력하세요");
+	} else if(phone == ''){
+		alert("휴대폰 번호를 입력하세요");
+	} else if(address == ''){
+		alert("모든 주소를 입력하세요");
+	}
+	else if (account_bank == 0){
+		alert("계좌를 선택해주세요!");
+	} else if(account_name == ''){
+		alert("올바른 입금자명을 입력해주세요!");
+	} else {
+		$.ajax({
+			url : "/order/member/deposit",
+			type : "POST",
+			data : {
+				"order_name" : name,
+				"order_phone" : phone,
+				"order_address" : address,
+				"user_no" : no,
+				"order_message" : message,
+				"account_bank" : account_bank,
+				"account_name" : account_name,
+				"point" : point,
+				"total_price" : total_price,
+			},
+			dataType : "html",
+			success : function() {
+				$.ajax({
+					url : "/order/get/lastOrder",
+					type : "POST",
+					dataType : "html",
+					success : function(order_no){
+						for(var i=0; i<$(".product_info").length; i++){
+							var product_no = $("input[name='checkout_product_no']").eq(i).val();
+							var product_size = $("input[name='checkout_product_size']").eq(i).val();
+							var product_color = $("input[name='checkout_product_color']").eq(i).val();
+							var product_qty = $("input[name='checkout_product_qty']").eq(i).val();
+							var product_price = $("input[name='checkout_product_price']").eq(i).val();
+							$.ajax({
+								url : "/order/info/add",
+								type : "POST",
+								dataType : "html",
+								data : {
+									"order_no" : order_no,
+									"product_no" : product_no,
+									"size_no" : product_size,
+									"color_no" : product_color,
+									"qty" : product_qty,
+									"price" : product_price,
+								},
+								success : function(){
+								},
+								error : function() {
+									alert('결제 실패');
+								}
+							});
+						}
+						location.href="/order/complete/" + order_no;
+					}
+				});
+			},
+			error : function(result){
+				alert(result);
 			}
 		});
 	}

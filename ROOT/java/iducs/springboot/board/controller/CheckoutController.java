@@ -1,6 +1,8 @@
 package iducs.springboot.board.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +48,13 @@ public class CheckoutController {
 			List<UserAddress> address = addressService.getAddressByUserNo(user.getNo());
 			model.addAttribute("address", address);
 		}
+		
+		String deliveryDate = null;
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat formatDate = new SimpleDateFormat("MM월 dd일(E)");
+		cal.add(Calendar.DATE,+3);
+		deliveryDate = formatDate.format(cal.getTime());
+		model.addAttribute("date", deliveryDate);
 		return "home/checkout/checkoutForm";
 	}
 	
@@ -53,7 +62,8 @@ public class CheckoutController {
 	@PostMapping("/jsonData")
 	public int cartOptionStockCheck(
 			@RequestBody List<Map<String, Object>> productData,
-			HttpSession session) {
+			HttpSession session,
+			Model model) {
 		List<Checkout> info = new ArrayList<Checkout>();
 		for(int i = 0; i < productData.size(); i ++) {
 			Checkout checkout = new Checkout();
@@ -77,13 +87,16 @@ public class CheckoutController {
 			
 			checkout.setNo(product);
 			checkout.setSize(size.getName());
+			checkout.setSizeNo(sizeNo);
 			checkout.setColor(color.getName());
+			checkout.setColorNo(colorNo);
 			checkout.setPrice(price);
 			checkout.setQty(qty);
 			info.add(checkout);
 			
 		}
 		session.setAttribute("info", info);
+		
 		//session.setMaxInactiveInterval(5);
 		
 		return 1;
