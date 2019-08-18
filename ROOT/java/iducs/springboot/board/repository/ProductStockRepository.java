@@ -13,6 +13,7 @@ import iducs.springboot.board.entity.ProductStockEntity;
 @Repository
 public interface ProductStockRepository extends JpaRepository<ProductStockEntity, Long>{
 	ProductStockEntity findByNo(long no);
+	
 	@Query(value="select * from product_stock where product_no = :no", nativeQuery=true)
 	ProductStockEntity findByProductNoQuery(long no);
 	

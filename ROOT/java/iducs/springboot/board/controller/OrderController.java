@@ -26,12 +26,14 @@ import iducs.springboot.board.domain.Color;
 import iducs.springboot.board.domain.Order;
 import iducs.springboot.board.domain.OrderInfo;
 import iducs.springboot.board.domain.Product;
+import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.domain.User;
 import iducs.springboot.board.domain.UserAddress;
 import iducs.springboot.board.service.ClothesSizeService;
 import iducs.springboot.board.service.ColorService;
 import iducs.springboot.board.service.OrderInfoService;
 import iducs.springboot.board.service.ProductService;
+import iducs.springboot.board.service.ProductStockService;
 import iducs.springboot.board.service.UserAddressService;
 import iducs.springboot.board.service.UserService;
 import iducs.springboot.board.service.OrderService;
@@ -46,6 +48,7 @@ public class OrderController {
 	@Autowired UserAddressService addressService;
 	@Autowired OrderService orderService;
 	@Autowired OrderInfoService orderInfoService;
+	@Autowired ProductStockService stockService;
 
 	@ResponseBody
 	@PostMapping("/deposit")
@@ -131,7 +134,13 @@ public class OrderController {
 		Order order = orderService.findByNo(order_no);
 		Product product = productService.getProductById(product_no);
 		Color color = colorService.getColorByNo(color_no);
-		ClothesSize size = sizeService.getClothesSizeByNo(size_no); 
+		ClothesSize size = sizeService.getClothesSizeByNo(size_no);
+		ProductStock stock = stockService.stockCheck(product_no, color_no, size_no);
+		
+		int original_stock = Integer.parseInt(stock.getStock());		// 구매 수량만큼 재고에서 빼기
+		String result_stock = Integer.toString(original_stock - qty);
+		stock.setStock(result_stock);
+		stockService.updateProductStock(stock);
 		
 		OrderInfo info = new OrderInfo(order, product, color, size, qty, price);
 		orderInfoService.saveOrderInfo(info);

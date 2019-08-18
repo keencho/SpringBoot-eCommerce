@@ -66,6 +66,7 @@
     <!-- Custom Theme Scripts -->
     <script src="/admin/build/js/custom.min.js"></script>
 	<script>
+	// 상품 문의 답변 ajax
 	function product_question_answer(no) {
 		var answer = $('#answer').val();
 		answer = answer.replace(/(?:\r\n|\r|\n)/g, '<br>');
@@ -90,6 +91,25 @@
 				});
 		 }
 	}
+	
+	// 주문 상태 변환 ajax
+	function status_ajax(no, status){
+	 	$.ajax({
+			url : "/admin/order/statusUpdate",
+			type : "POST",
+			data : {
+				"no" : no,
+				"status" : status
+			},
+			dataType : "html",
+			success : function(result) {	 
+			},
+			error : function() {
+				alert("실패");
+			}
+		});
+	}
+
 	</script>
   </body>
 </html>
