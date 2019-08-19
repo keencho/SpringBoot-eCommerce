@@ -47,7 +47,7 @@
     <script src="/admin/vendors/moment/min/moment.min.js"></script>
     <script src="/admin/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
      <!-- Datatables -->
-    <script src="/admin/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/admin/vendors/datatables.net/js/jquery.dataTables.min.js?ver=2"></script>
     <script src="/admin/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="/admin/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <script src="/admin/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
@@ -65,6 +65,8 @@
 
     <!-- Custom Theme Scripts -->
     <script src="/admin/build/js/custom.min.js"></script>
+    
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script>
 	// 상품 문의 답변 ajax
 	function product_question_answer(no) {
@@ -109,6 +111,76 @@
 			}
 		});
 	}
+	
+	// 주문 상태 변환 ajax(reload)
+	function status_ajax_reload(no, status){
+	 	$.ajax({
+			url : "/admin/order/statusUpdate",
+			type : "POST",
+			data : {
+				"no" : no,
+				"status" : status
+			},
+			dataType : "html",
+			success : function(result) {
+				location.reload();
+			},
+			error : function() {
+				alert("실패");
+			}
+		});
+	}
+	
+// datepicker
+$(function() {
+  $( ".date-input" ).datepicker({
+    dateFormat: 'yy-mm-dd',
+    prevText: '이전 달',
+    nextText: '다음 달',
+    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    dayNames: ['일','월','화','수','목','금','토'],
+    dayNamesShort: ['일','월','화','수','목','금','토'],
+    dayNamesMin: ['일','월','화','수','목','금','토'],
+    showMonthAfterYear: true,
+    changeMonth: true,
+    changeYear: true,
+    yearSuffix: '년'
+  });
+});
+
+// 날짜 & 상태 검색
+function date_status_search(no){
+	var date1 = $("#date-fld1").val();
+	var date2 = $("#date-fld2").val();
+	var status = $("#status_select_ajax option:selected").val();
+	var status_int = 0;
+	if (status == "전체"){
+		status_int = -1;
+	} else if (status == "결제완료"){
+		status_int = 0;
+	} else if (status == "결제대기"){
+		status_int = 1;
+	} else if (status == "배송준비중"){
+		status_int = 2;
+	} else if (status == "배송중"){
+		status_int = 3;
+	} else if (status == "배송완료"){
+		status_int = 4;
+	} else if (status == "취소요청"){
+		status_int = 5;
+	} else if (status == "취소 / 환불 완료"){
+		status_int = 6;
+	}
+	
+	if(no == 0){
+		location.href = "/admin/order";
+	} else if (date1 > date2){
+		alert("시작일은 종료일보다 클수 없습니다.");
+	}  else if(no == 1){
+		location.href = "/admin/order/" + date1 + "/" + date2 + "/" + status_int;
+	}
+}
 
 	</script>
   </body>

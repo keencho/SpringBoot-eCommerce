@@ -14,4 +14,6 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long>{
 	List<OrderEntity> findAll();
 	List<OrderEntity> findByNoOrderByNoDesc(long no);
 	List<OrderEntity> findByDateOrderByNoAsc(String date);
+	List<OrderEntity> findByDateBetween(String date1, String date2);
+	List<OrderEntity> findByStatusAndDateBetween(int status, String date1, String date2);
 }

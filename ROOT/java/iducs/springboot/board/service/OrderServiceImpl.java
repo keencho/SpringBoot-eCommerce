@@ -89,4 +89,26 @@ public class OrderServiceImpl implements OrderService{
 		return order;
 	}
 
+	@Override
+	public List<Order> findByDateBetween(String date1, String date2) {
+		List<Order> order = new ArrayList<Order>();
+		List<OrderEntity> entities = repository.findByDateBetween(date1, date2);
+		for(OrderEntity entity : entities) {
+			Order ord = entity.buildDomain();
+			order.add(ord);
+		}
+		return order;
+	}
+	
+	@Override
+	public List<Order> findByStatusAndDateBetween(int status, String date1, String date2) {
+		List<Order> order = new ArrayList<Order>();
+		List<OrderEntity> entities = repository.findByStatusAndDateBetween(status, date1, date2);
+		for(OrderEntity entity : entities) {
+			Order ord = entity.buildDomain();
+			order.add(ord);
+		}
+		return order;
+	}
+
 }

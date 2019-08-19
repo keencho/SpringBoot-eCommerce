@@ -97,7 +97,7 @@ public class CheckoutController {
 		}
 		session.setAttribute("info", info);
 		
-		session.setMaxInactiveInterval(5);
+		//session.setMaxInactiveInterval(5);
 		
 		return 1;
 	}

@@ -10,6 +10,7 @@ public class OrderInfo {
 	private ClothesSize size;	// 옵션 - 사이즈
 	private int qty;			// 수량
 	private String price;		// 가격 변동이 있으므로 결제 순간의 가격을 기준으로 한다.
+	private int int_price;		// 가격을 int형으로 변환
 	
 	public OrderInfo() {}
 	public OrderInfo(Order order, Product product, Color color, ClothesSize size, int qty, String price) {
@@ -63,5 +64,12 @@ public class OrderInfo {
 	public void setPrice(String price) {
 		this.price = price;
 	}
+	public int getInt_price() {
+		return int_price;
+	}
+	public void setInt_price(int int_price) {
+		this.int_price = int_price;
+	}
+	
 	
 }
