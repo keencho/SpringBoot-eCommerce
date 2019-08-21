@@ -43,6 +43,6 @@ public class BootThymeleafApplication extends SpringBootServletInitializer{
         StandardServletMultipartResolver resolver = new StandardServletMultipartResolver();  
         return resolver;  
     }
-	}
+}
 	
 

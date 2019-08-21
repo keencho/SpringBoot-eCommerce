@@ -1,0 +1,104 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+         <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">마이페이지</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>교환 / 반품 조회</h2>
+							<div class="card">
+								<div class="card-body" style="min-height: 0px !important;"
+									align="center">
+									<div class="container">
+										<div class="row">
+											<div class='col-md-4'>
+												<div class="input-group mb-2">
+													<div class="input-group-prepend">
+														<div class="input-group-text">
+															<i class="far fa-calendar-alt"></i>
+														</div>
+													</div>
+													<input type="text" class="form-control"
+														id="datetimepicker1" th:value="${date1}" autocomplete="off">
+												</div>
+											</div>
+											<div class='col-md-4'>
+												<div class="input-group mb-2">
+													<div class="input-group-prepend">
+														<div class="input-group-text">
+															<i class="far fa-calendar-alt"></i>
+														</div>
+													</div>
+													<input type="text" class="form-control"
+														id="datetimepicker2" th:value="${date2}" autocomplete="off">
+												</div>
+											</div>
+											<div class='col-md-2'>
+												<button type="button" onclick="order_change_lookup_date()" class="btn btn-primary">기간별 조회</button>
+											</div>
+											<div class='col-md-2'>
+												<button type="button" onclick="location.href='/mypage/change'" class="btn btn-primary">전체조회</button>
+											</div>
+										</div>
+										<div align="left">
+											<font color="red">※교환/반품 조회는 최대 1년 전까지의 결과만 조회 가능합니다.</font>
+											<br>
+											<font color="red">※교환/환불 신청후 등봉된 교환/환불 신청서를 작성후 직접 반품 신청하여 반품처리하셔야 원할한 처리가 가능합니다.</font>
+										</div>
+									</div>
+								</div>
+							</div>
+                            <div class="row">
+                                <table class="table text-center">
+								  <thead class="thead-light">
+								    <tr>
+								      <th scope="col">주문번호</th>
+								      <th scope="col">받으실 분</th>
+								      <th scope="col">결제 방식</th>
+								      <th scope="col">총 결제금액</th>
+								      <th scope="col">결제일</th>
+								      <th scope="col">상태</th>
+								      <th scope="col">정보 확인</th>
+								    </tr>
+								  </thead>
+								  <tbody th:if="${order.isEmpty() == false}">
+								    <tr th:each="order : ${order}">
+								      <th scope="row" th:text="${order.orderno}"></th>
+								      <td th:text="${order.order_name}"></td>
+								      <td th:if="${order.pay_type == 0}" th:text="@{'카드 결제'}"></td>
+								      <td th:if="${order.pay_type == 1}" th:text="계좌이체"></td>
+								      <td th:text="@{'{price}원'(price=${#numbers.formatInteger(order.price, 0, 'COMMA')})}"></td>
+								      <td th:text="${order.date}"></td>
+								      <td th:if="${order.status == 5}" th:text="교환요청"></td>
+								      <td th:if="${order.status == 6}" th:text="교환완료"></td>
+								      <td th:if="${order.status == 7}" th:text="환불요청"></td>
+								      <td th:if="${order.status == 8}" th:text="환불완료"></td>
+								      <td><a href="#" th:onclick="@{'window.open(\'/mypage/order/info/{no}\',\'receipt\',\'width=1200,height=950,location=no,status=no,scrollbars=yes\')'(no=${order.no})}"><i class="fas fa-file-invoice fa-2x"></i></a></td>
+								    </tr>
+								  </tbody>
+								  <tbody th:if="${order.isEmpty() == true}">
+								  	<tr>
+									  	<td colspan="8">
+									  		<i class="far fa-times-circle fa-2x"></i><font size=6>교환 / 환불 내역이 없습니다.</font>
+									  	</td>
+								  	</tr>
+								  </tbody>
+								</table>
+                            </div><!-- End .row -->
+
+                    </div><!-- End .col-lg-9 -->
+                    <th:block th:include="home/user/mypage/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->       
+ <th:block th:include="home/main/footer.html"></th:block>

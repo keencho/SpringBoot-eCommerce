@@ -69,7 +69,7 @@
                           <b>현재 상태(즉시 변경): </b>
                           	<select class="custom-select" id="status_select" name="status_select[]" onchange="location = this.value;" th:style="${order.status == 0} ? 'color: blue' : (${order.status == 1} ? 'color: red' : 'color: black')">
                           		<option 
-                          			th:each="num : ${#numbers.sequence(0,6)}" 
+                          			th:each="num : ${#numbers.sequence(0,9)}" 
                           			th:value="@{'javascript:status_ajax_reload(\'{no}\', \'{status}\')'(no=${order.no}, status=${num})}"
                           			th:selected="(${num} == ${order.status})"
                           			>
@@ -78,8 +78,11 @@
                           				<span th:if="${num == 2}" th:text="배송준비중"></span>
                           				<span th:if="${num == 3}" th:text="베송중"></span>
                           				<span th:if="${num == 4}" th:text="배송완료"></span>
-                          				<span th:if="${num == 5}" th:text="취소요청"></span>
-                          				<span th:if="${num == 6}"><span>취소 / 환불 완료</span></span>
+                          				<span th:if="${num == 5}" th:text="교환요청"></span>
+                          				<span th:if="${num == 6}" th:text="교환완료"></span>
+                          				<span th:if="${num == 7}" th:text="환불요청"></span>
+                          				<span th:if="${num == 8}" th:text="환불완료"></span>
+                          				<span th:if="${num == 9}" th:text="구매확정"></span>
                           		</option>
                           		</select>
                           <br>
@@ -96,8 +99,10 @@
                             <thead>
                               <tr>
                                 <th>상품 번호</th>
-                                <th style="width: 59%">상품명</th>
+                                <th style="width: 50%">상품명</th>
                                 <th>상품 모델명</th>
+                                <th>사이즈</th>
+                                <th>색상</th>
                                 <th>수량</th>
                                 <th>가격</th>
                               </tr>
@@ -107,6 +112,8 @@
                                 <td th:text="${info.product.no}"></td>
                                 <td th:text="${info.product.name}"></td>
                                 <td th:text="${info.product.modelname}"></td>
+                                <td th:text="${info.size.name}"></td>
+                                <td th:text="${info.color.name}"></td>
                                 <td th:text="@{'{qty}개'(qty=${info.qty})}"></td>
                                 <td th:text="@{'{price}원'(price=${#numbers.formatInteger(info.int_price * info.qty, 0, 'COMMA')})}"></td>
                               </tr>

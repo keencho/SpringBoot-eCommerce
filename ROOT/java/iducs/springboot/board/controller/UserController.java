@@ -121,10 +121,12 @@ public class UserController {
 	public String logout(HttpSession session, HttpServletResponse response) throws IOException {
 		session.invalidate();
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<script>alert('로그아웃이 완료되었습니다.'); location.href='/';</script>");
-		out.flush();
-		return null;
+		/*
+		 * PrintWriter out = response.getWriter();
+		 * out.println("<script>alert('로그아웃이 완료되었습니다.'); location.href='/';</script>");
+		 * out.flush();
+		 */
+		return "redirect:/";
 	}
 	
 	@ResponseBody

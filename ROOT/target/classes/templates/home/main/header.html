@@ -22,13 +22,16 @@
     <!-- 끝나고 고치기 
     <link rel="stylesheet" href="/home/assets/css/style.min.css?ver=19">
     -->
-    <link rel="stylesheet" href="/home/assets/css/style.css?ver=20">
+    <link rel="stylesheet" href="/home/assets/css/style.css?ver=21">
     
     <!-- Custom CSS File -->
-    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=37">
+    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=38">
     
     <!-- font-awesome -->
     <link href="/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
+    
+    <!-- jQuery DatePicker -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 </head>
 <body>
     <div class="page-wrapper">
@@ -43,7 +46,8 @@
                                     <li th:unless="${session.user}"><a href="/user/register">회원가입</a></li>
                                     <li th:unless="${session.user}"><a href="/user/login">로그인</a></li>
                                     <li th:if="${session.user !=null && session.user.rank == '0'}"><a href="/admin">관리자</a></li>
-                                    <li th:if="${session.user}"><a th:href="@{'/wishlist/{no}'(no=${session.user.no})}">위시 리스트</a></li>
+                                    <li th:if="${session.user}"><a href="/mypage">마이 페이지</a></li>
+                                    <li th:if="${session.user}"><a href="/wishlist">위시 리스트</a></li>
                                     <li th:if="${session.user}"><a href="/user/logout">로그아웃</a></li>
                                 </ul>
                             </div><!-- End .header-menu -->
@@ -132,7 +136,6 @@
                                                 <a href="#" th:onclick="@{'cart_del(\'{no}\')'(no=${cart.cartNo})}" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
                                             </figure>
                                         </div><!-- End .product -->
-                                        
                                          <div th:if="${session.cart == null}" align="center">
                                        		  <h4>장바구니가 비었습니다. </h4>  
                                        		  <h5>지금 원하시는 상품을 추가해보세요!</h5>
@@ -142,12 +145,12 @@
 
                                     <div class="dropdown-cart-total" th:if="${session.cart != null}">
                                         <span>합계</span>
-                                        <span class="cart-total-price" id="header_cart_total"></span>
+                                        <span class="cart-total-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(session.total, 0, 'COMMA')})}"></span>
                                     </div><!-- End .dropdown-cart-total -->
 
                                     <div class="dropdown-cart-action" th:if="${session.cart != null}">
                                         <a href="/cart" class="btn">장바구니 보기</a>
-                                        <a href="checkout-shipping.html" class="btn">Checkout</a>
+                                        <a href="#" class="btn" onclick="cart_deleteall_header()">장바구니 비우기</a>
                                     </div><!-- End .dropdown-cart-total -->
                                 </div><!-- End .dropdownmenu-wrapper -->
                             </div><!-- End .dropdown-menu -->

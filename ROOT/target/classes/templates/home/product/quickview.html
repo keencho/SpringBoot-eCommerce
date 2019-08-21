@@ -119,7 +119,7 @@ $(function(){
                     <div class="product-single-qty">
                         <input class="horizontal-quantity form-control" id="quick-qty" type="text">
                     </div><!-- End .product-single-qty -->
-					<a href="#" class="paction icon-dollar" title="바로 구매">
+					<a href="#" th:onclick="@{'purchaseQuickOptionAjax(\'{no}\')'(no=${product.no})}" class="paction icon-dollar" title="바로 구매">
                     	<span>바로 구매&nbsp&nbsp</span>
                     </a>
                     <a href="#" th:onclick="@{'cartQuickOptionAjax(\'{no}\')'(no=${product.no})}" class="paction add-cart" title="장바구니에 추가">

@@ -769,6 +769,11 @@
 			return this;
 		};
 		
+		$.fn.ajaxWishlistOptionClose = function() {
+			$( "#wishlist_ajax_option" ).css("display", "none");
+			return this;
+		};
+		
 	});
 	
 	//장바구니 ajax 수량체크
@@ -1390,14 +1395,16 @@
    });
 
    // 장바구니 총합 계산
-   $(document).ready(function () {
-   	var total = 0;
-   	 $("input[name='each_price']").each(function() {
-   		total += parseInt($(this).val());
-   	});
-   	 $(".cart_total").text(total.toLocaleString('en')+"원");
-   	 $("#header_cart_total").text(total.toLocaleString('en')+"원");
-   });
+$(document).ready(function() {
+	var total = 0;
+	$("input[name='each_price']").each(function() {
+		total += parseInt($(this).val());
+	});
+
+	$(".cart_total").text(total.toLocaleString('en') + "원");
+});
+
+
    
    // 상품에서 직접 구매 접근
    function product_order_page(userno, no){

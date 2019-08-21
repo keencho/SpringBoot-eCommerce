@@ -8,10 +8,13 @@ public interface OrderService {
 	Order findByNo(long no);
 	
 	List<Order> findAll();
+	List<Order> findByUserNoOrder(long no, List<Integer> status);
+	List<Order> findByUserNoAndDateBetween(long no, String date1, String date2);
 	List<Order> findByNoOrderByNoDesc(long no);
 	List<Order> findByDate(String date);
 	List<Order> findByDateBetween(String date1, String date2);
 	List<Order> findByStatusAndDateBetween(int status, String date1, String date2);
+	List<Order> findByUserNoAndStatusAndDateBetween(long no, String date1, String date2, List<Integer> status);
 	
 	void saveOrder(Order order);
 	void saveOrderNonUser(Order order);

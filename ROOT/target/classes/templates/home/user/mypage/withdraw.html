@@ -1,0 +1,48 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+		<main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">마이페이지</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>회원탈퇴</h2>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">아이디</label>
+                                                <input type="text" class="form-control" id="acc-name" name="id" required>
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                        <div class="col-md-6">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">비밀번호</label>
+                                                <input type="text" class="form-control" id="acc-name" name="password" required>
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                    </div><!-- End .row -->
+                                </div><!-- End .col-sm-11 -->
+                            </div><!-- End .row -->
+                            <div class="form-footer">
+                                <div class="form-footer-right">
+                                    <button type="button" onclick="user_withdraw()" class="btn btn-primary">회원탈퇴</button>
+                                </div>
+                            </div><!-- End .form-footer -->
+                    </div><!-- End .col-lg-9 -->
+
+                    <th:block th:include="home/user/mypage/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->  
+ <th:block th:include="home/main/footer.html"></th:block>

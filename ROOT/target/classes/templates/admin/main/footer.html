@@ -167,10 +167,16 @@ function date_status_search(no){
 		status_int = 3;
 	} else if (status == "배송완료"){
 		status_int = 4;
-	} else if (status == "취소요청"){
+	} else if (status == "교환요청"){
 		status_int = 5;
-	} else if (status == "취소 / 환불 완료"){
+	} else if (status == "교환완료"){
 		status_int = 6;
+	} else if (status == "환불요청"){
+		status_int = 7;
+	} else if (status == "환불완료"){
+		status_int = 8;
+	} else if (status == "구매확정"){
+		status_int = 9;
 	}
 	
 	if(no == 0){

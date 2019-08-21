@@ -26,7 +26,7 @@ public class UserAddressServiceImpl implements UserAddressService{
 	@Override
 	public List<UserAddress> getAddressByUserNo(long no) {
 		List<UserAddress> userAddress = new ArrayList<UserAddress>();
-		List<UserAddressEntity> entities = repository.findByUserNo(no);
+		List<UserAddressEntity> entities = repository.findByUserNoOrderByBasicAsc(no);
 		for(UserAddressEntity entity : entities) {
 			UserAddress address = entity.buildDomain();
 			userAddress.add(address);
@@ -58,6 +58,14 @@ public class UserAddressServiceImpl implements UserAddressService{
 	@Override
 	public UserAddress getAddressByUserNoOrderByDesc(long no) {
 		UserAddressEntity userAddressEntity = repository.findTop1ByUserNoOrderByNoDesc(no);
+		if(userAddressEntity == null)
+			return null;
+		return userAddressEntity.buildDomain();
+	}
+
+	@Override
+	public UserAddress getAddressByUserNoAndBasic(long no, int basic) {
+		UserAddressEntity userAddressEntity = repository.findByUserNoAndBasic(no, basic);
 		if(userAddressEntity == null)
 			return null;
 		return userAddressEntity.buildDomain();

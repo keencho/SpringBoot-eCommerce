@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import iducs.springboot.board.domain.Product;
+import iducs.springboot.board.domain.ProductSize;
+import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.domain.User;
 import iducs.springboot.board.domain.Wishlist;
 import iducs.springboot.board.service.ProductService;
@@ -37,14 +39,16 @@ public class WishlistController {
 	@Autowired
 	UserService userService;
 	
-	@GetMapping("/{no}")
-	public String wishlist(@PathVariable (value ="no") Long no, 
+	@GetMapping("")
+	public String wishlist( 
 			Model model, 
 			HttpSession session) {
-		List<Wishlist> wishlist = wishlistService.getWishlistByUserNo(no);
 		if(session.getAttribute("user") == null) {
 			return "redirect:/404";
 		}
+		User user = (User) session.getAttribute("user");
+		List<Wishlist> wishlist = wishlistService.getWishlistByUserNo(user.getNo());
+		
 		model.addAttribute("wishlist", wishlist);
 		return "home/feature/wishlist";
 	}
@@ -78,6 +82,23 @@ public class WishlistController {
 		}
 	}
 	
+	@GetMapping("/option/{no}")
+	public String cartGetOption(@PathVariable(value = "no") long no, Model model) {
+		Product product = productService.getProductById(no);
+		List<ProductStock> sizeStock = productstockService.findSizeByProductNo(no);
+		List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
+		model.addAttribute("product", product);
+		model.addAttribute("size", sizeStock);
+		model.addAttribute("color", colorStock);
+		try  {
+			ProductSize productSize = productsizeService.getProductSizeByNoNativeQuery(no);
+			model.addAttribute("productSize", productSize);
+		} catch (Exception e) {
+			System.out.println("null~"); // null 체크용 try~catch문
+		}
+		return "home/feature/wishlistOption";
+	}
+	
 	@GetMapping("/del/{userno}/{no}")
 	public String wishlistDel(
 			@PathVariable (value = "userno") Long userno,
@@ -89,7 +110,7 @@ public class WishlistController {
 		}
 		Wishlist wishlist = wishlistService.getWishlistByNo(no);
 		wishlistService.deleteWishlist(wishlist);
-		return "redirect:/wishlist/" + userno;
+		return "redirect:/wishlist";
 	}
 	
 	@GetMapping("/delall/{userno}")
@@ -101,6 +122,6 @@ public class WishlistController {
 			return "redirect:/404";
 		}
 		wishlistService.deleteByIdWishList(userno);
-		return "redirect:/wishlist/" + userno;
+		return "redirect:/wishlist";
 	}
 }

@@ -4,6 +4,8 @@
 <div id="cart_ajax_option"></div>
 <div id="cart_ajax_complete"></div>
 <div id="cart_ajax_sizeTable"></div>
+<!-- 바로구매 옵션 선택 팝업 레이어 -->
+<div id="wishlist_ajax_option"></div>
  <main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
@@ -43,7 +45,7 @@
                                         <td th:text="@{'{price}원'(price=${#numbers.formatInteger(wishlist.product_no.listprice, 0, 'COMMA')})}"></td>
                                         <td>
 											<a href="#" th:onclick="@{'cartOptionAjax(\'{no}\')'(no=${wishlist.product_no.no})}" class="btn btn-outline-secondary btn-update-cart">장바구니</a><br>
-											<a href="#" class="btn btn-outline-secondary btn-update-cart">바로구매</a><br>
+											<a href="#" th:onclick="@{'wishlistOrderOptionAjax(\'{no}\')'(no=${wishlist.product_no.no})}" class="btn btn-outline-secondary btn-update-cart">바로구매</a><br>
 											<a href="#" th:onclick="@{'wishlist_del(\'{no}\', \'{userno}\')'(no=${wishlist.no}, userno=${session.user.no})}" class="btn btn-primary">삭제</a>
 											</td>
                                     </tr>

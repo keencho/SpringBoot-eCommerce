@@ -131,6 +131,13 @@ public class CartController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/deleteallAjax")
+	public void cartDeleteAllAjax(HttpSession session) {
+		session.removeAttribute("cart");
+		session.removeAttribute("total");
+	}
+	
+	@ResponseBody
 	@PostMapping("/option/stockCheck")
 	public int cartOptionStockCheck(
 			@RequestParam(value = "no") long no,

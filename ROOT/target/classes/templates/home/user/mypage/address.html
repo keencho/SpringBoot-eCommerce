@@ -1,0 +1,170 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+		<main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">마이페이지</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>배송지 관리</h2>
+                        	※ 배송지는 최대 5개까지 등록 가능합니다.
+                        	<br>
+                        	<br>
+                            <div class="row">
+                                <table class="table">
+								  <thead class="thead-light text-center">
+								    <tr>
+								      <th scope="col">받으시는분</th>
+								      <th scope="col">주소</th>
+								      <th scope="col">전화번호</th>
+								      <th scope="col">작업</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr th:each="address : ${address}">
+								      <td th:text="${address.name}"></td>
+								      <td>
+								      	(<span th:text="${address.zipcode}"></span>) <span th:text="${address.address}"></span> <span th:text="${address.detailaddress}"></span> <span th:text="${address.reference}"></span>
+								      	<span th:if="${address.basic == 0}"><strong>(기본배송지)</strong></span>
+								      </td>
+								      <td th:text="${address.phone}"></td>
+								      <td>
+								      	<a href="#" data-toggle="modal" id="mypageUpdateAddress" data-target="#mypageUpdateAddressModal" th:data-addressno="${address.no}" th:data-name="${address.name}" th:data-phone="${address.phone}" 
+	                                        th:data-zipcode="${address.zipcode}" th:data-address="${address.address}" th:data-detailaddress="${address.detailaddress}" th:data-reference="${address.reference}">수정</a>
+								      	<span th:if="${address.basic == 1}"> / <a href="#" th:onclick="@{'mypage_address_del(\'{no}\')'(no=${address.no})}">삭제</a></span>
+								      	<span th:if="${address.basic == 1}"> / <a href="#" th:onclick="@{'mypage_address_basic(\'{no}\')'(no=${address.no})}">기본 배송지</a></span>
+								      </td>
+								    </tr>
+								  </tbody>
+								</table>
+                            </div><!-- End .row -->
+                            <div class="form-footer">
+                                <div class="form-footer-right">
+                                    <button type="button" onclick="mypage_address_add()" class="btn btn-primary">배송지 등록</button>
+                                </div>
+                            </div><!-- End .form-footer -->
+                    </div><!-- End .col-lg-9 -->
+
+                    <th:block th:include="home/user/mypage/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main --> 
+<!-- Modal(추가) -->
+    <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="addressModalLabel">배송지 추가</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div><!-- End .modal-header -->
+
+                    <div class="modal-body">          
+                            <div class="form-group required-field">
+                                <label>받으실 분</label>
+                                <input type="text" name="modal_new_name" class="form-control form-control-sm newModal_name" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>받으실 분의 전화번호</label>
+                                <input type="text" maxlength="11" name="modal_new_phone" class="form-control form-control-sm newModal_phone" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group">
+                                <label>우편번호</label><button type="button" class="btn btn-primary btn-sm float-right" onclick="sample5_execDaumPostcode();">우편번호 찾기</button>
+                                <input type="text" name="modal_new_zipcode" id="sample5_postcode" class="form-control form-control-sm newModal_zipcode" size="1">
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>주소</label>
+                                <input type="text" name="modal_new_address" id="sample5_address" class="form-control form-control-sm newModal_address" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>상세주소</label>
+                                <input type="text" name="modal_new_detailaddress" id="sample5_detailAddress" class="form-control form-control-sm newModal_detailaddress" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>참고항목</label>
+                                <input type="text" name="modal_new_reference" id="sample5_extraAddress" class="form-control form-control-sm newModal_reference" required>
+                            </div><!-- End .form-group -->
+                    </div><!-- End .modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link btn-sm" data-dismiss="modal">취소</button>
+                        <button type="button" onclick="mypage_address_new()" class="btn btn-primary btn-sm">배송지 저장</button>
+                    </div><!-- End .modal-footer -->
+                </form>
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div>
+ <!-- End .modal -->     
+ <!-- Modal(수정) -->
+    <div class="modal fade" id="mypageUpdateAddressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="addressModalLabel">배송지 추가</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div><!-- End .modal-header -->
+
+                    <div class="modal-body">     
+                            <div class="form-group required-field">
+                                <label>받으실 분</label>
+                                <input type="text" name="modal_name" class="form-control form-control-sm updateModal_name" required>
+                                <input type="hidden" name="modal_no" class="form-control form-control-sm updateModal_no">
+                                <input type="hidden" name="modal_basic" class="form-control form-control-sm updateModal_basic">
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>받으실 분의 전화번호</label>
+                                <input type="text" maxlength="11" name="modal_phone" class="form-control form-control-sm updateModal_phone" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>우편번호</label><button type="button" class="btn btn-primary btn-sm float-right" onclick="sample6_execDaumPostcode();">우편번호 찾기</button>
+                                <input type="text" name="modal_zipcode" id="sample6_postcode" class="form-control form-control-sm updateModal_zipcode" size="1">
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>주소</label>
+                                <input type="text" name="modal_address" id="sample6_address" class="form-control form-control-sm updateModal_address" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>상세주소</label>
+                                <input type="text" name="modal_detailaddress" id="sample6_detailAddress" class="form-control form-control-sm updateModal_detailaddress" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>참고항목</label>
+                                <input type="text" name="modal_reference" id="sample6_extraAddress" class="form-control form-control-sm updateModal_reference" required>
+                            </div><!-- End .form-group -->
+                    </div><!-- End .modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link btn-sm" data-dismiss="modal">취소</button>
+                        <button type="button" onclick="mypage_address_update()" class="btn btn-primary btn-sm">배송지 수정</button>
+                    </div><!-- End .modal-footer -->
+                </form>
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div>
+ <!-- End .modal -->               
+ <th:block th:include="home/main/footer.html"></th:block>
