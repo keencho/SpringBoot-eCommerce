@@ -1,0 +1,196 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+		<main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">마이페이지</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>나의 상품별 문의 / 답변</h2>
+                       	 ※질문을 클릭하시면 답변을 보실 수 있습니다. 
+                        <br>
+                        <br>
+                            <div class="row">
+                                <table class="table">
+								  <thead class="thead-light text-center">
+								    <tr>
+								      <th scope="col">상품명</th>
+								      <th scope="col" style="width:30%">문의명</th>
+								      <th scope="col">현재 상태</th>
+								      <th scope="col">질문 유형</th>
+								      <th scope="col">등록일</th>
+								    </tr>
+								  </thead>
+								  <div th:each="question : ${question}">
+									  <tbody>
+									    <tr>
+									      <td class="text-center"><a th:href="@{'/product/view/{no}'(no=${question.product_no.no})}" th:text="${question.product_no.name}" target="_blank"></a></td>
+									      <td>
+									      	<span th:text="${question.name}" style="cursor:pointer" class="question_name"></span>	
+									      </td>
+									      <td class="text-center" th:if="${question.status == 0}" th:text="답변대기"></td>
+									      <td class="text-center" th:if="${question.status == 1}"><strong>답변완료</strong></td>
+									      <td class="text-center" th:if="${question.type == 0}" th:text="사이즈"></td>
+										  <td class="text-center" th:if="${question.type == 1}" th:text="@{'디자인/색상'}"></td>
+										  <td class="text-center" th:if="${question.type == 2}" th:text="@{'배송/교환/반품'}"></td>
+										  <td class="text-center" th:if="${question.type == 3}" th:text="기타"></td>
+										  <td class="text-center" th:text="${question.regdate}"></td>
+									    </tr>
+									    <tr style="background-color: #E7EAED; display: none;" class="question_answer">
+											<td></td>
+											<td colspan="4">
+												<div style="padding-bottom: 15px">
+													<div style="display:inline-block; vertical-align:top;">
+														<font size="5"><i class="icon-question-circle-o"></i></font>
+													</div>
+													<div style="display:inline-block; padding-top:10px;">
+														<span th:utext="${question.contents}"></span>
+													</div>
+		
+												</div>
+												<div th:if="${question.status != 0}" style="border-top: 1px solid #DADEE3; padding-top: 15px; padding-bottom: 15px">
+													<div style="display:inline-block; vertical-align:top;">
+														<font size="5"><i class="icon-ok"></i></font>
+													</div>
+													<div style="display:inline-block; padding-top:10px;">
+														<span th:utext="${question.answer}" ></span>
+													</div>
+												</div>
+											</td>
+										</tr>
+									  </tbody>
+								  </div>
+								  <tbody th:if="${question.isEmpty() == true}">
+								  	<tr class="text-center">
+									  	<td colspan="8">
+									  		<i class="far fa-times-circle fa-2x"></i><font size=6>문의 / 답변 내역이 없습니다.</font>
+									  	</td>
+								  	</tr>
+								  </tbody>
+								</table>
+                            </div><!-- End .row -->
+                    </div><!-- End .col-lg-9 -->
+
+                    <th:block th:include="home/user/mypage/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main --> 
+<!-- Modal(추가) -->
+    <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="addressModalLabel">배송지 추가</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div><!-- End .modal-header -->
+
+                    <div class="modal-body">          
+                            <div class="form-group required-field">
+                                <label>받으실 분</label>
+                                <input type="text" name="modal_new_name" class="form-control form-control-sm newModal_name" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>받으실 분의 전화번호</label>
+                                <input type="text" maxlength="11" name="modal_new_phone" class="form-control form-control-sm newModal_phone" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group">
+                                <label>우편번호</label><button type="button" class="btn btn-primary btn-sm float-right" onclick="sample5_execDaumPostcode();">우편번호 찾기</button>
+                                <input type="text" name="modal_new_zipcode" id="sample5_postcode" class="form-control form-control-sm newModal_zipcode" size="1">
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>주소</label>
+                                <input type="text" name="modal_new_address" id="sample5_address" class="form-control form-control-sm newModal_address" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>상세주소</label>
+                                <input type="text" name="modal_new_detailaddress" id="sample5_detailAddress" class="form-control form-control-sm newModal_detailaddress" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>참고항목</label>
+                                <input type="text" name="modal_new_reference" id="sample5_extraAddress" class="form-control form-control-sm newModal_reference" required>
+                            </div><!-- End .form-group -->
+                    </div><!-- End .modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link btn-sm" data-dismiss="modal">취소</button>
+                        <button type="button" onclick="mypage_address_new()" class="btn btn-primary btn-sm">배송지 저장</button>
+                    </div><!-- End .modal-footer -->
+                </form>
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div>
+ <!-- End .modal -->     
+ <!-- Modal(수정) -->
+    <div class="modal fade" id="mypageUpdateAddressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="addressModalLabel">배송지 추가</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div><!-- End .modal-header -->
+
+                    <div class="modal-body">     
+                            <div class="form-group required-field">
+                                <label>받으실 분</label>
+                                <input type="text" name="modal_name" class="form-control form-control-sm updateModal_name" required>
+                                <input type="hidden" name="modal_no" class="form-control form-control-sm updateModal_no">
+                                <input type="hidden" name="modal_basic" class="form-control form-control-sm updateModal_basic">
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>받으실 분의 전화번호</label>
+                                <input type="text" maxlength="11" name="modal_phone" class="form-control form-control-sm updateModal_phone" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>우편번호</label><button type="button" class="btn btn-primary btn-sm float-right" onclick="sample6_execDaumPostcode();">우편번호 찾기</button>
+                                <input type="text" name="modal_zipcode" id="sample6_postcode" class="form-control form-control-sm updateModal_zipcode" size="1">
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>주소</label>
+                                <input type="text" name="modal_address" id="sample6_address" class="form-control form-control-sm updateModal_address" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>상세주소</label>
+                                <input type="text" name="modal_detailaddress" id="sample6_detailAddress" class="form-control form-control-sm updateModal_detailaddress" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group required-field">
+                                <label>참고항목</label>
+                                <input type="text" name="modal_reference" id="sample6_extraAddress" class="form-control form-control-sm updateModal_reference" required>
+                            </div><!-- End .form-group -->
+                    </div><!-- End .modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link btn-sm" data-dismiss="modal">취소</button>
+                        <button type="button" onclick="mypage_address_update()" class="btn btn-primary btn-sm">배송지 수정</button>
+                    </div><!-- End .modal-footer -->
+                </form>
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div>
+ <!-- End .modal -->               
+ <th:block th:include="home/main/footer.html"></th:block>

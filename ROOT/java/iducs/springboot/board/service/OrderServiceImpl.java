@@ -145,4 +145,15 @@ public class OrderServiceImpl implements OrderService{
 		return order;
 	}
 
+	@Override
+	public List<Order> findByUserNoandStatusAndDateLeftJoin(String date1, String date2, long userno) {
+		List<Order> order = new ArrayList<Order>();
+		List<OrderEntity> entities = repository.findByUserNoAndDateAndStatusLeftJoin(date1, date2, userno);
+		for(OrderEntity entity : entities) {
+			Order ord = entity.buildDomain();
+			order.add(ord);
+		}
+		return order;
+	}
+
 }

@@ -1,0 +1,135 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+         <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">마이페이지</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>상품평 작성</h2>
+                        <div class="card">
+								<div class="card-body" style="min-height: 0px !important;"
+									align="center">
+									<div class="container">				
+										<div align="left">
+											&#149 일반리뷰를 작성하면 즉시 100p, 포토리뷰를 작성하면 즉시 300p가 적립됩니다.
+											<br>
+											&#149 첨부파일을 선택하실 경우 포토리뷰, 아닐시 일반리뷰로 분류됩니다.
+											<br>
+											&#149 불건전한 내용을 올리실 경우 관리자가 임의로 삭제 가능하며, 적립된 포인트는 삭제됩니다.
+											<br>
+											&#149 한 상품에 하나의 상품평만 등록 가능합니다.
+											<br>
+											&#149 상품평 수정 / 삭제의 경우 좌측의 메뉴에서 확인 가능하며, 삭제의 경우 적립된 포인트는 삭제됩니다.
+											<br>
+											&#149 한번 상품의 상품평을 삭제하면, 동일한 상품의 상품평은 다시 작성하실 수 없습니다.
+										</div>
+									</div>
+								</div>
+							</div>
+							<form action="/mypage/review/add" method="post" enctype="multipart/form-data">
+							<div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">등록자</label>
+                                                <input type="text" class="form-control" id="acc-name" name="name" th:value="${info.order.user.name}" disabled>
+                                                <input type="hidden" name="userno" th:value="${info.order.user.no}">
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">상품명</label>
+                                                <input type="text" class="form-control" id="acc-name" name="product" th:value="${info.product.name}" disabled>
+                                                <input type="hidden" name="productno" th:value="${info.product.no}">
+                                                <input type="hidden" name="colorno" th:value="${info.color.no}">
+                                                <input type="hidden" name="sizeno" th:value="${info.size.no}">
+                                                <input type="hidden" name="infono" th:value="${info.no}">
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">점수</label>
+                                               <table class="ratings-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>1점</th>
+                                                            <th>2점</th>
+                                                            <th>3점</th>
+                                                            <th>4점</th>
+                                                            <th>5점</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align: center !important;">
+                                                                <input type="radio" name="score" id="Quality_1" value="1" class="radio">
+                                                            </td>
+                                                            <td>
+                                                                <input type="radio" name="score" id="Quality_2" value="2" class="radio">
+                                                            </td>
+                                                            <td>
+                                                                <input type="radio" name="score" id="Quality_3" value="3" class="radio">
+                                                            </td>
+                                                            <td>
+                                                                <input type="radio" name="score" id="Quality_4" value="4" class="radio">
+                                                            </td>
+                                                            <td>
+                                                                <input type="radio" name="score" id="Quality_5" value="5" class="radio" checked="checked">
+                                                            </td>
+                                                        </tr>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">상품평</label>
+                                            </div><!-- End .form-group -->
+                                            <textarea style="resize: none;" rows="8" cols="120" id="question_contents" name="contents" required></textarea>
+                                        </div><!-- End .col-md-12 -->
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">이미지1</label>
+                                                <input type="file" name="pic1" value="" class="form-control form-control-sm col-md-7 col-xs-12">
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">이미지2</label>
+                                                <input type="file" name="pic2" value="" class="form-control form-control-sm col-md-7 col-xs-12">
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">이미지3</label>
+                                                <input type="file" name="pic3" value="" class="form-control form-control-sm col-md-7 col-xs-12">
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                    </div><!-- End .row -->
+                                </div><!-- End .col-sm-11 -->
+                            </div><!-- End .row -->
+                            <div align="center">
+                           <button type="submit" class="btn btn-primary">등록</button>
+                           &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                           <button type="button" onclick="history.back()" class="btn btn-primary">뒤로가기</button>
+                           </div>
+                           </form>
+
+                    </div><!-- End .col-lg-9 -->
+                    <th:block th:include="home/user/mypage/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->       
+ <th:block th:include="home/main/footer.html"></th:block>

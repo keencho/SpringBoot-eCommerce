@@ -40,8 +40,9 @@ public class OrderInfoEntity {
 	
 	@Column(name="price", nullable=true, length=32, unique=false)
 	private String price;
-
 	
+	@Column(name="status", nullable=true, length=5, unique=false)
+	private int status;
 
 	public Long getNo() {
 		return no;
@@ -99,6 +100,14 @@ public class OrderInfoEntity {
 		this.price = price;
 	}
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	public OrderInfo buildDomain() {
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setNo(no);
@@ -108,6 +117,7 @@ public class OrderInfoEntity {
 		orderInfo.setSize(size.buildDomain());
 		orderInfo.setQty(qty);
 		orderInfo.setPrice(price);
+		orderInfo.setStatus(status);
 		
 		return orderInfo;
 	}
@@ -133,6 +143,7 @@ public class OrderInfoEntity {
 		
 		qty = orderInfo.getQty();
 		price = orderInfo.getPrice();
+		status = orderInfo.getStatus();
 	}
 
 }

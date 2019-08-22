@@ -101,4 +101,15 @@ public class ProductQuestionServiceImpl implements ProductQuestionService{
 		entitiy.buildEntity(productquestion);
 		repository.delete(entitiy);
 	}
+
+	@Override
+	public List<ProductQuestion> findByUserNo(long no) {
+		List<ProductQuestion> productquestion = new ArrayList<ProductQuestion>();
+		List<ProductQuestionEntity> entities = repository.findByUserNo(no);
+		for(ProductQuestionEntity entity : entities) {
+			ProductQuestion product = entity.buildDomain();
+			productquestion.add(product);
+		}
+		return productquestion;
+	}
 }

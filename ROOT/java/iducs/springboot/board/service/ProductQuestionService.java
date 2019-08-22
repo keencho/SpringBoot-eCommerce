@@ -14,6 +14,7 @@ public interface ProductQuestionService {
 	List<ProductQuestion> getProductQuestionStatus(long no, int status, Pageable questionPageable);
 	List<ProductQuestion> getProductQuestionOriginal(long no);
 	List<ProductQuestion> findAll();
+	List<ProductQuestion> findByUserNo(long no);
 	Page<ProductQuestionEntity> getProductQuestionPage(Pageable questionPageable, long no);
 	Page<ProductQuestionEntity> getProductQuestionStatusPage(Pageable questionPageable, long no, int status);
 	

@@ -1,36 +1,48 @@
 package iducs.springboot.board.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Color;
 import iducs.springboot.board.domain.Order;
 import iducs.springboot.board.domain.OrderInfo;
 import iducs.springboot.board.domain.Product;
+import iducs.springboot.board.domain.ProductQuestion;
+import iducs.springboot.board.domain.ProductReview;
 import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.domain.User;
 import iducs.springboot.board.domain.UserAddress;
+import iducs.springboot.board.service.ClothesSizeService;
+import iducs.springboot.board.service.ColorService;
 import iducs.springboot.board.service.OrderInfoService;
 import iducs.springboot.board.service.OrderService;
+import iducs.springboot.board.service.ProductQuestionService;
 import iducs.springboot.board.service.ProductService;
 import iducs.springboot.board.service.UserAddressService;
 import iducs.springboot.board.service.UserService;
+import iducs.springboot.board.service.ProductReviewService;
 
 @Controller
 @RequestMapping("/mypage")
@@ -45,6 +57,27 @@ public class MypageController {
 	OrderInfoService orderinfoService;
 	@Autowired
 	UserAddressService useraddressService;
+	@Autowired
+	ProductQuestionService questionService;
+	@Autowired
+	ColorService colorService;
+	@Autowired
+	ClothesSizeService sizeService;
+	@Autowired
+	ProductReviewService reviewService;
+	
+	String osName = System.getProperty("os.name");
+	static File cwd = new File("src/main/resources/static/uploads/review");	// 윈도우 업로드 경로
+	static File cwd2 = new File("webapps/ROOT/WEB-INF/classes/static/uploads/review");	// 리눅스 실제 웹서버 업로드 경로
+	static File path = cwd.getAbsoluteFile();
+	static File path2 = cwd2.getAbsoluteFile();
+	static String autoFolderStatic = path.toString();
+	static String autoFolderStatic2 = path2.toString();
+	
+	Date d = new Date();
+	SimpleDateFormat t1 = new SimpleDateFormat("yyyy-MM-dd");
+	
+	String newname = null, newname2 = null, newname3 = null;
 	
 	@GetMapping("")
 	public String mypageMain(
@@ -346,5 +379,178 @@ public class MypageController {
 		userAddress.setReference(reference);
 		
 		useraddressService.updateUserAddress(userAddress);
+	}
+	
+	@GetMapping("/myquestion")
+	public String mypageMyQuestion(
+			Model model, 
+			HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		List<ProductQuestion> question = questionService.findByUserNo(user.getNo());
+		
+		model.addAttribute("question", question);
+		return "home/user/mypage/myquestion";
+	}
+	
+	@GetMapping("/review/write")
+	public String mypageReviewWrite(
+			@RequestParam(value="no", required=false) Long no,
+			Model model, 
+			HttpSession session,
+			HttpServletResponse response) throws IOException {
+		User user = (User) session.getAttribute("user");
+		
+		if(no == null) {
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+			cal.add(Calendar.DATE, -31);
+			Date d = new Date();
+			String monthago = formatDate.format(cal.getTime());
+			String today = formatDate.format(d);
+			
+			List<OrderInfo> info = orderinfoService.findByUserNoandStatusAndDateLeftJoin(monthago, today, user.getNo());
+	
+			model.addAttribute("info", info);
+			return "home/user/mypage/reviewWriteList";
+		} else {
+			File autoFolder = new File(autoFolderStatic + "/" +  t1.format(d));
+			File autoFolder2 = new File(autoFolderStatic2 + "/" +  t1.format(d));
+			if(osName.matches(".*Windows.*")) {
+				if(!autoFolder.exists()) {
+					autoFolder.mkdirs();
+				}
+			} else {
+				if(!autoFolder2.exists()) {
+					autoFolder2.mkdirs();
+				}
+			}
+			
+			OrderInfo info = orderinfoService.findByNo(no);
+			List<ProductReview> review = reviewService.findByInfoNo(no);
+			
+			if(review.isEmpty() == false || info.getStatus() == 1) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				  
+				out.println("<script>alert('이미 등록된 상품평이 있거나 삭제된 이력이 존재합니다.');location.href='/mypage/review/write';</script>");
+				out.flush();
+				 
+			  return null;
+			} else {
+				model.addAttribute("info", info);
+				return "home/user/mypage/reviewWrite";
+			}
+		}
+	}
+	
+	@PostMapping(value="/review/add", consumes = "multipart/form-data")
+	public String mypageReviewAdd(
+			Long userno,
+			Long productno,
+			Long colorno,
+			Long sizeno,
+			String contents,
+			Long infono,
+			long score,
+			@RequestParam("pic1") MultipartFile pic1,
+			@RequestParam("pic2") MultipartFile pic2,
+			@RequestParam("pic3") MultipartFile pic3,
+			Model model, 
+			HttpSession session) throws Exception {
+		if (!pic1.isEmpty()) {
+			int idx1 = pic1.getContentType().indexOf("/");
+			int idxO1 = pic1.getOriginalFilename().indexOf(".");
+			String pic1Ex = pic1.getContentType().substring(idx1+1);
+			String pic1Bf = pic1.getOriginalFilename().substring(0, idxO1);
+
+			newname = pic1Bf + System.currentTimeMillis() + "." + pic1Ex;
+			if(osName.matches(".*Windows.*")) {
+				File file = new File(path + "/" + t1.format(d), newname);
+				FileCopyUtils.copy(pic1.getBytes(), file);
+			} else {
+				File file = new File(path2 + "/" + t1.format(d), newname);
+				FileCopyUtils.copy(pic1.getBytes(), file);
+			}
+		} else {
+			newname = null;
+		}
+		
+		if (!pic2.isEmpty()) {
+			int idx2 = pic2.getContentType().indexOf("/");
+			int idxO2 = pic2.getOriginalFilename().indexOf(".");
+			String pic2Ex = pic2.getContentType().substring(idx2+1);
+			String pic2Bf = pic2.getOriginalFilename().substring(0, idxO2);
+			
+			newname2 = pic2Bf + System.currentTimeMillis() + "." + pic2Ex;
+			if(osName.matches(".*Windows.*")) {
+				File file = new File(path + "/" + t1.format(d), newname2);
+				FileCopyUtils.copy(pic2.getBytes(), file);
+			} else {
+				File file = new File(path2 + "/" + t1.format(d), newname2);
+				FileCopyUtils.copy(pic2.getBytes(), file);
+			}
+		} else {
+			newname2 = null;
+		}
+		
+		if (!pic3.isEmpty()) {
+			int idx3 = pic3.getContentType().indexOf("/");
+			int idxO3 = pic3.getOriginalFilename().indexOf(".");
+			String pic3Ex = pic3.getContentType().substring(idx3+1);
+			String pic3Bf = pic3.getOriginalFilename().substring(0, idxO3);
+			
+			newname3 = pic3Bf + System.currentTimeMillis() + "." + pic3Ex;
+			if(osName.matches(".*Windows.*")) {
+				File file = new File(path + "/" + t1.format(d), newname3);
+				FileCopyUtils.copy(pic3.getBytes(), file);
+			} else {
+				File file = new File(path2 + "/" + t1.format(d), newname3);
+				FileCopyUtils.copy(pic3.getBytes(), file);
+			}
+		} else {
+			newname3 = null;
+		}
+		
+		Product product = productService.getProductById(productno);
+		User user = userService.getUserByNo(userno);
+		Color color = colorService.getColorByNo(colorno);
+		ClothesSize size = sizeService.getClothesSizeByNo(sizeno);
+		OrderInfo info = orderinfoService.findByNo(infono);
+		
+		info.setStatus(1);
+		orderinfoService.updateOrderInfo(info);
+		
+		int originalPoint = user.getPoint();
+		int updatePoint;
+
+		Date day = new Date();
+		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd");
+		contents = contents.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+		if (newname == null && newname2 == null && newname3 == null) {
+			ProductReview review = new ProductReview((int)score, product, user, size, color, contents, info, newname, newname2, newname3, today.format(day), 0);
+			updatePoint = originalPoint + 100;
+			user.setPoint(updatePoint);
+			userService.updateUser(user);
+			reviewService.saveProductReview(review);
+		} else {
+			updatePoint = originalPoint + 500;
+			user.setPoint(updatePoint);
+			userService.updateUser(user);
+			ProductReview review = new ProductReview((int)score, product, user, size, color, contents, info, newname, newname2, newname3, today.format(day), 1);
+			reviewService.saveProductReview(review);
+		}
+		
+		return "redirect:/mypage/review";
+	}
+	
+	@GetMapping("/review")
+	public String mypageMyReview(
+			Model model, 
+			HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		List<ProductQuestion> question = questionService.findByUserNo(user.getNo());
+		
+		model.addAttribute("question", question);
+		return "home/user/mypage/myquestion";
 	}
 }

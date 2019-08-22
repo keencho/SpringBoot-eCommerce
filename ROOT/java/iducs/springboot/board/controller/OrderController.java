@@ -137,7 +137,7 @@ public class OrderController {
 		stock.setStock(result_stock);
 		stockService.updateProductStock(stock);
 		
-		OrderInfo info = new OrderInfo(order, product, color, size, qty, price);
+		OrderInfo info = new OrderInfo(order, product, color, size, qty, price, 0);
 		orderInfoService.saveOrderInfo(info);
 	}
 	

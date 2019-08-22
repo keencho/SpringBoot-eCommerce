@@ -85,8 +85,11 @@ public class AdminProductController {
 	@PostMapping(value="/add", consumes = "multipart/form-data")
 	public String productAdd(Long category_no, Long section_no, Long division_no, String name, String modelname,
 			String price, String discount, String listprice, String size, String color, String material, String madeby,
-			String madein, String caution, String date,@RequestParam("pic1") MultipartFile pic1,@RequestParam("pic2") MultipartFile pic2,@RequestParam("pic3") MultipartFile pic3,@RequestParam("pic4") MultipartFile pic4,@RequestParam("pic5") MultipartFile pic5, @RequestParam("explainpic") MultipartFile explainpic,
-			String regdate, Model model, MultipartHttpServletRequest request, ModelAndView mav) throws Exception{
+			String madein, String caution, String date, @RequestParam("pic1") MultipartFile pic1,
+			@RequestParam("pic2") MultipartFile pic2, @RequestParam("pic3") MultipartFile pic3,
+			@RequestParam("pic4") MultipartFile pic4, @RequestParam("pic5") MultipartFile pic5,
+			@RequestParam("explainpic") MultipartFile explainpic, String regdate, Model model,
+			MultipartHttpServletRequest request, ModelAndView mav) throws Exception{
 		
 		if (!pic1.isEmpty()) {
 			int idx1 = pic1.getContentType().indexOf("/");
@@ -203,12 +206,6 @@ public class AdminProductController {
 
 		Product product = new Product(category, division, section, name, modelname, price, discount, listprice, size, color, material, madeby, madein, caution, date, newname, newname2, newname3, newname4, newname5, explainname, regdate);
 		productService.saveProduct(product);
-		
-		System.out.println(newname);
-		System.out.println(newname2);
-		System.out.println(newname3);
-		System.out.println(newname4);
-		System.out.println(newname5);
 
 		return "redirect:/admin/product";
 	}

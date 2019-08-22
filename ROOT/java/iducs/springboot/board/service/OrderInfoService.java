@@ -2,12 +2,12 @@ package iducs.springboot.board.service;
 
 import java.util.List;
 
-import iducs.springboot.board.domain.Order;
 import iducs.springboot.board.domain.OrderInfo;
 
 public interface OrderInfoService {
 	OrderInfo findByNo(long no);
 	List<OrderInfo> findByOrderNo(long no);
+	List<OrderInfo> findByUserNoandStatusAndDateLeftJoin(String date1, String date2, long userno);
 	
 	void saveOrderInfo(OrderInfo orderInfo);
 	void updateOrderInfo(OrderInfo orderInfo);

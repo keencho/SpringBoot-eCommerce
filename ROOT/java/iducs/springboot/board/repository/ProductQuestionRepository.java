@@ -16,6 +16,7 @@ public interface ProductQuestionRepository extends JpaRepository<ProductQuestion
 	List<ProductQuestionEntity> findByProductNoAndStatus(long no, Pageable questionPageable, int status);
 	List<ProductQuestionEntity> findByProductNo(long no);
 	List<ProductQuestionEntity> findAll();
+	List<ProductQuestionEntity> findByUserNo(long no);
 	
 	Page<ProductQuestionEntity> findByProductNo(Pageable questionPageable, long no);
 	Page<ProductQuestionEntity> findByProductNoAndStatus(Pageable questionPageable, long no, int status);

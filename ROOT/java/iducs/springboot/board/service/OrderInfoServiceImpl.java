@@ -54,4 +54,15 @@ public class OrderInfoServiceImpl implements OrderInfoService{
 		entity.buildEntity(orderInfo);
 		repository.delete(entity);
 	}
+
+	@Override
+	public List<OrderInfo> findByUserNoandStatusAndDateLeftJoin(String date1, String date2, long userno) {
+		List<OrderInfo> order = new ArrayList<OrderInfo>();
+		List<OrderInfoEntity> entities = repository.findByUserNoAndDateAndStatusLeftJoin(date1, date2, userno);
+		for(OrderInfoEntity entity : entities) {
+			OrderInfo ord = entity.buildDomain();
+			order.add(ord);
+		}
+		return order;
+	}
 }

@@ -15,6 +15,7 @@ public interface OrderService {
 	List<Order> findByDateBetween(String date1, String date2);
 	List<Order> findByStatusAndDateBetween(int status, String date1, String date2);
 	List<Order> findByUserNoAndStatusAndDateBetween(long no, String date1, String date2, List<Integer> status);
+	List<Order> findByUserNoandStatusAndDateLeftJoin(String date1, String date2, long userno);
 	
 	void saveOrder(Order order);
 	void saveOrderNonUser(Order order);
