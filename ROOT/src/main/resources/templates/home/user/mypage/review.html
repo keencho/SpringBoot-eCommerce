@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9 order-lg-last dashboard-content">
-                        <h2>상품평 작성</h2>
+                        <h2>나의 상품평</h2>
                         <div class="card">
 								<div class="card-body" style="min-height: 0px !important;"
 									align="center">
@@ -38,36 +38,34 @@
                                 <table class="table text-center">
 								  <thead class="thead-light">
 								    <tr>
-								      <th scope="col">주문번호</th>
 								      <th scope="col">상품명</th>
 								      <th scope="col">사이즈</th>
 								      <th scope="col">색상</th>
-								      <th scope="col">수량</th>
-								      <th scope="col">상품 가격</th>
-								      <th scope="col">결제일</th>
-								      <th scope="col">리뷰 작성하기</th>
+								      <th scope="col">점수</th>
+								      <th scope="col">삭제</th>
 								    </tr>
 								  </thead>
-								  <tbody th:if="${info.isEmpty() == false}">
-								    <tr th:each="info : ${info}">
-								      <th scope="row" th:text="${info.order.orderno}"></th>
-								      <td th:text="${info.product.name}"></td>
-								      <td th:text="${info.size.name}"></td>
-								      <td th:text="${info.color.name}"></td>
-								      <td th:text="@{'{qty}개'(qty=${info.qty})}"></td>
-								      <td th:text="@{'{price}원'(price=${#numbers.formatInteger(info.price, 0, 'COMMA')})}"></td>
-								      <td th:text="${info.order.date}"></td>
+								  <tbody th:if="${review.isEmpty() == false}">
+								    <tr th:each="review : ${review}">
+								      <th scope="row" th:text="${review.product.name}"></th>
+								      <td th:text="${review.size.name}"></td>
+								      <td th:text="${review.color.name}"></td>
+								      <td th:text="${review.score}"></td>
 								      <td>
-								      	<a th:href="@{'/mypage/review/write?no={no}'(no=${info.no})}">
-								      		작성
+								      	<a th:href="@{'/mypage/review?no={no}'(no=${review.no})}">
+								      		수정
+								      	</a>
+								      	/ 
+								      	<a href="#" th:onclick="@{'mypage_review_del(\'{no}\')'(no=${review.no})}">
+								      		삭제
 								      	</a>
 								      </td>
 								    </tr>
 								  </tbody>
-								  <tbody th:if="${info.isEmpty() == true}">
+								  <tbody th:if="${review.isEmpty() == true}">
 								  	<tr>
 									  	<td colspan="8">
-									  		<i class="far fa-times-circle fa-2x"></i><font size=6>구매 확정 내역이 없습니다.</font>
+									  		<i class="far fa-times-circle fa-2x"></i><font size=6>나의 상품평 내역이 없습니다.</font>
 									  	</td>
 								  	</tr>
 								  </tbody>

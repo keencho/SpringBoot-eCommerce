@@ -33,6 +33,7 @@ public class Product {
 	private int cartQty;
 	private int cartPrice;
 	private int cartNo;
+	private double score; // 상품평 평균
 	private List<ProductSize> productsize;
 	private List<ProductStock> productstock;
 	
@@ -323,10 +324,13 @@ public class Product {
 		this.cartColorNo = cartColorNo;
 	}
 
+	public double getScore() {
+		return score;
+	}
 
-
-
-	
+	public void setScore(double d) {
+		this.score = d;
+	}
 
 	
 }

@@ -545,12 +545,121 @@ public class MypageController {
 	
 	@GetMapping("/review")
 	public String mypageMyReview(
+			@RequestParam(value="no", required=false) Long no,
 			Model model, 
 			HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		List<ProductQuestion> question = questionService.findByUserNo(user.getNo());
+		if(no == null) {
+			List<ProductReview> review= reviewService.findByUserNo(user.getNo());
+			model.addAttribute("review", review);
+			return "home/user/mypage/review";
+		} else {
+			ProductReview review = reviewService.findByNo(no);
+			
+			model.addAttribute("review", review);
+			return "home/user/mypage/reviewEdit";
+		}
 		
-		model.addAttribute("question", question);
-		return "home/user/mypage/myquestion";
+	}
+	
+	@PostMapping(value="/review/update/{no}", consumes = "multipart/form-data")
+	public String mypageReviewUpdate(
+			@PathVariable("no") long no,
+			String contents,
+			long score,
+			@RequestParam("pic1") MultipartFile pic1,
+			@RequestParam("pic2") MultipartFile pic2,
+			@RequestParam("pic3") MultipartFile pic3,
+			Model model, 
+			HttpSession session) throws Exception {
+		ProductReview review = reviewService.findByNo(no);
+		if (!pic1.isEmpty()) {
+			int idx1 = pic1.getContentType().indexOf("/");
+			int idxO1 = pic1.getOriginalFilename().indexOf(".");
+			String pic1Ex = pic1.getContentType().substring(idx1+1);
+			String pic1Bf = pic1.getOriginalFilename().substring(0, idxO1);
+
+			newname = pic1Bf + System.currentTimeMillis() + "." + pic1Ex;
+			if(osName.matches(".*Windows.*")) {
+				File file = new File(path + "/" + t1.format(d), newname);
+				FileCopyUtils.copy(pic1.getBytes(), file);
+			} else {
+				File file = new File(path2 + "/" + t1.format(d), newname);
+				FileCopyUtils.copy(pic1.getBytes(), file);
+			}
+		} else {
+			newname = review.getPic1();
+		}
+		
+		if (!pic2.isEmpty()) {
+			int idx2 = pic2.getContentType().indexOf("/");
+			int idxO2 = pic2.getOriginalFilename().indexOf(".");
+			String pic2Ex = pic2.getContentType().substring(idx2+1);
+			String pic2Bf = pic2.getOriginalFilename().substring(0, idxO2);
+			
+			newname2 = pic2Bf + System.currentTimeMillis() + "." + pic2Ex;
+			if(osName.matches(".*Windows.*")) {
+				File file = new File(path + "/" + t1.format(d), newname2);
+				FileCopyUtils.copy(pic2.getBytes(), file);
+			} else {
+				File file = new File(path2 + "/" + t1.format(d), newname2);
+				FileCopyUtils.copy(pic2.getBytes(), file);
+			}
+		} else {
+			newname2 = review.getPic2();
+		}
+		
+		if (!pic3.isEmpty()) {
+			int idx3 = pic3.getContentType().indexOf("/");
+			int idxO3 = pic3.getOriginalFilename().indexOf(".");
+			String pic3Ex = pic3.getContentType().substring(idx3+1);
+			String pic3Bf = pic3.getOriginalFilename().substring(0, idxO3);
+			
+			newname3 = pic3Bf + System.currentTimeMillis() + "." + pic3Ex;
+			if(osName.matches(".*Windows.*")) {
+				File file = new File(path + "/" + t1.format(d), newname3);
+				FileCopyUtils.copy(pic3.getBytes(), file);
+			} else {
+				File file = new File(path2 + "/" + t1.format(d), newname3);
+				FileCopyUtils.copy(pic3.getBytes(), file);
+			}
+		} else {
+			newname3 = review.getPic3();
+		}
+		
+		contents = contents.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+		review.setScore((int) score);
+		review.setContents(contents);
+		review.setPic1(newname);
+		review.setPic2(newname2);
+		review.setPic3(newname3);
+		
+		reviewService.updateProductReview(review);
+		
+		return "redirect:/mypage/review";
+	}
+	
+	@GetMapping("/review/del/{no}")
+	public String mypageReviewDel(
+			@PathVariable("no") long no,
+			Model model, 
+			HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		ProductReview review = reviewService.findByNo(no);
+		int originalPoint = user.getPoint();
+		int updatePoint;
+		
+		if(review.getPic1() == null && review.getPic2() == null && review.getPic3() == null) {
+			updatePoint = originalPoint - 100;
+			user.setPoint(updatePoint);
+			userService.updateUser(user);
+		} else {
+			updatePoint = originalPoint - 500;
+			user.setPoint(updatePoint);
+			userService.updateUser(user);
+		}
+
+		reviewService.deleteProductReview(review);
+		return "redirect:/mypage/review";
 	}
 }

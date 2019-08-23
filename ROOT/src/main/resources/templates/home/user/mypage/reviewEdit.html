@@ -19,7 +19,7 @@
 									align="center">
 									<div class="container">				
 										<div align="left">
-											&#149 일반리뷰를 작성하면 즉시 100p, 포토리뷰를 작성하면 즉시 500p가 적립됩니다.
+											&#149 일반리뷰를 작성하면 즉시 100p, 포토리뷰를 작성하면 즉시 300p가 적립됩니다.
 											<br>
 											&#149 첨부파일을 선택하실 경우 포토리뷰, 아닐시 일반리뷰로 분류됩니다.
 											<br>
@@ -34,25 +34,20 @@
 									</div>
 								</div>
 							</div>
-							<form action="/mypage/review/add" method="post" enctype="multipart/form-data">
+							<form th:action="@{'/mypage/review/update/{no}'(no=${review.no})}" method="post" enctype="multipart/form-data">
 							<div class="row">
                                 <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group required-field">
                                                 <label for="acc-name">등록자</label>
-                                                <input type="text" class="form-control" id="acc-name" name="name" th:value="${info.order.user.name}" disabled>
-                                                <input type="hidden" name="userno" th:value="${info.order.user.no}">
+                                                <input type="text" class="form-control" id="acc-name" name="name" th:value="${review.user.name}" disabled>
                                             </div><!-- End .form-group -->
                                         </div><!-- End .col-md-12 -->
                                         <div class="col-md-12">
                                             <div class="form-group required-field">
                                                 <label for="acc-name">상품명</label>
-                                                <input type="text" class="form-control" id="acc-name" name="product" th:value="${info.product.name}" disabled>
-                                                <input type="hidden" name="productno" th:value="${info.product.no}">
-                                                <input type="hidden" name="colorno" th:value="${info.color.no}">
-                                                <input type="hidden" name="sizeno" th:value="${info.size.no}">
-                                                <input type="hidden" name="infono" th:value="${info.no}">
+                                                <input type="text" class="form-control" id="acc-name" name="product" th:value="${review.product.name}" disabled>
                                             </div><!-- End .form-group -->
                                         </div><!-- End .col-md-12 -->
                                         <div class="col-md-12">
@@ -71,19 +66,19 @@
                                                     <tbody>
                                                         <tr>
                                                             <td style="text-align: center !important;">
-                                                                <input type="radio" name="score" id="Quality_1" value="1" class="radio">
+                                                                <input type="radio" name="score" id="Quality_1" value="1" class="radio" th:checked="${review.score == 1}">
                                                             </td>
                                                             <td>
-                                                                <input type="radio" name="score" id="Quality_2" value="2" class="radio">
+                                                                <input type="radio" name="score" id="Quality_2" value="2" class="radio" th:checked="${review.score == 2}">
                                                             </td>
                                                             <td>
-                                                                <input type="radio" name="score" id="Quality_3" value="3" class="radio">
+                                                                <input type="radio" name="score" id="Quality_3" value="3" class="radio" th:checked="${review.score == 3}">
                                                             </td>
                                                             <td>
-                                                                <input type="radio" name="score" id="Quality_4" value="4" class="radio">
+                                                                <input type="radio" name="score" id="Quality_4" value="4" class="radio" th:checked="${review.score == 4}">
                                                             </td>
                                                             <td>
-                                                                <input type="radio" name="score" id="Quality_5" value="5" class="radio" checked="checked">
+                                                                <input type="radio" name="score" id="Quality_5" value="5" class="radio" th:checked="${review.score == 5}">
                                                             </td>
                                                         </tr>
                                                         </tr>
@@ -95,23 +90,36 @@
                                             <div class="form-group required-field">
                                                 <label for="acc-name">상품평</label>
                                             </div><!-- End .form-group -->
-                                            <textarea style="resize: none;" rows="8" cols="120" id="question_contents" name="contents" required></textarea>
+                                            <textarea style="resize: none;" rows="8" cols="120" id="mypage_review_contents" name="contents" th:text="${review.contents}" required>
+                                            </textarea>
                                         </div><!-- End .col-md-12 -->
                                         <div class="col-md-12">
                                             <div class="form-group required-field">
                                                 <label for="acc-name">이미지1</label>
-                                                <input type="file" name="pic1" value="" class="form-control form-control-sm col-md-7 col-xs-12">
+                                                <span th:if="${review.pic1}">
+	                                               	<br>
+	                                               	 현재파일명: <span th:text="${review.pic1}"></span>
+                                               	 </span>
+                                                <input type="file" name="pic1" th:value="${review.pic1}" class="form-control form-control-sm col-md-7 col-xs-12">
                                             </div><!-- End .form-group -->
                                         </div><!-- End .col-md-12 -->
                                         <div class="col-md-12">
                                             <div class="form-group required-field">
                                                 <label for="acc-name">이미지2</label>
+                                                <span th:if="${review.pic2}">
+	                                               	<br>
+	                                               	 현재파일명: <span th:text="${review.pic1}"></span>
+                                               	 </span>
                                                 <input type="file" name="pic2" value="" class="form-control form-control-sm col-md-7 col-xs-12">
                                             </div><!-- End .form-group -->
                                         </div><!-- End .col-md-12 -->
                                         <div class="col-md-12">
                                             <div class="form-group required-field">
                                                 <label for="acc-name">이미지3</label>
+                                                <span th:if="${review.pic3}">
+	                                               	<br>
+	                                               	 현재파일명: <span th:text="${review.pic1}"></span>
+                                               	 </span>
                                                 <input type="file" name="pic3" value="" class="form-control form-control-sm col-md-7 col-xs-12">
                                             </div><!-- End .form-group -->
                                         </div><!-- End .col-md-12 -->
@@ -119,7 +127,7 @@
                                 </div><!-- End .col-sm-11 -->
                             </div><!-- End .row -->
                             <div align="center">
-                           <button type="submit" class="btn btn-primary">등록</button>
+                           <button type="submit" class="btn btn-primary">수정</button>
                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                            <button type="button" onclick="history.back()" class="btn btn-primary">뒤로가기</button>
                            </div>

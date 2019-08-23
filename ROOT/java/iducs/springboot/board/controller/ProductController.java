@@ -8,9 +8,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
@@ -26,16 +28,19 @@ import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Division;
 import iducs.springboot.board.domain.Product;
 import iducs.springboot.board.domain.ProductQuestion;
+import iducs.springboot.board.domain.ProductReview;
 import iducs.springboot.board.domain.ProductSize;
 import iducs.springboot.board.domain.ProductStock;
 import iducs.springboot.board.domain.Section;
 import iducs.springboot.board.entity.ProductEntity;
 import iducs.springboot.board.entity.ProductQuestionEntity;
+import iducs.springboot.board.entity.ProductReviewEntity;
 import iducs.springboot.board.service.CategoryService;
 import iducs.springboot.board.service.ClothesSizeService;
 import iducs.springboot.board.service.ColorService;
 import iducs.springboot.board.service.DivisionService;
 import iducs.springboot.board.service.ProductQuestionService;
+import iducs.springboot.board.service.ProductReviewService;
 import iducs.springboot.board.service.ProductService;
 import iducs.springboot.board.service.ProductSizeService;
 import iducs.springboot.board.service.ProductStockService;
@@ -62,6 +67,8 @@ public class ProductController {
 	ProductStockService productstockService;
 	@Autowired
 	ProductQuestionService productquestionService;
+	@Autowired
+	ProductReviewService reviewService;
 	
 	@GetMapping("/list/category/{cno}")
 	public String productCategoryList(@PathVariable("cno") long categoryno,
@@ -78,7 +85,50 @@ public class ProductController {
 		List<Division> division = divisionService.getDivision();
 		List<Section> section = sectionService.getSection();
 		Page<ProductEntity> page = productService.getProductByCategoryNoPage(pageable, categoryno);
-
+		
+		for(int i = 0; i<product.size(); i ++) {	
+			// 상품평을 종합하여 평균을 내는 작업, 만약 상품평이 한개도 없다면 점수는 5점(별 5개)로 통일
+			List<ProductReview> review = reviewService.findByProductNo(product.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				product.get(i).setScore(before / (double)review.size());
+			} else {
+				product.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related.get(i).setScore(before / (double)review.size());
+			} else {
+				related.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related2.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related2.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related2.get(i).setScore(before / (double)review.size());
+			} else {
+				related2.get(i).setScore(5);
+			}
+		}
+		
 		model.addAttribute("categoryname", category);
 		model.addAttribute("productsize", productsize);
 		model.addAttribute("division", division);
@@ -112,6 +162,49 @@ public class ProductController {
 		List<Section> section = sectionService.getSection();
 		Page<ProductEntity> page = productService.getProductByCategoryNoPageSize(pageable, categoryno, sizeArray, colorArray, price1, price2);
 
+		for(int i = 0; i<product.size(); i ++) {	
+			// 상품평을 종합하여 평균을 내는 작업, 만약 상품평이 한개도 없다면 점수는 5점(별 5개)로 통일
+			List<ProductReview> review = reviewService.findByProductNo(product.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				product.get(i).setScore(before / (double)review.size());
+			} else {
+				product.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related.get(i).setScore(before / (double)review.size());
+			} else {
+				related.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related2.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related2.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related2.get(i).setScore(before / (double)review.size());
+			} else {
+				related2.get(i).setScore(5);
+			}
+		}
+		
 		model.addAttribute("categoryname", category);
 		model.addAttribute("productsize", productsize);
 		model.addAttribute("division", division);
@@ -157,7 +250,50 @@ public class ProductController {
 		List<Division> division = divisionService.getDivision();
 		List<Section> section = sectionService.getSection();
 		Page<ProductEntity> page = productService.getProductByDivisionNoPage(pageable, divisionno);
-
+		
+		for(int i = 0; i<product.size(); i ++) {	
+			// 상품평을 종합하여 평균을 내는 작업, 만약 상품평이 한개도 없다면 점수는 5점(별 5개)로 통일
+			List<ProductReview> review = reviewService.findByProductNo(product.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				product.get(i).setScore(before / (double)review.size());
+			} else {
+				product.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related.get(i).setScore(before / (double)review.size());
+			} else {
+				related.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related2.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related2.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related2.get(i).setScore(before / (double)review.size());
+			} else {
+				related2.get(i).setScore(5);
+			}
+		}
+		
 		model.addAttribute("divisionname", divisionname);
 		model.addAttribute("productsize", productsize);
 		model.addAttribute("division", division);
@@ -192,6 +328,49 @@ public class ProductController {
 		List<Section> section = sectionService.getSection();
 		Page<ProductEntity> page = productService.getProductByDivisionNoPageSize(pageable, divisionno, sizeArray, colorArray, price1, price2);
 
+		for(int i = 0; i<product.size(); i ++) {	
+			// 상품평을 종합하여 평균을 내는 작업, 만약 상품평이 한개도 없다면 점수는 5점(별 5개)로 통일
+			List<ProductReview> review = reviewService.findByProductNo(product.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				product.get(i).setScore(before / (double)review.size());
+			} else {
+				product.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related.get(i).setScore(before / (double)review.size());
+			} else {
+				related.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related2.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related2.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related2.get(i).setScore(before / (double)review.size());
+			} else {
+				related2.get(i).setScore(5);
+			}
+		}
+		
 		model.addAttribute("divisionname", divisionname);
 		model.addAttribute("productsize", productsize);
 		model.addAttribute("division", division);
@@ -237,6 +416,49 @@ public class ProductController {
 		List<Section> section = sectionService.getSection();
 		Page<ProductEntity> page = productService.getProductBySectionNoPage(pageable, sectionno);
 
+		for(int i = 0; i<product.size(); i ++) {	
+			// 상품평을 종합하여 평균을 내는 작업, 만약 상품평이 한개도 없다면 점수는 5점(별 5개)로 통일
+			List<ProductReview> review = reviewService.findByProductNo(product.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				product.get(i).setScore(before / (double)review.size());
+			} else {
+				product.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related.get(i).setScore(before / (double)review.size());
+			} else {
+				related.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related2.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related2.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related2.get(i).setScore(before / (double)review.size());
+			} else {
+				related2.get(i).setScore(5);
+			}
+		}
+		
 		model.addAttribute("sectionname", sectionname);
 		model.addAttribute("productsize", productsize);
 		model.addAttribute("division", division);
@@ -271,6 +493,49 @@ public class ProductController {
 		List<Section> section = sectionService.getSection();
 		Page<ProductEntity> page = productService.getProductBySectionNoPageSize(pageable, sectionno, sizeArray, colorArray, price1, price2);
 
+		for(int i = 0; i<product.size(); i ++) {	
+			// 상품평을 종합하여 평균을 내는 작업, 만약 상품평이 한개도 없다면 점수는 5점(별 5개)로 통일
+			List<ProductReview> review = reviewService.findByProductNo(product.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				product.get(i).setScore(before / (double)review.size());
+			} else {
+				product.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related.get(i).setScore(before / (double)review.size());
+			} else {
+				related.get(i).setScore(5);
+			}
+		}
+		
+		for(int i = 0; i<related2.size(); i ++) {	
+			List<ProductReview> review = reviewService.findByProductNo(related2.get(i).getNo());
+			if(review.isEmpty() == false)
+			{
+				int before=0;
+				for(int j = 0; j < review.size(); j ++) {
+					before = before + review.get(j).getScore();
+				}
+				related2.get(i).setScore(before / (double)review.size());
+			} else {
+				related2.get(i).setScore(5);
+			}
+		}
+		
 		model.addAttribute("sectionname", sectionname);
 		model.addAttribute("productsize", productsize);
 		model.addAttribute("division", division);
@@ -318,8 +583,9 @@ public class ProductController {
 	
 	@GetMapping("/view/{no}")
 	public String viewProduct(
-			@PathVariable(value = "no") Long no, 
-			@PageableDefault(size = 5, sort = "no", direction = Sort.Direction.DESC) Pageable questionPageable,
+			@PathVariable(value = "no") Long no,
+			@PageableDefault(size = 1, sort = "no", direction = Sort.Direction.DESC) Pageable questionPageable,
+
 			Model model,
 			HttpServletRequest request) throws Exception{
 		Product product = productService.getProductById(no);
@@ -330,7 +596,8 @@ public class ProductController {
 		List<Product> productCategory = productService.get6ProductByCategoryNo(product.getCategory().getNo());
 		List<Product> productDivision = productService.get3ProductByDivisionNo(product.getDivision().getNo());
 		Page<ProductQuestionEntity> questionPage = productquestionService.getProductQuestionPage(questionPageable, no);
-		
+		List<ProductReview> review = reviewService.findByProductNo(no, questionPageable);
+		Page<ProductReviewEntity> reviewPage = reviewService.findByProductNoPage(no, questionPageable);
 		String deliveryDate = null;
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat formatDate = new SimpleDateFormat("MM월 dd일(E) 이내 발송 예정");
@@ -359,6 +626,16 @@ public class ProductController {
 				questionComplete += 1;
 			}
 		}
+		int score = 0;
+		if (review.isEmpty() == false) {
+			for(int i = 0; i < review.size(); i++) {
+				score += review.get(i).getScore();
+				product.setScore(score / (double) review.size());
+			}
+		} else {
+			score = 5;
+			product.setScore(score);
+		}
 
 		model.addAttribute("product", product);
 		model.addAttribute("size", sizeStock);
@@ -371,6 +648,8 @@ public class ProductController {
 		model.addAttribute("productquestionComplete", questionComplete);
 		model.addAttribute("productCategory", productCategory);
 		model.addAttribute("productDivision", productDivision);
+		model.addAttribute("review", review);
+		model.addAttribute("reviewPage", reviewPage);
 		return "/home/product/view";
 	}
 

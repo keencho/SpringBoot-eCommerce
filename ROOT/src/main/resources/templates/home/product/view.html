@@ -109,10 +109,10 @@
 
                                         <div class="ratings-container">
                                             <div class="product-ratings">
-                                                <span class="ratings" style="width:60%"></span><!-- End .ratings -->
+                                                <span class="ratings" th:style="@{'width: {score}%'(score=${product.score * 20})}"></span><!-- End .ratings -->
                                             </div><!-- End .product-ratings -->
 
-                                            <a href="#" class="rating-link">( 6 Reviews )</a>
+                                            <a href="#" class="rating-link">( <span th:text="${review.size()}"></span>개의 리뷰 )</a>
                                         </div><!-- End .product-container -->
 
                                         <div class="price-box">
@@ -187,7 +187,7 @@
                                         <a class="nav-link" id="product-tab-tags" href="#product-information-content" data-toggle="tab">상품정보</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="product-tab-reviews" href="#product-reviews-content" data-toggle="tab">리뷰(추후)</a>
+                                        <a class="nav-link" id="product-tab-reviews" href="#product-reviews-content" data-toggle="tab">리뷰</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="product-tab-qna" href="#product-qna-content" data-toggle="tab">상품 문의</a>
@@ -305,101 +305,78 @@
     
                             <div class="tab-pane" id="product-reviews-content" role="tabpanel" aria-labelledby="product-tab-reviews">
                                 <div class="product-reviews-content">
-                                    <div class="collateral-box">
-                                        <ul>
-                                            <li>Be the first to review this product</li>
-                                        </ul>
-                                    </div><!-- End .collateral-box -->
+                                 <h3 class="text-uppercase heading-text-color font-weight-semibold">상품 리뷰</h3>
+	                                <div class="card">
+										<div class="card-body" style="min-height: 0px !important;"
+											align="center">
+											<div class="container">				
+												<div align="left">
+													&#149 일반리뷰를 작성하면 즉시 100p, 포토리뷰를 작성하면 즉시 500p가 적립됩니다.
+													<br>
+													&#149 첨부파일을 선택하실 경우 포토리뷰, 아닐시 일반리뷰로 분류됩니다.
+													<br>
+													&#149 불건전한 내용을 올리실 경우 관리자가 임의로 삭제 가능하며, 적립된 포인트는 삭제됩니다.
+													<br>
+													&#149 한 상품에 하나의 상품평만 등록 가능합니다.
+													<br>
+													&#149 상품평 수정 / 삭제의 경우 마이페이지의 '나의 상품평' 메뉴에서 확인 가능하며, 삭제의 경우 적립된 포인트는 삭제됩니다.
+													<br>
+													&#149 한번 상품의 상품평을 삭제하면, 동일한 상품의 상품평은 다시 작성하실 수 없습니다.
+												</div>
+											</div>
+										</div>
+									</div>
     
                                     <div class="add-product-review">
-                                        <h3 class="text-uppercase heading-text-color font-weight-semibold">WRITE YOUR OWN REVIEW</h3>
-                                        <p>How do you rate this product? *</p>
-    
-                                        <form action="#">
-                                            <table class="ratings-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>&nbsp;</th>
-                                                        <th>1 star</th>
-                                                        <th>2 stars</th>
-                                                        <th>3 stars</th>
-                                                        <th>4 stars</th>
-                                                        <th>5 stars</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Quality</td>
-                                                        <td>
-                                                            <input type="radio" name="ratings[1]" id="Quality_1" value="1" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="ratings[1]" id="Quality_2" value="2" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="ratings[1]" id="Quality_3" value="3" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="ratings[1]" id="Quality_4" value="4" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="ratings[1]" id="Quality_5" value="5" class="radio">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Value</td>
-                                                        <td>
-                                                            <input type="radio" name="value[1]" id="Value_1" value="1" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="value[1]" id="Value_2" value="2" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="value[1]" id="Value_3" value="3" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="value[1]" id="Value_4" value="4" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="value[1]" id="Value_5" value="5" class="radio">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Price</td>
-                                                        <td>
-                                                            <input type="radio" name="price[1]" id="Price_1" value="1" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="price[1]" id="Price_2" value="2" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="price[1]" id="Price_3" value="3" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="price[1]" id="Price_4" value="4" class="radio">
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="price[1]" id="Price_5" value="5" class="radio">
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-    
-                                            <div class="form-group">
-                                                <label>Nickname <span class="required">*</span></label>
-                                                <input type="text" class="form-control form-control-sm" required>
-                                            </div><!-- End .form-group -->
-                                            <div class="form-group">
-                                                <label>Summary of Your Review <span class="required">*</span></label>
-                                                <input type="text" class="form-control form-control-sm" required>
-                                            </div><!-- End .form-group -->
-                                            <div class="form-group mb-2">
-                                                <label>Review <span class="required">*</span></label>
-                                                <textarea cols="5" rows="6" class="form-control form-control-sm"></textarea>
-                                            </div><!-- End .form-group -->
-    
-                                            <input type="submit" class="btn btn-primary" value="Submit Review">
-                                        </form>
+    									<div id="review-pagination-load">
+	                                       <table class="table">
+												<thead class="thead-light">
+													<tr>
+														<th scope="col" class="text-center">작성자</th>
+														<th scope="col" class="text-center" width="45%">제목</th>
+														<th scope="col" class="text-center">답변상태</th>
+														<th scope="col" class="text-center">문의유형</th>
+														<th scope="col" class="text-center">작성일</th>
+													</tr>
+												</thead>
+												<tbody th:if="${review.isEmpty() == false}">
+													<div th:each="review : ${review}">
+														<tr>
+															<th scope="row" th:text="${review.contents}"></th>
+															
+														</tr>
+														
+													</div>
+													<tr th:if="${productquestion.size() == 0}" class="text-center">
+														<td colspan="6">
+															<font size="3"><i class="icon-cancel"></i>등록된 문의가 없습니다.</font>
+														</td>
+													</tr>
+												</tbody>
+												<tbody th:if="${review.isEmpty() == true}">
+												  	<tr>
+													  	<td colspan="5" class="text-center">
+													  		<i class="far fa-times-circle fa-1x"></i><font size=3>등록된 리뷰가 없습니다.</font>
+													  	</td>
+												  	</tr>
+											    </tbody>
+											</table>
+												<nav style="display: flex; border-top: .1rem solid #efefef; padding-top: 1.5rem;" th:if="${reviewPage.isEmpty() == false}">
+													<div style="margin: auto;">
+														<ul class="pagination" id="paginationajax_review">
+							                                <li class="page-item" th:if="${!reviewPage.first}">
+							                                    <a th:href="@{'?page={number}'(number=${reviewPage.number-1})}" class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+							                                </li>
+							                                <li th:each="pages: ${#numbers.sequence(0, reviewPage.totalPages-1)}" th:class=" ${reviewPage.number == pages} ? 'page-item active' : ''">
+							                                    <a th:unless="${pages+1 ==0}" class="page-link" th:href="@{${#httpServletRequest.requestURI}(page=${pages})}" th:inline="text">[[${pages+1}]]</a>
+							                                </li>   
+							                                <li th:if="${!questionPage.last}" class="page-item">
+							                                    <a th:href="@{'?page={number}'(number=${reviewPage.number+1})}" class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+							                                </li>
+							                            </ul>
+					                            	</div>
+					                            </nav>
+				                            </div>
                                     </div><!-- End .add-product-review -->
                                 </div><!-- End .product-reviews-content -->
                             </div><!-- End .tab-pane -->

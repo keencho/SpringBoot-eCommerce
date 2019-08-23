@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import iducs.springboot.board.domain.ProductReview;
@@ -48,7 +50,7 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 	@Override
 	public List<ProductReview> findByProductNo(long no) {
 		List<ProductReview> review = new ArrayList<ProductReview>();
-		List<ProductReviewEntity> entities = repository.findByProductNo(no);
+		List<ProductReviewEntity> entities = repository.findByProductNoOrderByNoDesc(no);
 		for(ProductReviewEntity entity : entities) {
 			ProductReview product = entity.buildDomain();
 			review.add(product);
@@ -81,6 +83,31 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 	public List<ProductReview> findByInfoNo(long no){
 		List<ProductReview> review = new ArrayList<ProductReview>();
 		List<ProductReviewEntity> entities = repository.findByInfoNo(no);
+		for(ProductReviewEntity entity : entities) {
+			ProductReview product = entity.buildDomain();
+			review.add(product);
+		}
+		return review;
+	}
+
+	@Override
+	public ProductReview getByProductNo(long no) {
+		ProductReviewEntity entity = repository.findByProductNo(no);
+		if(entity == null)
+			return null;
+		return entity.buildDomain();
+	}
+
+	@Override
+	public Page<ProductReviewEntity> findByProductNoPage(long no, Pageable pageable) {
+		Page<ProductReviewEntity> entities = repository.findByProductNo(pageable, no);
+		return entities;
+	}
+
+	@Override
+	public List<ProductReview> findByProductNo(long no, Pageable pageable) {
+		List<ProductReview> review = new ArrayList<ProductReview>();
+		List<ProductReviewEntity> entities = repository.findByProductNoOrderByNoDesc(no, pageable);
 		for(ProductReviewEntity entity : entities) {
 			ProductReview product = entity.buildDomain();
 			review.add(product);

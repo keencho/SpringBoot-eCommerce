@@ -733,6 +733,32 @@
 			}
 		});
  	}
+ 	
+    // 장바구니 총합 계산
+ 	$(document).ready(function() {
+ 		var contents = $("#mypage_review_contents").val();
+ 		var result = contents.replace(/(<br>|<br\/>|<br \/>)/g, '\r\n');
+ 		$("#mypage_review_contents").val(result);
+ 	});
+    
+    // 마이페이지 리뷰 삭제
+    function mypage_review_del(no){
+    	var check = confirm("상품평 삭제시 적립된 포인트는 회수됩니다.\n그래도 삭제하시겠습니까?");
+		if(check == true){
+			location.href="/mypage/review/del/" + no;
+		} else {
+			return false;
+		}
+    }
+    
+    // 상품별 리뷰 pagination load() 처리
+    $(function(){
+    	$(document).on("click","#paginationajax_review a",function(e) {
+    		$("#review-pagination-load").hide(); 
+    		$("#review-pagination-load").load($(this).attr("href") + " div#review-pagination-load").show();
+    		e.preventDefault();
+    	});
+    });
     </script>
     
 </body>
