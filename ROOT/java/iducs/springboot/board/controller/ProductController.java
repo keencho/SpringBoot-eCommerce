@@ -584,7 +584,7 @@ public class ProductController {
 	@GetMapping("/view/{no}")
 	public String viewProduct(
 			@PathVariable(value = "no") Long no,
-			@PageableDefault(size = 1, sort = "no", direction = Sort.Direction.DESC) Pageable questionPageable,
+			@PageableDefault(size = 5, sort = "no", direction = Sort.Direction.DESC) Pageable questionPageable,
 
 			Model model,
 			HttpServletRequest request) throws Exception{

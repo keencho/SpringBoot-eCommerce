@@ -311,6 +311,8 @@
 											align="center">
 											<div class="container">				
 												<div align="left">
+													&#149 리뷰 작성은 마이페이지의 좌측 메뉴를 이용해주세요.
+													<br>
 													&#149 일반리뷰를 작성하면 즉시 100p, 포토리뷰를 작성하면 즉시 500p가 적립됩니다.
 													<br>
 													&#149 첨부파일을 선택하실 경우 포토리뷰, 아닐시 일반리뷰로 분류됩니다.
@@ -330,28 +332,36 @@
                                     <div class="add-product-review">
     									<div id="review-pagination-load">
 	                                       <table class="table">
-												<thead class="thead-light">
-													<tr>
-														<th scope="col" class="text-center">작성자</th>
-														<th scope="col" class="text-center" width="45%">제목</th>
-														<th scope="col" class="text-center">답변상태</th>
-														<th scope="col" class="text-center">문의유형</th>
-														<th scope="col" class="text-center">작성일</th>
-													</tr>
+	                                       <thead class="thead-light">
+														<tr>
+															<th scope="col" class="text-center"></th>
+															<th scope="col" class="text-center"></th>
+															<th scope="col" class="text-center" width="70%">리스트</th>
+															<th scope="col" class="text-center"></th>
+															<th scope="col" class="text-center"></th>
+															<th scope="col" class="text-center"></th>
+														</tr>
 												</thead>
 												<tbody th:if="${review.isEmpty() == false}">
 													<div th:each="review : ${review}">
 														<tr>
-															<th scope="row" th:text="${review.contents}"></th>
-															
+															<td colspan="5">
+																<div class="ratings-container">
+																	<div class="product-ratings">
+																		<span class="ratings" th:style="@{'width: {score}%'(score=${review.score * 20})}"></span><!-- End .ratings -->
+																	</div>
+																</div>
+																옵션: <span th:text="${review.size.name}"></span>, <span th:text="${review.color.name}"></span>
+																<br>
+																<br>
+																<span th:text="${review.contents}"></span>
+															</td>
+															<td>
+															작성자: <span th:text="${review.user.name}"></span><br>
+															등록일: <span th:text="${review.date}"></span>
+															</td>
 														</tr>
-														
 													</div>
-													<tr th:if="${productquestion.size() == 0}" class="text-center">
-														<td colspan="6">
-															<font size="3"><i class="icon-cancel"></i>등록된 문의가 없습니다.</font>
-														</td>
-													</tr>
 												</tbody>
 												<tbody th:if="${review.isEmpty() == true}">
 												  	<tr>
