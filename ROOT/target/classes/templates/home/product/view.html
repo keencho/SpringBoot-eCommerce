@@ -305,7 +305,32 @@
     
                             <div class="tab-pane" id="product-reviews-content" role="tabpanel" aria-labelledby="product-tab-reviews">
                                 <div class="product-reviews-content">
-                                 <h3 class="text-uppercase heading-text-color font-weight-semibold">상품 리뷰</h3>
+									<div class="container">
+									  <div class="row">
+									    <div class="col-sm">
+									      <h3 class="text-uppercase heading-text-color font-weight-semibold">상품 리뷰</h3>
+									    </div>
+									    <div class="col-sm">
+									    </div>
+									    <div class="col-sm" align="right">
+										    <a th:if="${session.user != null}" href="/mypage/review/write">
+										      <button class="btn btn-primary">
+										      	<span style="white-space:nowrap;">
+										      		상품 리뷰 등록 바로가기
+										      	</span>
+										      </button>
+										    </a>
+										    <a th:if="${session.user == null}">
+										      <button class="btn btn-primary" onclick="login_popup()">
+										      	<span style="white-space:nowrap;">
+										      		상품 리뷰 등록 바로가기
+										      	</span>
+										      </button>
+										    </a>
+									    </div>
+									  </div>
+									</div>
+									<br>
 	                                <div class="card">
 										<div class="card-body" style="min-height: 0px !important;"
 											align="center">
@@ -333,20 +358,12 @@
     									<div id="review-pagination-load">
 	                                       <table class="table">
 	                                       <thead class="thead-light">
-														<tr>
-															<th scope="col" class="text-center"></th>
-															<th scope="col" class="text-center"></th>
-															<th scope="col" class="text-center" width="70%">리스트</th>
-															<th scope="col" class="text-center"></th>
-															<th scope="col" class="text-center"></th>
-															<th scope="col" class="text-center"></th>
-														</tr>
 												</thead>
 												<tbody th:if="${review.isEmpty() == false}">
 													<div th:each="review : ${review}">
 														<tr>
 															<td colspan="5">
-																<div class="ratings-container">
+																<div class="ratings-container">점수: 
 																	<div class="product-ratings">
 																		<span class="ratings" th:style="@{'width: {score}%'(score=${review.score * 20})}"></span><!-- End .ratings -->
 																	</div>
@@ -354,15 +371,55 @@
 																옵션: <span th:text="${review.size.name}"></span>, <span th:text="${review.color.name}"></span>
 																<br>
 																<br>
-																<span th:text="${review.contents}"></span>
+																<span th:utext="${review.contents_split}"></span>
+																<div th:if="${review.pic1 != null || review.pic2 != null || review.pic3 != null}">
+																	<br>
+																	<br>		
+																	<img th:if="${review.pic1}" th:src="@{'/uploads/review/{date}/{pic}'(date=${review.date}, pic=${review.pic1})}" style="max-width: 15%; display:inline;">
+																	<img th:if="${review.pic2}" th:src="@{'/uploads/review/{date}/{pic}'(date=${review.date}, pic=${review.pic2})}" style="max-width: 15%; display:inline;">
+																	<br>
+																	<br>
+																</div>
+																<div th:unless="${review.pic1 != null || review.pic2 != null || review.pic3 != null}">
+																	<br>
+																</div>
+																<button class="btn btn-primary review_before"><span style="white-space:nowrap;">더보기</span></button>							
 															</td>
 															<td>
 															작성자: <span th:text="${review.user.name}"></span><br>
 															등록일: <span th:text="${review.date}"></span>
 															</td>
 														</tr>
+														<tr style="display: none;">
+															<td colspan="5">
+																<div class="ratings-container">점수: 
+																	<div class="product-ratings">
+																		<span class="ratings" th:style="@{'width: {score}%'(score=${review.score * 20})}"></span><!-- End .ratings -->
+																	</div>
+																</div>
+																옵션: <span th:text="${review.size.name}"></span>, <span th:text="${review.color.name}"></span>
+																<br>
+																<br>
+																<span th:utext="${review.contents}"></span>
+																<div th:if="${review.pic1 != null || review.pic2 != null || review.pic3 != null}">
+																	<img th:if="${review.pic1}" th:src="@{'/uploads/review/{date}/{pic}'(date=${review.date}, pic=${review.pic1})}" style="max-width: 70%;">
+																	<img th:if="${review.pic2}" th:src="@{'/uploads/review/{date}/{pic}'(date=${review.date}, pic=${review.pic2})}" style="max-width: 70%;">
+																	<br>
+																	<br>
+																</div>
+																<div th:unless="${review.pic1 != null || review.pic2 != null || review.pic3 != null}">
+																	<br>
+																</div>
+																<button class="btn btn-primary review_after"><span style="white-space:nowrap;">닫기</span></button>
+															</td>
+
+															<td>
+															작성자: <span th:text="${review.user.name}"></span><br>
+															등록일: <span th:text="${review.date}"></span>
+															</td>
+														</tr>
 													</div>
-												</tbody>
+												</tbody>						
 												<tbody th:if="${review.isEmpty() == true}">
 												  	<tr>
 													  	<td colspan="5" class="text-center">

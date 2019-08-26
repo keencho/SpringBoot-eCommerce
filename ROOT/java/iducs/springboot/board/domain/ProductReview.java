@@ -16,6 +16,7 @@ public class ProductReview {
 	private String pic3;
 	private String date;
 	private int type;
+	private String contents_split;	// 리뷰 내용을 특정 사이즈로 잘라 저장핧 변수
 	
 	public ProductReview() {}
 
@@ -138,6 +139,14 @@ public class ProductReview {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public String getContents_split() {
+		return contents_split;
+	}
+
+	public void setContents_split(String contents_split) {
+		this.contents_split = contents_split;
 	}
 	
 	

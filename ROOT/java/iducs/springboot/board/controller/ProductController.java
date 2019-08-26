@@ -604,6 +604,7 @@ public class ProductController {
 		cal.add(Calendar.DATE,+3);
 		deliveryDate = formatDate.format(cal.getTime());
 		int point = Integer.parseInt(product.getListprice()) / 1000;
+		
 		try  {
 			ProductSize productSize = productsizeService.getProductSizeByNoNativeQuery(no);
 			model.addAttribute("productsize", productSize);
@@ -620,12 +621,14 @@ public class ProductController {
 			String replace = new String(new char[length]).replace("\0", "*");
 			productQuestion.get(i).getUser_no().setId(idSubstring + replace);
 		}
+		
 		for(int i=0; i < productQuestionOriginal.size(); i++) {
 			// 답변 완료된 문의를 count
 			if (productQuestionOriginal.get(i).getStatus() == 1) {
 				questionComplete += 1;
 			}
 		}
+		
 		int score = 0;
 		if (review.isEmpty() == false) {
 			for(int i = 0; i < review.size(); i++) {
@@ -635,6 +638,16 @@ public class ProductController {
 		} else {
 			score = 5;
 			product.setScore(score);
+		}
+		
+		if(review.isEmpty() == false) {		// 리뷰길이가 21글자가 넘을시 ...으로 대체
+			for(int i = 0; i < review.size(); i ++) {
+				if(review.get(i).getContents().length() >= 21) {
+					review.get(i).setContents_split(review.get(i).getContents().substring(0, 20) + "...");
+				} else {
+					review.get(i).setContents_split(review.get(i).getContents());
+				}
+			}
 		}
 
 		model.addAttribute("product", product);
