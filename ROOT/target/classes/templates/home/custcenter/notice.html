@@ -1,0 +1,73 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+         <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">고객센터</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>공지 사항</h2>
+                        	※ 질문 클릭시 내용이 보이게 됩니다.
+                        	<br>
+                        	<br>
+                            <div class="row">
+                               <table class="table">
+								  <tbody>
+									  <tr>
+									  	<td><i class="icon-question-circle-o"></i></td>
+									  	<td class="question_name" style="width: 98%">자주묻는 질문 1</td>
+									  </tr>
+									  <tr style="display:none;">
+									  	<td><i class="icon-ok"></i></i></td>
+									  	<td style="width: 98%">안녕하세요 가상 쇼핑몰입니다. <br><br>이것은 자주묻는 질문에 대한 답변1입니다.</td>
+									  </tr>
+									  <tr>
+									  	<td><i class="icon-question-circle-o"></i></td>
+									  	<td class="question_name" style="width: 98%">자주묻는 질문 2</td>
+									  </tr>
+									  <tr style="display:none;">
+									  	<td><i class="icon-ok"></td>
+									  	<td style="width: 98%">안녕하세요 가상 쇼핑몰입니다. <br><br>이것은 자주묻는 질문에 대한 답변2입니다.</td>
+									  </tr>
+									  <tr>
+									  	<td><i class="icon-question-circle-o"></i></td>
+									  	<td class="question_name" style="width: 98%">자주묻는 질문 3</td>
+									  </tr>
+									  <tr style="display:none;">
+									  	<td><i class="icon-ok"></td>
+									  	<td style="width: 98%">안녕하세요 가상 쇼핑몰입니다. <br><br>이것은 자주묻는 질문에 대한 답변3입니다.</td>
+									  </tr>
+									   <tr>
+									  	<td><i class="icon-question-circle-o"></i></td>
+									  	<td class="question_name" style="width: 98%">자주묻는 질문 4</td>
+									  </tr>
+									  <tr style="display:none;">
+									  	<td><i class="icon-ok"></td>
+									  	<td style="width: 98%">안녕하세요 가상 쇼핑몰입니다. <br><br>이것은 자주묻는 질문에 대한 답변4입니다.</td>
+									  </tr>
+									   <tr>
+									  	<td><i class="icon-question-circle-o"></i></td>
+									  	<td class="question_name" style="width: 98%">자주묻는 질문 5</td>
+									  </tr>
+									  <tr style="display:none;">
+									  	<td><i class="icon-ok"></td>
+									  	<td style="width: 98%">안녕하세요 가상 쇼핑몰입니다. <br><br>이것은 자주묻는 질문에 대한 답변5입니다.</td>
+									  </tr>
+								  </tbody>
+								</table> 
+                            </div><!-- End .row -->
+                    </div><!-- End .col-lg-9 -->
+                    <th:block th:include="home/custcenter/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->       
+ <th:block th:include="home/main/footer.html"></th:block>

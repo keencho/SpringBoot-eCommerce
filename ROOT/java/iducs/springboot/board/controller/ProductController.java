@@ -571,13 +571,16 @@ public class ProductController {
 			Model model
 			) {
 		Product product = productService.getProductById(no);
-		ProductSize productSize = productsizeService.getProductSizeByNoNativeQuery(no);
-		List<ProductStock> sizeStock = productstockService.findSizeByProductNo(no);
-		List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
 		model.addAttribute("product", product);
-		model.addAttribute("productsize", productSize);
-		model.addAttribute("size", sizeStock);
-		model.addAttribute("color", colorStock);
+		try {
+			ProductSize productSize = productsizeService.getProductSizeByNoNativeQuery(no);
+			List<ProductStock> sizeStock = productstockService.findSizeByProductNo(no);
+			List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
+			
+			model.addAttribute("productsize", productSize);
+			model.addAttribute("size", sizeStock);
+			model.addAttribute("color", colorStock);
+		} catch (Exception e) {}
 		return "home/product/quickview";
 	}
 	

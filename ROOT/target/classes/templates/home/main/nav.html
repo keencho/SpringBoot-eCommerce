@@ -55,9 +55,12 @@
                             			<li th:each="header2 : ${header2}" th:if="${header2.category.no == 4}"><a th:href="@{'/product/list/division/{no}'(no=${header2.no})}" th:text="${header2.name}"></a></li>
                             		</ul>
                             </li>
-                            
-                           		<li><a href="#">문의게시판</a></li>
-                            	
+                           	<li>
+                           		<a href="/custcenter/faq">고객센터</a>
+                           	</li>
+                            <li>
+                            	<a href="#">정보</a>
+                            </li>
                             </ul>
                     </nav>
                 </div><!-- End .header-bottom -->
