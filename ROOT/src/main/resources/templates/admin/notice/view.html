@@ -1,0 +1,61 @@
+<th:block th:include="admin/main/header.html"></th:block>
+<!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">	
+                    <h2>공지사항 상세보기
+					</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+						<table class="table table-borderless">
+						  <tbody>
+							<tr>
+							  <th scope="row" style="width: 10%">제목</th>
+							  <td>
+							  	<span th:text="${notice.title}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">등록일</th>
+							  <td>
+							  	<span th:text="${notice.date}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">조회수</th>
+							  <td>
+							  	<span th:text="${notice.views}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">내용</th>
+							  <td>
+							  	<span th:utext="${notice.contents}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">첨부파일</th>
+							  <td>
+							  	<u><a th:href="@{'/admin/notice/download?no={no}'(no=${notice.no})}"><span th:if="${notice.attach}" th:text="${notice.attach_original}"></span> <span th:if="${notice.attach}" th:text="@{'(클릭하여다운로드)'}"></span></a></u>
+							  	<span th:unless="${notice.attach}" th:text="없음"></span>
+							  </td>
+							</tr>
+						  </tbody>
+						</table>
+						<div align="center">
+						  <button type="button" class="btn btn-success" th:onclick="@{location.href='/admin/notice/update/{no}'(no=${notice.no})}">수정하기</button>
+						  <button type="button" class="btn btn-primary" onclick="location.href='/admin/notice'">리스트로</button>
+                        </div>
+						</div>
+                  </div>
+                </div>
+              </div>     
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+<th:block th:include="admin/main/footer.html"></th:block>

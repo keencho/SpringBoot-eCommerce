@@ -35,13 +35,13 @@
 	<div class="widget widget-dashboard">
 		<h3 class="widget-title">고객센터</h3>
 		<ul class="list">
-			<li th:class="${#httpServletRequest.requestURI == '/custcenter/faq'} ? 'active' : ''"><a href="/mypage">자주 묻는 질문</a></li>
-			<li th:if="${session.user}" th:class="${#httpServletRequest.requestURI == '/custcenter/counsel'} ? 'active' : ''"><a href="/mypage/change">1:1 문의하기</a></li>
+			<li th:class="${#httpServletRequest.requestURI == '/custcenter/faq'} ? 'active' : ''"><a href="/custcenter/faq">자주 묻는 질문</a></li>
+			<li th:if="${session.user}" th:class="${#httpServletRequest.requestURI == '/custcenter/counsel'} ? 'active' : ''"><a href="/custcenter/counsel">1:1 문의하기</a></li>
 			<li th:unless="${session.user}"><a href="#" onclick="login_popup()">1:1 문의하기</a></li>
 			<li th:if="${session.user}" th:class="${#httpServletRequest.requestURI == '/mypage/change/apply'} ? 'active' : ''"><a href="/mypage/change/apply">1:1 문의 답변</a></li>
 			<li th:unless="${session.user}"><a href="#" onclick="login_popup()">1:1 문의 답변</a></li>
 			<li th:class="${#httpServletRequest.requestURI == '/custcenter/notice'} ? 'active' : ''"><a href="/custcenter/notice">공지사항</a></li>
-			<li th:unless="${session.user}" th:class="${#httpServletRequest.requestURI == '/custcenter/tracking'} ? 'active' : ''"><a href="/mypage/review/write">비회원 주문조회</a></li>
+			<li th:unless="${session.user}" th:class="${#httpServletRequest.requestURI == '/custcenter/tracking'} ? 'active' : ''"><a href="/custcenter/tracking">비회원 주문조회</a></li>
 		</ul>
 	</div>
 	<!-- End .widget -->
