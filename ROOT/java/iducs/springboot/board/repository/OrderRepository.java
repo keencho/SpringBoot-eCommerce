@@ -12,6 +12,7 @@ import iducs.springboot.board.entity.OrderEntity;
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, Long>{
 	OrderEntity findByNo(long no);
+	OrderEntity findByOrdernoAndOrderpassword(String orderno, String password);
 	
 	List<OrderEntity> findAll();
 	List<OrderEntity> findByUserNoAndStatusIn(long no, List<Integer> status);

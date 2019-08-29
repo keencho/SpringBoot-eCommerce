@@ -156,4 +156,12 @@ public class OrderServiceImpl implements OrderService{
 		return order;
 	}
 
+	@Override
+	public Order findByOrdernoAndPassword(String orderno, String password) {
+		OrderEntity orderEntity = repository.findByOrdernoAndOrderpassword(orderno, password);
+		if(orderEntity == null)
+			return null;
+		return orderEntity.buildDomain();
+	}
+
 }

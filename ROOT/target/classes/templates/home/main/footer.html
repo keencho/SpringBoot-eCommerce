@@ -230,6 +230,7 @@
     <!-- jQuery UI -->
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script>
+    // 공지사항 소팅
     function notice_sorting() {
     	var sort = $('#orderby').val();
     	var url_original = "/custcenter/notice/?sort=" + sort;
@@ -245,6 +246,7 @@
 		}
     }
     
+    // 공지사항 검색
     function notice_search() {
     	var sort = $('#orderby').val();
     	var url_original = "/custcenter/notice/?sort=" + sort;
@@ -255,6 +257,14 @@
     	
     	location.href = url_original + "&search=" + search + "&category=" + category;
     }
+    
+    // post방식의 form 새 윈도우 띄우기
+    $(document).ready(function(){
+   	  $("#btn_submit").on("click", function(){
+   	    window.open("", "popup_window", "width=1200, height=950, scrollbars=no");
+   	    $("#myform").submit();
+   	  });
+   	});
   
     </script>
 </body>

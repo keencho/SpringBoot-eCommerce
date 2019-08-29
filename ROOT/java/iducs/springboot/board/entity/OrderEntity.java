@@ -35,7 +35,7 @@ public class OrderEntity {
 	private int check_user;
 	
 	@Column(name="order_password", nullable=true, length=32, unique=false)
-	private String order_password;
+	private String orderpassword;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_no", nullable=true, unique = false)
@@ -119,12 +119,12 @@ public class OrderEntity {
 		this.check_user = check_user;
 	}
 
-	public String getOrder_password() {
-		return order_password;
+	public String getOrderpassword() {
+		return orderpassword;
 	}
 
-	public void setOrder_password(String order_password) {
-		this.order_password = order_password;
+	public void setOrderpassword(String orderpassword) {
+		this.orderpassword = orderpassword;
 	}
 
 	public UserEntity getUser() {
@@ -224,7 +224,7 @@ public class OrderEntity {
 		order.setOrder_phone(order_phone);
 		order.setOrder_address(order_address);
 		order.setCheck_user(check_user);
-		order.setOrder_password(order_password);
+		order.setOrder_password(orderpassword);
 		order.setUser(user.buildDomain());
 		order.setOrder_message(order_message);
 		order.setPay_type(pay_type);
@@ -251,7 +251,7 @@ public class OrderEntity {
 		order_phone = order.getOrder_phone();
 		order_address = order.getOrder_address();
 		check_user = order.getCheck_user();
-		order_password = order.getOrder_password();
+		orderpassword = order.getOrder_password();
 		order_message = order.getOrder_message();
 		pay_type = order.getPay_type();
 		card_id = order.getCard_id();
@@ -271,7 +271,7 @@ public class OrderEntity {
 		order_phone = order.getOrder_phone();
 		order_address = order.getOrder_address();
 		check_user = order.getCheck_user();
-		order_password = order.getOrder_password();
+		orderpassword = order.getOrder_password();
 		order_message = order.getOrder_message();
 		pay_type = order.getPay_type();
 		card_id = order.getCard_id();

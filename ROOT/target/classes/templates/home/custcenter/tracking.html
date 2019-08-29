@@ -1,0 +1,36 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+         <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">고객센터</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>비회원 주문조회</h2>
+                        	※ 비회원 주문조회의 경우 3개월 이전의 결과까지만 조회 가능합니다.
+                        	<br><br>
+							<form action="/custcenter/tracking/find" method="post" target="popup_window">
+							<div class="col-md-6">
+	                            <input type="text" name="orderno" class="form-control" placeholder="결제완료시 알려드린 주문번호를 입력하세요." required="">
+	                            <input type="password" name="password" class="form-control" placeholder="결제시 입력하신 비밀번호를 입력하세요." required="">
+	                        </div>
+	                            <br>
+	                            <div align="center">
+	                                <button type="submit" class="btn btn-primary" id="btn_submit">조회</button>
+	                            </div><!-- End .form-footer -->
+	                        </form>
+                    </div><!-- End .col-lg-9 -->
+                    <th:block th:include="home/custcenter/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->       
+ <th:block th:include="home/main/footer.html"></th:block>

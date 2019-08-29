@@ -6,6 +6,7 @@ import iducs.springboot.board.domain.Order;
 
 public interface OrderService {
 	Order findByNo(long no);
+	Order findByOrdernoAndPassword(String orderno, String password);
 	
 	List<Order> findAll();
 	List<Order> findByUserNoOrder(long no, List<Integer> status);
