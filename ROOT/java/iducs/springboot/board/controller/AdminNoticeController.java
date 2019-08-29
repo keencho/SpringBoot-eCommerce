@@ -17,9 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -79,10 +81,11 @@ public class AdminNoticeController {
 		}
 		
 		if(!attach.isEmpty()) {
-			int idx1 = attach.getContentType().indexOf("/");					// 업로드할 파일의 형식중 / 가 있으면 그 위치를 저장
+			int idx1 = attach.getContentType().indexOf("/");					// 업로드할 파일의 형식중 application/의 위치를 검색
 			int idx2 = attach.getOriginalFilename().indexOf(".");				// 업로드할 파일의 오리지널 이름에서 .의 위치를 저장
-			String attach1 = attach.getContentType().substring(idx1 + 1);		// 업로드할 파일의 형식(사진, 파일 등) 을 저장
-			String attach2 = attach.getOriginalFilename().substring(0, idx2);	// 업로드할 파일의 오리지널 이름을 저장
+			String attach1 = attach.getContentType().substring(idx1 + 1);		// 업로드할 파일의 형식(사진, 파일 등) 을 저장(application/ 후에 나오는 형식)
+			// getContentType의 경우 이미지 파일들은 관련없지만 txt, office excel, word등의 파일은 MIME 형식으로 출력되므로 주의 필요(다운로드엔 문제없음, 사용자에게 보여지는 문장을 위해 필요함)
+			String attach2 = attach.getOriginalFilename().substring(0, idx2);	// 업로드할 파일의 원본 이름을 저장
 			
 			attachName = attach2 + System.currentTimeMillis() + "." + attach1;	// db에 올라갈 첨부파일명은 오리지널이름 + 현재 시간 + . + 파일 형식
 			attachNameOriginal = attach.getOriginalFilename();					// 사용자에게 보여질 파일명
@@ -162,29 +165,28 @@ public class AdminNoticeController {
 		return "admin/notice/update";
 	}
 	
-	@GetMapping("/del/{no}")
+	@DeleteMapping("/del/{no}")
 	public String noticeDel(
 			@PathVariable("no") Long no,
 			Model model
 			) {
 		Notice notice = noticeService.findByNo(no);
-		try{
-			if(!notice.getAttach().isEmpty()) {			// 삭제할 공지사항에 첨부파일이 존재할시 삭제
-				File file;
-				if(osName.matches(".*Windows.*")) {
-					file = new File(cwd + "/" + notice.getDate(), notice.getAttach());
-				} else {
-					file = new File(cwd2 + "/" + notice.getDate(), notice.getAttach());
-				}
-				file.delete();
+
+		if(notice.getAttach() != null) {			// 삭제할 공지사항에 첨부파일이 존재할시 삭제
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + notice.getDate(), notice.getAttach());
+			} else {
+				file = new File(cwd2 + "/" + notice.getDate(), notice.getAttach());
 			}
-		} catch (Exception e) {}
-		
+			file.delete();
+		}
+
 		noticeService.deleteNotice(notice);
 		return "redirect:/admin/notice";
 	}
 	
-	@PostMapping("/update/{no}")
+	@PutMapping("/update/{no}")
 	public String noticeUpdate(
 			@PathVariable("no") long no,
 			@RequestParam("title") String title,

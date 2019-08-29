@@ -229,7 +229,34 @@
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <!-- jQuery UI -->
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script>
+    function notice_sorting() {
+    	var sort = $('#orderby').val();
+    	var url_original = "/custcenter/notice/?sort=" + sort;
+		var url_string = window.location.href;
+    	var url = new URL(url_string);
+    	var category = url.searchParams.get("category");
+    	var search = url.searchParams.get("search");
+
+		if(category == null && search == null){
+			location.href = url_original;
+		} else if (category != null && search != null) {
+			location.href = url_original + "&search=" + search + "&category=" + category;
+		}
+    }
     
+    function notice_search() {
+    	var sort = $('#orderby').val();
+    	var url_original = "/custcenter/notice/?sort=" + sort;
+		var url_string = window.location.href;
+    	var url = new URL(url_string);
+    	var category = $("select[name=category]").val();
+    	var search = $("#search").val();
+    	
+    	location.href = url_original + "&search=" + search + "&category=" + category;
+    }
+  
+    </script>
 </body>
 
 </html>

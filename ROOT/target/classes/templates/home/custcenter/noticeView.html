@@ -1,0 +1,50 @@
+<th:block th:include="home/main/header.html"></th:block>
+<th:block th:include="home/main/nav.html"></th:block>
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">공지사항</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>공지사항</h2>
+						<table class="table table-bordered qnatable">
+							<tbody>
+								<tr>
+									<td width="10%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">제목</td>
+									<td style="vertical-align: left; text-align: left; width: 500px" th:text="${notice.title}"></td>
+									<td width="10%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">등록일</td>
+									<td style="vertical-align: left; text-align: left;" th:text="${notice.date}"></td>
+								</tr>
+								<tr>
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">첨부파일</td>
+									<td th:if="${notice.attach}"><u><a th:href="@{'/admin/notice/download?no={no}'(no=${notice.no})}"><span th:text="${notice.attach_original}"></span></a></u> (클릭시 다운)</td>
+									<td th:unless="${notice.attach}" th:text="없음"></td>
+									<td width="10%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">조회수</td>
+									<td th:text="${notice.views}"></td>
+								</tr>
+								<tr style="height: 300px">
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">내용</td>
+									<td colspan="3" style="vertical-align: left; text-align: left;" th:utext="${notice.contents}">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div align="center">
+							<button type="button" onclick="history.go(-1)" class="btn btn-primary">뒤로가기</button>
+						</div>
+                    </div><!-- End .col-lg-9 -->
+                   <th:block th:include="home/custcenter/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->
+<!-- End .main -->
+<th:block th:include="home/main/footer.html"></th:block>
