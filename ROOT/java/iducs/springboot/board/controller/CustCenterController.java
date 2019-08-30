@@ -2,6 +2,9 @@ package iducs.springboot.board.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +27,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import iducs.springboot.board.domain.Notice;
 import iducs.springboot.board.domain.Order;
 import iducs.springboot.board.domain.OrderInfo;
+import iducs.springboot.board.domain.User;
 import iducs.springboot.board.entity.NoticeEntity;
+import iducs.springboot.board.service.ConsultingService;
 import iducs.springboot.board.service.NoticeService;
 import iducs.springboot.board.service.OrderInfoService;
 import iducs.springboot.board.service.OrderService;
@@ -40,6 +46,7 @@ public class CustCenterController {
 	@Autowired NoticeService noticeService;
 	@Autowired OrderService orderService;
 	@Autowired OrderInfoService orderinfoService;
+	@Autowired ConsultingService consultingService;
 	
 	@GetMapping("/faq")
 	public String custcenterFaq(
@@ -137,8 +144,20 @@ public class CustCenterController {
 			Model model,
 			HttpServletResponse response
 			) throws IOException {
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+		cal.add(Calendar.MONTH, -3);
+		String threeMonthAgo = formatDate.format(cal.getTime());
 		try {
 			Order order = orderService.findByOrdernoAndPassword(orderno, password);
+			int dateResult = threeMonthAgo.compareTo(order.getDate());		// 날짜비교 --> 앞의 변수가 크면 1, 작으면 -1, 같으면 0
+			if(dateResult == 1) {		// 주문일이 오늘날 -3달한 결과값보다 작으면 조회를 할수없음.
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('조회가능한 기간이 지났습니다.'); self.close();</script>");
+				out.flush();
+			}
+			order.getDate();
 			List<OrderInfo> orderInfo = orderinfoService.findByOrderNo(order.getNo());
 			for (int i = 0; i < orderInfo.size(); i++) {
 				orderInfo.get(i).setInt_price(Integer.parseInt(orderInfo.get(i).getPrice()));
@@ -153,5 +172,43 @@ public class CustCenterController {
 		}
 		
 		return "/home/user/mypage/orderinfo";
+	}
+	
+	@GetMapping("/counsel")
+	public String custcenterCounseling (
+			HttpSession session,
+			Model model) {
+		if (session.getAttribute("user") == null)
+			return "redirect:/404";
+		
+		User user = (User) session.getAttribute("user");
+		String mail = user.getEmail();
+		int idx = mail.indexOf("@");
+		user.setMail1(mail.substring(0, idx));
+		user.setMail2(mail.substring(idx+1));
+		
+		model.addAttribute("user", user);
+		
+		return "home/custcenter/counsel";
+		
+	}
+	
+	@PostMapping("/counsel/add")
+	public String custcenterCounselingAdd(
+			@RequestParam("mail1") String mail1,
+			@RequestParam("mail2") String mail2,
+			@RequestParam("type") String type,
+			@RequestParam("title") String title,
+			@RequestParam("contents") String contents,
+			@RequestParam("attach") MultipartFile attach,
+			HttpSession session,
+			Model model) {
+		System.out.println(mail1);
+		System.out.println(mail2);
+		System.out.println(type);
+		System.out.println(title);
+		System.out.println( contents);
+		System.out.println(attach.getOriginalFilename());
+		return null;
 	}
 }

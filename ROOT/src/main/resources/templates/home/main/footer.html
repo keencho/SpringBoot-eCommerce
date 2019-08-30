@@ -260,12 +260,29 @@
     
     // post방식의 form 새 윈도우 띄우기
     $(document).ready(function(){
-   	  $("#btn_submit").on("click", function(){
-   	    window.open("", "popup_window", "width=1200, height=950, scrollbars=no");
-   	    $("#myform").submit();
+   	  $("#btn_tracking").on("click", function(){
+   		if (document.getElementById("orderno").value == ''){
+   			alert("주문번호를 입력하세요");
+   		} else if (document.getElementById("password").value == ''){
+   			alert("비밀번호를 입력하세요");
+   		} else {
+   			window.open("", "popup_window", "width=1200, height=950, scrollbars=no");
+   	   	    $("#myform").submit();
+   		}
+   	    
    	  });
    	});
-  
+    
+    // 자바스크립트로 파일 확장자 구분하여 이미지 파일만 받기
+    function counsel_imgcheck(){
+    	var attach = document.getElementById('attach').value;
+    	var filter = attach.slice(attach.indexOf(".") + 1).toLowerCase();
+    	if(filter !='jpg' && filter != 'png' && filter != 'gif' && filter !='bmp'){
+    		alert("이미지 관련 파일(jpg, png, gif, bmp) 파일만 등록 가능합니다.");
+    		document.getElementById('attach').value = '';
+    	}
+    }
+
     </script>
 </body>
 

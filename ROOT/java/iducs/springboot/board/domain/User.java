@@ -11,6 +11,9 @@ public class User {
 	private String joinday;
 	private int point;
 	
+	private String mail1;	// @ 이전의 메일
+	private String mail2;	// @ 이후의 메일
+	
 	public User()  {}
 	public User(String id, String password, String name, String email, String phone, String rank, String joinday, int point) {
 		super();
@@ -92,6 +95,18 @@ public class User {
 	}
 	public void setPoint(int point) {
 		this.point = point;
+	}
+	public String getMail1() {
+		return mail1;
+	}
+	public void setMail1(String mail1) {
+		this.mail1 = mail1;
+	}
+	public String getMail2() {
+		return mail2;
+	}
+	public void setMail2(String mail2) {
+		this.mail2 = mail2;
 	}
 	
 }

@@ -1,0 +1,90 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+         <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">고객센터</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>1:1 문의</h2>
+                        <form action="/custcenter/counsel/add" method="post" enctype="multipart/form-data">
+                        <table class="table table-bordered qnatable">
+							<tbody>
+								<tr>
+									<td width="15%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">고객명</td>
+									<td style="vertical-align: left; text-align: left; width: 500px" th:text="${user.name}"></td>				
+								</tr>
+								<tr>
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">아이디</td>
+									<td th:text="${user.id}"></td>
+								</tr>
+								<tr>
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">이메일 주소</td>
+									<td>
+										<input type="text" name="mail1" th:value="${user.mail1}"> @ <input type="text" name="mail2" th:value="${user.mail2}">
+									</td>
+								</tr>
+								<tr>
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">문의유형</td>
+									<td>
+										<div class="toolbox-left">
+			                                <div class="toolbox-item toolbox-sort">
+			                                    <div class="select-custom" style="margin-bottom: 0rem !important">
+			                                        <select id="orderby" name="type" class="form-control">
+			                                            <option value="pay">입금 / 결제</option>
+			                                            <option value="product">상품관련</option>
+			                                            <option value="delivery">배송관련</option>
+			                                            <option value="change">교환관련</option>
+			                                            <option value="return">반품관련</option>
+			                                            <option value="refund">환불관련</option>
+			                                            <option value="use">이용관련</option>
+			                                            <option value="as">A/S관련</option>
+			                                            <option value="etc">기타</option>
+			                                        </select>
+			                                    </div><!-- End .select-custom -->
+			                                </div><!-- End .toolbox-item -->
+			                            </div>
+									</td>
+								</tr>
+								<tr>
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">제목</td>
+									<td>
+										<div class="form-group required-field" style="margin-bottom: 0rem !important">
+                                            <input type="text" class="form-control" id="acc-name" name="title">
+                                        </div>
+									</td>
+								</tr>
+								<tr style="height: 300px">
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">문의내용</td>
+									<td colspan="3" style="vertical-align: left; text-align: left;" >
+										<textarea style="resize: none; width:100%;" rows="12" id="question_contents" name="contents" required=""></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">첨부파일</td>
+									<td colspan="3" style="vertical-align: left; text-align: left;" >
+										<input type="file" name="attach" id="attach" class="form-control form-control-sm col-md-7 col-xs-12" onchange="counsel_imgcheck()">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<div align="center">
+                           <button type="submit" class="btn btn-primary">등록</button>
+                        </div>
+                        </form>
+                    </div><!-- End .col-lg-9 -->
+                    <th:block th:include="home/custcenter/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->       
+ <th:block th:include="home/main/footer.html"></th:block>
