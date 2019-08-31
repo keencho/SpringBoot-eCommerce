@@ -9,6 +9,7 @@ public interface ConsultingService {
 	Consulting findByNo(long no);
 	List<Consulting> findAll();
 	List<Consulting> findByUserNo(long no);
+	List<Consulting> findByTypeAndDateBetween(String type, String date1, String date2);
 	List<Consulting> findByDateBetween(String date1, String date2);
 	List<Consulting> findByType(String type);
 	

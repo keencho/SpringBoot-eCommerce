@@ -13,6 +13,7 @@ public interface ConsultingRepository extends JpaRepository<ConsultingEntity, Lo
 	
 	List<ConsultingEntity> findAll();
 	List<ConsultingEntity> findByUserNo(long no);
+	List<ConsultingEntity> findByTypeAndDateqBetween(String type, String date1, String date2);
 	List<ConsultingEntity> findByDateqBetween(String date1, String date2);
 	List<ConsultingEntity> findByType(String type);
 }

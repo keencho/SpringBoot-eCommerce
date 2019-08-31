@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -674,6 +675,7 @@ public class MypageController {
 			) {
 		User user = (User) session.getAttribute("user");
 		List<Consulting> consulting= consultingService.findByUserNo(user.getNo());
+		Collections.reverse(consulting);
 		
 		model.addAttribute("consulting", consulting);
 		return "home/user/mypage/consulting";

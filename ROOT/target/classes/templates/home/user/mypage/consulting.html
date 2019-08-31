@@ -42,7 +42,7 @@
 									      <td class="text-center" th:if="${consulting.type == 'as'}" th:text="@{A/S관련}"></td>
 									      <td class="text-center" th:if="${consulting.type == 'etc'}" th:text="기타"></td>
 									      <td>
-									      	<a th:href="@{'/custcenter/consulting/view/{no}'(no=${consulting.no})}">
+									      	<a th:href="@{'/custcenter/consulting/view?no={no}'(no=${consulting.no})}">
 										      <u>
 										      	<span th:text="${consulting.title}" style="cursor:pointer"></span>	
 										      </u>

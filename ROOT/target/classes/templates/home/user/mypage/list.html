@@ -14,7 +14,7 @@
 			<li th:class="${#httpServletRequest.requestURI == '/mypage/review'} ? 'active' : ''"><a href="/mypage/review">나의 상품평</a></li>
 			<li th:class="${#httpServletRequest.requestURI == '/mypage/review/write'} ? 'active' : ''"><a href="/mypage/review/write">상품평 작성하기</a></li>
 			<li th:class="${#httpServletRequest.requestURI == '/mypage/myquestion'} ? 'active' : ''"><a href="/mypage/myquestion">상품 문의/답변</a></li>
-			<li th:class="${#httpServletRequest.requestURI == '/mypage/consulting'} ? 'active' : ''"><a href="/mypage/consulting">1:1 문의 답변</a></li>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/consulting'} ? 'active' : (${#httpServletRequest.requestURI == '/custcenter/consulting/view'} ? 'active' : '')"><a href="/mypage/consulting">1:1 문의 답변</a></li>
 			<br>
 			<strong>개인정보</strong>
 			<li th:class="${#httpServletRequest.requestURI == '/mypage/myaccount'} ? 'active' : ''"><a href="/mypage/myaccount">개인정보 확인/수정</a></li>

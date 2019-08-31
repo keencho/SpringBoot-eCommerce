@@ -270,9 +270,9 @@ public class CustCenterController {
 		return "redirect:/mypage/consulting";
 	}
 	
-	@GetMapping("/consulting/view/{no}")
+	@GetMapping("/consulting/view")
 	public String custcenterConsultingView(
-			@PathVariable("no") Long no,
+			@RequestParam(value="no", required=true) Long no,
 			Model model
 			) {
 		

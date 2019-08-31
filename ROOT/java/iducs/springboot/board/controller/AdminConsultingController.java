@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,10 +51,34 @@ public class AdminConsultingController {
 	
 	@GetMapping("")
 	public String adminConsultingHome(
+			@RequestParam(value="date1", required=false) String date1,
+			@RequestParam(value="date2", required=false) String date2,
+			@RequestParam(value="type", required=false) String type,
 			Model model) {
-		List<Consulting> consulting = consultingService.findAll();
-		model.addAttribute("consulting", consulting);
-		
+		if(date1 == null && date2 == null && type == null) {
+			List<Consulting> consulting = consultingService.findAll();
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+			cal.add(Calendar.DATE,-7);
+			Date d = new Date();
+			String weekago = formatDate.format(cal.getTime());
+			String today = formatDate.format(d);
+			
+			model.addAttribute("date1", weekago);
+			model.addAttribute("date2", today);
+			model.addAttribute("consulting", consulting);
+		} else {
+			if (type.equals("all")) {
+				List<Consulting> consulting = consultingService.findByDateBetween(date1, date2);
+				model.addAttribute("consulting", consulting);
+			} else {
+				List<Consulting> consulting = consultingService.findByTypeAndDateBetween(type, date1, date2);	
+				model.addAttribute("consulting", consulting);
+			}
+			model.addAttribute("type", type);
+			model.addAttribute("date1", date1);
+			model.addAttribute("date2", date2);
+		}
 		return "admin/consulting/list";
 	}
 	

@@ -46,9 +46,9 @@ public class ConsultingServiceImpl implements ConsultingService{
 	}
 
 	@Override
-	public List<Consulting> findByDateBetween(String date1, String date2) {
+	public List<Consulting> findByTypeAndDateBetween(String type, String date1, String date2) {
 		List<Consulting> cs = new ArrayList<Consulting>();
-		List<ConsultingEntity> cses = repository.findByDateqBetween(date1, date2);
+		List<ConsultingEntity> cses = repository.findByTypeAndDateqBetween(type, date1, date2);
 		for(ConsultingEntity et : cses) {
 			Consulting cst = et.buildDomain();
 			cs.add(cst);
@@ -86,6 +86,17 @@ public class ConsultingServiceImpl implements ConsultingService{
 		ConsultingEntity entity = new ConsultingEntity();
 		entity.buildEntity(consulting);
 		repository.delete(entity);
+	}
+
+	@Override
+	public List<Consulting> findByDateBetween(String date1, String date2) {
+		List<Consulting> cs = new ArrayList<Consulting>();
+		List<ConsultingEntity> cses = repository.findByDateqBetween(date1, date2);
+		for(ConsultingEntity et : cses) {
+			Consulting cst = et.buildDomain();
+			cs.add(cst);
+		}
+		return cs;
 	}
 	
 }
