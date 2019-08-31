@@ -1,0 +1,81 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+		<main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">마이페이지</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>1:1 문의 답변</h2>
+                       	 ※질문을 클릭하시면 답변을 보실 수 있습니다. 
+                        <br>
+                        <br>
+                            <div class="row">
+                                <table class="table">
+								  <thead class="thead-light text-center">
+								    <tr>
+								      <th scope="col">문의 유형</th>
+								      <th scope="col" style="width:50%">문의명</th>
+								      <th scope="col">답변 상태</th>
+								      <th scope="col">등록일</th>
+								      <th scope="col">삭제</th>
+								    </tr>
+								  </thead>
+								  <div th:each="consulting : ${consulting}">
+									  <tbody>
+									    <tr>
+									      <td class="text-center" th:if="${consulting.type == 'pay'}" th:text="@{입금/결제}"></td>
+									      <td class="text-center" th:if="${consulting.type == 'product'}" th:text="상품관련"></td>
+									      <td class="text-center" th:if="${consulting.type == 'delivery'}" th:text="배송관련"></td>
+									      <td class="text-center" th:if="${consulting.type == 'change'}" th:text="교환관련"></td>
+									      <td class="text-center" th:if="${consulting.type == 'return'}" th:text="반품관련"></td>
+									      <td class="text-center" th:if="${consulting.type == 'refund'}" th:text="환불관련"></td>
+									      <td class="text-center" th:if="${consulting.type == 'use'}" th:text="이용관련"></td>
+									      <td class="text-center" th:if="${consulting.type == 'as'}" th:text="@{A/S관련}"></td>
+									      <td class="text-center" th:if="${consulting.type == 'etc'}" th:text="기타"></td>
+									      <td>
+									      	<a th:href="@{'/custcenter/consulting/view/{no}'(no=${consulting.no})}">
+										      <u>
+										      	<span th:text="${consulting.title}" style="cursor:pointer"></span>	
+										      </u>
+											</a>
+									      </td>
+									      <td class="text-center" th:if="${consulting.status == 0}" th:text="답변대기"></td>
+									      <td class="text-center" th:if="${consulting.status == 1}"><strong>답변완료</strong></td>				     
+										  <td class="text-center" th:text="${consulting.date_q}"></td>
+										  <form th:action="@{'/custcenter/consulting/del/{no}'(no=${consulting.no})}" th:method="delete">
+										  	<td class="text-center">
+										  		<button type="submit" class="btn btn-danger btn-sm" onClick="return confirm('삭제할까요?');">
+										  			<i class="fas fa-trash-alt"></i>
+										  		</button>
+										  	</td>
+										  </form>
+									    </tr>  
+									  </tbody>
+								  </div>
+								  <tbody th:if="${consulting.isEmpty() == true}">
+								  	<tr class="text-center">
+									  	<td colspan="8">
+									  		<i class="far fa-times-circle fa-2x"></i><font size=6>1:1 문의 내역이 없습니다.</font>
+									  	</td>
+								  	</tr>
+								  </tbody>
+								</table>
+                            </div><!-- End .row -->
+                    </div><!-- End .col-lg-9 -->
+
+                    <th:block th:include="home/user/mypage/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->       
+ <th:block th:include="home/main/footer.html"></th:block>

@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import iducs.springboot.board.domain.ClothesSize;
 import iducs.springboot.board.domain.Color;
+import iducs.springboot.board.domain.Consulting;
 import iducs.springboot.board.domain.Order;
 import iducs.springboot.board.domain.OrderInfo;
 import iducs.springboot.board.domain.Product;
@@ -36,6 +37,7 @@ import iducs.springboot.board.domain.User;
 import iducs.springboot.board.domain.UserAddress;
 import iducs.springboot.board.service.ClothesSizeService;
 import iducs.springboot.board.service.ColorService;
+import iducs.springboot.board.service.ConsultingService;
 import iducs.springboot.board.service.OrderInfoService;
 import iducs.springboot.board.service.OrderService;
 import iducs.springboot.board.service.ProductQuestionService;
@@ -65,6 +67,8 @@ public class MypageController {
 	ClothesSizeService sizeService;
 	@Autowired
 	ProductReviewService reviewService;
+	@Autowired
+	ConsultingService consultingService;
 	
 	String osName = System.getProperty("os.name");
 	static File cwd = new File("src/main/resources/static/uploads/review");	// 윈도우 업로드 경로
@@ -661,5 +665,17 @@ public class MypageController {
 
 		reviewService.deleteProductReview(review);
 		return "redirect:/mypage/review";
+	}
+	
+	@GetMapping("/consulting")
+	public String mypageConsulting(
+			Model model,
+			HttpSession session
+			) {
+		User user = (User) session.getAttribute("user");
+		List<Consulting> consulting= consultingService.findByUserNo(user.getNo());
+		
+		model.addAttribute("consulting", consulting);
+		return "home/user/mypage/consulting";
 	}
 }

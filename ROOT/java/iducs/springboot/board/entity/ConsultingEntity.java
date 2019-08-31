@@ -50,6 +50,9 @@ public class ConsultingEntity {
 	@Column(name = "type", nullable=false, length=20)
 	private String type;
 	
+	@Column(name = "attach_original", nullable=true, length=100)
+	private String attach_original;
+	
 	public Long getNo() {
 		return no;
 	}
@@ -138,6 +141,16 @@ public class ConsultingEntity {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	
+
+	public String getAttach_original() {
+		return attach_original;
+	}
+
+	public void setAttach_original(String attach_original) {
+		this.attach_original = attach_original;
+	}
 
 	public Consulting buildDomain() {
 		Consulting consulting = new Consulting();
@@ -152,6 +165,7 @@ public class ConsultingEntity {
 		consulting.setDate_q(dateq);
 		consulting.setStatus(status);
 		consulting.setType(type);
+		consulting.setAttach_original(attach_original);
 		return consulting;
 	}
 	
@@ -166,6 +180,7 @@ public class ConsultingEntity {
 		dateq = consulting.getDate_q();
 		status = consulting.getStatus();
 		type = consulting.getType();
+		attach_original = consulting.getAttach_original();
 		
 		UserEntity userEntity = new UserEntity();
 		userEntity.buildEntity(consulting.getUser());

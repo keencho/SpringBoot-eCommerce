@@ -10,13 +10,14 @@ public class Consulting {
 	private String date_q;
 	private String date_a;
 	private String attach;
+	private String attach_original;
 	private int status;
 	private String type;
 	
 	public Consulting() {}
 	
 	public Consulting(User user, String email, String title, String contents, String answer, String date_q,
-			String date_a, String attach, int status, String type) {
+			String date_a, String attach, int status, String type, String attach_original) {
 		super();
 		this.user = user;
 		this.email = email;
@@ -28,6 +29,7 @@ public class Consulting {
 		this.attach = attach;
 		this.status = status;
 		this.type = type;
+		this.attach_original = attach_original;
 	}
 
 	public long getNo() {
@@ -105,6 +107,14 @@ public class Consulting {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getAttach_original() {
+		return attach_original;
+	}
+
+	public void setAttach_original(String attach_original) {
+		this.attach_original = attach_original;
 	}
 	
 	

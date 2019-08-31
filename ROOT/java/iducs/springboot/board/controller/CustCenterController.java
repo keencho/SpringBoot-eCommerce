@@ -1,5 +1,6 @@
 package iducs.springboot.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import iducs.springboot.board.domain.Consulting;
 import iducs.springboot.board.domain.Notice;
 import iducs.springboot.board.domain.Order;
 import iducs.springboot.board.domain.OrderInfo;
@@ -47,6 +51,20 @@ public class CustCenterController {
 	@Autowired OrderService orderService;
 	@Autowired OrderInfoService orderinfoService;
 	@Autowired ConsultingService consultingService;
+	
+	String osName = System.getProperty("os.name");
+	static File cwd = new File("src/main/resources/static/uploads/consulting");	// 윈도우 업로드 경로
+	static File cwd2 = new File("webapps/ROOT/WEB-INF/classes/static/uploads/consulting");	// 리눅스 실제 웹서버 업로드 경로
+	static File path = cwd.getAbsoluteFile();
+	static File path2 = cwd2.getAbsoluteFile();
+	static String autoFolderStatic = path.toString();
+	static String autoFolderStatic2 = path2.toString();
+	
+	Date d = new Date();
+	SimpleDateFormat t1 = new SimpleDateFormat("yyyy-MM-dd");
+	
+	String newname = null;
+	String newname_original = null;
 	
 	@GetMapping("/faq")
 	public String custcenterFaq(
@@ -202,13 +220,66 @@ public class CustCenterController {
 			@RequestParam("contents") String contents,
 			@RequestParam("attach") MultipartFile attach,
 			HttpSession session,
-			Model model) {
-		System.out.println(mail1);
-		System.out.println(mail2);
-		System.out.println(type);
-		System.out.println(title);
-		System.out.println( contents);
-		System.out.println(attach.getOriginalFilename());
-		return null;
+			Model model) throws IOException {
+		User user = (User) session.getAttribute("user");
+		File autoFolder = new File(autoFolderStatic + "/" +  t1.format(d));
+		File autoFolder2 = new File(autoFolderStatic2 + "/" +  t1.format(d));
+		if(osName.matches(".*Windows.*")) {
+			if(!autoFolder.exists()) {
+				autoFolder.mkdirs();
+			}
+		} else {
+			if(!autoFolder2.exists()) {
+				autoFolder2.mkdirs();
+			}
+		}
+		
+		if (!attach.isEmpty()) {
+			int idx1 = attach.getContentType().indexOf("/");
+			int idxO1 = attach.getOriginalFilename().indexOf(".");
+			String attachEx = attach.getContentType().substring(idx1+1);
+			String attachBf = attach.getOriginalFilename().substring(0, idxO1);
+
+			newname = attachBf + System.currentTimeMillis() + "." + attachEx;
+			newname_original = attach.getOriginalFilename();
+			if(osName.matches(".*Windows.*")) {
+				File file = new File(path + "/" + t1.format(d), newname);
+				FileCopyUtils.copy(attach.getBytes(), file);
+			} else {
+				File file = new File(path2 + "/" + t1.format(d), newname);
+				FileCopyUtils.copy(attach.getBytes(), file);
+			}
+		} else {
+			newname = null;
+			newname_original = null;
+		}
+		
+		contents = contents.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+		Consulting consulting = new Consulting(user, mail1 + "@" + mail2, title, contents, null, t1.format(d), null, newname, 0, type, newname_original);
+		consultingService.saveConsulting(consulting);
+		return "redirect:/mypage/consulting";
+	}
+	
+	@DeleteMapping("/consulting/del/{no}")
+	public String custcenterConsultingDel(
+			@PathVariable("no") Long no
+			) {
+		Consulting consulting = consultingService.findByNo(no);
+		consultingService.deleteConsulting(consulting);
+		
+		return "redirect:/mypage/consulting";
+	}
+	
+	@GetMapping("/consulting/view/{no}")
+	public String custcenterConsultingView(
+			@PathVariable("no") Long no,
+			Model model
+			) {
+		
+		Consulting consulting = consultingService.findByNo(no);
+		model.addAttribute("consulting", consulting);
+		
+		return "home/custcenter/consultingView";
+		
 	}
 }
