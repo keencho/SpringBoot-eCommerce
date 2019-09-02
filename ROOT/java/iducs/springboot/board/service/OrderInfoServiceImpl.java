@@ -65,4 +65,15 @@ public class OrderInfoServiceImpl implements OrderInfoService{
 		}
 		return order;
 	}
+
+	@Override
+	public List<OrderInfo> findOrderRand5(int count) {
+		List<OrderInfo> order = new ArrayList<OrderInfo>();
+		List<OrderInfoEntity> entities = repository.findOrderRand5(count);
+		for(OrderInfoEntity entity : entities) {
+			OrderInfo ord = entity.buildDomain();
+			order.add(ord);
+		}
+		return order;
+	}
 }

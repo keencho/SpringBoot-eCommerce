@@ -235,4 +235,63 @@ public class ProductServiceImpl implements ProductService{
 		return product;
 	}
 
+
+	@Override
+	public List<Product> get8ProductOrderByNoDesc() {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findTop8OrderByNoDesc();
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
+
+	@Override
+	public List<Product> getRand5Product() {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findRand5();
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+	
+	@Override
+	public List<Product> getRand3Product() {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findRand3();
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
+
+	@Override
+	public List<Product> getNewRand5Product(String date) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findNewRand5(date);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
+
+	@Override
+	public List<Product> getSaleRand5Product(int discount) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findSaleRand5(discount);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
 }

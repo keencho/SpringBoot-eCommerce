@@ -45,4 +45,19 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>{
 	Page<ProductEntity> findBySectionNoPage(@Param("no") long sectionno, Pageable pageable, @Param("size") String[] size, @Param("color") String[] color, @Param("price1") long price1, @Param("price2") long price2);
 	
 	List<ProductEntity> findAll(Sort sort);
+	
+	@Query(value="SELECT * FROM product ORDER BY no DESC LIMIT 8", nativeQuery = true)
+	List<ProductEntity> findTop8OrderByNoDesc();
+	
+	@Query(value="SELECT * FROM product ORDER BY rand() LIMIT 5", nativeQuery = true)
+	List<ProductEntity> findRand5();
+	
+	@Query(value="SELECT * FROM product ORDER BY rand() LIMIT 3", nativeQuery = true)
+	List<ProductEntity> findRand3();
+	
+	@Query(value="SELECT * FROM product WHERE regdate > :date ORDER BY rand() LIMIT 5", nativeQuery = true)
+	List<ProductEntity> findNewRand5(@Param("date") String date);
+	
+	@Query(value="SELECT * FROM product WHERE discount > :discount ORDER BY rand() LIMIT 5", nativeQuery = true)
+	List<ProductEntity> findSaleRand5(@Param("discount") int discount);
 }

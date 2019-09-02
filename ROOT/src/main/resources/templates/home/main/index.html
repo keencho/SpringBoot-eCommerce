@@ -1,4 +1,14 @@
 <th:block th:include="home/main/header.html"></th:block>
+<div style="display: none;">
+	<th:block th:include="home/main/nav.html"></th:block>
+</div>
+<!-- 장바구니 옵션 선택 팝업 레이어를 불러오기 위한 div 지정 -->
+<div id="cart_ajax_option"></div>
+<div id="cart_ajax_complete"></div>
+<div id="cart_ajax_sizeTable"></div>
+<div id="wishlist_ajax_complete"></div>
+<!-- 로그인 -->
+<div id="login_popup"></div>
  </header>	
 		<main class="main">
             <div class="info-boxes-container">
@@ -37,244 +47,66 @@
                     <div class="col-lg-9">
                         <div class="home-slider owl-carousel owl-carousel-lazy owl-theme owl-theme-light">
                             <div class="home-slide">
-                                <div class="owl-lazy slide-bg" data-src="/home/assets/images/slider/slide-1.jpg"></div>
+                                <div class="owl-lazy slide-bg" data-src="/home/assets/images/product-list.jpg"></div>
                                 <div class="home-slide-content text-white">
-                                    <h3>Get up to <span>60%</span> off</h3>
-                                    <h1>Summer Sale</h1>
-                                    <p>Limited items available at this price.</p>
-                                    <a href="category.html" class="btn btn-dark">Shop Now</a>
+                                    <h3><span>남성</span> 상품 바로 보기</h3>
+                                    <p>check out our men's product</p>
+                                    <a href="/product/list/category/1" class="btn btn-dark">확인</a>
                                 </div><!-- End .home-slide-content -->
                             </div><!-- End .home-slide -->
-
+                            
                             <div class="home-slide">
-                                <div class="owl-lazy slide-bg" data-src="/home/assets/images/slider/slide-2.jpg"></div>
-                                <div class="home-slide-content">
-                                    <h3>OVER <span>200+</span></h3>
-                                    <h1>GREAT DEALS</h1>
-                                    <p>While they last!</p>
-                                    <a href="category.html" class="btn btn-dark">Shop Now</a>
+                                <div class="owl-lazy slide-bg" data-src="/uploads/women.jpg"></div>
+                                <div class="home-slide-content text-white">
+                                    <h3><span>여성</span> 상품 바로 보기</h3>
+                                    <p>check out our women's product</p>
+                                    <a href="/product/list/category/2" class="btn btn-dark">확인</a>
                                 </div><!-- End .home-slide-content -->
                             </div><!-- End .home-slide -->
-
-                            <div class="home-slide">
-                                <div class="owl-lazy slide-bg" data-src="/home/assets/images/slider/slide-3.jpg"></div>
-                                <div class="home-slide-content">
-                                    <h3>up to <span>40%</span> off</h3>
-                                    <h1>NEW ARRIVALS</h1>
-                                    <p>Starting at $9</p>
-                                    <a href="category.html" class="btn btn-dark">Shop Now</a>
-                                </div><!-- End .home-slide-content -->
-                            </div><!-- End .home-slide -->
+                            
                         </div><!-- End .home-slider -->
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="banner banner-image">
-                                    <a href="#">
-                                        <img src="/home/assets/images/banners/banner-1.jpg" alt="banner">
-                                    </a>
-                                </div><!-- End .banner -->
-                            </div><!-- End .col-md-4 -->
-
-                            <div class="col-md-4">
-                                <div class="banner banner-image">
-                                    <a href="#">
-                                        <img src="/home/assets/images/banners/banner-2.jpg" alt="banner">
-                                    </a>
-                                </div><!-- End .banner -->
-                            </div><!-- End .col-md-4 -->
-
-                            <div class="col-md-4">
-                                <div class="banner banner-image">
-                                    <a href="#">
-                                        <img src="/home/assets/images/banners/banner-3.jpg" alt="banner">
-                                    </a>
-                                </div><!-- End .banner -->
-                            </div><!-- End .col-md-4 -->
-                        </div><!-- End .row -->
-
+                        
                         <div class="mb-3"></div><!-- margin -->
 
-                        <h2 class="carousel-title">Featured Products</h2>
+                        <h2 class="carousel-title">최근  등록된 상품</h2>
 
                         <div class="home-featured-products owl-carousel owl-theme owl-dots-top">
-                            <div class="product">
+                            <div class="product" th:each="product : ${product_last8}">
                                 <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="/home/assets/images/products/home-featured-1.jpg" alt="product">
+                                    <a th:href="@{'/product/view/{no}'(no=${product.no})}" class="product-image">
+                                        <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product">
                                     </a>
-                                    <a href="/home/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
+                                    <a th:href="@{'/product/quickview/{no}'(no=${product.no})}" class="btn-quickview">상품 미리보기</a>
                                 </figure>
                                 <div class="product-details">
                                     <div class="ratings-container">
                                         <div class="product-ratings">
-                                            <span class="ratings" style="width:80%"></span><!-- End .ratings -->
+                                            <span class="ratings" th:style="@{'width: {score}%'(score=${product.score * 20})}"></span><!-- End .ratings -->
                                         </div><!-- End .product-ratings -->
                                     </div><!-- End .product-container -->
                                     <h2 class="product-title">
-                                        <a href="product.html">Wireless Headset</a>
+                                        <a th:href="@{'/product/view/{no}'(no=${product.no})}" th:text="${product.name}"></a>
                                     </h2>
                                     <div class="price-box">
-                                        <span class="product-price">$28.00</span>
+                                    	<span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
+                                    	<span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
                                     </div><!-- End .price-box -->
 
                                     <div class="product-action">
-                                        <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                            <span>Add to Wishlist</span>
-                                        </a>
-
-                                        <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                            <span>Add to Cart</span>
-                                        </a>
-
-                                        <a href="#" class="paction add-compare" title="Add to Compare">
-                                            <span>Add to Compare</span>
-                                        </a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-details -->
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="/home/assets/images/products/home-featured-2.jpg" alt="product">
-                                    </a>
-                                    <a href="/home/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                                </figure>
-                                <div class="product-details">
-                                    <div class="ratings-container">
-                                        <div class="product-ratings">
-                                            <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                                        </div><!-- End .product-ratings -->
-                                    </div><!-- End .product-container -->
-                                    <h2 class="product-title">
-                                        <a href="product.html">Bluetooth Headset</a>
-                                    </h2>
-                                    <div class="price-box">
-                                        <span class="product-price">$28.00</span>
-                                    </div><!-- End .price-box -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                            <span>Add to Wishlist</span>
-                                        </a>
-
-                                        <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                            <span>Add to Cart</span>
-                                        </a>
-
-                                        <a href="#" class="paction add-compare" title="Add to Compare">
-                                            <span>Add to Compare</span>
-                                        </a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-details -->
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="/home/assets/images/products/home-featured-3.jpg" alt="product">
-                                    </a>
-                                    <a href="/home/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                                </figure>
-                                <div class="product-details">
-                                    <div class="ratings-container">
-                                        <div class="product-ratings">
-                                            <span class="ratings" style="width:40%"></span><!-- End .ratings -->
-                                        </div><!-- End .product-ratings -->
-                                    </div><!-- End .product-container -->
-                                    <h2 class="product-title">
-                                        <a href="product.html">MSK02 Headset</a>
-                                    </h2>
-                                    <div class="price-box">
-                                        <span class="product-price">$28.00</span>
-                                    </div><!-- End .price-box -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                            <span>Add to Wishlist</span>
-                                        </a>
-
-                                        <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                            <span>Add to Cart</span>
-                                        </a>
-
-                                        <a href="#" class="paction add-compare" title="Add to Compare">
-                                            <span>Add to Compare</span>
-                                        </a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-details -->
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="/home/assets/images/products/home-featured-4.jpg" alt="product">
-                                    </a>
-                                    <a href="/home/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                                </figure>
-                                <div class="product-details">
-                                    <div class="ratings-container">
-                                        <div class="product-ratings">
-                                            <span class="ratings" style="width:0%"></span><!-- End .ratings -->
-                                        </div><!-- End .product-ratings -->
-                                    </div><!-- End .product-container -->
-                                    <h2 class="product-title">
-                                        <a href="product.html">Noise CT</a>
-                                    </h2>
-                                    <div class="price-box">
-                                        <span class="product-price">$28.00</span>
-                                    </div><!-- End .price-box -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                            <span>Add to Wishlist</span>
-                                        </a>
-
-                                        <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                            <span>Add to Cart</span>
-                                        </a>
-
-                                        <a href="#" class="paction add-compare" title="Add to Compare">
-                                            <span>Add to Compare</span>
-                                        </a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-details -->
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="/home/assets/images/products/home-featured-5.jpg" alt="product">
-                                    </a>
-                                    <a href="/home/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                                </figure>
-                                <div class="product-details">
-                                    <div class="ratings-container">
-                                        <div class="product-ratings">
-                                            <span class="ratings" style="width:50%"></span><!-- End .ratings -->
-                                        </div><!-- End .product-ratings -->
-                                    </div><!-- End .product-container -->
-                                    <h2 class="product-title">
-                                        <a href="product.html">Stereo Headset</a>
-                                    </h2>
-                                    <div class="price-box">
-                                        <span class="product-price">$28.00</span>
-                                    </div><!-- End .price-box -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                            <span>Add to Wishlist</span>
-                                        </a>
-
-                                        <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                            <span>Add to Cart</span>
-                                        </a>
-
-                                        <a href="#" class="paction add-compare" title="Add to Compare">
-                                            <span>Add to Compare</span>
-                                        </a>
-                                    </div><!-- End .product-action -->
+	                                    <a style="cursor: pointer;" onclick="login_popup()" class="paction add-wishlist" title="위시 리스트에 추가" th:if="${session.user == null}">
+	                                        <span>위시 리스트에 추가</span>
+	                                    </a>
+	                                    <a style="cursor: pointer;" th:onclick="@{'wishlist_ajax_add(\'{no}\', \'{productno}\')'(no=${session.user.no}, productno=${product.no})}" class="paction add-wishlist" title="위시 리스트에 추가" th:unless="${session.user == null}">
+	                                        <span>위시 리스트에 추가</span>
+	                                    </a>
+	                                    <a style="cursor: pointer;" class="paction add-cart" title="장바구니에 추가" th:onclick="@{'cartOptionAjax(\'{no}\')'(no=${product.no})}">
+	                                        <span>장바구니</span>
+	                                    </a>
+	
+	                                    <a th:href="@{'/product/view/{no}'(no=${product.no})}" class="paction icon-magnifier" title="새창으로 보기" target="_blank">
+	                                        <span>새창으로 보기</span>
+	                                    </a>
+	                                </div><!-- End .product-action -->
                                 </div><!-- End .product-details -->
                             </div><!-- End .product -->
                         </div><!-- End .featured-proucts -->
@@ -284,211 +116,94 @@
                         <div class="row">
                             <div class="col-6 col-md-4">
                                 <div class="product-column">
-                                    <h3 class="title">New</h3>
+                                    <h3 class="title">신상품</h3>
 
-                                    <div class="product product-sm">
+                                    <div class="product product-sm" th:each="product : ${product_new_rand5}">
                                         <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/home/assets/images/products/home-featured-3.jpg" alt="product">
+                                            <a th:href="@{'/product/view/{no}'(no=${product.no})}" class="product-image">
+                                                <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product">
                                             </a>
                                         </figure>
                                         <div class="product-details">
                                             <h2 class="product-title">
-                                                <a href="product.html">Silver Porto Headset</a>
+                                                <a th:href="@{'/product/view/{no}'(no=${product.no})}" th:text="${product.name}"></a>
                                             </h2>
                                             <div class="ratings-container">
                                                 <div class="product-ratings">
-                                                    <span class="ratings" style="width:80%"></span><!-- End .ratings -->
+                                                    <span class="ratings" th:style="@{'width: {score}%'(score=${product.score * 20})}"></span><!-- End .ratings -->
                                                 </div><!-- End .product-ratings -->
                                             </div><!-- End .product-container -->
                                             <div class="price-box">
-                                                <span class="product-price">$45.00</span>
+                                                <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
                                     </div><!-- End .product -->
-
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/home/assets/images/products/home-featured-4.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Headphone Black</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:20%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="old-price">$60.00</span>
-                                                <span class="product-price">$45.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
-
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/home/assets/images/products/small/product-1.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Computer Mouse</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="product-price">$50.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
+                                    
                                 </div><!-- End .product-column -->
                             </div><!-- End .col-md-4 -->
 
                             <div class="col-6 col-md-4">
                                 <div class="product-column">
-                                    <h3 class="title">Hot</h3>
+                                    <h3 class="title">주문많은 상품</h3>
 
-                                    <div class="product product-sm">
+                                    <div class="product product-sm" th:each="product : ${product_order_rand5}">
                                         <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/home/assets/images/products/home-featured-1.jpg" alt="product">
+                                            <a th:href="@{'/product/view/{no}'(no=${product.product.no})}" class="product-image">
+                                                <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.product.regdate}, pic=${product.product.pic1})}" alt="product">
                                             </a>
                                         </figure>
                                         <div class="product-details">
                                             <h2 class="product-title">
-                                                <a href="product.html">Porto Evolution Headset</a>
+                                                <a th:href="@{'/product/view/{no}'(no=${product.product.no})}" th:text="${product.product.name}"></a>
                                             </h2>
                                             <div class="ratings-container">
                                                 <div class="product-ratings">
-                                                    <span class="ratings" style="width:20%"></span><!-- End .ratings -->
+                                                    <span class="ratings" th:style="@{'width: {score}%'(score=${product.product.score * 20})}"></span><!-- End .ratings -->
                                                 </div><!-- End .product-ratings -->
                                             </div><!-- End .product-container -->
                                             <div class="price-box">
-                                                <span class="product-price">$13.00</span>
+                                                <span class="product-price">
+                                                	<span th:text="@{'{price}원'(price=${#numbers.formatInteger(product.product.listprice, 0, 'COMMA')})}"></span>
+                                                </span>
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
                                     </div><!-- End .product -->
 
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/home/assets/images/products/home-featured-2.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Audio Technicca</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:50%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="old-price">$42.00</span>
-                                                <span class="product-price">$27.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
-
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/home/assets/images/products/home-featured-5.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Senheisser</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:0%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="product-price">$35.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
                                 </div><!-- End .product-column -->
                             </div><!-- End .col-md-4 -->
 
                             <div class="col-6 col-md-4">
                                 <div class="product-column">
-                                    <h3 class="title">Sale</h3>
+                                    <h3 class="title">세일중인 상품</h3>
 
-                                    <div class="product product-sm">
+                                   <div class="product product-sm" th:each="product : ${product_sale_rand5}">
                                         <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/home/assets/images/products/home-featured-4.jpg" alt="product">
+                                            <a th:href="@{'/product/view/{no}'(no=${product.no})}" class="product-image">
+                                                <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product">
                                             </a>
                                         </figure>
                                         <div class="product-details">
                                             <h2 class="product-title">
-                                                <a href="product.html">Phillips</a>
+                                                <a th:href="@{'/product/view/{no}'(no=${product.no})}" th:text="${product.name}"></a>
                                             </h2>
                                             <div class="ratings-container">
                                                 <div class="product-ratings">
-                                                    <span class="ratings" style="width:20%"></span><!-- End .ratings -->
+                                                    <span class="ratings" th:style="@{'width: {score}%'(score=${product.score * 20})}"></span><!-- End .ratings -->
                                                 </div><!-- End .product-ratings -->
                                             </div><!-- End .product-container -->
                                             <div class="price-box">
-                                                <span class="product-price">$13.00</span>
+                                                <span class="product-price">
+                                                	<span th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
+                                                	<div style="padding-top:10px">
+	                                                	<font size="2" color="blue">
+	                                                		<span th:text="@{'할인율: {discount}%' (discount=${product.discount})}"></span>
+	                                                	</font>
+	                                                </div>
+                                                </span>
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
                                     </div><!-- End .product -->
 
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/home/assets/images/products/small/product-1.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Computer Mouse</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:50%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="old-price">$42.00</span>
-                                                <span class="product-price">$27.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
-
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/home/assets/images/products/home-featured-3.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Skullcanddy</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:0%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="product-price">$35.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
                                 </div><!-- End .product-column -->
                             </div><!-- End .col-md-4 -->
                         </div><!-- End .row -->
@@ -501,9 +216,9 @@
                                     <i class="icon-star"></i>
 
                                     <div class="feature-box-content">
-                                        <h3>Dedicated Service</h3>
-                                        <p>Consult our specialists for help with an order, customization, or design advice</p>
-                                        <a href="#" class="btn btn-outline-dark">Get in touch</a>
+                                        <h3>많은 상품</h3>
+                                        <p>수많은 상품들을 지금 바로 확인해보세요!</p>
+                                        <a href="#" class="btn btn-outline-dark">지금 바로 쇼핑!</a>
                                     </div><!-- End .feature-box-content -->
                                 </div><!-- End .feature-box -->
                             </div><!-- End .col-md-4 -->
@@ -513,9 +228,10 @@
                                     <i class="icon-reply"></i>
 
                                     <div class="feature-box-content">
-                                        <h3>Free Returns</h3>
-                                        <p>We stand behind our goods and services and want you to be satisfied with them.</p>
-                                        <a href="#" class="btn btn-outline-dark">Return Policy</a>
+                                        <h3>손쉬운 교환 & 환불</h3>
+                                        <p>한번의 클릭으로 손쉽게 교환 & 환불 신청하세요!</p>
+                                        <a href="#" onclick="login_popup()" class="btn btn-outline-dark" th:if="${session.user == null}">교환 & 환불 신청</a>
+                                        <a href="/mypage/change/apply" class="btn btn-outline-dark" th:if="${session.user != null}">교환 & 환불 신청</a>
                                     </div><!-- End .feature-box-content -->
                                 </div><!-- End .feature-box -->
                             </div><!-- End .col-md-4 -->
@@ -525,9 +241,10 @@
                                     <i class="icon-paper-plane"></i>
 
                                     <div class="feature-box-content">
-                                        <h3>International Shipping</h3>
-                                        <p>Currently over 50 countries qualify for express international shipping.</p>
-                                        <a href="#" class="btn btn-outline-dark">Lear More</a>
+                                        <h3>친절 상담 항시 대기</h3>
+                                        <p>지금 바로 마이페이지 에서 1:1 상담을 등록해보세요.</p>
+                                        <a href="#" onclick="login_popup()" class="btn btn-outline-dark" th:if="${session.user == null}">1:1 상담</a>
+                                        <a href="/custcenter/counsel" class="btn btn-outline-dark" th:if="${session.user != null}">1:1 상담</a>
                                     </div><!-- End .feature-box-content -->
                                 </div><!-- End .feature-box -->
                             </div><!-- End .col-md-4 -->
@@ -593,35 +310,30 @@
                                         </ul>
                                     </li>
                                     <li><a href="/custcenter/faq">&nbsp&nbsp<i class="far fa-clipboard"></i>&nbsp고객센터</a></li>
-                                    <li><a href="#">&nbsp&nbsp<i class="fas fa-info"></i>&nbsp&nbsp정보</a></li>
+                                    <li><a href="/about">&nbsp&nbsp<i class="fas fa-info"></i>&nbsp&nbsp정보</a></li>
                                 </ul>
                             </nav>
                         </div><!-- End .side-menu-container -->
                         <div class="widget widget-banners">
                             <div class="widget-banners-slider owl-carousel owl-theme">
-                                <div class="banner banner-image">
-                                    <a href="#">
-                                        <img src="/home/assets/images/banners/banner-sidebar.jpg" alt="banner">
+                                <div class="banner banner-image" th:each="product : ${product_rand5}">
+                                    <a th:href="@{'/product/view/{no}'(no=${product.no})}">
+                                       <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="banner">
                                     </a>
-                                </div><!-- End .banner -->
-
-                                <div class="banner banner-image">
-                                    <a href="#">
-                                        <img src="/home/assets/images/banners/banner-sidebar-2.jpg" alt="banner">
-                                    </a>
+                                    <div align="center" style="background: white;" th:text="${product.name}"></div>
                                 </div><!-- End .banner -->
                             </div><!-- End .banner-slider -->
                         </div><!-- End .widget -->
 
                         <div class="widget widget-newsletters">
-                            <h3 class="widget-title">Newsletter</h3>
-                            <p>Get all the latest information on Events, Sales and Offers. </p>
+                            <h3 class="widget-title">구독하기</h3>
+                            <p>최신 상품 정보들을<br> 이메일로 확인 해보세요.</p>
                             <form action="#">
                                 <div class="form-group">
                                     <input type="email" class="form-control" id="wemail">
-                                    <label for="wemail"><i class="icon-envolope"></i>Email Address</label>
+                                    <label for="wemail"><i class="icon-envolope"></i>이메일</label>
                                 </div><!-- Endd .form-group -->
-                                <input type="submit" class="btn btn-block" value="Subscribe Now">
+                                <input type="submit" class="btn btn-block" value="구독하기">
                             </form>
                         </div><!-- End .widget -->
 
@@ -630,59 +342,21 @@
                                 <div class="testimonial">
                                     <div class="testimonial-owner">
                                         <figure>
-                                            <img src="/home/assets/images/clients/client1.png" alt="client">
+                                            <img src="/uploads/cho.jpg" alt="client">
                                         </figure>
 
                                         <div>
-                                            <h4 class="testimonial-title">john Smith</h4>
-                                            <span>CEO &amp; Founder</span>
+                                            <h4 class="testimonial-title">조세영</h4>
+                                            <span>Developer</span>
                                         </div>
                                     </div><!-- End .testimonial-owner -->
 
                                     <blockquote>
-                                        <p>Lorem ipsum dolor sit amet, consectetur elitad adipiscing Cras non placerat mi.</p>
+                                        <p>본 사이트는 Spring-Boot, Maven, Thymeleaf를 사용한 가상 쇼핑몰입니다. 방문해주셔서 감사합니다!</p>
                                     </blockquote>
                                 </div><!-- End .testimonial -->
 
-                                <div class="testimonial">
-                                    <div class="testimonial-owner">
-                                        <figure>
-                                            <img src="/home/assets/images/clients/client2.png" alt="client">
-                                        </figure>
-
-                                        <div>
-                                            <h4 class="testimonial-title">Dae Smith</h4>
-                                            <span>Co-founder</span>
-                                        </div>
-                                    </div><!-- End .testimonial-owner -->
-
-                                    <blockquote>
-                                        <p>Lorem ipsum dolor sit amet, consectetur elitad adipiscing Cras non placerat mi.</p>
-                                    </blockquote>
-                                </div><!-- End .testimonial -->
                             </div><!-- End .testimonials-slider -->
-                        </div><!-- End .widget -->
-
-                        <div class="widget">
-                            <div class="widget-posts-slider owl-carousel owl-theme">
-                                <div class="post">
-                                    <span class="post-date">01- Jun -2018</span>
-                                    <h4 class="post-title"><a href="#">Fashion News</a></h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur elitad adipiscing Cras non placerat mi. </p>
-                                </div><!-- End .post -->
-
-                                <div class="post">
-                                    <span class="post-date">22- May -2018</span>
-                                    <h4 class="post-title"><a href="#">Shopping News</a></h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur elitad adipiscing Cras non plasasyi. </p>
-                                </div><!-- End .post -->
-
-                                <div class="post">
-                                    <span class="post-date">13- May -2018</span>
-                                    <h4 class="post-title"><a href="#">Fashion News</a></h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur elitad adipiscing Cras non placerat. </p>
-                                </div><!-- End .post -->
-                            </div><!-- End .posts-slider -->
                         </div><!-- End .widget -->
                     </aside><!-- End .col-lg-3 -->
                 </div><!-- End .row -->

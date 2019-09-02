@@ -26,6 +26,11 @@ public interface ProductService {
 	
 	List<Product> get6ProductByCategoryNo(long no);
 	List<Product> get3ProductByDivisionNo(long no);
+	List<Product> get8ProductOrderByNoDesc();
+	List<Product> getRand5Product();
+	List<Product> getRand3Product();
+	List<Product> getNewRand5Product(String date);
+	List<Product> getSaleRand5Product(int discount);
 
 	Page<ProductEntity> getProductByCategoryNoPage(Pageable pageable, long no);
 	Page<ProductEntity> getProductByCategoryNoPageSize(Pageable pageable, long no, String[] sizeArray, String[] colorArray, long price1, long price2);

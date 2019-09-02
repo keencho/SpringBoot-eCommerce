@@ -151,7 +151,11 @@ public class CustCenterController {
 	}
 	
 	@GetMapping("/tracking")
-	public String custcenterNonUserTracking() {
+	public String custcenterNonUserTracking(
+			HttpSession session) {
+		if (session.getAttribute("user") != null)
+			return "redirect:/404";
+		
 		return "home/custcenter/tracking";
 	}
 	

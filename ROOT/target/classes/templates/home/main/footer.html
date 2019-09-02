@@ -40,32 +40,32 @@
 
                                     <div class="col-md-6">
                                         <form action="#">
-                                            <input type="email" class="form-control" placeholder="Email address" required>
+                                            <input type="email" class="form-control" placeholder="이메일 주소" required>
 
-                                            <input type="submit" class="btn" value="Subscribe">
+                                            <input type="submit" class="btn" value="구독하기">
                                         </form>
                                     </div><!-- End .col-md-6 -->
                                 </div><!-- End .row -->
                             </div><!-- End .widget -->
 
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-5" th:if="${session.user != null}">
                                     <div class="widget">
-                                        <h4 class="widget-title">My Account</h4>
+                                        <h4 class="widget-title">내 계정</h4>
 
                                         <div class="row">
                                             <div class="col-sm-6 col-md-5">
                                                 <ul class="links">
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="contact.html">Contact Us</a></li>
-                                                    <li><a href="my-account.html">My Account</a></li>
+                                                    <li><a href="/mypage">마이페이지</a></li>
+                                                    <li><a href="/mypage">주문 / 배송 조회</a></li>
+                                                    <li><a href="/mypage/review">나의 상품평</a></li>
                                                 </ul>
                                             </div><!-- End .col-sm-6 -->
                                             <div class="col-sm-6 col-md-5">
                                                 <ul class="links">
-                                                    <li><a href="#">Orders History</a></li>
-                                                    <li><a href="#">Advanced Search</a></li>
-                                                    <li><a href="#" class="login-link">Login</a></li>
+                                                    <li><a href="/custcenter/counsel">1:1 문의 하기</a></li>                                                
+                                                    <li><a href="/mypage/consulting">1:1 문의 답변</a></li>
+                                                    <li><a href="/mypage/withdraw" class="login-link">회원 탈퇴</a></li>
                                                 </ul>
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
@@ -74,20 +74,21 @@
 
                                 <div class="col-md-7">
                                     <div class="widget">
-                                        <h4 class="widget-title">Main Features</h4>
+                                        <h4 class="widget-title">사이트 둘러보기</h4>
                                         
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <ul class="links">
-                                                    <li><a href="#">Super Fast Magento Theme</a></li>
-                                                    <li><a href="#">1st Fully working Ajax Theme</a></li>
-                                                    <li><a href="#">20 Unique Homepage Layouts</a></li>
+                                                    <li><a href="/custcenter/faq">고객센터</a></li>
+                                                    <li><a href="/custcenter/faq">자주 묻는 질문</a></li>
+                                                    <li><a href="/custcenter/tracking">비회원 주문조회</a></li>
+                                                    
                                                 </ul>
                                             </div><!-- End .col-sm-6 -->
                                             <div class="col-sm-6">
                                                 <ul class="links">
-                                                    <li><a href="#">Powerful Admin Panel</a></li>
-                                                    <li><a href="#">Mobile & Retina Optimized</a></li>
+                                                	<li><a href="/about">사이트 정보</a></li>
+                                                    <li><a href="/custcenter/notice">공지사항</a></li>
                                                 </ul>
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->

@@ -16,4 +16,7 @@ public interface OrderInfoRepository extends JpaRepository<OrderInfoEntity, Long
 	List<OrderInfoEntity> findByOrderNoOrderByNoAsc(long no);
 	@Query(value="SELECT * FROM order_productinfo LEFT JOIN order_sheet as os ON os.no = order_productinfo.order_no WHERE os.date >= :date1 AND os.date <= :date2 AND os.user_no = :userno AND os.status = 9 order by os.date asc", nativeQuery=true)
 	List<OrderInfoEntity> findByUserNoAndDateAndStatusLeftJoin(@Param("date1") String date1, @Param("date2") String date2, @Param("userno") long userno);
+	
+	@Query(value="SELECT * FROM order_productinfo GROUP BY product_no HAVING count(*) >= :count ORDER BY rand() LIMIT 5", nativeQuery = true)
+	List<OrderInfoEntity> findOrderRand5(@Param("count") int count);
 }
