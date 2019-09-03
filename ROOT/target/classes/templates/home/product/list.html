@@ -94,6 +94,7 @@
                                             <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product">
                                         </a>
                                         <a th:href="@{'/product/quickview/{no}'(no=${product.no})}" class="btn-quickview" >상품 미리보기</a>
+                                        <span class="product-label label-sale" th:if="${product.discount != '0'}" th:text="@{'-{discount}%'(discount=${product.discount})}"></span>
                                     </figure>
                                     <div class="product-details">
                                         <div class="ratings-container">

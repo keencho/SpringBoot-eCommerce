@@ -40,32 +40,32 @@
 
                                     <div class="col-md-6">
                                         <form action="#">
-                                            <input type="email" class="form-control" placeholder="Email address" required>
+                                            <input type="email" class="form-control" placeholder="이메일 주소" required>
 
-                                            <input type="submit" class="btn" value="Subscribe">
+                                            <input type="submit" class="btn" value="구독하기">
                                         </form>
                                     </div><!-- End .col-md-6 -->
                                 </div><!-- End .row -->
                             </div><!-- End .widget -->
 
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-5" th:if="${session.user != null}">
                                     <div class="widget">
-                                        <h4 class="widget-title">My Account</h4>
+                                        <h4 class="widget-title">내 계정</h4>
 
                                         <div class="row">
                                             <div class="col-sm-6 col-md-5">
                                                 <ul class="links">
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="contact.html">Contact Us</a></li>
-                                                    <li><a href="my-account.html">My Account</a></li>
+                                                    <li><a href="/mypage">마이페이지</a></li>
+                                                    <li><a href="/mypage">주문 / 배송 조회</a></li>
+                                                    <li><a href="/mypage/review">나의 상품평</a></li>
                                                 </ul>
                                             </div><!-- End .col-sm-6 -->
                                             <div class="col-sm-6 col-md-5">
                                                 <ul class="links">
-                                                    <li><a href="#">Orders History</a></li>
-                                                    <li><a href="#">Advanced Search</a></li>
-                                                    <li><a href="#" class="login-link">Login</a></li>
+                                                    <li><a href="/custcenter/counsel">1:1 문의 하기</a></li>                                                
+                                                    <li><a href="/mypage/consulting">1:1 문의 답변</a></li>
+                                                    <li><a href="/mypage/withdraw" class="login-link">회원 탈퇴</a></li>
                                                 </ul>
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
@@ -74,20 +74,21 @@
 
                                 <div class="col-md-7">
                                     <div class="widget">
-                                        <h4 class="widget-title">Main Features</h4>
+                                        <h4 class="widget-title">사이트 둘러보기</h4>
                                         
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <ul class="links">
-                                                    <li><a href="#">Super Fast Magento Theme</a></li>
-                                                    <li><a href="#">1st Fully working Ajax Theme</a></li>
-                                                    <li><a href="#">20 Unique Homepage Layouts</a></li>
+                                                    <li><a href="/custcenter/faq">고객센터</a></li>
+                                                    <li><a href="/custcenter/faq">자주 묻는 질문</a></li>
+                                                    <li><a href="/custcenter/tracking">비회원 주문조회</a></li>
+                                                    
                                                 </ul>
                                             </div><!-- End .col-sm-6 -->
                                             <div class="col-sm-6">
                                                 <ul class="links">
-                                                    <li><a href="#">Powerful Admin Panel</a></li>
-                                                    <li><a href="#">Mobile & Retina Optimized</a></li>
+                                                	<li><a href="/about">사이트 정보</a></li>
+                                                    <li><a href="/custcenter/notice">공지사항</a></li>
                                                 </ul>
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
@@ -221,349 +222,69 @@
     <script src="/home/assets/js/main.min.js?ver=2"></script>
     
     <!-- Custom JS File -->
-    <script src="/home/assets/js/custom.js?ver=40"></script>
+    <script src="/home/assets/js/custom.js?ver=50"></script>
     <!-- .load()메소드를 사용했을시 main.js를 다시 불러오기 위한 reload function -->
     <script src="/home/assets/js/reload_main.js"></script>
+    
+    <!-- 아임포트 결제 데모 -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+    <!-- jQuery UI -->
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script>
-function cart_order_page(no){
-	if(no == -1) {
-		alert("장바구니에 상품이 없습니다.");
-	} else if(no == 0) {
-		var productList = new Array();
-		for(var i = 0; i < $(".cart_count").length; i ++){
-			 var productData = new Object();
-			 var productno = $("input[name='hidden_cart_no']").eq(i).val();
-			 var option = $("input[name='hidden_option']").eq(i).val();
-			 var str = option.split('/');
-			 var size = str[0];
-			 var color = str[1];
-			 var qty = $('input[name=product_qty]').eq(i).val();
-			 
-			 productData.no = productno;
-			 productData.size = size;
-			 productData.color = color;
-			 productData.qty = qty;
-			 
-			 productList.push(productData);
+    // 공지사항 소팅
+    function notice_sorting() {
+    	var sort = $('#orderby').val();
+    	var url_original = "/custcenter/notice/?sort=" + sort;
+		var url_string = window.location.href;
+    	var url = new URL(url_string);
+    	var category = url.searchParams.get("category");
+    	var search = url.searchParams.get("search");
+
+		if(category == null && search == null){
+			location.href = url_original;
+		} else if (category != null && search != null) {
+			location.href = url_original + "&search=" + search + "&category=" + category;
 		}
-		var jsonProductData = JSON.stringify(productList);
-			 $.ajax({
-		        type : "POST",
-		        contentType: 'application/json',
-		        dataType : "json",
-		        url : "/checkout/jsonData",
-		        data : jsonProductData,
-		        success : function(data) {
-		              location.href="/checkout/getForm";
-		        },
-		        error : function(e) {
-		               alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
-		        }
-		});
-	} else if (no == 1){
-		 var check = confirm("비회원으로 구매를 진행하시면 추후 교환/환불 등에 어려움이 있을 수 있고, 포인트를 적립하실 수 없습니다.\n그래도 비회원으로 구매하시겠습니까?");
-		 var url="/user/loginPopup";
-		 if (check == true){
-			 var productList = new Array();
-				for(var i = 0; i < $(".cart_count").length; i ++){
-					 var productData = new Object();
-					 var productno = $("input[name='hidden_cart_no']").eq(i).val();
-					 var option = $("input[name='hidden_option']").eq(i).val();
-					 var str = option.split('/');
-					 var size = str[0];
-					 var color = str[1];
-					 var qty = $('input[name=product_qty]').eq(i).val();
-					 
-					 productData.no = productno;
-					 productData.size = size;
-					 productData.color = color;
-					 productData.qty = qty;
-					 
-					 productList.push(productData);
-				}
-				var jsonProductData = JSON.stringify(productList);
-					 $.ajax({
-				        type : "POST",
-				        contentType: 'application/json',
-				        dataType : "json",
-				        url : "/checkout/jsonData",
-				        data : jsonProductData,
-				        success : function(data) {
-				              location.href="/checkout/getForm";
-				        },
-				        error : function(e) {
-				               alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
-				        }
-				});
-		 } else {
-			 $("#login_popup").css({
-					"top": (($(window).height()-$("#login_popup").outerHeight())/2+$(window).scrollTop())+"px",
-					"left": (($(window).width()-$("#login_popup").outerWidth())/2+$(window).scrollLeft())+"px",
-				 });
-				$("#login_popup").load(url + " #modal-wrapper").fadeIn(300);
-		 }
-	}
-}
+    }
+    
+    // 공지사항 검색
+    function notice_search() {
+    	var sort = $('#orderby').val();
+    	var url_original = "/custcenter/notice/?sort=" + sort;
+		var url_string = window.location.href;
+    	var url = new URL(url_string);
+    	var category = $("select[name=category]").val();
+    	var search = $("#search").val();
+    	
+    	location.href = url_original + "&search=" + search + "&category=" + category;
+    }
+    
+    // post방식의 form 새 윈도우 띄우기
+    $(document).ready(function(){
+   	  $("#btn_tracking").on("click", function(){
+   		if (document.getElementById("orderno").value == ''){
+   			alert("주문번호를 입력하세요");
+   		} else if (document.getElementById("password").value == ''){
+   			alert("비밀번호를 입력하세요");
+   		} else {
+   			window.open("", "popup_window", "width=1200, height=950, scrollbars=no");
+   	   	    $("#myform").submit();
+   		}
+   	    
+   	  });
+   	});
+    
+    // 자바스크립트로 파일 확장자 구분하여 이미지 파일만 받기
+    function counsel_imgcheck(){
+    	var attach = document.getElementById('attach').value;
+    	var filter = attach.slice(attach.indexOf(".") + 1).toLowerCase();
+    	if(filter !='jpg' && filter != 'png' && filter != 'gif' && filter !='bmp'){
+    		alert("이미지 관련 파일(jpg, png, gif, bmp) 파일만 등록 가능합니다.");
+    		document.getElementById('attach').value = '';
+    	}
+    }
 
-// 주소지 선택시 active 추가 / 삭제
-$(document).on("click", ".address_box_change", function() {
-	if ($(this).parent().parent().hasClass('active') == false) {
-		$('.shipping-address-box').removeClass('active');
-		$(this).parent().parent().addClass('active');
-		
-	}
-});
-
-// 주소지 수정시 modal에 데이터 전송
-$(document).on("click", ".modaldata", function() {
-	$('.updateModal_name').val($(this).data('name'));
-	$('.updateModal_phone').val($(this).data('phone'));
-	$('.updateModal_zipcode').val($(this).data('zipcode'));
-	$('.updateModal_address').val($(this).data('address'));
-	$('.updateModal_detailaddress').val($(this).data('detailaddress'));
-	$('.updateModal_reference').val($(this).data('reference'));
-	$('.updateModal_no').val($(this).data('addressno'));
-	$('.updateModal_basic').val($(this).data('basic'));
-});
-
-// 주문 페이지 주소지 선택 -> 주소지 수정
-function modal_address_update_ajax() {
-	var no = $("input[name=modal_no]").val();
-	var name = $("input[name=modal_name]").val();
-	var phone = $("input[name=modal_phone]").val();
-	var zipcode = $("input[name=modal_zipcode]").val();
-	var address = $("input[name=modal_address]").val();
-	var detailaddress = $("input[name=modal_detailaddress]").val();
-	var reference = $("input[name=modal_reference]").val();
-	var basic = $("input[name=modal_basic]").val();
-	if(name == ''){
-		alert("이름을 입력하세요");
-	} else if(phone == ''){
-		alert("휴대폰 번호를 입력하세요");
-	} else if(zipcode == ''){
-		alert("우편번호를 입력하세요");
-	} else if(address == ''){
-		alert("주소를 입력하세요");
-	} else if(detailaddress == ''){
-		alert("상세주소를 입력하세요");
-	} else if(reference == ''){
-		alert("참고항목을 입력하세요");
-	} else {
-		$.ajax({
-				url : "/user/updateAddress",
-				type : "POST",
-				data : {
-					"no" : no,
-					"name" : name,
-					"phone" : phone,
-					"zipcode" : zipcode,
-					"address" : address,
-					"detailaddress" : detailaddress,
-					"reference" : reference
-				},
-				dataType : "html",
-				success : function() {
-					$('#updateAddressModal').modal("hide");
-					$('#address_id' + no).remove();
-					$("#address_parent_id" + no).append(
-						"<div id='address_id" + no + "'>"
-					  + "<div class='address_box_change'>"
-					  + "<address>"
-					  + "(<span>" + zipcode + "</span>)<br>"
-					  + "<span>" + address + "</span><br>"
-					  + "<span>" + detailaddress + "</span><br>"
-					  + "<span>" + reference + "</span><br>"
-					  + "<span>" + name + "</span><br>"
-					  + "<span>" + phone + "</span><br>"
-					  + "</address>"
-					  + "<a href='#' data-toggle='modal' data-target='#updateAddressModal' data-name='" + name + "' data-phone='" + phone + "' data-zipcode='" + zipcode + "' "
-					  + "data-address='" + address +"' data-detailaddress='" + detailaddress + "' data-reference='" + reference + "' data-addressno='" + no + "' class='btn btn-sm btn-outline-secondary modaldata'>"
-					  + "수정</a>"
-					  + (basic == 0 ? "<span class='float-right'><strong>기본 배송지</strong></span>" : '')
-					  + "</div>"
-					  + "</div>");			 
-				},
-				error : function() {
-					alert("수정에 실패하였습니다. 다시 시도해주세요");
-				}
-			});
-	}
-}
-
-
-// 배송지 추가전 값 검증
-function modalAddAddress(no) {
-	$.ajax({
-		url : "/user/checkAddress",
-		type : "POST",
-		data : {
-			"user_no" : no
-		},
-		dataType : "html",
-		success : function(result) {
-			if (result >= 5){
-				alert("최대로 저장할 수 있는 주소록의 갯수는 5개입니다.");
-			} else {
-				$('#addressModal').modal("show");
-			}
-		},
-		error : function() {
-			alert("다시 시도해주세요");
-		}
-	});
-	
-}
-
-//주문 페이지 주소지 선택 -> 주소지 추가
-function modal_address_new_ajax(no) {
-	var name = $("input[name=modal_new_name]").val();
-	var phone = $("input[name=modal_new_phone]").val();
-	var zipcode = $("input[name=modal_new_zipcode]").val();
-	var address = $("input[name=modal_new_address]").val();
-	var detailaddress = $("input[name=modal_new_detailaddress]").val();
-	var reference = $("input[name=modal_new_reference]").val();
-	if(name == ''){
-		alert("이름을 입력하세요");
-	} else if(phone == ''){
-		alert("휴대폰 번호를 입력하세요");
-	} else if(zipcode == ''){
-		alert("우편번호를 입력하세요");
-	} else if(address == ''){
-		alert("주소를 입력하세요");
-	} else if(detailaddress == ''){
-		alert("상세주소를 입력하세요");
-	} else if(reference == ''){
-		alert("참고항목을 입력하세요");
-	} else {
-		$.ajax({
-			url : "/user/addAddress",
-			type : "POST",
-			data : {
-				"user_no" : no,
-				"name" : name,
-				"phone" : phone,
-				"zipcode" : zipcode,
-				"address" : address,
-				"detailaddress" : detailaddress,
-				"reference" : reference
-			},
-			dataType : "html",
-			success : function(result) {
-				$('#addressModal').modal("hide");
-				$('.shipping-address-box').removeClass('active');
-				$(".add-address-apppend").append(
-					"<div id='address_parent_id" + result + "' class='shipping-address-box active'>"
-				  + "<div id='address_id" + result + "'>"
-				  + "<div class='address_box_change'>"
-				  + "<address>"
-				  + "(<span>" + zipcode + "</span>)<br>"
-				  + "<span>" + address + "</span><br>"
-				  + "<span>" + detailaddress + "</span><br>"
-				  + "<span>" + reference + "</span><br>"
-				  + "<span>" + name + "</span><br>"
-				  + "<span>" + phone + "</span><br>"
-				  + "</address>"
-				  + "<a href='#' data-toggle='modal' data-target='#updateAddressModal' data-name='" + name + "' data-phone='" + phone + "' data-zipcode='" + zipcode + "' "
-				  + "data-address='" + address +"' data-detailaddress='" + detailaddress + "' data-reference='" + reference + "' data-addressno='" + result + "'data-basic='1' class='btn btn-sm btn-outline-secondary modaldata'>"
-				  + "수정</a>"
-				  + "</div>"
-				  + "</div>"
-				  + "</div>");
-			},
-			error : function() {
-				alert("저장에 실패하였습니다. 다시 시도해주세요.");
-			}
-		});
-	}
-}
-
-//주소지 방식 변경
-$(document).on("change", "input[name='addressType']", function() {
-	if($(this).val() == "exist"){
-		$('.new-address-append').hide();
-		$('.add-address-apppend').show();
-		$('.modalAddAddress').show();
-	} else if ($(this).val() == "new"){
-		$('.add-address-apppend').hide();
-		$('.modalAddAddress').hide();
-		$('.new-address-append').show();
-	}
-});
-
-function purchase(no) {
-	if (no != 0){
-		alert("회원");
-	} else{
-		alert("비회원");
-	}
-}
-
-// 주소지 방식 기본(비회원)
-$( document ).ready(function() {
-	if ($("input[name='addressType']").val() == "new"){
-		$('.new-address-append').show();
-	}
-});
-
-// 장바구니 총합 계산
-$(document).ready(function () {
-	var total = 0;
-	 $("input[name='checkout_each_price']").each(function() {
-		total += parseInt($(this).val());
-	});
-	 $(".checkout_user_point").text(Math.round(total/1000));
-	 $(".checkout_total_price").text(total.toLocaleString('en')+"원");
-	 $("input[name='checkout_hidden_point']").val(Math.round(total/1000));
-	 $("input[name='checkout_hidden_total']").val(total);
-});
-
-// 포인트 체크박스 감지하여 disabled 속성 추가 / 해제
-$(document).on("change", "#address-save" ,function(){
-	if($(this).is(":checked")){
-		$("input[name='user_point']").attr("disabled", false);
-		$("#point_access").show();
-	} else {
-		$("input[name='user_point']").attr("disabled", true);
-		$("#point_access").hide();
-	}
-	
-});
-
-// 포인트 검증후 결제 금액에 반영
-function point_verify(no){
-	var total = $("input[name='checkout_hidden_total']").val();
-	var point = $("input[name='user_point']").val();
-	var current_point = $("#user_current_point").val();
-	if(current_point - point < 0) {
-		alert("입력하신 포인트가 적용 가능한 남은 포인트보다 많습니다.");
-	}
-	else if (isNaN(point) == true || point == '' || point == 0 || point < 0){
-		alert("올바른 값을 입력해주세요");
-	} else {
-		$.ajax({
-			url : "/user/checkPoint",
-			type : "POST",
-			data : {
-				"no" : no,
-				"point" : point
-			},
-			dataType : "html",
-			success : function(result) {
-				if(result == 0){
-					$("#point_success").hide();
-					$("#point_success").show();
-					$("input[name='checkout_hidden_total']").val(total-point);			
-					$(".checkout_total_price").text((total-point).toLocaleString('en')+"원");
-					$("#user_current_point").val(current_point-point);
-					$("#span_current_point").text((current_point-point));
-				} else if(result == 1){
-					alert("사용하실 수 없는 포인트입니다. 확인후 다시 시도해주세요.");
-				}
-			}
-		});
-	}
-}
- </script>
+    </script>
 </body>
 
 </html>

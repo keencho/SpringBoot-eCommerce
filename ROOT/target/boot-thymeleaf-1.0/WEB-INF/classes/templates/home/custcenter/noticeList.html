@@ -1,0 +1,262 @@
+<th:block th:include="home/main/header.html"></th:block>
+<th:block th:include="home/main/nav.html"></th:block>
+<main class="main">
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+	<div class="container">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+			<li class="breadcrumb-item active" aria-current="page">고객센터</li>
+		</ol>
+	</div>
+	<!-- End .container -->
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-9 order-lg-last dashboard-content">
+			<h2>공지 사항</h2>
+			<div class="row justify-content-between">
+				<div class="col-4">
+					등록된 글: <span th:text="${page.getTotalElements()}"></span>개
+				</div>
+				<div class="col-4" align="right">
+					<nav class="toolbox" style="display: -webkit-box !important;">
+						<div class="toolbox-right">
+							<select id="orderby" class="form-control"
+								onchange="javascript:notice_sorting();">
+								<option value="no,desc"
+									th:if="${#strings.equals(param.sort, 'no,desc')}" selected>최신순</option>
+								<option value="no,desc"
+									th:unless="${#strings.equals(param.sort, 'no,desc')}">최신순</option>
+								<option value="no,asc"
+									th:if="${#strings.equals(param.sort, 'no,asc')}" selected>오래된순</option>
+								<option value="no,asc"
+									th:unless="${#strings.equals(param.sort, 'no,asc')}">오래된순</option>
+								<option value="title,asc"
+									th:if="${#strings.equals(param.sort, 'title,asc')}" selected>이름순</option>
+								<option value="title,asc"
+									th:unless="${#strings.equals(param.sort, 'title,asc')}">이름순</option>
+							</select>
+						</div>
+					</nav>
+				</div>
+			</div>
+			<div class="row">
+				<table class="table">
+					<thead class="thead-light">
+						<tr class="text-center">
+							<th scope="col">번호</th>
+							<th scope="col" style="width: 60%">제목</th>
+							<th scope="col">등록일</th>
+							<th scope="col">조회수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="notice : ${notice}">
+							<th scope="row" class="text-center"><span
+								th:text="${notice.no}"></span></th>
+							<td><a
+								th:href="@{'/custcenter/notice/{no}'(no=${notice.no})}"><span
+									th:text="${notice.title}"></span> <i
+									th:if="${notice.attach != null}" class="icon-doc"></i></a></td>
+							<td class="text-center" th:text="${notice.date}"></td>
+							<td class="text-center" th:text="${notice.views}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- End .row -->
+			<nav
+				style="display: flex; border-top: .1rem solid #efefef; padding-top: 1.5rem;"
+				th:if="${page.isEmpty() == false}">
+				<div style="margin: auto;">
+					<div th:if="${param.search == null && param.category == null}">
+						<ul class="pagination" th:if="${param.sort == null}">
+							<li class="page-item" th:if="${!page.first}"><a
+								th:href="@{'?page={number}'(number=${page.number-1})}"
+								class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+							</li>
+							<li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}"
+								th:class=" ${page.number == pages} ? 'page-item active' : ''">
+								<a th:unless="${pages+1 ==0}" class="page-link"
+								th:href="@{${#httpServletRequest.requestURI}(page=${pages})}"
+								th:inline="text">[[${pages+1}]]</a>
+							</li>
+							<li th:if="${!page.last}" class="page-item"><a
+								th:href="@{'?page={number}'(number=${page.number+1})}"
+								class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+							</li>
+						</ul>
+						<ul class="pagination"
+							th:if="${#strings.equals(param.sort, 'no,desc')}">
+							<li class="page-item" th:if="${!page.first}"><a
+								th:href="@{'?sort=no,desc&page={number}'(number=${page.number-1})}"
+								class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+							</li>
+							<li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}"
+								th:class=" ${page.number == pages} ? 'page-item active' : ''">
+								<a th:unless="${pages+1 ==0}" class="page-link"
+								th:href="@{${#httpServletRequest.requestURI}(sort=${param.sort}, page=${pages})}"
+								th:inline="text">[[${pages+1}]]</a>
+							</li>
+							<li th:if="${!page.last}" class="page-item"><a
+								th:href="@{'?sort=no,desc&page={number}'(number=${page.number+1})}"
+								class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+							</li>
+						</ul>
+						<ul class="pagination"
+							th:if="${#strings.equals(param.sort, 'no,asc')}">
+							<li class="page-item" th:if="${!page.first}"><a
+								th:href="@{'?sort=no,asc&page={number}'(number=${page.number-1})}"
+								class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+							</li>
+							<li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}"
+								th:class=" ${page.number == pages} ? 'page-item active' : ''">
+								<a th:unless="${pages+1 ==0}" class="page-link"
+								th:href="@{${#httpServletRequest.requestURI}(sort=${param.sort}, page=${pages})}"
+								th:inline="text">[[${pages+1}]]</a>
+							</li>
+							<li th:if="${!page.last}" class="page-item"><a
+								th:href="@{'?sort=no,asc&page={number}'(number=${page.number+1})}"
+								class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+							</li>
+						</ul>
+						<ul class="pagination"
+							th:if="${#strings.equals(param.sort, 'title,asc')}">
+							<li class="page-item" th:if="${!page.first}"><a
+								th:href="@{'?sort=title,asc&page={number}'(number=${page.number-1})}"
+								class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+							</li>
+							<li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}"
+								th:class=" ${page.number == pages} ? 'page-item active' : ''">
+								<a th:unless="${pages+1 ==0}" class="page-link"
+								th:href="@{${#httpServletRequest.requestURI}(sort=${param.sort}, page=${pages})}"
+								th:inline="text">[[${pages+1}]]</a>
+							</li>
+							<li th:if="${!page.last}" class="page-item"><a
+								th:href="@{'?sort=title,asc&page={number}'(number=${page.number+1})}"
+								class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+							</li>
+						</ul>
+					</div>
+					<div th:if="${param.search != null && param.category != null}">
+						<ul class="pagination" th:if="${param.sort == null}">
+							<li class="page-item" th:if="${!page.first}"><a
+								th:href="@{'?search={search}&category={category}&page={number}'(search=${param.search}, category=${param.category}, number=${page.number-1})}"
+								class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+							</li>
+							<li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}"
+								th:class=" ${page.number == pages} ? 'page-item active' : ''">
+								<a th:unless="${pages+1 ==0}" class="page-link"
+								th:href="@{${#httpServletRequest.requestURI}(search=${param.search}, category=${param.category}, page=${pages})}"
+								th:inline="text">[[${pages+1}]]</a>
+							</li>
+							<li th:if="${!page.last}" class="page-item"><a
+								th:href="@{'?search={search}&category={category}&page={number}'(search=${param.search}, category=${param.category}, number=${page.number+1})}"
+								class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+							</li>
+						</ul>
+						<ul class="pagination"
+							th:if="${#strings.equals(param.sort, 'no,desc')}">
+							<li class="page-item" th:if="${!page.first}"><a
+								th:href="@{'?sort=no,desc&search={search}&category={category}&page={number}'(search=${param.search}, category=${param.category}, number=${page.number-1})}"
+								class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+							</li>
+							<li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}"
+								th:class=" ${page.number == pages} ? 'page-item active' : ''">
+								<a th:unless="${pages+1 ==0}" class="page-link"
+								th:href="@{${#httpServletRequest.requestURI}(sort=${param.sort}, search=${param.search}, category=${param.category}, page=${pages})}"
+								th:inline="text">[[${pages+1}]]</a>
+							</li>
+							<li th:if="${!page.last}" class="page-item"><a
+								th:href="@{'?sort=no,desc&search={search}&category={category}&page={number}'(search=${param.search}, category=${param.category}, number=${page.number+1})}"
+								class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+							</li>
+						</ul>
+						<ul class="pagination"
+							th:if="${#strings.equals(param.sort, 'no,asc')}">
+							<li class="page-item" th:if="${!page.first}"><a
+								th:href="@{'?sort=no,asc&search={search}&category={category}&page={number}'(search=${param.search}, category=${param.category}, number=${page.number-1})}"
+								class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+							</li>
+							<li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}"
+								th:class=" ${page.number == pages} ? 'page-item active' : ''">
+								<a th:unless="${pages+1 ==0}" class="page-link"
+								th:href="@{${#httpServletRequest.requestURI}(sort=${param.sort}, search=${param.search}, category=${param.category}, page=${pages})}"
+								th:inline="text">[[${pages+1}]]</a>
+							</li>
+							<li th:if="${!page.last}" class="page-item"><a
+								th:href="@{'?sort=no,asc&search={search}&category={category}&page={number}'(search=${param.search}, category=${param.category}, number=${page.number+1})}"
+								class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+							</li>
+						</ul>
+						<ul class="pagination"
+							th:if="${#strings.equals(param.sort, 'title,asc')}">
+							<li class="page-item" th:if="${!page.first}"><a
+								th:href="@{'?sort=title,asc&search={search}&category={category}&page={number}'(search=${param.search}, category=${param.category}, number=${page.number-1})}"
+								class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+							</li>
+							<li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}"
+								th:class=" ${page.number == pages} ? 'page-item active' : ''">
+								<a th:unless="${pages+1 ==0}" class="page-link"
+								th:href="@{${#httpServletRequest.requestURI}(sort=${param.sort}, search=${param.search}, category=${param.category}, page=${pages})}"
+								th:inline="text">[[${pages+1}]]</a>
+							</li>
+							<li th:if="${!page.last}" class="page-item"><a
+								th:href="@{'?sort=title,asc&search={search}&category={category}&page={number}'(search=${param.search}, category=${param.category}, number=${page.number+1})}"
+								class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<br>
+			<div align="center">
+				<div class="header-search">
+					<a href="#" class="search-toggle" role="button"><i
+						class="icon-magnifier"></i></a>
+					<form action="" method="get">
+						<div class="header-search-wrapper">
+							<input type="search" class="form-control" name="search"
+								id="search" placeholder="검색" th:value="${param.search}"
+								required="">
+							<div class="select-custom">
+								<select id="cat" name="category">
+									<option value="0"
+										th:if="${#strings.equals(param.category, '0')}" selected>제목</option>
+									<option value="0"
+										th:unless="${#strings.equals(param.category, '0')}">제목</option>
+									<option value="1"
+										th:if="${#strings.equals(param.category, '1')}" selected>내용</option>
+									<option value="1"
+										th:unless="${#strings.equals(param.category, '1')}">내용</option>
+									<option value="2"
+										th:if="${#strings.equals(param.category, '2')}" selected>제목
+										+ 내용</option>
+									<option value="2"
+										th:unless="${#strings.equals(param.category, '2')}">제목
+										+ 내용</option>
+								</select>
+							</div>
+							<!-- End .select-custom -->
+							<button class="btn" type="button" onclick="notice_search()">
+								<i class="icon-magnifier"></i>
+							</button>
+						</div>
+						<!-- End .header-search-wrapper -->
+					</form>
+				</div>
+				<!-- End .header-search -->
+			</div>
+		</div>
+		<!-- End .col-lg-9 -->
+		<th:block th:include="home/custcenter/list.html"></th:block>
+	</div>
+	<!-- End .row -->
+</div>
+<!-- End .container -->
+
+<div class="mb-5"></div>
+<!-- margin --> </main>
+<!-- End .main -->
+<th:block th:include="home/main/footer.html"></th:block>

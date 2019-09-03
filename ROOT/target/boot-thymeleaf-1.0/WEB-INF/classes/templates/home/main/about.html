@@ -1,0 +1,50 @@
+<th:block th:include="home/main/header.html"></th:block>
+<th:block th:include="home/main/nav.html"></th:block>
+	<main class="main">
+           <nav aria-label="breadcrumb" class="breadcrumb-nav">
+               <div class="container">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                       <li class="breadcrumb-item active" aria-current="page">정보</li>
+                   </ol>
+               </div><!-- End .container -->
+           </nav>
+
+           <div class="about-section">
+               <div class="container">
+                   <h2 class="subtitle">사이트 정보</h2>
+                   <p class="lead">“ 이 사이트는 가상 웹 쇼핑몰 입니다. ”</p>
+                   <p>os: Linux Ubuntu 18.04 LTS</p>
+                   <p>tools: STS 4.2.0</p>
+                   <p>언어: java / spring</p>
+                   <p>빌드 툴: maven</p>
+                   <p>템플릿 엔진: thymeleaf</p>
+                   <p>위 도구들을 사용하여 만들어본 쇼핑몰 프로젝트 입니다. 소스 정보는 <a href="https://github.com/keencho/SpringBoot-eCommerce"><font color="blue">여기</font></a>를 클릭하여 확인하실 수 있습니다.</p>
+                   <p>이 프로젝트에 대한 자세한 정보를 알고싶으시면 <a href="#"><font color="blue">여기</font></a> 를 눌러 첨부파일을 확인해주세요!
+               </div><!-- End .container -->
+           </div><!-- End .about-section -->
+
+           <div class="testimonials-section">
+               <div class="container">
+                   <h2 class="subtitle text-center">만든이</h2>
+					<div class="container" >
+					  <div class="row justify-content-center" align="right">
+					    <div class="col-4">
+					 		<img src="/uploads/cho.jpg" width="50%" alt="client">
+					    </div>
+					    <div class="col-4" align="left">
+					    인덕대학교 컴퓨터소프트웨어과 졸업 예정
+					    <br><br>
+					      <p>이름: 조세영</p>
+					      <p>이메일: seyoung050412@gmail.com</p>
+					      <p>전화번호: 010-3457-8021</p>
+					    
+					    </div>
+					  </div>
+					</div>		
+               </div><!-- End .container -->
+           </div><!-- End .testimonials-section -->
+     
+       </main><!-- End .main -->
+
+ <th:block th:include="home/main/footer.html"></th:block>

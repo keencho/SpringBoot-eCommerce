@@ -41,6 +41,15 @@ public interface ProductService {
 	Page<ProductEntity> getProductBySectionNoPage(Pageable pageable, long no);
 	Page<ProductEntity> getProductBySectionNoPageSize(Pageable pageable, long no, String[] sizeArray, String[] colorArray, long price1, long price2);
 	
+	List<Product> getProductByNameContaining(Pageable pageable, String name);
+	Page<ProductEntity> getProductByNameContaining(String name, Pageable pageable);
+	
+	List<Product> getProductByCategoryNoAndNameContaining(Pageable pageable, long no, String name);
+	Page<ProductEntity> getProductByCategoryNoAndNameContaining(long no, String name, Pageable pageable);
+	
+	List<Product> getProductByDivisionNoAndNameContaining(Pageable pageable, long no, String name);
+	Page<ProductEntity> getProductByDivisionNoAndNameContaining(long no, String name, Pageable pageable);
+	
 	void saveProduct(Product product);
 	void updateProduct(Product product);
 	void deleteProduct(Product product);

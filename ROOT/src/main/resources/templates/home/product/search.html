@@ -1,0 +1,121 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+<!-- 장바구니 옵션 선택 팝업 레이어를 불러오기 위한 div 지정 -->
+<div id="cart_ajax_option"></div>
+<div id="cart_ajax_complete"></div>
+<div id="cart_ajax_sizeTable"></div>
+<div id="wishlist_ajax_complete"></div>
+<!-- 로그인 -->
+<div id="login_popup"></div>
+<main class="main">
+            <div class="banner banner-cat" style="background-image: url('/home/assets/images/product-list.jpg');">
+                <div class="banner-content container">
+                    <h2 class="banner-subtitle">검색 결과</h2>
+                    <h1 class="banner-title">
+                        search result
+                    </h1>
+                </div><!-- End .banner-content -->
+            </div><!-- End .banner -->
+
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#">상품 검색 결과</a></li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <nav class="toolbox">
+                    <div class="toolbox-left">
+                        <div class="toolbox-item toolbox-sort">
+                            <div class="select-custom">
+                                <select id="orderby" name="orderby" class="form-control" th:onchange="@{'search_sorting(\'{search}\', \'{classcification}\')'(search=${search}, classcification=${classcification})}">
+                                    <option value="no,desc" th:if="${#strings.equals(param.sort, 'no,desc')}" selected>최근 등록순</option>
+                                    <option value="no,desc" th:unless="${#strings.equals(param.sort, 'no,desc')}">최근 등록순</option>
+                                    <option value="no,asc" th:if="${#strings.equals(param.sort, 'no,asc')}" selected>오래된순</option>
+                                    <option value="no,asc" th:unless="${#strings.equals(param.sort, 'no,asc')}">오래된순</option>
+                                    <option value="listprice,desc" th:if="${#strings.equals(param.sort, 'listprice,desc')}" selected>높은 가격순</option>
+                                    <option value="listprice,desc" th:unless="${#strings.equals(param.sort, 'listprice,desc')}">높은 가격순</option>
+                                    <option value="listprice,asc" th:if="${#strings.equals(param.sort, 'listprice,asc')}" selected>낮은 가격순</option>
+                                    <option value="listprice,asc" th:unless="${#strings.equals(param.sort, 'listprice,asc')}">낮은 가격순</option>
+                                    <option value="discount,desc" th:if="${#strings.equals(param.sort, 'discount,desc')}" selected>할인율 높은순</option>
+                                    <option value="discount,desc" th:unless="${#strings.equals(param.sort, 'discount,desc')}">할인율 높은순</option>
+                                </select>
+                            </div><!-- End .select-custom -->
+                        </div><!-- End .toolbox-item -->
+                    </div><!-- End .toolbox-left -->
+
+                    <div class="toolbox-item toolbox-show">
+                        <label>총 <span th:text="${page.getTotalElements()}"></span>개의 상품</label>
+                    </div><!-- End .toolbox-item -->
+                </nav>
+
+                <div class="row row-sm">
+                
+                    <div class="col-6 col-md-4 col-xl-5col" th:each="product : ${product}">
+                        <div class="product">
+                            <figure class="product-image-container">
+                                <a th:href="@{'/product/view/{no}'(no=${product.no})}" class="product-image">
+                                    <img th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product">
+                                </a>
+                                <a th:href="@{'/product/quickview/{no}'(no=${product.no})}" class="btn-quickview" >상품 미리보기</a>
+                                <span class="product-label label-sale" th:if="${product.discount != '0'}" th:text="@{'-{discount}%'(discount=${product.discount})}"></span>
+                            </figure>
+                           <div class="product-details">
+	                           <div class="ratings-container">
+	                               <div class="product-ratings">
+	                                   <span class="ratings" th:style="@{'width: {score}%'(score=${product.score * 20})}"></span><!-- End .ratings -->
+	                               </div><!-- End .product-ratings -->
+	                           </div><!-- End .product-container -->
+	                           <h2 class="product-title">
+	                               <a th:href="@{'/product/view/{no}'(no=${product.no})}" th:text="${product.name}"></a>
+	                           </h2>
+	                           <div class="price-box">
+	                               <span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
+	                               <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
+	                           </div><!-- End .price-box -->
+	
+	                           <div class="product-action">
+	                               <a style="cursor: pointer;" onclick="login_popup()" class="paction add-wishlist" title="위시 리스트에 추가" th:if="${session.user == null}">
+	                                   <span>위시 리스트에 추가</span>
+	                               </a>
+	                               <a style="cursor: pointer;" th:onclick="@{'wishlist_ajax_add(\'{no}\', \'{productno}\')'(no=${session.user.no}, productno=${product.no})}" class="paction add-wishlist" title="위시 리스트에 추가" th:unless="${session.user == null}">
+	                                   <span>위시 리스트에 추가</span>
+	                               </a>
+	
+	                               <a style="cursor: pointer;" class="paction add-cart" title="장바구니에 추가" th:onclick="@{'cartOptionAjax(\'{no}\')'(no=${product.no})}">
+	                                   <span>장바구니에 추가</span>
+	                               </a>
+	
+	                               <a th:href="@{'/product/view/{no}'(no=${product.no})}" class="paction icon-magnifier" title="새창으로 보기" target="_blank">
+	                                   <span>새창으로 보기</span>
+	                               </a>
+	                           </div><!-- End .product-action -->
+	                       </div><!-- End .product-details -->
+                        </div><!-- End .product -->
+                    </div><!-- End .col-md-4 -->
+                    
+                </div><!-- End .row -->
+
+                <nav class="toolbox toolbox-pagination" >
+	                <div style="margin: auto;" >
+	                    <ul class="pagination">
+	                        <li class="page-item" th:if="${!page.first}">
+                                <a th:href="@{'?search={search}&classcification={classcification}&page={number}&sort={sort}'(search=${search}, classcification=${classcification}, number=${page.number-1}, sort=${param.sort})}" class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+                            </li>
+                            <li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}" th:class=" ${page.number == pages} ? 'page-item active' : ''">
+                                <a th:unless="${pages+1 ==0}" class="page-link" th:href="@{${#httpServletRequest.requestURI}(search=${search}, classcification=${classcification}, page=${pages}, sort=${param.sort})}" th:inline="text">[[${pages+1}]]</a>
+                            </li>   
+                            <li th:if="${!page.last}" class="page-item">
+                                <a th:href="@{'?search={search}&classcification={classcification}&page={number}&sort={sort}'(search=${search}, classcification=${classcification}, number=${page.number+1}, sort=${param.sort})}" class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+                            </li>
+	                    </ul>
+                    </div>
+                </nav>
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->
+	 <th:block th:include="home/main/footer.html"></th:block>

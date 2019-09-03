@@ -283,6 +283,12 @@
     		document.getElementById('attach').value = '';
     	}
     }
+    
+    // 검색 소팅
+    function search_sorting(search, classcification){
+    	var sort = $('#orderby').val();
+    	location.href="/product/list?search=" + search + "&classcification=" + classcification + "&page=0&sort=" + sort;
+    }
 
     </script>
 </body>

@@ -1,0 +1,77 @@
+<th:block th:include="home/main/header.html"></th:block>
+<th:block th:include="home/main/nav.html"></th:block>
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">1:1 문의 확인</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>1:1 문의 확인</h2>
+						<table class="table table-bordered qnatable">
+							<tbody>
+								<tr>
+									<td width="10%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">제목</td>
+									<td style="vertical-align: left; text-align: left; width: 500px" th:text="${consulting.title}"></td>
+									<td width="10%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">등록일</td>
+									<td style="vertical-align: left; text-align: left;" th:text="${consulting.date_q}"></td>
+								</tr>
+								<tr>
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">첨부파일</td>
+									<td th:if="${consulting.attach}"><u><a th:href="@{'/admin/consulting/download?no={no}'(no=${consulting.no})}"><span th:text="${consulting.attach_original}"></span></a></u> (클릭시 다운)</td>
+									<td th:unless="${consulting.attach}" th:text="없음"></td>
+									<td width="10%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">답변일</td>
+									<td>
+										<span th:if="${consulting.status == 0}"></span>
+										<span th:if="${consulting.status == 1}" th:text="${consulting.date_a}"></span>
+									</td>
+								</tr>
+								<tr>
+									<td width="10%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">문의 유형</td>
+									<td style="vertical-align: left; text-align: left; width: 500px">
+										<span th:if="${consulting.type == 'pay'}" th:text="@{입금/결제}"></span>
+								        <span th:if="${consulting.type == 'product'}" th:text="상품관련"></span>
+								        <span th:if="${consulting.type == 'delivery'}" th:text="배송관련"></span>
+								        <span th:if="${consulting.type == 'change'}" th:text="교환관련"></span>
+								        <span th:if="${consulting.type == 'return'}" th:text="반품관련"></span>
+								        <span th:if="${consulting.type == 'refund'}" th:text="환불관련"></span>
+								        <span th:if="${consulting.type == 'use'}" th:text="이용관련"></span>
+								        <span th:if="${consulting.type == 'as'}" th:text="@{A/S관련}"></span>
+								        <span th:if="${consulting.type == 'etc'}" th:text="기타"></span>
+									</td>
+									<td width="10%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">답변상태</td>
+									<td style="vertical-align: left; text-align: left;">
+										<span th:if="${consulting.status == 0}" th:text="답변대기"></span>
+										<span th:if="${consulting.status == 1}" th:text="답변완료"></span>
+									</td>
+								</tr>
+								<tr style="height: 300px">
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">내용</td>
+									<td colspan="3" style="vertical-align: left; text-align: left;" th:utext="${consulting.contents}">
+									</td>
+								</tr>
+								<tr style="height: 300px">
+									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">답변 내용</td>
+									<td colspan="3" style="vertical-align: left; text-align: left;" th:utext="${consulting.answer}">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div align="center">
+							<button type="button" onclick="history.go(-1)" class="btn btn-primary">뒤로가기</button>
+						</div>
+                    </div><!-- End .col-lg-9 -->
+                   <th:block th:include="home/user/mypage/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->
+<!-- End .main -->
+<th:block th:include="home/main/footer.html"></th:block>

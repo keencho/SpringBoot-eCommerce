@@ -1,0 +1,355 @@
+<link rel="stylesheet" href="/home/assets/css/bootstrap.min.css">
+<style>
+.receipt-content .logo a:hover {
+  text-decoration: none;
+  color: #7793C4; 
+}
+
+.receipt-content .invoice-wrapper {
+  background: #FFF;
+  border: 1px solid #CDD3E2;
+  box-shadow: 0px 0px 1px #CCC;
+  padding: 40px 40px 60px;
+  margin-top: 40px;
+  border-radius: 4px; 
+}
+
+.receipt-content .invoice-wrapper .payment-details span {
+  color: #A9B0BB;
+  display: block; 
+}
+.receipt-content .invoice-wrapper .payment-details a {
+  display: inline-block;
+  margin-top: 5px; 
+}
+
+.receipt-content .invoice-wrapper .line-items .print a {
+  display: inline-block;
+  border: 1px solid #9CB5D6;
+  padding: 13px 13px;
+  border-radius: 5px;
+  color: #708DC0;
+  font-size: 13px;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -ms-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear; 
+}
+
+.receipt-content .invoice-wrapper .line-items .print a:hover {
+  text-decoration: none;
+  border-color: #333;
+  color: #333; 
+}
+
+.receipt-content {
+  background: #ECEEF4; 
+}
+@media (min-width: 1200px) {
+  .receipt-content .container {width: 900px; } 
+}
+
+.receipt-content .logo {
+  text-align: center;
+  margin-top: 50px; 
+}
+
+.receipt-content .logo a {
+  font-family: Myriad Pro, Lato, Helvetica Neue, Arial;
+  font-size: 36px;
+  letter-spacing: .1px;
+  color: #555;
+  font-weight: 300;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -ms-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear; 
+}
+
+.receipt-content .invoice-wrapper .intro {
+  line-height: 25px;
+  color: #444; 
+}
+
+.receipt-content .invoice-wrapper .payment-info {
+  margin-top: 25px;
+  padding-top: 15px; 
+}
+
+.receipt-content .invoice-wrapper .payment-info span {
+  color: #A9B0BB; 
+}
+
+.receipt-content .invoice-wrapper .payment-info strong {
+  display: block;
+  color: #444;
+  margin-top: 3px; 
+}
+
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .payment-info .text-right {
+  text-align: left;
+  margin-top: 20px; } 
+}
+.receipt-content .invoice-wrapper .payment-details {
+  border-top: 2px solid #EBECEE;
+  margin-top: 30px;
+  padding-top: 20px;
+  line-height: 22px; 
+}
+
+
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .payment-details .text-right {
+  text-align: left;
+  margin-top: 20px; } 
+}
+.receipt-content .invoice-wrapper .line-items {
+  margin-top: 40px; 
+}
+.receipt-content .invoice-wrapper .line-items .headers {
+  color: #A9B0BB;
+  font-size: 13px;
+  letter-spacing: .3px;
+  border-bottom: 2px solid #EBECEE;
+  padding-bottom: 4px; 
+}
+.receipt-content .invoice-wrapper .line-items .items {
+  margin-top: 8px;
+  border-bottom: 2px solid #EBECEE;
+  padding-bottom: 8px; 
+}
+.receipt-content .invoice-wrapper .line-items .items .item {
+  padding: 10px 0;
+  color: #696969;
+  font-size: 15px; 
+}
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .line-items .items .item {
+  font-size: 13px; } 
+}
+.receipt-content .invoice-wrapper .line-items .items .item .amount {
+  letter-spacing: 0.1px;
+  color: #84868A;
+  font-size: 16px;
+ }
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .line-items .items .item .amount {
+  font-size: 13px; } 
+}
+
+.receipt-content .invoice-wrapper .line-items .total {
+  margin-top: 30px; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .extra-notes {
+  float: left;
+  width: 40%;
+  text-align: left;
+  font-size: 13px;
+  color: #7A7A7A;
+  line-height: 20px; 
+}
+
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .line-items .total .extra-notes {
+  width: 100%;
+  margin-bottom: 30px;
+  float: none; } 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .extra-notes strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #454545; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .field {
+  margin-bottom: 7px;
+  font-size: 14px;
+  color: #555; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .field.grand-total {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .field.grand-total span {
+  color: #20A720;
+  font-size: 16px; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .field span {
+  display: inline-block;
+  margin-left: 20px;
+  min-width: 85px;
+  color: #84868A;
+  font-size: 15px; 
+}
+
+.receipt-content .invoice-wrapper .line-items .print {
+  margin-top: 50px;
+  text-align: center; 
+}
+
+
+
+.receipt-content .invoice-wrapper .line-items .print a i {
+  margin-right: 3px;
+  font-size: 14px; 
+}
+
+.receipt-content .footer {
+  margin-top: 40px;
+  margin-bottom: 110px;
+  text-align: center;
+  font-size: 12px;
+  color: #969CAD; 
+}                    
+</style>
+<div class="receipt-content">
+    <div class="container bootstrap snippet">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="invoice-wrapper">
+					<div class="intro">
+						<strong th:text="${order.order_name}"></strong> 님의 주문내역입니다. 
+					</div>
+
+					<div class="payment-info">
+						<div class="row">
+							<div class="col-sm-6">
+								<span>주문번호</span>
+								<strong th:text="${order.orderno}"></strong>
+							</div>
+							<div class="col-sm-6 text-right">
+								<span>결제(주문)일</span>
+								<strong th:text="${order.date}"></strong>
+							</div>
+						</div>
+					</div>
+
+					<div class="payment-details">
+						<div class="row">
+							<div class="col-sm-6">
+								<span>구매자 정보</span>
+								<strong th:text="${order.order_name}"></strong>
+								<p>
+								<br>
+									<span th:text="${order.order_phone}" style="color: black !important;"></span>
+									<span th:text="${order.order_address}" style="color: black !important;"></span>
+								</p>
+							</div>
+							<div class="col-sm-6 text-right">
+								<span>판매자 정보</span>
+								<strong>
+									조세영
+								</strong>
+								<p>
+								<br>
+									01034578021<br>
+									seyoung1231@naver.com <br>
+									seyoung050412@gmail.com <br>
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="line-items">
+						<div class="headers clearfix">
+							<div class="row">
+								<span style="padding-left: 10px">주문내역</span>
+							</div>
+						</div>
+						<div class="items">
+							<table class="table text-center">
+							  <thead class="thead-light">
+							    <tr>
+							      <th scope="col">상품명</th>
+							      <th scope="col">사이즈</th>
+							      <th scope="col">색상</th>
+							      <th scope="col">수량</th>
+							      <th scope="col">단품 가격</th>
+							      <th scope="col">총합</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							    <tr th:each="info : ${info}">
+							      <th scope="row" th:text="${info.product.name}">1</th>
+							      <td th:text="${info.size.name}"></td>
+							      <td th:text="${info.color.name}"></td>
+							      <td th:text="${info.qty}"></td>
+							      <td th:text="@{'{price}원'(price=${#numbers.formatInteger(info.price, 0, 'COMMA')})}"></td>
+							      <td th:text="@{'{price}원'(price=${#numbers.formatInteger(info.int_price * info.qty, 0, 'COMMA')})}"></td>
+							    </tr>
+							  </tbody>
+							</table>
+						</div>
+						<div class="total text-right">
+							<p class="extra-notes">
+								<strong>기타 정보</strong>
+								결제방식: 
+								<span th:if="${order.pay_type == 0}" th:text="카드결제"></span>
+								<span th:if="${order.pay_type == 1}" th:text="계좌이체"></span>
+								<br>
+								현재상태:
+								<span th:if="${order.status == 0}" th:text="결제완료"></span>
+						      	<span th:if="${order.status == 1}" th:text="결제대기"></span>
+						      	<span th:if="${order.status == 2}" th:text="배송준비중"></span>
+						      	<span th:if="${order.status == 3}" th:text="배송중"></span>
+						      	<span th:if="${order.status == 4}" th:text="배송완료"></span>
+						      	<span th:if="${order.status == 5}" th:text="교환요청"></span>
+						      	<span th:if="${order.status == 6}" th:text="교환완료"></span>
+						      	<span th:if="${order.status == 7}" th:text="환불요청"></span>
+						      	<span th:if="${order.status == 8}" th:text="환불완료"></span>
+						      	<span th:if="${order.status == 9}" th:text="구매확정"></span>
+						      	<span th:if="${order.pay_type == 0}">
+						      		<br>
+						      		카드 승인번호: <span th:text="${order.card_id}"></span>
+						      	</span>
+						      	<span th:if="${order.pay_type == 1}">
+						      		<br>
+						      		입금하실 은행: 
+						      		<span th:if="${order.account_bank == 1}"><span>신한 110-000-000000</span></span>
+	                          		<span th:if="${order.account_bank == 2}"><span>우리 112-000-00000</span></span>
+	                          		<span th:if="${order.account_bank == 3}"><span>국민 114-000-000000</span></span>
+						      		<br>
+						      		입금자명:
+						      		<span th:text="${order.account_name}"></span>
+						      	</span>
+						      	<span th:if="${order.status == 1}">
+						      		<br>
+						      		<font color="red">※주문일로부터 3일 이내에 입금해주셔야 원할한 진행이 가능합니다.</font>
+						      	</span>
+							</p>
+							<div class="field" th:each="info : ${info}">
+								<span th:text="${info.product.name}"></span> <span th:text="@{'{price}원'(price=${#numbers.formatInteger(info.int_price * info.qty, 0, 'COMMA')})}"></span>
+							</div>
+							<div class="field">
+								배송비 <span>0원</span>
+							</div>
+							<div class="field grand-total">
+								결제금액 <span th:text="@{'{price}원'(price=${#numbers.formatInteger(order.price, 0, 'COMMA')})}"></span>
+							</div>
+						</div>
+						<br>
+						<div class="print">
+							<a href="#" onclick="window.print()">
+								<i class="fa fa-print"></i>
+								프린트
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="footer">
+					Copyright © 2019. virtual shopping-mall
+				</div>
+			</div>
+		</div>
+	</div>
+</div>                    

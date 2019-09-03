@@ -49,7 +49,7 @@
                             <div class="home-slide">
                                 <div class="owl-lazy slide-bg" data-src="/home/assets/images/product-list.jpg"></div>
                                 <div class="home-slide-content text-white">
-                                    <h3><span>남성</span> 상품 바로 보기</h3>
+                                    <h3><span>남자</span> 상품 바로 보기</h3>
                                     <p>check out our men's product</p>
                                     <a href="/product/list/category/1" class="btn btn-dark">확인</a>
                                 </div><!-- End .home-slide-content -->
@@ -58,7 +58,7 @@
                             <div class="home-slide">
                                 <div class="owl-lazy slide-bg" data-src="/uploads/women.jpg"></div>
                                 <div class="home-slide-content text-white">
-                                    <h3><span>여성</span> 상품 바로 보기</h3>
+                                    <h3><span>여자</span> 상품 바로 보기</h3>
                                     <p>check out our women's product</p>
                                     <a href="/product/list/category/2" class="btn btn-dark">확인</a>
                                 </div><!-- End .home-slide-content -->
@@ -288,25 +288,25 @@
                                     <li>
                                         <a href="#" class="sf-with-ul">&nbsp&nbsp<i class="fas fa-male"></i>&nbsp&nbsp남자</a>
                                         <ul>
-                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 1}"><a href="cart.html" th:text="${header2.name}"></a></li>
+                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 1}"><a th:href="@{'/product/list/division/{no}'(no=${header2.no})}" th:text="${header2.name}"></a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="#" class="sf-with-ul">&nbsp&nbsp<i class="fas fa-female"></i>&nbsp&nbsp여자</a>
                                         <ul>
-                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 2}"><a href="cart.html" th:text="${header2.name}"></a></li>
+                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 2}"><a th:href="@{'/product/list/division/{no}'(no=${header2.no})}" th:text="${header2.name}"></a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="#" class="sf-with-ul">&nbsp<i class="fas fa-hat-wizard"></i>&nbsp악세사리</a>
                                         <ul>
-                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 3}"><a href="cart.html" th:text="${header2.name}"></a></li>
+                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 3}"><a th:href="@{'/product/list/division/{no}'(no=${header2.no})}" th:text="${header2.name}"></a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="#" class="sf-with-ul">&nbsp<i class="fas fa-shoe-prints"></i>신발</a>
                                         <ul>
-                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 4}"><a href="cart.html" th:text="${header2.name}"></a></li>
+                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 4}"><a th:href="@{'/product/list/division/{no}'(no=${header2.no})}" th:text="${header2.name}"></a></li>
                                         </ul>
                                     </li>
                                     <li><a href="/custcenter/faq">&nbsp&nbsp<i class="far fa-clipboard"></i>&nbsp고객센터</a></li>

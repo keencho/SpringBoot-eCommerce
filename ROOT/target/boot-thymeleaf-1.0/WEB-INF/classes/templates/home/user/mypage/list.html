@@ -1,0 +1,27 @@
+<aside class="sidebar col-lg-3">
+	<div class="widget widget-dashboard">
+		<h3 class="widget-title">마이 페이지</h3>
+		<span th:text="${session.user.name}"></span>님 (보유포인트: <span
+			th:text="${session.user.point}"></span>p)
+		<ul class="list">
+			<br>
+			<strong>쇼핑 정보</strong>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage'} ? 'active' : ''"><a href="/mypage">주문/배송 조회</a></li>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/change'} ? 'active' : ''"><a href="/mypage/change">교환/환불 조회</a></li>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/change/apply'} ? 'active' : ''"><a href="/mypage/change/apply">교환/환불 신청</a></li>
+			<br>
+			<strong>편의 서비스</strong>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/review'} ? 'active' : ''"><a href="/mypage/review">나의 상품평</a></li>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/review/write'} ? 'active' : ''"><a href="/mypage/review/write">상품평 작성하기</a></li>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/myquestion'} ? 'active' : ''"><a href="/mypage/myquestion">상품 문의/답변</a></li>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/consulting'} ? 'active' : (${#httpServletRequest.requestURI == '/custcenter/consulting/view'} ? 'active' : '')"><a href="/mypage/consulting">1:1 문의 답변</a></li>
+			<br>
+			<strong>개인정보</strong>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/myaccount'} ? 'active' : ''"><a href="/mypage/myaccount">개인정보 확인/수정</a></li>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/address'} ? 'active' : ''"><a href="/mypage/address">배송지 관리</a></li>
+			<li th:class="${#httpServletRequest.requestURI == '/mypage/withdraw'} ? 'active' : ''"><a href="/mypage/withdraw">회원 탈퇴</a></li>
+		</ul>
+	</div>
+	<!-- End .widget -->
+</aside>
+<!-- End .col-lg-3 -->

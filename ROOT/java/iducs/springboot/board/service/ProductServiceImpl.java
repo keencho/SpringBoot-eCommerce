@@ -294,4 +294,61 @@ public class ProductServiceImpl implements ProductService{
 		return product;
 	}
 
+
+	@Override
+	public List<Product> getProductByNameContaining(Pageable pageable, String name) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findByNameContaining(pageable, name);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
+
+	@Override
+	public Page<ProductEntity> getProductByNameContaining(String name, Pageable pageable) {
+		Page<ProductEntity> entities = repository.findByNameContaining(name, pageable);
+		return entities;
+	}
+
+
+	@Override
+	public List<Product> getProductByCategoryNoAndNameContaining(Pageable pageable, long no, String name) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findByCategoryNoAndNameContaining(pageable, no, name);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
+
+	@Override
+	public Page<ProductEntity> getProductByCategoryNoAndNameContaining(long no, String name, Pageable pageable) {
+		Page<ProductEntity> entities = repository.findByCategoryNoAndNameContaining(no, name, pageable);
+		return entities;
+	}
+
+
+	@Override
+	public List<Product> getProductByDivisionNoAndNameContaining(Pageable pageable, long no, String name) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findByDivisionNoAndNameContaining(pageable, no, name);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
+
+	@Override
+	public Page<ProductEntity> getProductByDivisionNoAndNameContaining(long no, String name, Pageable pageable) {
+		Page<ProductEntity> entities = repository.findByDivisionNoAndNameContaining(no, name, pageable);
+		return entities;
+	}
+
 }

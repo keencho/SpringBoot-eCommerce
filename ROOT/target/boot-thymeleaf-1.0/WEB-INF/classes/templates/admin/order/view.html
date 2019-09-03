@@ -1,0 +1,200 @@
+<th:block th:include="admin/main/header.html"></th:block>
+<!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>주문 / 결제</h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>주문 상세정보</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <section class="content invoice">
+                      <!-- title row -->
+                      <div class="row">
+                        <div class="col-xs-12 invoice-header">
+                          <h1>
+                            <i class="fa fa-globe"></i> 주문
+                              <small class="pull-right" th:text="@{'주문완료일: {date}'(date=${order.date})}"></small>
+                          </h1>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- info row -->
+                      <div class="row invoice-info">
+                        <div class="col-sm-6 invoice-col">
+                          	고객 배송지 / 정보
+                          <address>
+                              <strong>주문자명: </strong><strong th:text="${order.order_name}"></strong>
+                              <strong th:if="${order.check_user == 0}">(<span th:text="회원"></span>)</strong>
+                              <strong th:if="${order.check_user == 1}">(<span th:text="비회원"></span>)</strong>
+                              <span th:if="${order.check_user == 1}">
+                              	<br>
+                              	비회원 비밀번호: <span th:text="${order.order_password}"></span>
+                              </span>
+                              <br>휴대폰 번호: <span th:text="${order.order_phone}"></span>
+                              <br>주소: <span th:text="${order.order_address}"></span>
+                          </address>
+                        </div>
+                        <!-- /.col -->
+                        
+                        <!-- /.col -->
+                        <div class="col-sm-6 invoice-col" align="right">
+                          <b>주문번호: <span th:text="${order.orderno}"></span></b>
+                          <br>
+                          <br>
+                          <b>결제 방식: </b><span th:if="${order.pay_type == 0}" th:text="신용카드"></span><span th:if="${order.pay_type == 1}" th:text="계좌이체"></span>
+                          <br>
+                          <b>현재 상태(즉시 변경): </b>
+                          	<select class="custom-select" id="status_select" name="status_select[]" onchange="location = this.value;" th:style="${order.status == 0} ? 'color: blue' : (${order.status == 1} ? 'color: red' : 'color: black')">
+                          		<option 
+                          			th:each="num : ${#numbers.sequence(0,9)}" 
+                          			th:value="@{'javascript:status_ajax_reload(\'{no}\', \'{status}\')'(no=${order.no}, status=${num})}"
+                          			th:selected="(${num} == ${order.status})"
+                          			>
+                          				<span th:if="${num == 0}" th:text="결제완료"></span>
+                          				<span th:if="${num == 1}" th:text="결제대기"></span>
+                          				<span th:if="${num == 2}" th:text="배송준비중"></span>
+                          				<span th:if="${num == 3}" th:text="베송중"></span>
+                          				<span th:if="${num == 4}" th:text="배송완료"></span>
+                          				<span th:if="${num == 5}" th:text="교환요청"></span>
+                          				<span th:if="${num == 6}" th:text="교환완료"></span>
+                          				<span th:if="${num == 7}" th:text="환불요청"></span>
+                          				<span th:if="${num == 8}" th:text="환불완료"></span>
+                          				<span th:if="${num == 9}" th:text="구매확정"></span>
+                          		</option>
+                          		</select>
+                          <br>
+                          <b>배송 메시지: </b><span th:if="${order.order_message != ''}" th:text="${order.order_message}"></span><span th:if="${order.order_message == ''}" th:text="없음"></span>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <!-- Table row -->
+                      <div class="row">
+                        <div class="col-xs-12 table">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>상품 번호</th>
+                                <th style="width: 50%">상품명</th>
+                                <th>상품 모델명</th>
+                                <th>사이즈</th>
+                                <th>색상</th>
+                                <th>수량</th>
+                                <th>가격</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:each="info : ${info}">
+                                <td th:text="${info.product.no}"></td>
+                                <td th:text="${info.product.name}"></td>
+                                <td th:text="${info.product.modelname}"></td>
+                                <td th:text="${info.size.name}"></td>
+                                <td th:text="${info.color.name}"></td>
+                                <td th:text="@{'{qty}개'(qty=${info.qty})}"></td>
+                                <td th:text="@{'{price}원'(price=${#numbers.formatInteger(info.int_price * info.qty, 0, 'COMMA')})}"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <div class="row">
+                        <!-- accepted payments column -->
+                        <div class="col-xs-6">
+                          <p class="lead">결제 방식</p>
+                          <div th:if="${order.pay_type == 0}">
+	                          <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+	                          	<strong><span th:text="신용카드"></span></strong>
+	                          	<br>
+	                          	<span>가맹점 id: <span th:text="${order.card_shopid}"></span></span>
+	                          	<br>
+	                          	<span>카드 id: <span th:text="${order.card_id}"></span></span>
+	                          	<br>
+	                          	<span>카드 승인번호: <span th:text="${order.card_applyno}"></span></span>
+	                          	<br>
+	                          	<br>
+	                          	<strong><a href="https://admin.iamport.kr/users/login" target="_blank">여기</a></strong>를 눌러 자세한 결제정보 확인
+	                          </p>
+                          </div>
+                          <div th:if="${order.pay_type == 1}">
+	                          <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+	                          	<strong><span th:text="계좌이체"></span></strong>
+	                          	<br>
+	                          	<span>입금자명: <span th:text="${order.account_name}"></span></span>
+	                          	<br>
+	                          	<span>입금할 계좌: 
+	                          		<span th:if="${order.account_bank == 1}"><span>신한 110-000-000000</span></span>
+	                          		<span th:if="${order.account_bank == 2}"><span>우리 112-000-00000</span></span>
+	                          		<span th:if="${order.account_bank == 3}"><span>국민 114-000-000000</span></span>
+	                          	</span>
+	                          	<span th:if="${order.status == 1}">
+		                          	<br>
+		                          	<br>
+		                          	<span>※<span th:text="${limit}"></span><span>까지 입금하지 않으면 취소하기</span></span>    
+	                          	</span>        	
+	                          </p>
+                          </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-6">
+                          <p class="lead">합계</p>
+                          <div class="table-responsive">
+                            <table class="table">
+                              <tbody>
+                                <tr th:each="info : ${info}">
+                                  <th style="width:50%" th:text="${info.product.name}"></th>
+                                  <td th:text="@{'{price}원'(price=${#numbers.formatInteger(info.int_price * info.qty, 0, 'COMMA')})}"></td>
+                                </tr>
+                                <tr>
+                                  <th>배송비</th>
+                                  <td>0원</td>
+                                </tr>
+                                <tr>
+                                  <th>총 합계</th>
+                                  <strong><td th:text="@{'{price}원'(price=${#numbers.formatInteger(order.price, 0, 'COMMA')})}"></td></strong>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <div align="center">
+						  <button type="button" class="btn btn-primary" onclick="history.back();">이전화면</button>
+                      </div>
+                      <!-- /.row -->
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->      
+<th:block th:include="admin/main/footer.html"></th:block>

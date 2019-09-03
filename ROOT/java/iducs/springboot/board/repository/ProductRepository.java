@@ -60,4 +60,13 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>{
 	
 	@Query(value="SELECT * FROM product WHERE discount > :discount ORDER BY rand() LIMIT 5", nativeQuery = true)
 	List<ProductEntity> findSaleRand5(@Param("discount") int discount);
+	
+	List<ProductEntity> findByNameContaining(Pageable pageable, String name);
+	Page<ProductEntity> findByNameContaining(String name, Pageable pageable);
+	
+	List<ProductEntity> findByCategoryNoAndNameContaining(Pageable pageable, long no, String name);
+	Page<ProductEntity> findByCategoryNoAndNameContaining(long no, String name, Pageable pageable);
+	
+	List<ProductEntity> findByDivisionNoAndNameContaining(Pageable pageable, long no, String name);
+	Page<ProductEntity> findByDivisionNoAndNameContaining(long no, String name, Pageable pageable);
 }

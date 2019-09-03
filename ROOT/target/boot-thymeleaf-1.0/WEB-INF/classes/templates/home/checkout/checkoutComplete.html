@@ -1,0 +1,45 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+<main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item">결제</li>
+						<li class="breadcrumb-item">결제 완료</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+			<div align="center">
+	            <div class="container">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="heading">
+	                            <h1 class="title">주문이 완료되었습니다!</h1>
+	                            <h3>고객님의 주문번호는 '<span th:text="${info.orderno}"></span>' 입니다.</h3>
+								<br>
+								<p>※ 계좌이체의 경우 <span th:text="${date}"></span>까지 입금하셔야 처리가 완료됩니다.</p>
+								<p>회원이신 경우는 마이페이지, 비회원이신 경우는 <strong>고객센터</strong>의 비회원 주문조회 페이지를 사용해주세요.(앞서 입력하신 비밀번호와 주문번호가 필요합니다)</p>
+	                            <a href="/">홈</a>
+	                        </div><!-- End .heading -->
+	                    </div><!-- End .col-md-6 -->
+	                </div><!-- End .row -->
+	            </div><!-- End .container -->
+            </div>
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->
+<th:block th:include="home/main/footer.html"></th:block>
+<script>
+function doNotReload(){ 
+    if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
+    	alert("새로고침키는 사용하실 수 없습니다.");
+        event.keyCode = 0; 
+        event.cancelBubble = true; 
+        event.returnValue = false; 
+    } 
+} 
+document.onkeydown = doNotReload;
+</script>
+
+

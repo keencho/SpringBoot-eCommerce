@@ -1,0 +1,82 @@
+<th:block th:include="home/main/header.html"></th:block>
+	<th:block th:include="home/main/nav.html"></th:block>
+		<main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">마이페이지</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 order-lg-last dashboard-content">
+                        <h2>개인정보 수정</h2>※주소 수정은 배송지 관리에서 진행해주세요.
+                        <br>             
+                        <br>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">이름</label>
+                                                <input type="text" class="form-control" id="acc-name" name="name" th:value="${user.name}" required>
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">이메일</label>
+                                                <input type="text" class="form-control" id="acc-name" name="email" th:value="${user.email}" required>
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                        <div class="col-md-12">
+                                            <div class="form-group required-field">
+                                                <label for="acc-name">휴대폰</label>
+                                                <input type="text" class="form-control" maxlength="11" id="acc-name" name="phone" th:value="${user.phone}" required>
+                                            </div><!-- End .form-group -->
+                                        </div><!-- End .col-md-12 -->
+                                    </div><!-- End .row -->
+                                </div><!-- End .col-sm-11 -->
+                            </div><!-- End .row -->
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="change-pass-checkbox" value="1">
+                                <label class="custom-control-label" for="change-pass-checkbox">비밀번호 변경하기</label>
+                            </div><!-- End .custom-checkbox -->
+
+                            <div id="account-chage-pass">
+                                <h3 class="mb-2">비밀번호 변경</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group required-field">
+                                            <label for="acc-pass2">변경할 비밀번호</label>
+                                            <input type="password" class="form-control" id="acc-pass2" name="password">
+                                        </div><!-- End .form-group -->
+                                    </div><!-- End .col-md-6 -->
+
+                                    <div class="col-md-6">
+                                        <div class="form-group required-field">
+                                            <label for="acc-pass3">비밀번호 확인</label>
+                                            <input type="password" class="form-control" id="acc-pass3" name="password2">
+                                        </div><!-- End .form-group -->
+                                    </div><!-- End .col-md-6 -->
+                                </div><!-- End .row -->
+                            </div><!-- End #account-chage-pass -->
+
+                            <div class="required text-right">* 필수 입력 항목</div>
+                            <div class="form-footer">
+                                <div class="form-footer-right">
+                                    <button type="button" th:onclick="@{'account_update(\'{no}\')'(no=${user.no})}" class="btn btn-primary">저장</button>
+                                </div>
+                            </div><!-- End .form-footer -->
+                    </div><!-- End .col-lg-9 -->
+
+                    <th:block th:include="home/user/mypage/list.html"></th:block>
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+            <div class="mb-5"></div><!-- margin -->
+        </main><!-- End .main -->  
+ <th:block th:include="home/main/footer.html"></th:block>

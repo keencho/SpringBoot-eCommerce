@@ -60,7 +60,7 @@ $(function(){
                     <span class="old-price" th:if="${product.discount != '0'}" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.price, 0, 'COMMA')})}"></span>
                     <span class="product-price" th:text="@{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"></span>
                 </div><!-- End .price-box -->
-                <div class="product-desc">
+                <div class="product-desc" th:if="${productsize}">
                     <table class="table table-hover">
 					  <thead>
 					    <tr>
@@ -98,7 +98,7 @@ $(function(){
 					  
 					</table>
                 </div><!-- End .product-desc -->
-                <div class="product-filters-container">
+                <div class="product-filters-container" th:if="${size != null || color != null}">
 	                <div class="product-single-filter">
 	                        <label>사이즈:</label>
 	                        <select id="quick_cart_ajax_size" class="form-control" style="width:200px; height:50px;">
@@ -115,11 +115,11 @@ $(function(){
 	                        </ul>
 	                    </div><!-- End .product-single-filter -->
                 </div><!-- End .product-filters-container -->
-                <div class="product-action">
+                <div class="product-action" th:if="${size != null || color != null}">
                     <div class="product-single-qty">
                         <input class="horizontal-quantity form-control" id="quick-qty" type="text">
                     </div><!-- End .product-single-qty -->
-					<a href="#" class="paction icon-dollar" title="바로 구매">
+					<a href="#" th:onclick="@{'purchaseQuickOptionAjax(\'{no}\')'(no=${product.no})}" class="paction icon-dollar" title="바로 구매">
                     	<span>바로 구매&nbsp&nbsp</span>
                     </a>
                     <a href="#" th:onclick="@{'cartQuickOptionAjax(\'{no}\')'(no=${product.no})}" class="paction add-cart" title="장바구니에 추가">

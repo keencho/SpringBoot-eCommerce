@@ -586,7 +586,6 @@ public class ProductController {
 	public String viewProduct(
 			@PathVariable(value = "no") Long no,
 			@PageableDefault(size = 5, sort = "no", direction = Sort.Direction.DESC) Pageable questionPageable,
-
 			Model model,
 			HttpServletRequest request) throws Exception{
 		Product product = productService.getProductById(no);
@@ -650,7 +649,6 @@ public class ProductController {
 				}
 			}
 		}
-
 		model.addAttribute("product", product);
 		model.addAttribute("size", sizeStock);
 		model.addAttribute("color", colorStock);
@@ -665,6 +663,86 @@ public class ProductController {
 		model.addAttribute("review", review);
 		model.addAttribute("reviewPage", reviewPage);
 		return "/home/product/view";
+	}
+	
+	@GetMapping("/list")
+	public String productSearch(
+			@RequestParam(value="search", required=false) String search,
+			@RequestParam(value="classcification", required=false) String classcification,
+			@PageableDefault(size = 5, sort = "no", direction = Sort.Direction.DESC) Pageable pageable,
+			Model model) {
+		int idx = classcification.indexOf(",");
+		String csf_1 = classcification.substring(0, idx);
+		String csf_2_string = classcification.substring(idx + 1);
+		long csf_2 = Long.parseLong(csf_2_string);
+		
+		if(csf_1.equals("all")) {
+			List<Product> product = productService.getProductByNameContaining(pageable, search);
+			Page<ProductEntity> page = productService.getProductByNameContaining(search, pageable);
+			
+			for(int i = 0; i<product.size(); i ++) {	
+				List<ProductReview> review = reviewService.findByProductNo(product.get(i).getNo());
+				if(review.isEmpty() == false)
+				{
+					int before=0;
+					for(int j = 0; j < review.size(); j ++) {
+						before = before + review.get(j).getScore();
+					}
+					product.get(i).setScore(before / (double)review.size());
+				} else {
+					product.get(i).setScore(5);
+				}
+			}
+			
+			model.addAttribute("product", product);
+			model.addAttribute("page", page);
+		} else if (csf_1.equals("category")) {
+			List<Product> product = productService.getProductByCategoryNoAndNameContaining(pageable, csf_2, search);
+			Page<ProductEntity> page = productService.getProductByCategoryNoAndNameContaining(csf_2, search, pageable);
+			
+			for(int i = 0; i<product.size(); i ++) {	
+				List<ProductReview> review = reviewService.findByProductNo(product.get(i).getNo());
+				if(review.isEmpty() == false)
+				{
+					int before=0;
+					for(int j = 0; j < review.size(); j ++) {
+						before = before + review.get(j).getScore();
+					}
+					product.get(i).setScore(before / (double)review.size());
+				} else {
+					product.get(i).setScore(5);
+				}
+			}
+			
+			model.addAttribute("product", product);
+			model.addAttribute("page", page);
+		} else if (csf_1.equals("division")) {
+			List<Product> product = productService.getProductByDivisionNoAndNameContaining(pageable, csf_2, search);
+			Page<ProductEntity> page = productService.getProductByDivisionNoAndNameContaining(csf_2, search, pageable);
+			
+			for(int i = 0; i<product.size(); i ++) {	
+				List<ProductReview> review = reviewService.findByProductNo(product.get(i).getNo());
+				if(review.isEmpty() == false)
+				{
+					int before=0;
+					for(int j = 0; j < review.size(); j ++) {
+						before = before + review.get(j).getScore();
+					}
+					product.get(i).setScore(before / (double)review.size());
+				} else {
+					product.get(i).setScore(5);
+				}
+			}
+			
+			model.addAttribute("product", product);
+			model.addAttribute("page", page);
+		}
+		
+		model.addAttribute("search", search);
+		model.addAttribute("classcification", classcification);
+		model.addAttribute("csf", csf_2);
+		
+		return "/home/product/search";
 	}
 
 }
