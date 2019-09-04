@@ -67,28 +67,24 @@
                     <div class="header-center">
                         <div class="header-search">
                             <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
-                            <form action="#" method="get">
+                            <form action="/product/list" method="get">
                                 <div class="header-search-wrapper">
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="검색" required>
+                                    <input type="search" class="form-control" name="search" th:value="${search}" id="search" placeholder="검색" autocomplete="off" required>
                                     <div class="select-custom">
-                                        <select id="cat" name="cat">
-                                            <option value="">All Categories</option>
-                                            <option value="4">Fashion</option>
-                                            <option value="12">- Women</option>
-                                            <option value="13">- Men</option>
-                                            <option value="66">- Jewellery</option>
-                                            <option value="67">- Kids Fashion</option>
-                                            <option value="5">Electronics</option>
-                                            <option value="21">- Smart TVs</option>
-                                            <option value="22">- Cameras</option>
-                                            <option value="63">- Games</option>
-                                            <option value="7">Home &amp; Garden</option>
-                                            <option value="11">Motors</option>
-                                            <option value="31">- Cars and Trucks</option>
-                                            <option value="32">- Motorcycles &amp; Powersports</option>
-                                            <option value="33">- Parts &amp; Accessories</option>
-                                            <option value="34">- Boats</option>
-                                            <option value="57">- Auto Tools &amp; Supplies</option>
+                                        <select id="classcification" name="classcification">
+                                        	<option value="all,0" th:selected="${classcification} == 'all,0'">전체</option>
+                                        	<div th:each="category : ${header}">
+                                            	<option th:value="@{'category,{no}'(no=${category.no})}" 
+                                            			th:text="${category.name}"
+                                            			th:selected="(@{'category,{num}'(num=${category.no})} == ${classcification})"></option>
+                                            	<div th:each="division : ${header2}">
+                                            		<option th:value="@{'division,{no}'(no=${division.no})}" 
+                                            				th:if="${division.category.no == category.no}"
+                                            				th:selected="@{'division,{num}'(num=${division.no})} == ${classcification}">
+                                            			- <span th:text="${division.name}"></span>
+                                            		</option>
+                                            	</div>
+                                            </div>
                                         </select>
                                     </div><!-- End .select-custom -->
                                     <button class="btn" type="submit"><i class="icon-magnifier"></i></button>

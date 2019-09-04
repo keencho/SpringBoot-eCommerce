@@ -216,6 +216,20 @@ function consulting_status_search(no){
 	
 }
 
+//상품별 첨부파일 삭제
+function attach_delete_product(no){
+	var check = confirm("정말 첨부파일을 삭제하시겠습니까?");
+	if(no == 1){
+		alert("첫번째 첨부파일은 삭제하실 수 없습니다.");
+	}
+	else if (check == true){
+		$("#attach"+no).hide();
+		$("#attach_status"+no).val(1);
+	} else {
+		return false;
+	}
+}
+
 	</script>
   </body>
 </html>

@@ -1,6 +1,7 @@
 package iducs.springboot.board.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,6 +52,8 @@ public class AdminProductController {
 	SimpleDateFormat t1 = new SimpleDateFormat("yyyy-MM-dd");
 	
 	String newname = null, newname2 = null, newname3 = null, newname4 = null, newname5 = null, explainname= null;
+	String attachName1 = null, attachName2 = null, attachName3 = null, attachName4 = null, attachName5 = null, attachName6 = null;
+	String attachNameOriginal1 = null, attachNameOriginal2 = null, attachNameOriginal3 = null, attachNameOriginal4 = null, attachNameOriginal5 = null, attachNameOriginal6 = null;
 	
 	@GetMapping("")
 	public String productHome(Model model) throws Exception{
@@ -217,11 +221,471 @@ public class AdminProductController {
 		return "/admin/product/view";
 	}
 	
+	@GetMapping("/update/{no}")
+	public String adminProductUpdateForm(
+			@PathVariable(value="no") Long no,
+			Model model) {
+		Product product = productService.getProductById(no);
+		model.addAttribute("product", product);
+		
+		return "/admin/product/update";
+		
+	}
+	
 	@GetMapping("/del/{no}")
 	public String productSizeDel(@PathVariable(value = "no") Long no, Model model) {
 		Product product = productService.getProductById(no);
+		if(product.getPic1() != null) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic1());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic1());
+			}
+			file.delete();
+		}
+		
+		if(product.getPic2() != null) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic2());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic2());
+			}
+			file.delete();
+		}
+		
+		if(product.getPic3() != null) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic3());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic3());
+			}
+			file.delete();
+		}
+		
+		if(product.getPic4() != null) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic4());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic4());
+			}
+			file.delete();
+		}
+		
+		if(product.getPic5() != null) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic5());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic5());
+			}
+			file.delete();
+		}
+		
+		if(product.getExplainpic() != null) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getExplainpic());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getExplainpic());
+			}
+			file.delete();
+		}
 		productService.deleteProduct(product);
 		return "redirect:/admin/product";
+	}
+	
+	@PutMapping("/update/{no}")
+	public String productUpdate(
+			@PathVariable(value="no") Long no,
+			@RequestParam("name") String name,
+			@RequestParam("modelname") String modelname,
+			@RequestParam("price") String price,
+			@RequestParam("discount") String discount,
+			@RequestParam("listprice") String listprice,
+			@RequestParam("color") String color,
+			@RequestParam("size") String size,
+			@RequestParam("material") String material,
+			@RequestParam("madeby") String madeby,
+			@RequestParam("madein") String madein,
+			@RequestParam("caution") String caution,
+			@RequestParam("date") String date,
+			@RequestParam("pic1") MultipartFile pic1,
+			@RequestParam("pic2") MultipartFile pic2, 
+			@RequestParam("pic3") MultipartFile pic3,
+			@RequestParam("pic4") MultipartFile pic4, 
+			@RequestParam("pic5") MultipartFile pic5,
+			@RequestParam("explainpic") MultipartFile explainpic,
+			@RequestParam("attach_status1") int status1,
+			@RequestParam("attach_status2") int status2,
+			@RequestParam("attach_status3") int status3,
+			@RequestParam("attach_status4") int status4,
+			@RequestParam("attach_status5") int status5,
+			@RequestParam("attach_status6") int status6,
+			Model model
+			) throws IOException {
+		Product product = productService.getProductById(no);
+		
+		if(status1 == 0) {								// 첨부파일이 기존에 없었거나 삭제되지 않았을 경우
+			if(!pic1.isEmpty()) {						// 첨부파일을 새로 등록했을때
+				int idx1 = pic1.getContentType().indexOf("/");
+				int idx2 = pic1.getOriginalFilename().indexOf(".");
+				String attach1 = pic1.getContentType().substring(idx1 + 1);
+				String attach2 = pic1.getOriginalFilename().substring(0, idx2);
+				
+				attachName1 = attach2 + System.currentTimeMillis() + "." + attach1;
+				try {
+					if(!product.getPic1().isEmpty()) {	// 기존의 첨부파일이 있다면
+						File file;
+						if(osName.matches(".*Windows.*")) {
+							file = new File(cwd + "/" + product.getRegdate(), product.getPic1());
+						} else {
+							file = new File(cwd2 + "/" + product.getRegdate(), product.getPic1());
+						}
+						file.delete(); 					// 기존의 첨부파일은 삭제
+					}
+				} catch (Exception e) {}
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName1);
+					FileCopyUtils.copy(pic1.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName1);
+					FileCopyUtils.copy(pic1.getBytes(), newFile);
+				}
+				product.setPic1(attachName1);
+			}
+		} else if (status1 == 1) {	// 기존의 첨부파일을 삭제하고자 할 경우
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic1());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic1());
+			}
+			file.delete();
+			attachName1 = null;
+			if(!pic1.isEmpty()) {
+				int idx1 = pic1.getContentType().indexOf("/");
+				int idx2 = pic1.getOriginalFilename().indexOf(".");
+				String attach1 = pic1.getContentType().substring(idx1 + 1);
+				String attach2 = pic1.getOriginalFilename().substring(0, idx2);
+				
+				attachName1 = attach2 + System.currentTimeMillis() + "." + attach1;
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName1);
+					FileCopyUtils.copy(pic1.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName1);
+					FileCopyUtils.copy(pic1.getBytes(), newFile);
+				}
+			}
+			product.setPic1(attachName1);
+		}
+		/* ---------------------------------------------------------------------------------------------- */
+		if(status2 == 0) {
+			if(!pic2.isEmpty()) {
+				int idx1 = pic2.getContentType().indexOf("/");
+				int idx2 = pic2.getOriginalFilename().indexOf(".");
+				String attach1 = pic2.getContentType().substring(idx1 + 1);
+				String attach2 = pic2.getOriginalFilename().substring(0, idx2);
+				
+				attachName2 = attach2 + System.currentTimeMillis() + "." + attach1;
+				try {
+					if(!product.getPic2().isEmpty()) {	// 기존의 첨부파일이 있다면
+						File file;
+						if(osName.matches(".*Windows.*")) {
+							file = new File(cwd + "/" + product.getRegdate(), product.getPic2());
+						} else {
+							file = new File(cwd2 + "/" + product.getRegdate(), product.getPic2());
+						}
+						file.delete(); 					// 기존의 첨부파일은 삭제
+					}
+				} catch (Exception e) {}
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName2);
+					FileCopyUtils.copy(pic2.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName2);
+					FileCopyUtils.copy(pic2.getBytes(), newFile);
+				}
+				product.setPic2(attachName2);
+			}
+		} else if (status2 == 1) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic2());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic2());
+			}
+			file.delete();
+			attachName2 = null;
+			if(!pic2.isEmpty()) {
+				int idx1 = pic2.getContentType().indexOf("/");
+				int idx2 = pic2.getOriginalFilename().indexOf(".");
+				String attach1 = pic2.getContentType().substring(idx1 + 1);
+				String attach2 = pic2.getOriginalFilename().substring(0, idx2);
+				
+				attachName2 = attach2 + System.currentTimeMillis() + "." + attach1;
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName2);
+					FileCopyUtils.copy(pic2.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName2);
+					FileCopyUtils.copy(pic2.getBytes(), newFile);
+				}
+			}
+			product.setPic2(attachName2);
+		}
+		/* ---------------------------------------------------------------------------------------------- */
+		if(status3 == 0) {
+			if(!pic3.isEmpty()) {
+				int idx1 = pic3.getContentType().indexOf("/");
+				int idx2 = pic3.getOriginalFilename().indexOf(".");
+				String attach1 = pic3.getContentType().substring(idx1 + 1);
+				String attach2 = pic3.getOriginalFilename().substring(0, idx2);
+				
+				attachName3 = attach2 + System.currentTimeMillis() + "." + attach1;
+				try {
+					if(!product.getPic3().isEmpty()) {	// 기존의 첨부파일이 있다면
+						File file;
+						if(osName.matches(".*Windows.*")) {
+							file = new File(cwd + "/" + product.getRegdate(), product.getPic3());
+						} else {
+							file = new File(cwd2 + "/" + product.getRegdate(), product.getPic3());
+						}
+						file.delete(); 					// 기존의 첨부파일은 삭제
+					}
+				} catch (Exception e) {}
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName3);
+					FileCopyUtils.copy(pic3.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName3);
+					FileCopyUtils.copy(pic3.getBytes(), newFile);
+				}
+				product.setPic3(attachName3);
+			}
+		} else if (status3 == 1) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic3());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic3());
+			}
+			file.delete();
+			attachName3 = null;
+			if(!pic3.isEmpty()) {
+				int idx1 = pic3.getContentType().indexOf("/");
+				int idx2 = pic3.getOriginalFilename().indexOf(".");
+				String attach1 = pic3.getContentType().substring(idx1 + 1);
+				String attach2 = pic3.getOriginalFilename().substring(0, idx2);
+				
+				attachName3 = attach2 + System.currentTimeMillis() + "." + attach1;
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName3);
+					FileCopyUtils.copy(pic3.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName3);
+					FileCopyUtils.copy(pic3.getBytes(), newFile);
+				}
+			}
+			product.setPic3(attachName3);
+		}
+		/* ---------------------------------------------------------------------------------------------- */
+		if(status4 == 0) {
+			if(!pic4.isEmpty()) {
+				int idx1 = pic4.getContentType().indexOf("/");
+				int idx2 = pic4.getOriginalFilename().indexOf(".");
+				String attach1 = pic4.getContentType().substring(idx1 + 1);
+				String attach2 = pic4.getOriginalFilename().substring(0, idx2);
+				
+				attachName4 = attach2 + System.currentTimeMillis() + "." + attach1;
+				try {
+					if(!product.getPic4().isEmpty()) {	// 기존의 첨부파일이 있다면
+						File file;
+						if(osName.matches(".*Windows.*")) {
+							file = new File(cwd + "/" + product.getRegdate(), product.getPic4());
+						} else {
+							file = new File(cwd2 + "/" + product.getRegdate(), product.getPic4());
+						}
+						file.delete(); 					// 기존의 첨부파일은 삭제
+					}
+				} catch (Exception e) {}
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName4);
+					FileCopyUtils.copy(pic4.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName4);
+					FileCopyUtils.copy(pic4.getBytes(), newFile);
+				}
+				product.setPic4(attachName4);
+			}
+		} else if (status4 == 1) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic4());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic4());
+			}
+			file.delete();
+			attachName4 = null;
+			if(!pic4.isEmpty()) {
+				int idx1 = pic4.getContentType().indexOf("/");
+				int idx2 = pic4.getOriginalFilename().indexOf(".");
+				String attach1 = pic4.getContentType().substring(idx1 + 1);
+				String attach2 = pic4.getOriginalFilename().substring(0, idx2);
+				
+				attachName4 = attach2 + System.currentTimeMillis() + "." + attach1;
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName4);
+					FileCopyUtils.copy(pic4.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName4);
+					FileCopyUtils.copy(pic4.getBytes(), newFile);
+				}
+			}
+			product.setPic4(attachName4);
+		}
+		/* ---------------------------------------------------------------------------------------------- */
+		if(status5 == 0) {
+			if(!pic5.isEmpty()) {
+				int idx1 = pic5.getContentType().indexOf("/");
+				int idx2 = pic5.getOriginalFilename().indexOf(".");
+				String attach1 = pic5.getContentType().substring(idx1 + 1);
+				String attach2 = pic5.getOriginalFilename().substring(0, idx2);
+				
+				attachName5 = attach2 + System.currentTimeMillis() + "." + attach1;
+				try {
+					if(!product.getPic5().isEmpty()) {	// 기존의 첨부파일이 있다면
+						File file;
+						if(osName.matches(".*Windows.*")) {
+							file = new File(cwd + "/" + product.getRegdate(), product.getPic5());
+						} else {
+							file = new File(cwd2 + "/" + product.getRegdate(), product.getPic5());
+						}
+						file.delete(); 					// 기존의 첨부파일은 삭제
+					}
+				} catch (Exception e) {}
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName5);
+					FileCopyUtils.copy(pic5.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName5);
+					FileCopyUtils.copy(pic5.getBytes(), newFile);
+				}
+				product.setPic5(attachName5);
+			}
+		} else if (status5 == 1) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getPic5());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getPic5());
+			}
+			file.delete();
+			attachName5 = null;
+			if(!pic5.isEmpty()) {
+				int idx1 = pic5.getContentType().indexOf("/");
+				int idx2 = pic5.getOriginalFilename().indexOf(".");
+				String attach1 = pic5.getContentType().substring(idx1 + 1);
+				String attach2 = pic5.getOriginalFilename().substring(0, idx2);
+				
+				attachName5 = attach2 + System.currentTimeMillis() + "." + attach1;
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName5);
+					FileCopyUtils.copy(pic5.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName5);
+					FileCopyUtils.copy(pic5.getBytes(), newFile);
+				}
+			}
+			product.setPic5(attachName5);
+		}
+		/* ---------------------------------------------------------------------------------------------- */
+		if(status6 == 0) {
+			if(!explainpic.isEmpty()) {
+				int idx1 = explainpic.getContentType().indexOf("/");
+				int idx2 = explainpic.getOriginalFilename().indexOf(".");
+				String attach1 = explainpic.getContentType().substring(idx1 + 1);
+				String attach2 = explainpic.getOriginalFilename().substring(0, idx2);
+				
+				attachName6 = attach2 + System.currentTimeMillis() + "." + attach1;
+				try {
+					if(!product.getExplainpic().isEmpty()) {	// 기존의 첨부파일이 있다면
+						File file;
+						if(osName.matches(".*Windows.*")) {
+							file = new File(cwd + "/" + product.getRegdate(), product.getExplainpic());
+						} else {
+							file = new File(cwd2 + "/" + product.getRegdate(), product.getExplainpic());
+						}
+						file.delete(); 					// 기존의 첨부파일은 삭제
+					}
+				} catch (Exception e) {}
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName6);
+					FileCopyUtils.copy(explainpic.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName6);
+					FileCopyUtils.copy(explainpic.getBytes(), newFile);
+				}
+				product.setExplainpic(attachName6);
+			}
+		} else if (status6 == 1) {
+			File file;
+			if(osName.matches(".*Windows.*")) {
+				file = new File(cwd + "/" + product.getRegdate(), product.getExplainpic());
+			} else {
+				file = new File(cwd2 + "/" + product.getRegdate(), product.getExplainpic());
+			}
+			file.delete();
+			attachName6 = null;
+			if(!explainpic.isEmpty()) {
+				int idx1 = explainpic.getContentType().indexOf("/");
+				int idx2 = explainpic.getOriginalFilename().indexOf(".");
+				String attach1 = explainpic.getContentType().substring(idx1 + 1);
+				String attach2 = explainpic.getOriginalFilename().substring(0, idx2);
+				
+				attachName6 = attach2 + System.currentTimeMillis() + "." + attach1;
+				
+				if(osName.matches(".*Windows.*")) {
+					File newFile = new File(path + "/" + product.getRegdate(), attachName6);
+					FileCopyUtils.copy(explainpic.getBytes(), newFile);
+				} else {
+					File newFile = new File(path2 + "/" + product.getRegdate(), attachName6);
+					FileCopyUtils.copy(explainpic.getBytes(), newFile);
+				}
+			}
+			product.setExplainpic(attachName6);
+		}
+		
+		product.setName(name);
+		product.setModelname(modelname);
+		product.setPrice(price);
+		product.setDiscount(discount);
+		product.setListprice(listprice);
+		product.setColor(color);
+		product.setSize(size);
+		product.setMaterial(material);
+		product.setMadeby(madeby);
+		product.setMadein(madein);
+		product.setCaution(caution);
+		product.setDate(date);
+		productService.updateProduct(product);
+		
+		return "redirect:/admin/product/view/" + no;
 	}
 
 }

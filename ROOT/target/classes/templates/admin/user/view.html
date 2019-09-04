@@ -1,0 +1,77 @@
+<th:block th:include="admin/main/header.html"></th:block>
+<!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">	
+                    <h2>사용자 정보 상세보기
+					</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+						<table class="table table-borderless">
+						  <tbody>
+						  <tr>
+							  <th scope="row" style="width: 10%">번호</th>
+							  <td>
+							  	<span th:text="${user.no}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row" style="width: 10%">이름</th>
+							  <td>
+							  	<span th:text="${user.name}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">아이디</th>
+							  <td>
+							  	<span th:text="${user.id}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">비밀번호</th>
+							  <td>
+							  	<span th:text="${user.password}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">이메일</th>
+							  <td>
+							  	<span th:text="${user.email}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">전화번호</th>
+							  <td>
+							  	<span th:utext="${user.phone}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">포인트</th>
+							  <td>
+							  	<span th:text="${user.point}"></span>
+							  </td>
+							</tr>
+							<tr>
+							  <th scope="row">가입일</th>
+							  <td>
+							  	<span th:text="${user.joinday}"></span>
+							  </td>
+							</tr>
+						  </tbody>
+						</table>
+						<div align="center">
+						  <button type="button" class="btn btn-primary" onclick="location.href='/admin/user'">리스트로</button>
+                        </div>
+						</div>
+                  </div>
+                </div>
+              </div>     
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+<th:block th:include="admin/main/footer.html"></th:block>

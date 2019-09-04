@@ -1,15 +1,31 @@
 <th:block th:include="admin/main/header.html"></th:block>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+
 	function find_category() {
-		window.open("/admin/division/findCategory", "","resizeable=yes,scrollbar=yes,width=900,height=800");
+		window.open("/admin/product/findCategory", "",
+				"resizeable=yes,scrollbar=yes,width=891,height=800");
 	}
+	
+	function cal_prices()
+	{
+		var price = Number(productAddForm.price.value);
+		var discount = Number(productAddForm.discount.value);
+		productAddForm.listprice2.value=Math.floor(price * (1 - (discount/100)));
+		productAddForm.listprice.value=Math.floor(price * (1 - (discount/100)));
+	}
+	function xx(){
+		var x = productAddForm.pic1.value;
+		alert(x);
+	}
+ 
 </script>
 <!-- page content -->
-        <div class="right_col" role="main">
+<div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>중분류</h3>
+                <h3 onclick="xx()">의류  판매 정보 수정</h3>
               </div>
             </div>
 
@@ -24,23 +40,182 @@
                   </div>
                   <div class="x_content">
                     <br />
-                    <form th:action="@{'/admin/division/update/{no}'(no=${division.no})}" name="divisionAddForm" th:method="put" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <form class="form-horizontal form-label-left" th:action="@{'/admin/product/update/{no}'(no=${product.no})}" name="productAddForm" th:method="put" enctype="multipart/form-data" >
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">대분류명 <span class="required">*</span>
                         </label>
-                        <input type="button" value="대분류 찾기" onClick="find_category();" class="btn">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" required="required" name="category_name" class="form-control col-md-7 col-xs-12" th:value="${division.category.name}" disabled>
-                          <input type="hidden" required="required" name="category_no" th:value="${division.category.no}">
+                          <input type="text" required="required" name="category_name" th:value="${product.category.name}" class="form-control col-md-7 col-xs-12" disabled>
+                        </div>
+                      </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">중분류명<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="division_name" th:value="${product.division.name}" class="form-control col-md-7 col-xs-12" disabled>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">중분류명<span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">소분류명 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="name" required="required" class="form-control col-md-7 col-xs-12" th:value="${division.name}">
+                          <input type="text" required="required" name="section_name" th:value="${product.section.name}" class="form-control col-md-7 col-xs-12" disabled>
+
                         </div>
                       </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">판매명 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="name" th:value="${product.name}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">모델명 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="modelname" th:value="${product.modelname}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">원가 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="price" th:value="${product.price}" class="form-control col-md-7 col-xs-12" oninput="cal_prices()";>
+                        </div>
+                      </div> 
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">할인율 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="discount" th:value="${product.discount}" class="form-control col-md-7 col-xs-12" oninput="cal_prices()">
+                        </div>
+                      </div> 
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">정가 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="listprice2" th:value="${product.listprice}" class="form-control col-md-7 col-xs-12" disabled>
+                          <input type="hidden" required="required" name="listprice" th:value="${product.listprice}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">색상 목록 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="color" th:value="${product.color}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div> 
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">사이즈 목록 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="size" th:value="${product.size}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">소재 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="material" th:value="${product.material}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">제조사 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="madeby" th:value="${product.madeby}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">제조국 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="madein" th:value="${product.madein}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">세탁방법 및 취급시 주의사항 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="caution" th:value="${product.caution}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">제조년월 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" required="required" name="date" th:value="${product.date}" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">상품사진1
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+	                        <span th:if="${product.pic1}" id="attach1">
+	                       		 현재 업로드 되어있는 파일명: <u><span th:text="${product.pic1}"></span></u>&nbsp&nbsp&nbsp<a style="cursor: pointer;" onclick="attach_delete_product(1)"><i class="fa fa-close fa-1x"></i></a>
+	                        </span>
+	                      <input type="hidden" name="attach_status1" id="attach_status1" value="0">
+                          <input type="file" name="pic1" value="" class="form-control form-control-sm col-md-7 col-xs-12">
+                        </div>
+                      </div>
+					  <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">상품사진2
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        	<span th:if="${product.pic2}" id="attach2">
+	                       		 현재 업로드 되어있는 파일명: <u><span th:text="${product.pic2}"></span></u>&nbsp&nbsp&nbsp<a style="cursor: pointer;" onclick="attach_delete_product(2)"><i class="fa fa-close fa-1x"></i></a>
+	                        </span>
+	                      <input type="hidden" name="attach_status2" id="attach_status2" value="0">
+                          <input type="file" name="pic2" value="" class="form-control form-control-sm col-md-7 col-xs-12">
+                        </div>
+                      </div>
+					  <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">상품사진3
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        	<span th:if="${product.pic3}" id="attach3">
+	                       		 현재 업로드 되어있는 파일명: <u><span th:text="${product.pic3}"></span></u>&nbsp&nbsp&nbsp<a style="cursor: pointer;" onclick="attach_delete_product(3)"><i class="fa fa-close fa-1x"></i></a>
+	                        </span>
+	                      <input type="hidden" name="attach_status3" id="attach_status3" value="0">
+                          <input type="file" name="pic3" value="" class="form-control form-control-sm col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">상품사진4
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        	<span th:if="${product.pic4}" id="attach4">
+	                       		 현재 업로드 되어있는 파일명: <u><span th:text="${product.pic4}"></span></u>&nbsp&nbsp&nbsp<a style="cursor: pointer;" onclick="attach_delete_product(4)"><i class="fa fa-close fa-1x"></i></a>
+	                        </span>
+	                      <input type="hidden" name="attach_status4" id="attach_status4" value="0">  
+                          <input type="file" name="pic4" value="" class="form-control form-control-sm col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">상품사진5
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        	<span th:if="${product.pic5}" id="attach5">
+	                       		 현재 업로드 되어있는 파일명: <u><span th:text="${product.pic5}"></span></u>&nbsp&nbsp&nbsp<a style="cursor: pointer;" onclick="attach_delete_product(5)"><i class="fa fa-close fa-1x"></i></a>
+	                        </span>
+	                      <input type="hidden" name="attach_status5" id="attach_status5" value="0">
+                          <input type="file" name="pic5" value="" class="form-control form-control-sm col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                     <div align="center">※선택 안해도 기본 추가</div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">상품설명 이미지
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <span th:if="${product.explainpic}" id="attach6">
+	                       		 현재 업로드 되어있는 파일명: <u><span th:text="${product.explainpic}"></span></u>&nbsp&nbsp&nbsp<a style="cursor: pointer;" onclick="attach_delete_product(6)"><i class="fa fa-close fa-1x"></i></a>
+	                        </span>
+	                      <input type="hidden" name="attach_status6" id="attach_status6" value="0">
+                          <input type="file" name="explainpic" class="form-control form-control-sm col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <input type="hidden" required="required" name="regdate" class="form-control col-md-7 col-xs-12" th:value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}">
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">

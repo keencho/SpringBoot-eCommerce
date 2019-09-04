@@ -288,25 +288,25 @@
                                     <li>
                                         <a href="#" class="sf-with-ul">&nbsp&nbsp<i class="fas fa-male"></i>&nbsp&nbsp남자</a>
                                         <ul>
-                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 1}"><a href="cart.html" th:text="${header2.name}"></a></li>
+                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 1}"><a th:href="@{'/product/list/division/{no}'(no=${header2.no})}" th:text="${header2.name}"></a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="#" class="sf-with-ul">&nbsp&nbsp<i class="fas fa-female"></i>&nbsp&nbsp여자</a>
                                         <ul>
-                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 2}"><a href="cart.html" th:text="${header2.name}"></a></li>
+                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 2}"><a th:href="@{'/product/list/division/{no}'(no=${header2.no})}" th:text="${header2.name}"></a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="#" class="sf-with-ul">&nbsp<i class="fas fa-hat-wizard"></i>&nbsp악세사리</a>
                                         <ul>
-                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 3}"><a href="cart.html" th:text="${header2.name}"></a></li>
+                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 3}"><a th:href="@{'/product/list/division/{no}'(no=${header2.no})}" th:text="${header2.name}"></a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="#" class="sf-with-ul">&nbsp<i class="fas fa-shoe-prints"></i>신발</a>
                                         <ul>
-                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 4}"><a href="cart.html" th:text="${header2.name}"></a></li>
+                                            <li th:each="header2 : ${header2}" th:if="${header2.category.no == 4}"><a th:href="@{'/product/list/division/{no}'(no=${header2.no})}" th:text="${header2.name}"></a></li>
                                         </ul>
                                     </li>
                                     <li><a href="/custcenter/faq">&nbsp&nbsp<i class="far fa-clipboard"></i>&nbsp고객센터</a></li>

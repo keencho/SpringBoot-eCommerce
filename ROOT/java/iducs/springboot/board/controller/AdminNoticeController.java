@@ -198,7 +198,7 @@ public class AdminNoticeController {
 		Notice notice = noticeService.findByNo(no);
 		notice.setTitle(title);
 		contents = contents.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
-		notice.setContents(contents);	
+		notice.setContents(contents);
 		
 		if(status == 0) {								// 첨부파일이 기존에 없었거나 삭제되지 않았을 경우
 			if(!attach.isEmpty()) {						// 첨부파일을 새로 등록했을때

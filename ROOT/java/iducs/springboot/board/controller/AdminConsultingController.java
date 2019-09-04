@@ -3,12 +3,24 @@ package iducs.springboot.board.controller;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.InternetHeaders;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -93,26 +105,6 @@ public class AdminConsultingController {
 		return "admin/consulting/answer";
 	}
 	
-	@PutMapping("/answer/{no}")
-	public String adminConsultingAnswer(
-			@PathVariable("no") Long no,
-			@RequestParam("answer") String answer,
-			Model model
-			) {
-		Date d = new Date();
-		SimpleDateFormat t1 = new SimpleDateFormat("yyyy-MM-dd");
-		answer = answer.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
-		
-		Consulting consulting = consultingService.findByNo(no);
-		consulting.setAnswer(answer);
-		consulting.setDate_a(t1.format(d));
-		consulting.setStatus(1);
-		
-		consultingService.updateConsulting(consulting);
-		
-		return "redirect:/admin/consulting";
-	}
-	
 	@DeleteMapping("/del/{no}")
 	public String adminConsultingDel(
 			@PathVariable("no") Long no
@@ -158,6 +150,64 @@ public class AdminConsultingController {
 	    in.close();
 	    response.getOutputStream().flush();
 	    response.getOutputStream().close();
+		
+	}
+	
+	@PutMapping("/answer/{no}")
+	public String adminConsultingAnswer(
+			@PathVariable("no") Long no,
+			@RequestParam("answer") String answer,
+			Model model
+			) throws UnsupportedEncodingException, MessagingException {
+		Date d = new Date();
+		SimpleDateFormat t1 = new SimpleDateFormat("yyyy-MM-dd");
+		answer = answer.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+		
+		Consulting consulting = consultingService.findByNo(no);
+		this.sendEmail(consulting.getEmail(), consulting.getUser().getName(), consulting.getTitle());
+		
+		consulting.setAnswer(answer);
+		consulting.setDate_a(t1.format(d));
+		consulting.setStatus(1);
+		
+		consultingService.updateConsulting(consulting);
+		
+		return "redirect:/admin/consulting";
+	}
+	
+	public void sendEmail(String email, String name, String title) throws UnsupportedEncodingException, MessagingException {	// 이메일 보내기
+		final String user = "seyoung12314@gmail.com";
+		final String password = "sw971312!@";
+		String content = "keencho 가상 쇼핑몰입니다.<br><br>고객님의 <font color='blue'>'" + title + "'</font> 1:1문의에 대한 답변이 등록되었습니다.<br><u><a href='http://keencho.ml:8900/'>여기</a></u>를 눌러 지금 바로 답변을 확인해보세요!";
+		
+		Properties prop = new Properties();
+		prop.put("mail.smtp.host", "smtp.gmail.com");
+		prop.put("mail.smtp.port", 465);
+		prop.put("mail.smtp.auth", "true");
+		prop.put("mail.smtp.ssl.enable", "true");
+		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		
+		Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(user, password);
+            }
+        });
+
+		try {
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(user));
+			
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));		// 수신자 이메일 주소
+			
+			message.setSubject(name + "님의 1:1 문의에 대한 답변이 등록되었습니다!");
+			message.setText(content, "UTF-8", "html");
+			
+			Transport.send(message);
+		} catch (AddressException e) {
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
