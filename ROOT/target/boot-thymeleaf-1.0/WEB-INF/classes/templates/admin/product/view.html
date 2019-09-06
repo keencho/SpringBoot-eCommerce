@@ -175,10 +175,10 @@
                       </div>
 
                       <div class="">
-                        <button type="button" class="btn btn-default btn-lg">상품 판매정보 수정</button>
+                        <button type="button" class="btn btn-default btn-lg" th:onclick="@{location.href='/admin/product/update/{no}'(no=${product.no})}">상품 판매정보 수정</button>
                         <button type="button" class="btn btn-default btn-lg" th:onclick="@{'sizeTable(\'{no}\')'(no=${product.no})}">치수표 확인</button>
                         <button type="button" class="btn btn-default btn-lg" th:onclick="@{'stockTable(\'{no}\')'(no=${product.no})}">수량 확인</button>
-                        <button type="button" class="btn btn-default btn-lg">삭제</button>
+                        <button type="button" class="btn btn-default btn-lg" th:onclick="@{location.href='/admin/product/del/{no}'(no=${product.no})}">삭제</button>
                       </div>
 
 

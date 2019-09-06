@@ -229,7 +229,7 @@
     <!-- 아임포트 결제 데모 -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <!-- jQuery UI -->
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
     // 공지사항 소팅
     function notice_sorting() {
@@ -285,10 +285,42 @@
     }
     
     // 검색 소팅
-    function search_sorting(search, classcification){
+    function search_sorting(search){
     	var sort = $('#orderby').val();
-    	location.href="/product/list?search=" + search + "&classcification=" + classcification + "&page=0&sort=" + sort;
+    	location.href="/product/list?search=" + search + "&page=0&sort=" + sort;
     }
+    
+    // 자동완성
+    $(function() {
+    	  var availableTags = [
+    	    "ActionScript",
+    	    "AppleScript",
+    	    "Asp",
+    	    "BASIC",
+    	    "C",
+    	    "C++",
+    	    "Clojure",
+    	    "COBOL",
+    	    "ColdFusion",
+    	    "Erlang",
+    	    "Fortran",
+    	    "Groovy",
+    	    "Haskell",
+    	    "Java",
+    	    "JavaScript",
+    	    "Lisp",
+    	    "Perl",
+    	    "PHP",
+    	    "Python",
+    	    "Ruby",
+    	    "Scala",
+    	    "Scheme"
+    	  ];
+    	  $("#autocomplete").autocomplete({
+    	    source: availableTags
+    	  });
+    	});
+
 
     </script>
 </body>

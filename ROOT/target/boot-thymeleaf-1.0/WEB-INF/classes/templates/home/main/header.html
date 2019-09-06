@@ -70,23 +70,6 @@
                             <form action="/product/list" method="get">
                                 <div class="header-search-wrapper">
                                     <input type="search" class="form-control" name="search" th:value="${search}" id="search" placeholder="검색" autocomplete="off" required>
-                                    <div class="select-custom">
-                                        <select id="classcification" name="classcification">
-                                        	<option value="all,0" th:selected="${classcification} == 'all,0'">전체</option>
-                                        	<div th:each="category : ${header}">
-                                            	<option th:value="@{'category,{no}'(no=${category.no})}" 
-                                            			th:text="${category.name}"
-                                            			th:selected="(@{'category,{num}'(num=${category.no})} == ${classcification})"></option>
-                                            	<div th:each="division : ${header2}">
-                                            		<option th:value="@{'division,{no}'(no=${division.no})}" 
-                                            				th:if="${division.category.no == category.no}"
-                                            				th:selected="@{'division,{num}'(num=${division.no})} == ${classcification}">
-                                            			- <span th:text="${division.name}"></span>
-                                            		</option>
-                                            	</div>
-                                            </div>
-                                        </select>
-                                    </div><!-- End .select-custom -->
                                     <button class="btn" type="submit"><i class="icon-magnifier"></i></button>
                                 </div><!-- End .header-search-wrapper -->
                             </form>

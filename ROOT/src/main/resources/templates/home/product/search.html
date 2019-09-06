@@ -31,7 +31,7 @@
                     <div class="toolbox-left">
                         <div class="toolbox-item toolbox-sort">
                             <div class="select-custom">
-                                <select id="orderby" name="orderby" class="form-control" th:onchange="@{'search_sorting(\'{search}\', \'{classcification}\')'(search=${search}, classcification=${classcification})}">
+                                <select id="orderby" name="orderby" class="form-control" th:onchange="@{'search_sorting(\'{search}\')'(search=${search})}">
                                     <option value="no,desc" th:if="${#strings.equals(param.sort, 'no,desc')}" selected>최근 등록순</option>
                                     <option value="no,desc" th:unless="${#strings.equals(param.sort, 'no,desc')}">최근 등록순</option>
                                     <option value="no,asc" th:if="${#strings.equals(param.sort, 'no,asc')}" selected>오래된순</option>
@@ -103,13 +103,13 @@
 	                <div style="margin: auto;" >
 	                    <ul class="pagination">
 	                        <li class="page-item" th:if="${!page.first}">
-                                <a th:href="@{'?search={search}&classcification={classcification}&page={number}&sort={sort}'(search=${search}, classcification=${classcification}, number=${page.number-1}, sort=${param.sort})}" class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
+                                <a th:href="@{'?search={search}&page={number}&sort={sort}'(search=${search}, number=${page.number-1}, sort=${param.sort})}" class="page-link page-link-btn"><i class="icon-angle-left"></i></a>
                             </li>
                             <li th:each="pages: ${#numbers.sequence(0, page.totalPages-1)}" th:class=" ${page.number == pages} ? 'page-item active' : ''">
-                                <a th:unless="${pages+1 ==0}" class="page-link" th:href="@{${#httpServletRequest.requestURI}(search=${search}, classcification=${classcification}, page=${pages}, sort=${param.sort})}" th:inline="text">[[${pages+1}]]</a>
+                                <a th:unless="${pages+1 ==0}" class="page-link" th:href="@{${#httpServletRequest.requestURI}(search=${search}, page=${pages}, sort=${param.sort})}" th:inline="text">[[${pages+1}]]</a>
                             </li>   
                             <li th:if="${!page.last}" class="page-item">
-                                <a th:href="@{'?search={search}&classcification={classcification}&page={number}&sort={sort}'(search=${search}, classcification=${classcification}, number=${page.number+1}, sort=${param.sort})}" class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
+                                <a th:href="@{'?search={search}&page={number}&sort={sort}'(search=${search}, number=${page.number+1}, sort=${param.sort})}" class="page-link page-link-btn"><i class="icon-angle-right"></i></a>
                             </li>
 	                    </ul>
                     </div>
