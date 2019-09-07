@@ -2,6 +2,7 @@ package iducs.springboot.board.controller;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -43,6 +44,7 @@ import iducs.springboot.board.service.ProductService;
 import iducs.springboot.board.service.ProductSizeService;
 import iducs.springboot.board.service.ProductStockService;
 import iducs.springboot.board.service.SectionService;
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/product")
@@ -693,6 +695,35 @@ public class ProductController {
 		model.addAttribute("search", search);
 		
 		return "/home/product/search";
+	}
+	
+	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @PostMapping("/search") public JSONArray productAutoComplete(
+	 * 
+	 * @RequestParam(value = "search") String search, Model model) { // Ajax로
+	 * autocomplete을 위한 결과값 얻어오기 List<Product> product =
+	 * productService.findProductByNameContaining(search); List<String> product_name
+	 * = new ArrayList<String>(); for(int i = 0; i < product.size(); i ++) {
+	 * System.out.println(product.get(i).getName());
+	 * product_name.add(product.get(i).getName()); }
+	 * 
+	 * return JSONArray.fromObject(product_name); }
+	 */
+	 
+	
+	@ResponseBody
+	@GetMapping("/search")
+	public List<String> search(
+			@RequestParam(value="search", required = false) String search){
+		List<Product> product = productService.findProductByNameContaining(search);
+		List<String> product_name = new ArrayList<String>();
+		for (int i = 0; i < product.size(); i++) {
+			product_name.add(product.get(i).getName());
+		}
+		return product_name;
 	}
 
 }

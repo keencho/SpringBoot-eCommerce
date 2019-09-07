@@ -43,6 +43,7 @@ public interface ProductService {
 	
 	List<Product> getProductByNameContaining(Pageable pageable, String name);
 	Page<ProductEntity> getProductByNameContaining(String name, Pageable pageable);
+	List<Product> findProductByNameContaining(String search);
 	
 	List<Product> getProductByCategoryNoAndNameContaining(Pageable pageable, long no, String name);
 	Page<ProductEntity> getProductByCategoryNoAndNameContaining(long no, String name, Pageable pageable);

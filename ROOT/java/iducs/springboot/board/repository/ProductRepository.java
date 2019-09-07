@@ -63,6 +63,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>{
 	
 	List<ProductEntity> findByNameContaining(Pageable pageable, String name);
 	Page<ProductEntity> findByNameContaining(String name, Pageable pageable);
+	List<ProductEntity> findByNameContainingOrderByNameAsc(String search);
 	
 	List<ProductEntity> findByCategoryNoAndNameContaining(Pageable pageable, long no, String name);
 	Page<ProductEntity> findByCategoryNoAndNameContaining(long no, String name, Pageable pageable);

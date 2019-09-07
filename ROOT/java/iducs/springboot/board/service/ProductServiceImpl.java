@@ -351,4 +351,16 @@ public class ProductServiceImpl implements ProductService{
 		return entities;
 	}
 
+
+	@Override
+	public List<Product> findProductByNameContaining(String search) {
+		List<Product> product = new ArrayList<Product>();
+		List<ProductEntity> entities = repository.findByNameContainingOrderByNameAsc(search);
+		for(ProductEntity entity : entities) {
+			Product products = entity.buildDomain();
+			product.add(products);
+		}
+		return product;
+	}
+
 }

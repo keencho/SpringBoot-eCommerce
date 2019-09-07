@@ -290,37 +290,14 @@
     	location.href="/product/list?search=" + search + "&page=0&sort=" + sort;
     }
     
-    // 자동완성
-    $(function() {
-    	  var availableTags = [
-    	    "ActionScript",
-    	    "AppleScript",
-    	    "Asp",
-    	    "BASIC",
-    	    "C",
-    	    "C++",
-    	    "Clojure",
-    	    "COBOL",
-    	    "ColdFusion",
-    	    "Erlang",
-    	    "Fortran",
-    	    "Groovy",
-    	    "Haskell",
-    	    "Java",
-    	    "JavaScript",
-    	    "Lisp",
-    	    "Perl",
-    	    "PHP",
-    	    "Python",
-    	    "Ruby",
-    	    "Scala",
-    	    "Scheme"
-    	  ];
-    	  $("#autocomplete").autocomplete({
-    	    source: availableTags
-    	  });
-    	});
-
+	// 자동완성
+	$("#autocomplete").on('input', function() {
+		var search = this.value;
+		  $("#autocomplete").autocomplete({
+	  	    source: '/product/search?search=' + search
+	  	  });
+		
+	}); 
 
     </script>
 </body>
