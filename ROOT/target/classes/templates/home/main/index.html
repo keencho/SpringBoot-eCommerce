@@ -9,7 +9,20 @@
 <div id="wishlist_ajax_complete"></div>
 <!-- 로그인 -->
 <div id="login_popup"></div>
- </header>	
+</header>
+<div class="sidenav" align="center" style="top: 244px !important">
+ 	<span>최근본상품</span>
+ 	<br>
+ 	<font color="red">0</font>
+ 	<div class="sidenav_inside sidenav_scrollbar">
+	 	<div th:each="product : ${product_last8}">
+			<a th:href="@{'/product/view/{no}'(no=${product.no})}" target="_blank">
+				<img class="sidenav_img" th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product" width="20" 
+					data-toggle="tooltip" data-placement="top" th:title="${product.name} + '<br>' + @{'{price}원'(price=${#numbers.formatInteger(product.listprice, 0, 'COMMA')})}"> 
+			</a>
+		</div>
+	</div>
+</div>
 		<main class="main">
             <div class="info-boxes-container">
                 <div class="container">
@@ -41,7 +54,6 @@
                     </div><!-- End .info-box -->
                 </div><!-- End .container -->
             </div><!-- End .info-boxes-container -->
-
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9">

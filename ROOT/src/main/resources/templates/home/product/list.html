@@ -7,9 +7,66 @@
 <div id="wishlist_ajax_complete"></div>
 <!-- 로그인 -->
 <div id="login_popup"></div>
+<style>
+.sidenav {
+  height: 455px;
+  width: 90px;
+  position: fixed;
+  z-index: 1;
+  top: 212px;
+  right: 0;
+  margin-right: 230px;
+  background-color: #FFF;
+  padding-top: 10px;
+  border: 1px solid #DCDCDC;
+
+}
+
+.sidenav_inside {
+	overflow: hidden auto;
+	height: 370px;
+	margin-top: 20px;
+}
+
+.sidenav span {
+	font-size: 12px;
+	font-weight: bold;
+	border-bottom: 1px solid;
+	border-bottom-length: 50px;
+	padding-bottom: 35px;
+}
+
+.sidenav_img {
+	width: 74px;
+    height: auto;
+}
+
+.sidenav_scrollbar{
+	width: 80px;
+}
+
+.sidenav_scrollbar::-webkit-scrollbar {
+	width: 3px;
+}
+
+.sidenav_scrollbar::-webkit-scrollbar-thumb {
+	background: #DCDCDC; 
+}
+</style>
+ <div class="sidenav" align="center">
+ 	<span>최근본상품</span>
+ 	<br>
+ 	<font color="red">0</font>
+ 	<div class="sidenav_inside sidenav_scrollbar">
+	 	<div th:each="product : ${product_last8}">
+				<a th:href="@{'/product/view/{no}'(no=${product.no})}">
+					<img class="sidenav_img" th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product" width="20">
+				</a>
+		</div>
+	</div>
+</div>
 <main class="main">
             <div class="banner banner-cat" style="background-image: url('/home/assets/images/product-list.jpg');">
-            	
                 <div class="banner-content container color-change">
                 <h1 class="banner-title">
                       	  상품 리스트

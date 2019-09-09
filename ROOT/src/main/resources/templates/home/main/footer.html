@@ -222,7 +222,7 @@
     <script src="/home/assets/js/main.min.js?ver=2"></script>
     
     <!-- Custom JS File -->
-    <script src="/home/assets/js/custom.js?ver=50"></script>
+    <script src="/home/assets/js/custom.js?ver=51"></script>
     <!-- .load()메소드를 사용했을시 main.js를 다시 불러오기 위한 reload function -->
     <script src="/home/assets/js/reload_main.js"></script>
     
@@ -298,8 +298,39 @@
 	  	  });
 		
 	}); 
+	
+	// 최근 본상품 이동
+	$(function() {
+		var offset = $(".sidenav").offset();
+		var topPadding = 100;
+		$(window).scroll(function() {
+			if ($(window).scrollTop() > offset.top) {
+				$(".sidenav").stop().animate({
+					marginTop: $(window).scrollTop() - offset.top + topPadding
+				});
+			} else {
+				$(".sidenav").stop().animate({
+					marginTop: 0
+				});
+			};
+		});
+	});
+	
+	// tooltip
+	$(function() {
+		$("[data-toggle='tooltip']").tooltip({
+			position : {
+				my : "left+15 center",
+				at : "right center"
+			},
+			content : function() {
+				return $(this).prop('title');
+			},
+			hide: { duration: 1 }
+		});
 
-    </script>
+	});
+				</script>
 </body>
 
 </html>

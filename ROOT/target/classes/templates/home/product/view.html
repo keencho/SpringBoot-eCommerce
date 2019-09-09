@@ -50,7 +50,20 @@
 				<a style="cursor: pointer" onclick="product_question_add()" class="button">등록하기</a>
 		  		<a style="cursor: pointer" onclick="$(this).qnaPopupClose();" class="button">닫기</a>
 		</span>		
+</div>
+
+ <div class="sidenav" align="center">
+ 	<span>최근본상품</span>
+ 	<br>
+ 	<font color="red">0</font>
+ 	<div class="sidenav_inside sidenav_scrollbar">
+	 	<div th:each="product : ${product_last8}">
+			<a th:href="@{'/product/view/{no}'(no=${product.no})}">
+				<img class="sidenav_img" th:src="@{'/uploads/{regdate}/{pic}'(regdate=${product.regdate}, pic=${product.pic1})}" alt="product" width="20">
+			</a>
 		</div>
+	</div>
+</div>
 		
  		<main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
