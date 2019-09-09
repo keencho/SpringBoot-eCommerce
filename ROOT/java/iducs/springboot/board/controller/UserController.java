@@ -119,7 +119,7 @@ public class UserController {
 	}
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletResponse response) throws IOException {
-		session.invalidate();
+		session.removeAttribute("user");
 		response.setContentType("text/html; charset=UTF-8");
 		/*
 		 * PrintWriter out = response.getWriter();

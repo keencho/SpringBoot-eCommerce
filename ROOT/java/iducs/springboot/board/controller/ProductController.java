@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
@@ -589,7 +590,8 @@ public class ProductController {
 			@PathVariable(value = "no") Long no,
 			@PageableDefault(size = 5, sort = "no", direction = Sort.Direction.DESC) Pageable questionPageable,
 			Model model,
-			HttpServletRequest request) throws Exception{
+			HttpServletRequest request,
+			HttpSession session) throws Exception{
 		Product product = productService.getProductById(no);
 		List<ProductStock> sizeStock = productstockService.findSizeByProductNo(no);
 		List<ProductStock> colorStock = productstockService.findColorByProductNo(no);
@@ -600,6 +602,7 @@ public class ProductController {
 		Page<ProductQuestionEntity> questionPage = productquestionService.getProductQuestionPage(questionPageable, no);
 		List<ProductReview> review = reviewService.findByProductNo(no, questionPageable);
 		Page<ProductReviewEntity> reviewPage = reviewService.findByProductNoPage(no, questionPageable);
+		
 		String deliveryDate = null;
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat formatDate = new SimpleDateFormat("MM월 dd일(E) 이내 발송 예정");
@@ -651,6 +654,29 @@ public class ProductController {
 				}
 			}
 		}
+		
+		/* 최근본상품 session 구현 */
+		int recentNo = 0;
+		product.setRecentNo(recentNo);
+		if(session.getAttribute("recent") == null) {	// 최근본상품 세션이 존재하지 않으면 새로 생성
+			List<Product> recent = new ArrayList<Product>();
+			recent.add(recentNo, product);
+			session.setAttribute("recent", recent);
+		} else {	// 최근본상품 세션이 존재할시 중복 검증후 추가
+			List<Product> recent = (List<Product>) session.getAttribute("recent");
+			int index = this.exists(no, recent);	// 최근본상품 세션에 현재 사용자가 보고있는 상품이 있는지 확인
+			if (index == -1) {	// 없을 시
+				for(int i = 0; i < recent.size(); i++) {
+					recentNo = i + 1;
+					product.setRecentNo(recentNo);
+				}
+				recent.add(recentNo, product);
+			}
+			
+			session.setAttribute("recent", recent);
+		}
+		/* 끝 */
+		
 		model.addAttribute("product", product);
 		model.addAttribute("size", sizeStock);
 		model.addAttribute("color", colorStock);
@@ -697,23 +723,6 @@ public class ProductController {
 		return "/home/product/search";
 	}
 	
-	
-	/*
-	 * @ResponseBody
-	 * 
-	 * @PostMapping("/search") public JSONArray productAutoComplete(
-	 * 
-	 * @RequestParam(value = "search") String search, Model model) { // Ajax로
-	 * autocomplete을 위한 결과값 얻어오기 List<Product> product =
-	 * productService.findProductByNameContaining(search); List<String> product_name
-	 * = new ArrayList<String>(); for(int i = 0; i < product.size(); i ++) {
-	 * System.out.println(product.get(i).getName());
-	 * product_name.add(product.get(i).getName()); }
-	 * 
-	 * return JSONArray.fromObject(product_name); }
-	 */
-	 
-	
 	@ResponseBody
 	@GetMapping("/search")
 	public List<String> search(
@@ -724,6 +733,15 @@ public class ProductController {
 			product_name.add(product.get(i).getName());
 		}
 		return product_name;
+	}
+	
+	private int exists(Long no, List<Product> recent) {
+		for(int i = 0; i < recent.size(); i ++) {
+			if(recent.get(i).getNo() == no) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 }

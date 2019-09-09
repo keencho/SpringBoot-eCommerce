@@ -2624,3 +2624,103 @@ $(document).ready(function() {
     	});
     });
     
+    // 공지사항 소팅
+    function notice_sorting() {
+    	var sort = $('#orderby').val();
+    	var url_original = "/custcenter/notice/?sort=" + sort;
+		var url_string = window.location.href;
+    	var url = new URL(url_string);
+    	var category = url.searchParams.get("category");
+    	var search = url.searchParams.get("search");
+
+		if(category == null && search == null){
+			location.href = url_original;
+		} else if (category != null && search != null) {
+			location.href = url_original + "&search=" + search + "&category=" + category;
+		}
+    }
+    
+    // 공지사항 검색
+    function notice_search() {
+    	var sort = $('#orderby').val();
+    	var url_original = "/custcenter/notice/?sort=" + sort;
+		var url_string = window.location.href;
+    	var url = new URL(url_string);
+    	var category = $("select[name=category]").val();
+    	var search = $("#search").val();
+    	
+    	location.href = url_original + "&search=" + search + "&category=" + category;
+    }
+    
+    // post방식의 form 새 윈도우 띄우기
+    $(document).ready(function(){
+   	  $("#btn_tracking").on("click", function(){
+   		if (document.getElementById("orderno").value == ''){
+   			alert("주문번호를 입력하세요");
+   		} else if (document.getElementById("password").value == ''){
+   			alert("비밀번호를 입력하세요");
+   		} else {
+   			window.open("", "popup_window", "width=1200, height=950, scrollbars=no");
+   	   	    $("#myform").submit();
+   		}
+   	    
+   	  });
+   	});
+    
+    // 자바스크립트로 파일 확장자 구분하여 이미지 파일만 받기
+    function counsel_imgcheck(){
+    	var attach = document.getElementById('attach').value;
+    	var filter = attach.slice(attach.indexOf(".") + 1).toLowerCase();
+    	if(filter !='jpg' && filter != 'png' && filter != 'gif' && filter !='bmp'){
+    		alert("이미지 관련 파일(jpg, png, gif, bmp) 파일만 등록 가능합니다.");
+    		document.getElementById('attach').value = '';
+    	}
+    }
+    
+    // 검색 소팅
+    function search_sorting(search){
+    	var sort = $('#orderby').val();
+    	location.href="/product/list?search=" + search + "&page=0&sort=" + sort;
+    }
+    
+	// 자동완성
+	$("#autocomplete").on('input', function() {
+		var search = this.value;
+		  $("#autocomplete").autocomplete({
+	  	    source: '/product/search?search=' + search
+	  	  });
+		
+	}); 
+	
+	// 최근 본상품 이동
+	$(function() {
+		var offset = $(".sidenav").offset();
+		var topPadding = 100;
+		$(window).scroll(function() {
+			if ($(window).scrollTop() > offset.top) {
+				$(".sidenav").stop().animate({
+					marginTop: $(window).scrollTop() - offset.top + topPadding
+				});
+			} else {
+				$(".sidenav").stop().animate({
+					marginTop: 0
+				});
+			};
+		});
+	});
+	
+	// tooltip
+	$(function() {
+		$("[data-toggle='tooltip']").tooltip({
+			position : {
+				my : "left+15 center",
+				at : "right center"
+			},
+			content : function() {
+				return $(this).prop('title');
+			},
+			hide: { duration: 1 }
+		});
+
+	});
+    

@@ -33,6 +33,7 @@ public class Product {
 	private int cartQty;
 	private int cartPrice;
 	private int cartNo;
+	private int recentNo;
 	private double score; // 상품평 평균
 	private List<ProductSize> productsize;
 	private List<ProductStock> productstock;
@@ -330,6 +331,14 @@ public class Product {
 
 	public void setScore(double d) {
 		this.score = d;
+	}
+
+	public int getRecentNo() {
+		return recentNo;
+	}
+
+	public void setRecentNo(int recentNo) {
+		this.recentNo = recentNo;
 	}
 
 	
