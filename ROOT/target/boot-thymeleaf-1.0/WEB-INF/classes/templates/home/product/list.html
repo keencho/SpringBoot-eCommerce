@@ -7,9 +7,23 @@
 <div id="wishlist_ajax_complete"></div>
 <!-- 로그인 -->
 <div id="login_popup"></div>
+
+<div class="sidenav" align="center" style="top: 500px !important">
+ 	<span>최근본상품</span>
+ 	<br>
+ 	<font color="red" th:if="${session.recent}" th:text="${session.recent.size()}"></font>
+ 	<font color="red" th:unless="${session.recent}" th:text="0"></font>
+ 	<div class="sidenav_inside sidenav_scrollbar">
+	 	<div th:each="recent : ${session.recent}">
+			<a th:href="@{'/product/view/{no}'(no=${recent.no})}" target="_blank">
+				<img class="sidenav_img" th:src="@{'/uploads/{regdate}/{pic}'(regdate=${recent.regdate}, pic=${recent.pic1})}" alt="product" width="20" 
+					data-toggle="tooltip" data-placement="top" th:title="${recent.name} + '<br>' + @{'{price}원'(price=${#numbers.formatInteger(recent.listprice, 0, 'COMMA')})}"> 
+			</a>
+		</div>
+	</div>
+</div></div>
 <main class="main">
             <div class="banner banner-cat" style="background-image: url('/home/assets/images/product-list.jpg');">
-            	
                 <div class="banner-content container color-change">
                 <h1 class="banner-title">
                       	  상품 리스트

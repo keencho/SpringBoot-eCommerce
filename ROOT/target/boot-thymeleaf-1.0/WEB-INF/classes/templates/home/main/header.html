@@ -19,20 +19,20 @@
     <link rel="stylesheet" href="/home/assets/css/bootstrap.min.css">
 
     <!-- Main CSS File -->
-    <!-- 끝나고 고치기 
-    <link rel="stylesheet" href="/home/assets/css/style.min.css?ver=19">
-    -->
-    <link rel="stylesheet" href="/home/assets/css/style.css?ver=21">
-    
+    <link rel="stylesheet" href="/home/assets/css/style.min.css?ver=20">
+
     <!-- Custom CSS File -->
-    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=38">
-    
+    <link rel="stylesheet" href="/home/assets/css/custom.css?ver=52">
+
     <!-- font-awesome -->
     <link href="/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
     
     <!-- jQuery DatePicker -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
+
 <body>
     <div class="page-wrapper">
         <header class="header">
@@ -63,13 +63,12 @@
                             <img src="/home/assets/images/logo.png" alt="Porto Logo">
                         </a>
                     </div><!-- End .header-left -->
-
                     <div class="header-center">
                         <div class="header-search">
                             <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
                             <form action="/product/list" method="get">
                                 <div class="header-search-wrapper">
-                                    <input type="search" class="form-control" name="search" th:value="${search}" id="search" placeholder="검색" autocomplete="off" required>
+                                    <input type="search" class="form-control" name="search" th:value="${search}" id="autocomplete" placeholder="검색" autocomplete="off" required>
                                     <button class="btn" type="submit"><i class="icon-magnifier"></i></button>
                                 </div><!-- End .header-search-wrapper -->
                             </form>

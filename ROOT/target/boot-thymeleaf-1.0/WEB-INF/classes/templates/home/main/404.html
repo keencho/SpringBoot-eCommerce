@@ -1,6 +1,20 @@
 <th:block th:include="home/main/header.html"></th:block>
 	<th:block th:include="home/main/nav.html"></th:block>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<div class="sidenav" align="center" style="top: 244px !important">
+ 	<span>최근본상품</span>
+ 	<br>
+ 	<font color="red" th:if="${session.recent}" th:text="${session.recent.size()}"></font>
+ 	<font color="red" th:unless="${session.recent}" th:text="0"></font>
+ 	<div class="sidenav_inside sidenav_scrollbar">
+	 	<div th:each="recent : ${session.recent}">
+			<a th:href="@{'/product/view/{no}'(no=${recent.no})}" target="_blank">
+				<img class="sidenav_img" th:src="@{'/uploads/{regdate}/{pic}'(regdate=${recent.regdate}, pic=${recent.pic1})}" alt="product" width="20" 
+					data-toggle="tooltip" data-placement="top" th:title="${recent.name} + '<br>' + @{'{price}원'(price=${#numbers.formatInteger(recent.listprice, 0, 'COMMA')})}"> 
+			</a>
+		</div>
+	</div>
+</div>
         <main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">

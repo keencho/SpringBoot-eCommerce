@@ -582,3 +582,69 @@
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #2C7FC3 0 0px 0px 40px inset;
 }
+
+.sidenav {
+  height: 455px;
+  width: 90px;
+  position: absolute;
+  z-index: 1;
+  top: 212px;
+  right: 0;
+  margin-right: 230px;
+  background-color: #FFF;
+  padding-top: 10px;
+  border: 1px solid #DCDCDC;
+
+}
+
+.sidenav_inside {
+	overflow: hidden auto;
+	height: 370px;
+	margin-top: 20px;
+}
+
+.sidenav span {
+	font-size: 12px;
+	font-weight: bold;
+	border-bottom: 1px solid;
+	border-bottom-length: 50px;
+	padding-bottom: 35px;
+}
+
+.sidenav_img {
+	width: 74px;
+    height: auto;
+}
+
+.sidenav_scrollbar{
+	width: 80px;
+}
+
+.sidenav_scrollbar::-webkit-scrollbar {
+	width: 3px;
+}
+
+.sidenav_scrollbar::-webkit-scrollbar-thumb {
+	background: #DCDCDC; 
+}
+
+.ui-tooltip {
+	color: white !important;
+	background: black !important;
+
+	
+	zoom: 1 !important;
+	filter: alpha(opacity=100) !important; 
+	opacity: 1 !important;
+}
+
+.ui-tooltip:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
