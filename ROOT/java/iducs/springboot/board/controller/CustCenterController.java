@@ -1,8 +1,11 @@
 package iducs.springboot.board.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +58,8 @@ public class CustCenterController {
 	String osName = System.getProperty("os.name");
 	static File cwd = new File("src/main/resources/static/uploads/consulting");	// 윈도우 업로드 경로
 	static File cwd2 = new File("webapps/ROOT/WEB-INF/classes/static/uploads/consulting");	// 리눅스 실제 웹서버 업로드 경로
+	static File cwd_notice = new File("src/main/resources/static/uploads/notice");
+	static File cwd_notice2 = new File("webapps/ROOT/WEB-INF/classes/static/uploads/notice");
 	static File path = cwd.getAbsoluteFile();
 	static File path2 = cwd2.getAbsoluteFile();
 	static String autoFolderStatic = path.toString();
@@ -285,5 +290,43 @@ public class CustCenterController {
 		
 		return "home/custcenter/consultingView";
 		
+	}
+	
+	@GetMapping("/notice/download")
+	public void noticeDownload(
+			@RequestParam(value = "no", required = true) long no,
+			HttpServletResponse response,
+			HttpServletRequest request
+			) throws Exception{
+		Notice notice = noticeService.findByNo(no);
+		File file;
+		if(osName.matches(".*Windows.*")) {
+			file = new File(cwd_notice + "/" + notice.getDate(), notice.getAttach());
+		} else {
+			file = new File(cwd_notice2 + "/" + notice.getDate(), notice.getAttach());
+		}
+		BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+
+		String header = request.getHeader("User-Agent");
+		String fileName;
+
+		 if ((header.contains("MSIE")) || (header.contains("Trident")) || (header.contains("Edge"))) {
+	        //인터넷 익스플로러 10이하 버전, 11버전, 엣지에서 인코딩 
+	        fileName = URLEncoder.encode(notice.getAttach_original(), "UTF-8");
+		 } else {
+	        //나머지 브라우저에서 인코딩
+	        fileName = new String(notice.getAttach_original().getBytes("UTF-8"), "iso-8859-1");
+	    }
+		 
+		//형식을 모르는 파일첨부용 contentType
+	    response.setContentType("application/octet-stream");
+
+	    //다운로드와 다운로드될 파일이름
+	    response.setHeader("Content-Disposition", "attachment; filename=\""+ fileName + "\"");
+		FileCopyUtils.copy(in, response.getOutputStream());
+	    in.close();
+	    response.getOutputStream().flush();
+	    response.getOutputStream().close();
+
 	}
 }

@@ -1,0 +1,463 @@
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:92) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:101) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:103) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:248) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:988) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:959) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:472) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	... 18 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'delegatingMethodSecurityMetadataSource' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodSecurityMetadataSources' while setting constructor argument with key [0]; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodSecurityMetadataSources' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodMap' while setting constructor argument; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodMap' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Invocation of init method failed; nested exception is org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:359) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveManagedList(BeanDefinitionValueResolver.java:382) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:157) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:92) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:101) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:103) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:248) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:988) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:959) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:472) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	... 18 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodSecurityMetadataSources' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodMap' while setting constructor argument; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodMap' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Invocation of init method failed; nested exception is org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:359) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveManagedList(BeanDefinitionValueResolver.java:382) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:157) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:92) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:101) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:103) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:248) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:988) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:959) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:472) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	... 18 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodMap' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Invocation of init method failed; nested exception is org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1578) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:545) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveManagedList(BeanDefinitionValueResolver.java:382) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:157) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:92) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:101) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:103) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:248) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:988) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:959) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:472) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	... 18 more
+Caused by: org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:231) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:645) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:680) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:707) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:757) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.query(NamedParameterJdbcTemplate.java:192) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.queryForList(NamedParameterJdbcTemplate.java:264) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.queryForList(NamedParameterJdbcTemplate.java:271) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at egovframework.rte.fdl.security.securedobject.impl.SecuredObjectDAO.getRolesAndResources(SecuredObjectDAO.java:278) ~[egovframework.rte.fdl.security-3.7.0.jar:?]
+	at egovframework.rte.fdl.security.securedobject.impl.SecuredObjectDAO.getRolesAndMethod(SecuredObjectDAO.java:333) ~[egovframework.rte.fdl.security-3.7.0.jar:?]
+	at egovframework.rte.fdl.security.securedobject.impl.SecuredObjectServiceImpl.getRolesAndMethod(SecuredObjectServiceImpl.java:92) ~[egovframework.rte.fdl.security-3.7.0.jar:?]
+	at egovframework.rte.fdl.security.intercept.MethodResourcesMapFactoryBean.init(MethodResourcesMapFactoryBean.java:57) ~[egovframework.rte.fdl.security-3.7.0.jar:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_212]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_212]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_212]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_212]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1706) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1645) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1574) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:545) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveManagedList(BeanDefinitionValueResolver.java:382) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:157) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:92) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:101) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:103) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:248) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:988) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:959) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:472) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	... 18 more
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_212]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_212]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_212]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_212]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:408) ~[mysql-connector-java-5.1.31.jar:?]
+	at com.mysql.jdbc.Util.getInstance(Util.java:383) ~[mysql-connector-java-5.1.31.jar:?]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1062) ~[mysql-connector-java-5.1.31.jar:?]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4226) ~[mysql-connector-java-5.1.31.jar:?]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4158) ~[mysql-connector-java-5.1.31.jar:?]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2615) ~[mysql-connector-java-5.1.31.jar:?]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2776) ~[mysql-connector-java-5.1.31.jar:?]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2840) ~[mysql-connector-java-5.1.31.jar:?]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082) ~[mysql-connector-java-5.1.31.jar:?]
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2212) ~[mysql-connector-java-5.1.31.jar:?]
+	at net.sf.log4jdbc.PreparedStatementSpy.executeQuery(PreparedStatementSpy.java:734) ~[log4jdbc-1.2.jar:?]
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96) ~[commons-dbcp-1.4.jar:1.4]
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96) ~[commons-dbcp-1.4.jar:1.4]
+	at org.springframework.jdbc.core.JdbcTemplate$1.doInPreparedStatement(JdbcTemplate.java:688) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:629) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:680) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:707) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:757) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.query(NamedParameterJdbcTemplate.java:192) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.queryForList(NamedParameterJdbcTemplate.java:264) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.queryForList(NamedParameterJdbcTemplate.java:271) ~[spring-jdbc-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at egovframework.rte.fdl.security.securedobject.impl.SecuredObjectDAO.getRolesAndResources(SecuredObjectDAO.java:278) ~[egovframework.rte.fdl.security-3.7.0.jar:?]
+	at egovframework.rte.fdl.security.securedobject.impl.SecuredObjectDAO.getRolesAndMethod(SecuredObjectDAO.java:333) ~[egovframework.rte.fdl.security-3.7.0.jar:?]
+	at egovframework.rte.fdl.security.securedobject.impl.SecuredObjectServiceImpl.getRolesAndMethod(SecuredObjectServiceImpl.java:92) ~[egovframework.rte.fdl.security-3.7.0.jar:?]
+	at egovframework.rte.fdl.security.intercept.MethodResourcesMapFactoryBean.init(MethodResourcesMapFactoryBean.java:57) ~[egovframework.rte.fdl.security-3.7.0.jar:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_212]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_212]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_212]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_212]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1706) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1645) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1574) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:545) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveManagedList(BeanDefinitionValueResolver.java:382) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:157) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:92) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:101) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:103) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:248) ~[spring-aop-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:988) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:959) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:472) ~[spring-beans-4.2.4.RELEASE.jar:4.2.4.RELEASE]
+	... 18 more
+8월 23, 2019 6:34:54 오후 org.apache.catalina.core.StandardContext listenerStart
+심각: Exception sending context initialized event to listener instance of class org.springframework.web.context.ContextLoaderListener
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'messageSource' defined in file [C:\egov\eGovFrameDev-3.7.0-64bit\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\egov_potal\WEB-INF\classes\egovframework\spring\com\context-common.xml]: BeanPostProcessor before instantiation of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodSecurityMetadataSourceAdvisor' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'delegatingMethodSecurityMetadataSource' while setting constructor argument; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'delegatingMethodSecurityMetadataSource' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodSecurityMetadataSources' while setting constructor argument with key [0]; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodSecurityMetadataSources' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodMap' while setting constructor argument; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodMap' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Invocation of init method failed; nested exception is org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:478)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.context.support.AbstractApplicationContext.initMessageSource(AbstractApplicationContext.java:697)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:526)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:446)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:328)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:5016)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5528)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1575)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1565)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodSecurityMetadataSourceAdvisor' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'delegatingMethodSecurityMetadataSource' while setting constructor argument; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'delegatingMethodSecurityMetadataSource' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodSecurityMetadataSources' while setting constructor argument with key [0]; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodSecurityMetadataSources' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodMap' while setting constructor argument; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodMap' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Invocation of init method failed; nested exception is org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:359)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:92)
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:101)
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:103)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:248)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:988)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:959)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:472)
+	... 18 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'delegatingMethodSecurityMetadataSource' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodSecurityMetadataSources' while setting constructor argument with key [0]; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodSecurityMetadataSources' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodMap' while setting constructor argument; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodMap' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Invocation of init method failed; nested exception is org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:359)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveManagedList(BeanDefinitionValueResolver.java:382)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:157)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351)
+	... 36 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodSecurityMetadataSources' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Cannot resolve reference to bean 'methodMap' while setting constructor argument; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodMap' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Invocation of init method failed; nested exception is org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:359)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:648)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:140)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1143)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1046)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351)
+	... 50 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodMap' defined in URL [jar:file:/C:/egov/eGovFrameDev-3.7.0-64bit/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/egov_potal/WEB-INF/lib/egovframework.rte.fdl.security-3.7.0.jar!/META-INF/spring/security/method-config.xml]: Invocation of init method failed; nested exception is org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1578)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:545)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351)
+	... 62 more
+Caused by: org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [          SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority           FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b           WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'          ORDER BY a.ROLE_SORT]; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:231)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:645)
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:680)
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:707)
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:757)
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.query(NamedParameterJdbcTemplate.java:192)
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.queryForList(NamedParameterJdbcTemplate.java:264)
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.queryForList(NamedParameterJdbcTemplate.java:271)
+	at egovframework.rte.fdl.security.securedobject.impl.SecuredObjectDAO.getRolesAndResources(SecuredObjectDAO.java:278)
+	at egovframework.rte.fdl.security.securedobject.impl.SecuredObjectDAO.getRolesAndMethod(SecuredObjectDAO.java:333)
+	at egovframework.rte.fdl.security.securedobject.impl.SecuredObjectServiceImpl.getRolesAndMethod(SecuredObjectServiceImpl.java:92)
+	at egovframework.rte.fdl.security.intercept.MethodResourcesMapFactoryBean.init(MethodResourcesMapFactoryBean.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1706)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1645)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1574)
+	... 69 more
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cms.lettnroleinfo' doesn't exist
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:408)
+	at com.mysql.jdbc.Util.getInstance(Util.java:383)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1062)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4226)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4158)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2615)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2776)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2840)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2212)
+	at net.sf.log4jdbc.PreparedStatementSpy.executeQuery(PreparedStatementSpy.java:734)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.springframework.jdbc.core.JdbcTemplate$1.doInPreparedStatement(JdbcTemplate.java:688)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:629)
+	... 86 more
+
+8월 23, 2019 6:34:54 오후 org.apache.catalina.core.StandardContext startInternal
+심각: One or more listeners failed to start. Full details will be found in the appropriate container log file
+8월 23, 2019 6:34:54 오후 org.apache.catalina.core.StandardContext startInternal
+심각: Context [/pst_webapp] startup failed due to previous errors
+8월 23, 2019 6:34:54 오후 org.apache.catalina.core.ApplicationContext log
+정보: Closing Spring root WebApplicationContext
+8월 23, 2019 6:34:54 오후 org.apache.catalina.loader.WebappClassLoader clearReferencesJdbc
+심각: The web application [/pst_webapp] registered the JDBC driver [net.sf.log4jdbc.DriverSpy] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+8월 23, 2019 6:34:54 오후 org.apache.catalina.loader.WebappClassLoader clearReferencesJdbc
+심각: The web application [/pst_webapp] registered the JDBC driver [com.mysql.jdbc.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+8월 23, 2019 6:34:54 오후 org.apache.catalina.loader.WebappClassLoader clearReferencesThreads
+심각: The web application [/pst_webapp] appears to have started a thread named [Abandoned connection cleanup thread] but has failed to stop it. This is very likely to create a memory leak.
+8월 23, 2019 6:34:54 오후 org.apache.coyote.AbstractProtocol start
+정보: Starting ProtocolHandler ["http-bio-8080"]
+8월 23, 2019 6:34:54 오후 org.apache.coyote.AbstractProtocol start
+정보: Starting ProtocolHandler ["ajp-bio-8009"]
+8월 23, 2019 6:34:54 오후 org.apache.catalina.startup.Catalina start
+정보: Server startup in 4109 ms
+1

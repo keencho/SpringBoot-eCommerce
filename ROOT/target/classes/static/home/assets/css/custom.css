@@ -583,18 +583,191 @@
 	box-shadow: #2C7FC3 0 0px 0px 40px inset;
 }
 
-.sidenav {
-  height: 455px;
-  width: 90px;
-  position: absolute;
-  z-index: 1;
-  top: 212px;
-  right: 0;
-  margin-right: 230px;
-  background-color: #FFF;
-  padding-top: 10px;
-  border: 1px solid #DCDCDC;
+@media screen and (min-width: 2501px){
+   .sidenav {
+	  display: none;
+	}
+}
 
+@media screen and (min-width: 2400px) and (max-width: 2500px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 420px;
+	}
+}
+ 
+@media screen and (min-width: 2300px) and (max-width: 2399px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 400px;
+	}
+}
+ 
+@media screen and (min-width: 2200px) and (max-width: 2299px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 350px;
+	}
+}
+ 
+@media screen and (min-width: 2100px) and (max-width: 2199px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 300px;
+	}
+}
+ 
+@media screen and (min-width: 2000px) and (max-width: 2099px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 250px;
+	}
+}
+ 
+@media screen and (min-width: 1920px) and (max-width: 1999px) {
+   .sidenav {
+	  height: 455px;
+	  width: 90px;	
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	}
+}
+ 
+@media screen and (min-width: 1800px) and (max-width: 1919px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 200px;
+	}
+}
+ 
+@media screen and (min-width: 1700px) and (max-width: 1799px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 150px;
+	}
+}
+ 
+@media screen and (min-width: 1600px) and (max-width: 1699px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 100px;
+	}
+}
+ 
+@media screen and (min-width: 1500px) and (max-width: 1599px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 50px;
+	}
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1499px) {
+	 .sidenav {
+	  height: 455px;
+	  width: 90px;
+	  position: absolute;
+	  z-index: 1;
+	  top: 212px;
+	  right: 0;
+	  margin-right: 230px;
+	  background-color: #FFF;
+	  padding-top: 10px;
+	  border: 1px solid #DCDCDC;
+	  margin-right : 10px;
+	}
+}
+
+@media screen and (max-width: 1399px) {
+	 .sidenav {
+	 	display: none;
+	}
 }
 
 .sidenav_inside {
@@ -638,13 +811,3 @@
 	opacity: 1 !important;
 }
 
-.ui-tooltip:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 100%;
-    margin-top: -5px;
-    border-width: 6px;
-    border-style: solid;
-    border-color: transparent black transparent transparent;
-}

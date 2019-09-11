@@ -38,7 +38,7 @@
 								</tr>
 								<tr>
 									<td style="vertical-align: middle; text-align: center; background: #f4f4f4;">첨부파일</td>
-									<td th:if="${notice.attach}"><u><a th:href="@{'/admin/notice/download?no={no}'(no=${notice.no})}"><span th:text="${notice.attach_original}"></span></a></u> (클릭시 다운)</td>
+									<td th:if="${notice.attach}"><u><a th:href="@{'/custcenter/notice/download?no={no}'(no=${notice.no})}"><span th:text="${notice.attach_original}"></span></a></u> (클릭시 다운)</td>
 									<td th:unless="${notice.attach}" th:text="없음"></td>
 									<td width="10%" style="vertical-align: middle; text-align: center; background: #f4f4f4;">조회수</td>
 									<td th:text="${notice.views}"></td>
