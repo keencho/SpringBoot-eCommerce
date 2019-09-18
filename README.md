@@ -1,5 +1,5 @@
 # Springboot-eCommerce
-  * 2019. 7. 8. 시작
+  * 2019-07 시작 
   * Ubuntu 18.04LTS 기반
   * Build Tools은 Maven, ORM은 JPA, Template Engine은 Thymeleaf 사용
   * application.properties를 사용한 스프링부트 환경설정
