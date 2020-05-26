@@ -5,7 +5,6 @@
   * application.properties를 사용한 스프링부트 환경설정
   * Porto사의 eCommerce-Template 사용
   * 가상 옷 쇼핑몰
-  * http://keencho.ml:8900 (vmware 상에서 돌아가는 가상 웹서버이므로 서버를 항상 켜둘수는 없습니다. seyoung050412@gmail.com으로 연락주시면 빠르게 조치하겠습니다.)
 
 # 주요 특징
  * REST API를 사용한 개발 - GET, POST, PUT, DELETE Method 사용
